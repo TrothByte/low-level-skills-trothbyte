@@ -1,0 +1,28 @@
+// BAD: missing state space qualifier on a shared-memory load.
+// ld with no state space uses Generic Addressing; the address from
+// cvta.to.shared is a SHARED-space address, not a generic one.
+
+.version 8.0
+.target sm_80
+.address_size 64
+
+.entry bad_missing_space_qualifier
+(
+    .param .u64 gbl_out
+)
+{
+    .reg .u32  %val;
+    .reg .u64  %p_out, %p_sh;
+    .shared .align 4 .u32 sh[64];
+
+    ld.param.u64 %p_out, [gbl_out];
+    cvta.to.shared.u64 %p_sh, sh;
+
+    st.shared.u32 [%p_sh], %tid.x;
+
+    // BUG: no .shared qualifier - this is generic addressing, not a shared load.
+    ld.b32 %val, [%p_sh];
+
+    st.global.u32 [%p_out], %val;
+    ret;
+}

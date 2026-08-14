@@ -1,0 +1,556 @@
+# Research Ingestion — извлечение findings из аналитических документов
+# Источники: "Анализ скиллов.md" (2026-08-14), "Энциклопедия — первичные источники и валидация.md" (2026-08-14)
+
+documents_read:
+  - id: analysis-skills
+    title: "Анализ скиллов.md"
+    status: COMPLETE
+    lines: 483
+    date: 2026-08-14
+  - id: encyclopedia
+    title: "Энциклопедия — первичные источники и валидация.md"
+    status: COMPLETE
+    lines: 367
+    date: 2026-08-14
+
+# ============================================================
+# REPOSITORY INVENTORY
+# ============================================================
+repositories:
+  - id: trailofbits-skills
+    name: trailofbits/skills
+    url: https://github.com/trailofbits/skills
+    license: CC-BY-SA-4.0
+    scope: "C/C++/Rust безопасность, фаззинг, санитайзеры, DWARF, zeroization"
+    skill_count: 78
+    depth: 5
+    usefulness: 5
+    strengths: ["69 Rust- и 47-64 C/C++-баг-классов", "Evals с фикстурами", "Прогрессивное раскрытие", "Rationalizations to Reject"]
+    weaknesses: ["Сложный оркестрационный протокол", "Скиллы про аудит, не про написание"]
+    unique: ["zeroize-audit", "constant-time-analysis", "variant-analysis", "dwarf-expert", "fuzzing-dictionary"]
+    verification: "CI-валидация, evals-кейсы"
+    source_model: "CC-BY-SA-4.0"
+
+  - id: wshobson-agents
+    name: wshobson/agents
+    url: https://github.com/wshobson/agents
+    license: MIT
+    scope: "Rust/C/C++/Go systems-programming, ARM Cortex, RE"
+    skill_count: 180
+    depth: 2
+    usefulness: 3
+    strengths: ["Широкое языковое покрытие", "binary-analysis-patterns (asm-идиомы)"]
+    weaknesses: ["SKILL.md поверхностные (2-3 КБ)"]
+    unique: ["go-concurrency-patterns", "Таблица 'тип C ↔ asm-паттерн'"]
+    verification: "ASan/Valgrind/Miri/TSan упоминаются"
+    source_model: "MIT"
+
+  - id: jeffallan-claude-skills
+    name: Jeffallan/claude-skills
+    url: https://github.com/Jeffallan/claude-skills
+    license: MIT
+    scope: "cpp-pro, embedded-systems, rust-engineer"
+    skill_count: 66
+    depth: 3
+    usefulness: 4
+    strengths: ["Конкретные embedded-шаблоны", "MUST DO / MUST NOT DO формат"]
+    weaknesses: ["Стандартные best-practices"]
+    unique: []
+    verification: "-Wall -Werror, cppcheck, stack high-water mark"
+    source_model: "MIT"
+
+  - id: voltagent-awesome
+    name: VoltAgent/awesome-agent-skills
+    url: https://github.com/VoltAgent/awesome-agent-skills
+    license: MIT
+    scope: "Индекс 1497+ скиллов"
+    skill_count: 1497
+    depth: null
+    usefulness: 4
+    strengths: ["Лучший каталог", "Skill Quality Standards"]
+    weaknesses: ["Сам по себе не скиллы"]
+    unique: []
+    verification: "Курация 'не AI-slop'"
+    source_model: "MIT"
+
+  - id: zhaoxuya520-reverse
+    name: zhaoxuya520/reverse-skill
+    url: https://github.com/zhaoxuya520/reverse-skill
+    license: UNKNOWN
+    scope: "RE: IDA, radare2, Ghidra, Go/Rust RE, pwn-chain, firmware-pentest"
+    skill_count: 85
+    depth: 4
+    usefulness: 4
+    strengths: ["Самый широкий RE-охват", "Активен", "Дисциплина 'не угадывай пути'"]
+    weaknesses: ["Наступательная направленность", "Привязка к структуре репо"]
+    unique: ["idalib-MCP интеграция", "Раздельная методика Go/Rust-RE", "pwn-chain (movaps)", "firmware-pentest (FSTM)"]
+    verification: "Stage-гейты, evidence-требования"
+    source_model: "UNKNOWN"
+
+  - id: nvidia-skills
+    name: NVIDIA/skills
+    url: https://github.com/NVIDIA/skills
+    license: "CC-BY-4.0/Apache-2.0"
+    scope: "DOCA (C/C++ BlueField DPU), tilegym (CUDA C++ cuTile)"
+    skill_count: 260
+    depth: 4
+    usefulness: 4
+    strengths: ["Официальные рабочие скиллы", "Эталон прогрессивного раскрытия"]
+    weaknesses: ["PTX-asm не покрыт"]
+    unique: ["DOCA DMA-программирование", "tilegym cuTile"]
+    verification: "Six verbs: configure/build/modify/run/test/debug"
+    source_model: "CC-BY-4.0/Apache-2.0"
+
+  - id: zhinkgit-embedded
+    name: zhinkgit/embeddedskills
+    url: https://github.com/zhinkgit/embeddedskills
+    license: UNKNOWN
+    scope: "Embedded-инструменты: gcc, jlink, keil, openocd, probe-rs"
+    skill_count: 12
+    depth: 3
+    usefulness: 5
+    strengths: ["Рабочие инструменты (Python-скрипты)", "Чёткая модель конфигурации", "Политика 'не угадывать'"]
+    weaknesses: ["Не закрывает MPU/TrustZone"]
+    unique: ["J-Link halt/step/RTT/SWO/GDB", "Анализ ELF text/data/bss"]
+    verification: "J-Link halt/step, RTT, GDB backtrace"
+    source_model: "UNKNOWN"
+
+  - id: z3prover-z3
+    name: Z3Prover/z3
+    url: https://github.com/Z3Prover/z3
+    license: MIT
+    scope: "Собственные ASan/UBSan-скиллы официального C++-солвера"
+    skill_count: 11
+    depth: 3
+    usefulness: 4
+    strengths: ["Рабочий образец санитайзерного CI-цикла", "SQLite-хранение findings"]
+    weaknesses: ["Специфичен для Z3"]
+    unique: ["memory-safety (ASan/UBSan/LeakSanitizer)", "static-analysis (scan-build)"]
+    verification: "ASan/UBSan/LeakSanitizer, SQL-запросы регрессий"
+    source_model: "MIT"
+
+  - id: css-electronics-can
+    name: CSS-Electronics/can-bus-reverse-engineering-skills
+    url: https://github.com/CSS-Electronics/can-bus-reverse-engineering-skills
+    license: UNKNOWN
+    scope: "Авто-RE CAN-сигналов в DBC"
+    skill_count: 1
+    depth: 4
+    usefulness: 3
+    strengths: ["Детерминированный конвейер", "verify-as-gate (PASS/UNCONFIRMED)"]
+    weaknesses: ["Узкая ниша"]
+    unique: ["Авто-RE конвейер CAN→DBC"]
+    verification: "verify-as-gate, exit 0/2"
+    source_model: "UNKNOWN"
+
+  - id: p4nda0s-reverse
+    name: P4nda0s/reverse-skills
+    url: https://github.com/P4nda0s/reverse-skills
+    license: UNKNOWN
+    scope: "rev-idapython, rev-frida, rev-unicorn-debug, rev-struct"
+    skill_count: 6
+    depth: 2
+    usefulness: 3
+    strengths: ["IDA-скриптинг"]
+    weaknesses: ["Средняя глубина"]
+    unique: []
+    verification: "UNKNOWN"
+    source_model: "UNKNOWN"
+
+  - id: masriyan-cybersec
+    name: Masriyan/Claude-Code-CyberSecurity-Skill
+    url: https://github.com/Masriyan/Claude-Code-CyberSecurity-Skill
+    license: UNKNOWN
+    scope: "exploit-development, reverse-engineering, malware-analysis"
+    skill_count: 15
+    depth: 3
+    usefulness: 3
+    strengths: ["Качественные security-скиллы", "Современные CFI (Intel CET, ARM PAC/BTI)"]
+    weaknesses: ["Не чисто low-level"]
+    unique: []
+    verification: "UNKNOWN"
+    source_model: "UNKNOWN"
+
+  - id: simoneavogadro-android
+    name: SimoneAvogadro/android-reverse-engineering-skill
+    url: https://github.com/SimoneAvogadro/android-reverse-engineering-skill
+    license: UNKNOWN
+    scope: "Android RE (Smali/dex/Frida)"
+    skill_count: 1
+    depth: null
+    usefulness: null
+    strengths: ["Крупнейший RE-скилл по звёздам (6792)"]
+    weaknesses: ["К C/C++/asm отношения мало"]
+    unique: []
+    verification: "UNKNOWN"
+    source_model: "UNKNOWN"
+
+  - id: mohitmishra786-lowlevel
+    name: mohitmishra786/low-level-dev-skills
+    url: https://github.com/mohitmishra786/low-level-dev-skills
+    license: MIT
+    scope: "142 скилла, 26 категорий: компиляторы, линкеры, ELF/DWARF, kernel, bare-metal, SIMD, GPU, eBPF, WASM, Zig"
+    skill_count: 142
+    depth: 3
+    usefulness: 5
+    strengths: ["Самое широкое покрытие", "Закрывает все ранее пустые ниши", "Прогрессивное раскрытие"]
+    weaknesses: ["Нет баг-классов/evals", "Учебно-практическая глубина"]
+    unique: ["Полный набор компиляторы/линкеры/архитектура", "Профилирование и оптимизация как скиллы", "Zig-скиллы (7)"]
+    verification: "Инструментальная верификация (perf/valgrind/sanitizers)"
+    source_model: "MIT"
+
+  - id: rudedogg-zig
+    name: rudedogg/zig-skills
+    url: https://github.com/rudedogg/zig-skills
+    license: UNKNOWN
+    scope: "Zig 0.15.x: основной скилл + 30+ reference-файлов"
+    skill_count: 1
+    depth: 4
+    usefulness: 4
+    strengths: ["Глубочайший Zig-скилл", "Code-review-чеклист с уровнями уверенности (ALWAYS FLAG/FLAG WITH CONTEXT/SUGGEST)"]
+    weaknesses: ["Привязан к версии 0.15.x"]
+    unique: ["Code-review-чеклист Zig по уровням уверенности"]
+    verification: "UNKNOWN"
+    source_model: "UNKNOWN"
+
+  - id: zigcc-skills
+    name: zigcc/skills
+    url: https://github.com/zigcc/skills
+    license: UNKNOWN
+    scope: "Версионные Zig-скиллы 0.15/0.16"
+    skill_count: 2
+    depth: 3
+    usefulness: 3
+    strengths: ["Версионный подход", "Таблицы миграций", "25 ошибок с фиксами"]
+    weaknesses: ["Привязан к версиям"]
+    unique: []
+    verification: "UNKNOWN"
+    source_model: "UNKNOWN"
+
+  - id: nzrsky-zig
+    name: nzrsky/zig-skills
+    url: https://github.com/nzrsky/zig-skills
+    license: UNKNOWN
+    scope: "Zig 0.17.0-dev: 57 reference-файлов"
+    skill_count: 1
+    depth: 3
+    usefulness: 3
+    strengths: ["Свежий (0.17-dev)", "Миграции 0.14/0.15/0.16"]
+    weaknesses: ["Привязан к версии"]
+    unique: []
+    verification: "UNKNOWN"
+    source_model: "UNKNOWN"
+
+  - id: whit3rabbit-zig
+    name: whit3rabbit/claude-zig-skill
+    url: https://github.com/whit3rabbit/claude-zig-skill
+    license: UNKNOWN
+    scope: "zig-programming (223 рецепта BBQ Cookbook), zig-async"
+    skill_count: 2
+    depth: 3
+    usefulness: 3
+    strengths: ["223 рецепта", "Документация по 13 версиям Zig"]
+    weaknesses: ["Zipped-поставка"]
+    unique: ["Zig-рецепты из BBQ Cookbook"]
+    verification: "UNKNOWN"
+    source_model: "UNKNOWN"
+
+  - id: snailsploit-claude-red
+    name: SnailSploit/Claude-Red
+    url: https://github.com/SnailSploit/Claude-Red
+    license: MIT
+    scope: "Ассемблер: x86/x64 shellcode, exploit dev, mitigations/ROP, Windows internals"
+    skill_count: 60
+    depth: 4
+    usefulness: 3
+    strengths: ["Самый глубокий asm-контент", "Полный x64 shellcode", "PEB walk", "Null-byte avoidance"]
+    weaknesses: ["Наступательная направленность", "Слабая курация крупных файлов"]
+    unique: ["Полный x64 shellcode как артефакт", "Windows 11 24H2 AMSI heap scan обход", "Windows on ARM64 syscall-конвенция"]
+    verification: "WinDbg-команды для отладки"
+    source_model: "MIT"
+
+# ============================================================
+# TOPIC INVENTORY (темы, найденные во всех репозиториях)
+# ============================================================
+topics:
+  memory_safety: ["buffer overflow", "use-after-free", "double-free", "uninitialized memory", "integer overflow", "out-of-bounds", "null deref", "memory leak", "dangling pointer", "overlapping memcpy"]
+  cpp_semantics: ["static init order fiasco", "virtual calls in ctor/dtor", "iterator invalidation", "move semantics", "lambda capture", "exception safety", "smart pointers"]
+  rust_safety: ["unsafe blocks", "transmute misuse", "raw pointer arithmetic", "repr(C) layout", "enum discriminant FFI", "panic reachability", "unwind through FFI", "CString dangling", "foreign drop", "Send/Sync impl"]
+  concurrency: ["data race", "memory ordering", "atomics", "ABBA deadlock", "lock ordering", "condvar", "signal handler safety", "thread sanitizer", "channel starvation"]
+  ffi_abi: ["calling conventions", "SysV AMD64", "AAPCS64", "RISC-V psABI", "repr(C)", "padding", "alignment", "opaque pointers", "extern C", "ABI mismatch"]
+  assembly: ["x86/x86-64", "ARM/AArch64", "RISC-V", "shellcode", "PIC techniques", "PEB walk", "null-byte avoidance", "signed vs unsigned branches", "optimizer artifacts", "inline asm", "stack alignment"]
+  compiler: ["GCC", "Clang", "LLVM", "MSVC", "LLVM IR", "LLVM passes", "MLIR", "JIT", "codegen", "optimizations", "PGO", "cross-compilation", "compiler frontend/backend"]
+  linker: ["ELF", "dynamic linking", "LTO", "linkers", "binutils", "symbol resolution", "relocations", "PLT/GOT"]
+  debugging: ["gdb", "lldb", "core dumps", "DWARF", "debug optimized builds", "concurrency debugging"]
+  profiling: ["perf", "valgrind", "flamegraphs", "heaptrack", "VTune", "uProf", "hardware counters", "strace/ltrace"]
+  sanitizers: ["ASan", "UBSan", "TSan", "MSan", "LeakSanitizer", "cargo-fuzz", "libFuzzer", "AFL++", "OSS-Fuzz"]
+  kernel: ["Linux kernel", "drivers", "char drivers", "copy_to_user", "ioctl", "mmap", "device tree", "kernel concurrency", "kernel memory management", "KUnit", "kselftest", "syzkaller"]
+  embedded: ["bare-metal", "firmware", "bootloader", "RTOS", "interrupts", "DMA", "MMIO", "volatile", "watchdog", "MPU", "TrustZone", "ARM Cortex-M"]
+  toolchain_hardware: ["J-Link", "OpenOCD", "probe-rs", "GDB server", "RTT", "SWO", "arm-none-eabi-gcc"]
+  simd: ["SSE", "AVX", "NEON", "SVE", "intrinsics", "auto-vectorization", "alignment"]
+  gpu: ["CUDA", "cuTile", "Triton", "PTX", "ROCm/HIP", "GPU memory model", "CUTLASS", "CUDA graphs", "DPU/DOCA"]
+  networking: ["io_uring", "DPDK", "AF_XDP", "eBPF", "RDMA", "sockets", "CAN bus"]
+  storage: ["filesystems", "NVMe", "storage drivers"]
+  binary_analysis: ["disassembly", "IDA", "Ghidra", "radare2", "Binary Ninja", "angr", "Qiling", "Unicorn", "decompilation", "type recovery", "signature recovery", "binary diffing"]
+  reverse_engineering: ["Go RE (pclntab)", "Rust RE (rust_begin_unwind)", "firmware RE", "protocol RE", "anti-analysis", "packers", "malware analysis"]
+  wasm: ["emscripten", "wasmtime", "WASM runtime"]
+  zig: ["versioned API", "comptime", "build system", "Writergate", "c-interop", "allocators"]
+  security_hardening: ["ASLR", "NX/DEP", "canary", "RELRO", "PIE", "CFI", "CET shadow stack", "PAC/BTI", "constant-time", "zeroization"]
+
+# ============================================================
+# BUG-CLASS INVENTORY (Категория A — технические ошибки в коде)
+# Источник: Анализ скиллов.md Этап 5. Нумерация соответствует источнику.
+# ============================================================
+bug_classes:
+  memory_safety_ub:
+    - {id: A1, name: "buffer overflow (sizeof(ptr) vs sizeof(array))", cwe: ["CWE-787", "CWE-119"], source: "Pearce et al. arXiv:2108.09293; c-review BOF/MEMCPYSZ", lint: ["bugprone-sizeof-expression", "cert-arr39-c", "V568"]}
+    - {id: A2, name: "integer overflow before allocation", cwe: ["CWE-190"], source: "c-review INT", lint: ["bugprone-implicit-widening-of-multiplication-result", "V104/V106", "cppcheck integerOverflow"]}
+    - {id: A3, name: "strncpy without NUL-termination", cwe: ["CWE-170"], source: "c-review STRNCPY", lint: ["bugprone-not-null-terminated-result", "V527"]}
+    - {id: A4, name: "snprintf return value ignored (truncation)", cwe: ["CWE-252"], source: "c-review SNPRINTF", lint: "NONE direct (CodeQL/semgrep recommended)"}
+    - {id: A5, name: "uninitialized memory (scanf error, Vec::set_len)", cwe: ["CWE-457"], source: "c-review UNINIT/SCANFUNINIT; rust-review UNINITREAD/SETLEN", lint: ["clang-analyzer-core.uninitialized.*", "cppcheck uninitvar", "V614"]}
+    - {id: A6, name: "use-after-free / double-free", cwe: ["CWE-416", "CWE-415"], source: "c-review UAF; rust-review UAF/DFREE", lint: ["clang-analyzer-cplusplus.NewDelete", "cppcheck doubleFree", "V611"]}
+    - {id: A7, name: "transmute/union cast without size/align check", cwe: [], source: "rust-review TRANS/UNIONUB", lint: ["cast_ptr_alignment", "transmute_ptr_to_ref"]}
+    - {id: A8, name: "str::from_utf8_unchecked / invalid slice boundaries", cwe: [], source: "rust-review STRSLICE/OOBIDX", lint: []}
+    - {id: A9, name: "unaligned read via raw pointer (packed struct field)", cwe: [], source: "rust-review RAWPTR/PTRCAST/PACKEDREF", lint: ["cast_ptr_alignment"]}
+  concurrency_atomics:
+    - {id: A10, name: "data race on shared counter / static mut", cwe: ["CWE-362"], source: "c-review RACE; rust-review STATICMUT/ATOMICRACE", lint: ["TSan", "Miri", "CON32-C"]}
+    - {id: A11, name: "wrong memory ordering (Relaxed vs Acquire/Release)", cwe: [], source: "rust-review atomic-race", lint: ["Miri", "TSan"]}
+    - {id: A12, name: "ABBA/lock-ordering deadlock", cwe: ["CWE-833"], source: "rust-review ABBA", lint: ["CON35-C"]}
+    - {id: A13, name: "unsafe impl Send/Sync without invariant", cwe: [], source: "rust-review UNSAFESYNC", lint: ["arc_with_non_send_sync"]}
+    - {id: A14, name: "non-async-signal-safe function in signal handler", cwe: ["CWE-479"], source: "c-review SIGNAL", lint: ["bugprone-signal-handler", "SIG30-C"]}
+    - {id: A15, name: "condvar wait without predicate loop", cwe: [], source: "rust-review CONDVAR", lint: ["CON36-C"]}
+    - {id: A16, name: "RefCell/Mutex poisoning panic on user input (DoS)", cwe: ["CWE-248"], source: "rust-review REFCELLPANIC; CyberSecEval arXiv:2312.04724", lint: ["unwrap_used"]}
+  api_misuse_syscall_ffi:
+    - {id: A17, name: "errno checked too late / wrong branch", cwe: ["CWE-248"], source: "c-review ERRNO", lint: ["ERR30-C"]}
+    - {id: A18, name: "EINTR not handled (read/write/accept)", cwe: ["CWE-252"], source: "c-review EINTR", lint: "NONE direct"}
+    - {id: A19, name: "negative syscall return treated as success (signed var)", cwe: ["CWE-252"], source: "c-review NEGRET", lint: []}
+    - {id: A20, name: "panic/unwind across extern C boundary", cwe: [], source: "rust-review PANICUNWIND/ABI-mismatch", lint: []}
+    - {id: A21, name: "CString::from_raw/CStr::from_ptr wrong ownership", cwe: ["CWE-416"], source: "rust-review CSTRDANGLE", lint: []}
+    - {id: A22, name: "foreign drop (Rust object allocated in C)", cwe: ["CWE-401"], source: "rust-review FOREIGNDROP", lint: []}
+    - {id: A23, name: "repr(C) struct padding/discriminant mismatch", cwe: [], source: "rust-review REPRC/REPRCPAD/ENUMUB", lint: []}
+    - {id: A24, name: "TOCTOU (access+open, exists+read)", cwe: ["CWE-367"], source: "rust-review TOCTOU", lint: ["CodeQL cpp/toctou"]}
+    - {id: A25, name: "path traversal via Path::join/format!", cwe: ["CWE-22"], source: "rust-review PATHJOIN", lint: ["CodeQL cpp/path-injection"]}
+    - {id: A26, name: "pointer exposure in logs/serialization", cwe: ["CWE-200"], source: "rust-review PTREXPOSE", lint: []}
+  cpp_semantics:
+    - {id: A27, name: "static init order fiasco", cwe: [], source: "c-review INIT", lint: ["bugprone-dynamic-static-initializers", "misc-static-initialization-cycle"]}
+    - {id: A28, name: "virtual call in constructor/destructor", cwe: ["CWE-456"], source: "c-review VIRT", lint: ["clang-analyzer-cplusplus.PureVirtualCall", "optin.cplusplus.VirtualCall"]}
+    - {id: A29, name: "iterator/pointer invalidation", cwe: [], source: "c-review ITER", lint: ["clang-analyzer-cplusplus.InnerPointer", "bugprone-inaccurate-erase"]}
+    - {id: A30, name: "use-after-move / dangling lambda reference", cwe: ["CWE-416"], source: "c-review MOVE/LAMBDA", lint: ["bugprone-use-after-move", "clippy use_after_move"]}
+    - {id: A31, name: "leak/bad state on exception in destructor", cwe: [], source: "c-review EXCEPT", lint: []}
+    - {id: A32, name: "recursive parse/deserialize unbounded depth (stack overflow)", cwe: ["CWE-674"], source: "rust-review RECURSEDES; c-review DOS", lint: ["V606/V621"]}
+
+# ============================================================
+# FAILURE-MODE INVENTORY (Категория B — поведенческие паттерны агентов)
+# Источник: Анализ скиллов.md Этап 5, Категория B. Нумерация соответствует источнику.
+# ============================================================
+failure_modes:
+  compiler_and_safety:
+    - {id: B1, name: "adds unsafe/unwrap/clone/#[allow] at first compile error instead of fixing root cause", source: "trailofbits rust-review; expert"}
+    - {id: B2, name: "'it compiles therefore correct' — borrow checker proves nothing about unsafe/panic/deadlock/memory-ordering/FFI ABI", source: "rust-review Rationalizations to Reject (verbatim quote)"}
+    - {id: B3, name: "// SAFETY: comment used as infallibility claim, not as invariant documentation", source: "rust-review"}
+    - {id: B4, name: "'unsafe is rare → skip memory-safety cluster' instead of setting has_unsafe flag honestly", source: "rust-review"}
+    - {id: B5, name: "only accepts compiler/linter errors; never runs sanitizers/fuzzers on C/C++", source: "testing-handbook-skills; Perry et al. CCS'23 arXiv:2211.03622; Z3 memory-safety"}
+  process_and_quality:
+    - {id: B6, name: "confident tone on wrong answer; invents API/behavior, does not mark uncertainty", source: "Perry et al.; CyberSecEval arXiv:2312.04724"}
+    - {id: B7, name: "does not ask clarifying questions; silently picks an interpretation", source: "ask-questions-if-underspecified; karpathy-guidelines; zhinkgit"}
+    - {id: B8, name: "overengineering: abstractions for single-use code, impossible-error handling", source: "karpathy-guidelines"}
+    - {id: B9, name: "non-surgical edits: improves neighboring code, refactors non-broken code, breaks style", source: "karpathy-guidelines 'Touch only what you must'"}
+    - {id: B10, name: "hides partial result behind 'successful' report (partial run → REPORT.md as if complete)", source: "trailofbits c-review/rust-review; CSS-Electronics verify-as-gate"}
+    - {id: B11, name: "re-derives plan/prompts inline instead of running canonical planner", source: "trailofbits"}
+    - {id: B12, name: "wrong tool parallelism (background spawns do NOT parallelize)", source: "trailofbits"}
+    - {id: B13, name: "fails to re-check ownership/lifetime after own refactor; breaks implicit contract elsewhere", source: "expert; karpathy surgical changes"}
+    - {id: B14, name: "confuses similar API signatures across versions (tokio 0.2 vs 1.x, snprintf vs _snprintf)", source: "expert; rust-review static-hygiene"}
+    - {id: B15, name: "transfers pattern across languages where it does not apply (C free in Rust, Go channels in C++)", source: "expert; c-review cpp-semantics"}
+    - {id: B16, name: "loses ownership context in long file/call chain (pointer to local, reference to temporary)", source: "expert; c-review UAF"}
+    - {id: B17, name: "no measurable success criterion ('make it work') → cannot self-verify", source: "karpathy-guidelines"}
+    - {id: B18, name: "reports completed on partial result (hard-cap truncated worker)", source: "trailofbits"}
+    - {id: B19, name: "guesses tool/file paths instead of verifying (tool-index, no ad-hoc PowerShell)", source: "zhaoxuya520 tool-index.md"}
+    - {id: B20, name: "ignores available hardware/instrumentation gates (J-Link halt/step, RTT, GDB backtrace, verify-as-gate)", source: "zhinkgit/embeddedskills; CSS-Electronics"}
+    - {id: B21, name: "writes code against stale training-data API (Zig 0.11-0.14 API); must load versioned reference first", source: "all 4 Zig repos independently"}
+    - {id: B22, name: "finishes without running perf/valgrind/sanitizers; 'compiled' != 'correct perf/memory'", source: "mohitmishra786; Z3; zhinkgit"}
+
+# ============================================================
+# VERIFICATION INVENTORY
+# ============================================================
+verification:
+  compiler: ["-Wall -Werror", "clang -Weverything", "warnings-as-errors", "cargo clippy -D warnings", "rustc lints"]
+  static_analysis: ["clang-tidy", "cppcheck", "scan-build (Clang Static Analyzer)", "PVS-Studio", "CodeQL", "semgrep", "cargo-geiger"]
+  sanitizers: ["ASan", "UBSan", "TSan", "MSan", "LeakSanitizer", "Miri", "Valgrind"]
+  fuzzing: ["libFuzzer", "AFL++", "cargo-fuzz", "OSS-Fuzz", "honggfuzz", "wycheproof"]
+  disassembly: ["objdump", "llvm-objdump", "ndisasm", "capstone", "as emitted by compiler"]
+  elf_inspection: ["readelf", "objdump -h", "nm", "llvm-readobj", "patchelf", "checksec"]
+  dwarf_inspection: ["readelf --debug-dump", "llvm-dwarfdump", "gdb info registers/locals"]
+  debugger: ["gdb", "lldb", "WinDbg", "J-Link GDB", "RTT", "SWO", "backtrace", "core dumps"]
+  emulation: ["QEMU (user/system)", "Unicorn", "Qiling", "Firmadyne", "angr"]
+  hardware: ["J-Link halt/step/run-to", "OpenOCD", "probe-rs", "flashrom", "logic analyzer", "oscilloscope"]
+  benchmark: ["perf", "VTune", "uProf", "hardware counters", "flamegraphs", "heaptrack", "valgrind --tool=callgrind", "criterion (Rust)", "google benchmark"]
+  symbolic_execution: ["angr", "KLEE", "Triton", "kani (Rust)", "CBMC"]
+  unit_integration: ["ctest", "cargo test", "llvm-lit/FileCheck", "KUnit", "kselftest", "cargo miri test"]
+  property_based: ["proptest", "quickcheck", "hypothesis", "mutation testing"]
+
+# ============================================================
+# CVE INVENTORY (21 записей из Энциклопедии, Блок 2)
+# Источник: Энциклопедия — первичные источники и валидация.md
+# ============================================================
+cves:
+  - {id: CVE-2022-0185, project: "Linux kernel", component: "fs/fs_context.c", bug_class: "integer underflow → heap overflow", fix: "commit 722d948", eval_quality: "excellent (1 line)", recommended: true}
+  - {id: CVE-2022-0847, project: "Linux kernel", component: "lib/iov_iter.c (Dirty Pipe)", bug_class: "uninitialized memory", fix: "commit 9d2231c", eval_quality: "excellent (+2 lines)", recommended: true}
+  - {id: CVE-2016-5195, project: "Linux kernel", component: "mm/gup.c (Dirty COW)", bug_class: "TOCTOU", fix: "commit 19be0ea", eval_quality: "medium", recommended: false}
+  - {id: CVE-2021-22555, project: "Linux kernel", component: "net/netfilter/x_tables.c", bug_class: "OOB write", fix: "commit b29c457", eval_quality: "medium", recommended: false}
+  - {id: CVE-2021-33909, project: "Linux kernel", component: "fs/seq_file.c (Sequoia)", bug_class: "size_t→int truncation → OOB write", fix: "commit 8cae8cd", eval_quality: "medium", recommended: false}
+  - {id: CVE-2014-0160, project: "OpenSSL", component: "TLS heartbeat (Heartbleed)", bug_class: "missing bounds check → over-read", fix: "commit 96db902", eval_quality: "good", recommended: false}
+  - {id: CVE-2022-3602, project: "OpenSSL", component: "crypto/punycode.c", bug_class: "off-by-one → buffer overrun", fix: "commit fe3b639", eval_quality: "excellent (1 line)", recommended: true}
+  - {id: CVE-2021-3711, project: "OpenSSL", component: "crypto/sm2/sm2_crypt.c", bug_class: "size miscalc → heap overflow", fix: "commit 36cf45e", eval_quality: "good", recommended: false}
+  - {id: CVE-2023-38545, project: "curl", component: "lib/socks.c (SOCKS5)", bug_class: "heap buffer overflow (oversized hostname)", fix: "commit fb4415d", eval_quality: "excellent", recommended: true}
+  - {id: CVE-2018-16890, project: "curl", component: "lib/vauth/ntlm.c", bug_class: "integer overflow → OOB read", fix: "commit b780b30", eval_quality: "excellent (1 condition)", recommended: true}
+  - {id: CVE-2016-8617, project: "curl", component: "lib/base64.c", bug_class: "integer overflow before allocation", fix: "commit efd24d5", eval_quality: "excellent (+5 lines)", recommended: true}
+  - {id: CVE-2022-35737, project: "SQLite", component: "printf() C API", bug_class: "integer overflow → array-bounds", fix: "releaselog 3_39_2", eval_quality: "medium", recommended: false}
+  - {id: CVE-2020-13434, project: "SQLite", component: "printf() SQL function", bug_class: "integer overflow → stack overwrite", fix: "sqlite.org/src/info/23439ea582241138", eval_quality: "good", recommended: false}
+  - {id: CVE-2021-20227, project: "SQLite", component: "core", bug_class: "use-after-free (read)", fix: "sqlite.org/src/info/30a4c323650cc949", eval_quality: "good", recommended: false}
+  - {id: CVE-2021-32761, project: "Redis", component: "BITFIELD", bug_class: "integer overflow → heap corruption", fix: "GHSA-8wxq-j7rp-g8wj (⚠)", eval_quality: "medium", recommended: false}
+  - {id: CVE-2023-28856, project: "Redis", component: "HINCRBYFLOAT", bug_class: "error-handling misuse (NaN) (⚠)", fix: "commit bc7fe41", eval_quality: "medium", recommended: false}
+  - {id: CVE-2017-7529, project: "Nginx", component: "range filter", bug_class: "signed integer overflow → OOB read", fix: "commit 9197a3c", eval_quality: "excellent", recommended: true}
+  - {id: CVE-2021-23017, project: "Nginx", component: "resolver", bug_class: "off-by-one write", fix: "commit 9f1dcb0", eval_quality: "excellent", recommended: true}
+  - {id: CVE-2021-32714, project: "hyper (Rust)", component: "chunked parser", bug_class: "integer overflow (usize)", fix: "commit 9b69cbc", eval_quality: "good", recommended: false}
+  - {id: CVE-2024-32650, project: "rustls (Rust)", component: "complete_io", bug_class: "infinite loop / DoS (⚠ CWE-835)", fix: "GHSA-6g7w-8wpp-frhj", eval_quality: "medium", recommended: false}
+  - {id: CVE-2020-36432, project: "alg_ds (Rust)", component: "RUSTSEC-2020-0033", bug_class: "uninitialized memory use (drop)", fix: "RUSTSEC-2020-0033", eval_quality: "excellent (minimal Rust)", recommended: true}
+
+# ============================================================
+# PRIMARY SOURCE INVENTORY (Блок 1 Энциклопедии)
+# Полная форма в registry/sources.yaml; здесь — сводка.
+# ============================================================
+primary_sources:
+  c: [
+    {title: "ISO C11 N1570", url: "https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf", key_sections: "6.3.1.1, 6.5, 6.5.7, 7.21, 7.22.3, J.2 (191 UB items)"},
+    {title: "ISO C23 N3096", url: "https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf", key_sections: "6.5, J.2, 7.24, 7.26"},
+    {title: "cppreference C behavior", url: "https://en.cppreference.com/w/c/language/behavior", key_sections: "UB list"},
+    {title: "SEI CERT C Coding Standard", url: "https://wiki.sei.cmu.edu/confluence/display/c/SEI+CERT+C+Coding+Standard", key_sections: "EXP33/34/35, INT30-34, ARR30/32, STR30-35, MEM30-35, ERR30/33, CON32/35/36, SIG30/31"}
+  ]
+  cpp: [
+    {title: "ISO C++20 N4861", url: "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2020/n4861.pdf", key_sections: "[intro.abstract], [intro.execution], [intro.object], [expr.new/delete]"},
+    {title: "ISO C++23 N4971", url: "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2023/n4971.pdf", key_sections: "[[assume]], <stdatomic.h>"},
+    {title: "cppreference C++ UB list", url: "https://en.cppreference.com/w/cpp/language/ub", key_sections: "7 blocks"},
+    {title: "C++ Core Guidelines", url: "https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines", key_sections: "R.1/R.3/R.10-23/R.37, ES.100-107, Bounds.1-4, E.12/28/30, I.11-13, CP.20-40"}
+  ]
+  rust: [
+    {title: "Rust Reference", url: "https://doc.rust-lang.org/reference/", key_sections: "unsafety.html, behavior-considered-undefined.html, type-layout.html"},
+    {title: "Rustonomicon", url: "https://doc.rust-lang.org/nomicon/", key_sections: "meet-safe-and-unsafe, races, ffi, transmute"},
+    {title: "Rust API Guidelines", url: "https://rust-lang.github.io/api-guidelines/", key_sections: "C-CONV-TRAITS, C-SEND-SYNC, C-GOOD-ERR, C-NEWTYPE, C-VALIDATE, C-DTOR-FAIL"}
+  ]
+  abi_architecture: [
+    {title: "System V AMD64 ABI", url: "https://gitlab.com/x86-psABIs/x86-64-ABI", key_sections: "3.2 (regs, 16-byte align, red zone), 3.3/3.4 varargs, 4 data rep"},
+    {title: "AAPCS64", url: "https://github.com/ARM-software/abi-aa/blob/main/aapcs64/aapcs64.rst", key_sections: "6.1-6.3, 7 stack, 8 data rep"},
+    {title: "RISC-V psABI", url: "https://github.com/riscv-non-isa/riscv-elf-psabi-doc", key_sections: "calling convention, register conventions, stack layout"},
+    {title: "Intel SDM", url: "https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html", key_sections: "Vol.2 instruction set, Vol.3 memory ordering"},
+    {title: "AMD64 APM", url: "https://www.amd.com/en/support/tech-docs/processor-programming-reference", key_sections: "Vol.1-3"},
+    {title: "ARM ABI (abi-aa)", url: "https://github.com/ARM-software/abi-aa", key_sections: "aapcs32/64, EHABI, TLS, SVE/Neon vector ABI"}
+  ]
+  talks: [
+    {title: "Carruth GIGO (UB)", url: "https://www.youtube.com/watch?v=yG1OZ69H_-o", note: "why UB cannot be 'patched', must design without it"},
+    {title: "Godbolt What Has My Compiler Done", url: "https://www.youtube.com/watch?v=bSkpMdDe4g4", note: "how compiler interprets UB in real asm"},
+    {title: "Sean Parent C++ Seasoning", url: "https://www.youtube.com/watch?v=W7tNzYJfVJY", note: "value semantics, no raw loops"}
+  ]
+
+# ============================================================
+# LINT-CODE INVENTORY (Блок 3 Энциклопедии)
+# ============================================================
+lint_codes:
+  clang_tidy: ["bugprone-sizeof-expression", "bugprone-not-null-terminated-result", "bugprone-implicit-widening-of-multiplication-result", "clang-analyzer-core.uninitialized.*", "clang-analyzer-core.NullDereference", "clang-analyzer-cplusplus.NewDelete", "bugprone-use-after-move", "bugprone-signal-handler", "bugprone-dynamic-static-initializers", "cppcoreguidelines-owning-memory", "cert-arr39-c", "cert-sig30-c"]
+  cppcheck: ["arrayIndexOutOfBounds", "nullPointer", "uninitvar", "memleak", "doubleFree", "integerOverflow", "signedIntegerOverflow", "shiftNegative", "shiftTooManyBits", "truncLongCastAssignment", "wrongPrintfScanfArgNum", "reallocError", "wrongMemaccess"]
+  pvs_studio: ["V512 (memcpy overlap)", "V568/V579 (sizeof ptr)", "V610 (shift UB)", "V614 (uninit)", "V522/V595 (null deref)", "V611 (new[]+delete)", "V104-V126 (int overflow)", "V527-V576 (strings)", "V606-V622 (recursion/stack)"]
+  clippy: ["missing_safety_doc", "undocumented_unsafe_blocks", "not_unsafe_ptr_arg_deref", "cast_ptr_alignment", "transmute_ptr_to_ref", "cast_possible_truncation", "unwrap_used", "arithmetic_side_effects", "use_after_move", "await_holding_lock", "mem_forget", "uninit_vec", "iter_nth"]
+  rustc: ["unsafe_op_in_unsafe_fn", "unsafe_code", "missing_unsafe_on_extern", "fuzzy_provenance_casts", "lossy_provenance_casts"]
+  no_direct_coverage: ["snprintf return check", "errno/EINTR idiom", "TOCTOU (clang-tidy/cppcheck; CodeQL cpp/toctou)", "path traversal (CodeQL cpp/path-injection)", "panic reachability (Miri/kani only)", "iterator invalidation interprocedural"]
+
+# ============================================================
+# CALIBRATION FEEDBACK (Блок 4 Энциклопедии)
+# ============================================================
+calibration:
+  trailofbits:
+    - {ref: "PR #238", finding: "c-review 16/17 vs fanout 14/17 vs single 11/17; packetloom 24/30 both; 'no cost argument for c-review' (2.10M vs 1.06M tokens)", url: "https://github.com/trailofbits/skills/pull/238"}
+    - {ref: "Issue #143", finding: "fp-check Stop hook fires on every session; each stop costs ~30s LLM turn", url: "https://github.com/trailofbits/skills/issues/143"}
+    - {ref: "Issue #205", finding: "KEY: 'A completeness gate that fires on correct output trains people to ignore it' — gates must be path-aware", url: "https://github.com/trailofbits/skills/issues/205"}
+    - {ref: "Issue #181", finding: "cross-skill: ASan without -m none/-rss_limit_mb=0 → fuzzer silently dies → false 'no bugs'", url: "https://github.com/trailofbits/skills/issues/181"}
+    - {ref: "PR #148", finding: "adversarial-verification: advocate/skeptic against sycophancy", url: "https://github.com/trailofbits/skills/pull/148"}
+    - {ref: "Issue #216", finding: "Drop 'When to Use' — triggers read too late, selector sees only name/description", url: "https://github.com/trailofbits/skills/issues/216"}
+  external_validation:
+    - {ref: "HN tob_scott_a", finding: "constant-time-analysis discovered real vuln in RustCrypto (GHSA-hcp2-x6j4-29j7)", url: "https://news.ycombinator.com/item?id=46647852"}
+    - {ref: "Reddit r/ClaudeAI", finding: "independent audit: 60 skills, 165 claims, 93.3% accuracy; 37% of errors were staleness not fabrication", url: "https://old.reddit.com/r/ClaudeAI/comments/1rizql9/"}
+    - {ref: "ToB blog", finding: "two-pass FP gauntlet: two judges, different models, valid only if both agree", url: "https://blog.trailofbits.com/2026/07/28/how-we-use-goal-to-find-bugs-in-patch-the-planet/"}
+  rudedogg_zig:
+    - {ref: "Issue #3", finding: "only content feedback: 'skill is pretty good, update to 0.16?' — content rots on language update; no public FP calibration", url: "https://github.com/rudedogg/zig-skills/issues/3"}
+  design_conclusions:
+    - "Completeness gates that fire on correct output train agents to ignore them (path-aware gates required)"
+    - "Expect noise floor 1-2 bugs out of 17; single-pass precision ~65-90%"
+    - "Two-model judge cuts FP without losing recall, at 2x token cost"
+    - "Token cost is the top complaint: 30 plugins = massive prompt; fanout 100+ agents for one diff"
+    - "Cross-skill boundary cases (ASan flags) are real missed-case class → cross-skill checklists"
+    - "Sparse activation + missed-case sweep + budgeted references (anthropics Discussion #1288)"
+
+# ============================================================
+# POSITIVE PATTERNS (Блок 5 Энциклопедии)
+# ============================================================
+positive_patterns:
+  rust_api: ["C-CONV-TRAITS (From/AsRef/AsMut)", "C-SEND-SYNC", "C-GOOD-ERR (typed errors, not anyhow in public API)", "C-NEWTYPE (static distinctions)", "C-CUSTOM-TYPE (args carry meaning)", "C-BUILDER", "C-VALIDATE (validate args)", "C-DTOR-FAIL", "C-COMMON-TRAITS", "C-QUESTION-MARK (use ? not unwrap)"]
+  raii_cpp: ["R.1 manage resources via RAII", "R.3 raw pointer is non-owning", "R.10/R.11 avoid malloc/free/new/delete", "R.12 give allocation result to manager immediately", "R.20/R.21/R.23 unique_ptr/make_unique", "R.37 don't pass aliased smart pointer"]
+  descriptor_types: ["wrap raw int fd / void* in valid-state type (C-NEWTYPE, R.3/R.20)", "try-scope/defer/errdefer: free in same function as allocate (R.12, Zig errdefer, Rust Drop)", "builder + validation for complex construction (C-BUILDER + C-VALIDATE)", "error model as API (C-GOOD-ERR, E.28 anti-errno)", "contracts at boundaries: debug_assert preconditions (matklad Preconditions, C-VALIDATE)", "minimize unsafe surface behind safe wrapper (missing_safety_doc, Rustonomicon)"]
+  skill_format: ["progressive disclosure: core < 500 lines + references (VoltAgent/NVIDIA/ToB)", "body < 500 lines, resources on demand", "no absolute paths", "scoped tools (no tools:*)"]
+
+# ============================================================
+# OPEN QUESTIONS / UNVERIFIED (из раздела «Что не удалось проверить»)
+# ============================================================
+open_questions:
+  - "GitHub code-search requires auth; 'repo X is the only one' claims hold only within verified sample. With token, re-run: SKILL.md + 'memory safety', SKILL.md + assembly, SKILL.md + sanitizer"
+  - "skills.sh / claudemarketplaces.com JS-rendered catalogs not searchable programmatically"
+  - "Claude-Red large files (354-567 KB) not read line-by-line; only offensive-shellcode (18.9 KB) read in full"
+  - "Niche RE skills (ghidrasql, ios-reverse, ripcord, pedisasm, ghidra-restore) — metrics only"
+  - "NVIDIA PTX asm content not verified (cuTile/Triton present, no PTX)"
+  - "zhaoxuya520: only 5 of 85 SKILL.md read in detail"
+  - "NVIDIA DOCA: only doca-dma read in detail"
+  - "mohitmishra786: 6 of 142 skills read in detail (assembly-x86, simd-intrinsics, writing-char-drivers, llvm-passes, zig-comptime, zig-compiler)"
+  - "whit3rabbit 223 recipes not read individually; nzrsky content not read line-by-line"
+  - "Fork counts for mohitmishra786/rudedogg/zigcc/nzrsky/whit3rabbit may be stale (rate limit hit)"
+  - "aiskillstore/marketplace security audit — README only, individual skills not reviewed"
+
+# ============================================================
+# CROSS-REPOSITORY SIGNALS (пересекающиеся темы = «правило реально важное»)
+# ============================================================
+cross_repo_signals:
+  - {signal: "sanitizers/fuzzers as mandatory verification stage", repos: ["trailofbits", "wshobson", "Jeffallan", "Z3"], strength: 4}
+  - {signal: "minimize unsafe, justify every unsafe block", repos: ["trailofbits", "wshobson"], strength: 2}
+  - {signal: "RAII/ownership vs UAF/leaks", repos: ["wshobson", "trailofbits", "Jeffallan"], strength: 3}
+  - {signal: "progressive disclosure (short core + references)", repos: ["trailofbits", "wshobson", "Jeffallan", "NVIDIA", "VoltAgent"], strength: 5}
+  - {signal: "don't hide partial results (verify-as-gate)", repos: ["trailofbits", "CSS-Electronics", "karpathy"], strength: 3}
+  - {signal: "check C function returns (snprintf/strncpy/syscalls)", repos: ["trailofbits"], strength: 1}
+  - {signal: "volatile for ISR/hardware-shared state", repos: ["Jeffallan", "trailofbits"], strength: 2}
+  - {signal: "don't guess config — ask", repos: ["trailofbits", "zhinkgit", "karpathy"], strength: 3}
+  - {signal: "instrumental verification over 'looks like it works'", repos: ["mohitmishra786", "zhinkgit", "CSS-Electronics", "trailofbits"], strength: 4}
+  - {signal: "W^X / allocate-RW→write→protect-RX", repos: ["Claude-Red", "trailofbits exploit-mitigations"], strength: 2}
+  - {signal: "signed vs unsigned branches (jge/jae, sar/shr, cdq)", repos: ["wshobson", "c-review"], strength: 2}
+  - {signal: "optimizer artifacts as analysis traps (inline, tail-call, RIP-relative)", repos: ["wshobson", "trailofbits"], strength: 2}
+  - {signal: "stack alignment (movaps, 16-byte) as 64-bit trap", repos: ["zhaoxuya520", "wshobson", "trailofbits"], strength: 3}
+  - {signal: "versioned API references for fast-moving languages (Zig)", repos: ["rudedogg", "zigcc", "nzrsky", "whit3rabbit"], strength: 4}
+  - {signal: "panic-reachability on user input (unwrap/@intCast/.?/catch unreachable)", repos: ["rudedogg", "trailofbits rust-review", "c-review"], strength: 3}
+
+# ============================================================
+# UNIQUE FINDINGS (встретились только в одном месте)
+# ============================================================
+unique_findings:
+  - {id: U1, name: "zeroize-audit", repo: "trailofbits", note: "asm-level verification of secret zeroization (check_rust_asm_x86/aarch64.py)"}
+  - {id: U2, name: "constant-time-analysis + wycheproof", repo: "trailofbits", note: "compiler-induced timing side-channel detection"}
+  - {id: U3, name: "variant-analysis (CodeQL cpp.ql + semgrep)", repo: "trailofbits", note: "vuln pattern transfer with evals"}
+  - {id: U4, name: "fuzzing-dictionary/obstacles/ossfuzz", repo: "trailofbits", note: "fuzzing methodology as separate skills"}
+  - {id: U5, name: "dwarf-expert", repo: "trailofbits", note: "only DWARF skill found"}
+  - {id: U6, name: "full x64 shellcode artifact (PEB walk, EAT parse)", repo: "Claude-Red", note: "complete asm example with RVA offsets"}
+  - {id: U7, name: "Windows 11 24H2 AMSI heap scan bypass", repo: "Claude-Red", note: "PAGE_NOACCESS → decrypt → PAGE_EXECUTE_READ"}
+  - {id: U8, name: "Windows on ARM64 syscall convention (SVC 0, PAC)", repo: "Claude-Red", note: "unique fresh detail"}
+  - {id: U9, name: "type C ↔ asm pattern table (movzx→char)", repo: "wshobson binary-analysis-patterns", note: "type recovery cheat sheet"}
+  - {id: U10, name: "sanitizer CI cycle in SKILL.md (SQLite findings DB)", repo: "Z3", note: "ASan/UBSan/LeakSanitizer in agent loop"}
+  - {id: U11, name: "auto-RE pipeline CAN→DBC (verify-as-gate)", repo: "CSS-Electronics", note: "deterministic survey→correlate→bitsearch→build_dbc"}
+  - {id: U12, name: "separate Go/Rust RE methodology", repo: "zhaoxuya520 go-rust-reverse", note: "GoReSym/pclntab + rust_begin_unwind"}
+  - {id: U13, name: "idalib-MCP integration with real workarounds", repo: "zhaoxuya520 ida-reverse", note: "schema bug, orphan processes, Temp degradation"}
+  - {id: U14, name: "DOCA DMA programming skills", repo: "NVIDIA", note: "doca_dma_task_memcpy, capability queries"}
+  - {id: U15, name: "Zig code-review checklist by confidence levels", repo: "rudedogg", note: "ALWAYS FLAG / FLAG WITH CONTEXT / SUGGEST"}
+  - {id: U16, name: "full compiler/linker/architecture skill set", repo: "mohitmishra786", note: "LLVM passes, MLIR, JIT, ELF, ABI"}
+  - {id: U17, name: "profiling/optimization as skills", repo: "mohitmishra786", note: "perf/flamegraphs/hardware-counters/simd"}
+  - {id: U18, name: "Zig recipes from BBQ Cookbook (223)", repo: "whit3rabbit", note: "tested Zig recipe collection"}

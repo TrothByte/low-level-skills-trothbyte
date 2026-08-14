@@ -1,0 +1,39 @@
+// GOOD: full-warp butterfly reduction with shfl.sync.
+// All 32 lanes execute the same shfl.sync with the same membermask
+// (0xffffffff = full warp). After the 5-step butterfly, lane 0 holds
+// the sum of all lanes.
+
+.version 8.0
+.target sm_80
+.address_size 64
+
+.entry good_shfl_warp_reduction
+(
+    .param .u64 gbl_out
+)
+{
+    .reg .u32  %sum, %t;
+    .reg .u64  %p;
+    .reg .pred %p0;
+
+    ld.param.u64 %p, [gbl_out];
+
+    mov.u32 %sum, %tid.x;
+
+    // shfl.sync.down: d, a, b(offset), c(clamp/segment), membermask.
+    shfl.sync.down.b32 %t, %sum, 16, 0xffffffff, 0xffffffff;
+    add.u32 %sum, %sum, %t;
+    shfl.sync.down.b32 %t, %sum, 8, 0xffffffff, 0xffffffff;
+    add.u32 %sum, %sum, %t;
+    shfl.sync.down.b32 %t, %sum, 4, 0xffffffff, 0xffffffff;
+    add.u32 %sum, %sum, %t;
+    shfl.sync.down.b32 %t, %sum, 2, 0xffffffff, 0xffffffff;
+    add.u32 %sum, %sum, %t;
+    shfl.sync.down.b32 %t, %sum, 1, 0xffffffff, 0xffffffff;
+    add.u32 %sum, %sum, %t;
+
+    // Lane 0 holds the warp reduction result.
+    setp.eq.u32 %p0, %laneid, 0;
+    @%p0 st.global.u32 [%p], %sum;
+    ret;
+}

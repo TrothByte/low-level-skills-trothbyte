@@ -1,0 +1,27 @@
+// BAD: instruction type width vs data width confusion.
+// The kernel receives a 64-bit pointer to a 32-bit element (u32 array).
+// The pointer register is .u64; the ELEMENT is 32 bits.
+
+.version 8.0
+.target sm_80
+.address_size 64
+
+.entry bad_size_type
+(
+    .param .u64 gbl_arr
+)
+{
+    .reg .u32  %val;
+    .reg .u64  %p;
+
+    ld.param.u64 %p, [gbl_arr];
+
+    // BUG 1: the element is 32-bit; .u64 loads 8 bytes, reading past the element.
+    ld.global.u64 %val, [%p];
+
+    // BUG 2: a b64 store from a 32-bit source register - destination/source
+    // narrower than the instruction type is invalid.
+    st.global.b64 [%p], %val;
+
+    ret;
+}

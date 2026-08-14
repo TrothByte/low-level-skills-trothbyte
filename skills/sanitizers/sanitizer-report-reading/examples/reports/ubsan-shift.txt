@@ -1,0 +1,10 @@
+=== ILLUSTRATIVE FIXTURE (hand-written, modeled on real sanitizer output) ===
+Report:   UBSan: left shift of negative value
+Program:  tools/bitpack
+Build:    clang -O1 -g -fsanitize=undefined -fno-omit-frame-pointer -o bitpack tools/bitpack.c
+Mode:     recover enabled (default) — the process continued after this error
+
+tools/bitpack.c:19:12: runtime error: left shift of negative value -3
+    #0 0x55f0ab16d210 in pack_flags tools/bitpack.c:19:12
+    #1 0x55f0ab16d300 in encode_header tools/bitpack.c:64:5
+    #2 0x55f0ab16d400 in main tools/bitpack.c:22:7

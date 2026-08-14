@@ -1,0 +1,40 @@
+// BAD: shared-memory exchange between warps with no bar.sync.
+// Thread writes sh[tid], then reads sh[(tid+1)&63], a slot written by
+// ANOTHER warp. Without a barrier there is no ordering: the read may
+// happen before the peer's write (data race).
+
+.version 8.0
+.target sm_80
+.address_size 64
+
+.entry bad_missing_barrier
+(
+    .param .u64 gbl_out
+)
+{
+    .reg .u32  %idx, %val, %off;
+    .reg .u64  %p_out, %p_base, %p_nbr, %off64;
+    .shared .align 4 .u32 sh[64];
+
+    ld.param.u64 %p_out, [gbl_out];
+    cvta.to.shared.u64 %p_base, sh;
+
+    // own slot: sh[tid]
+    shl.b32 %off, %tid.x, 2;
+    cvt.u64.u32 %off64, %off;
+    add.s64 %p_nbr, %p_base, %off64;
+    st.shared.u32 [%p_nbr], %tid.x;
+
+    // neighbor slot: sh[(tid+1)&63] - written by a DIFFERENT warp.
+    add.s32 %idx, %tid.x, 1;
+    and.b32 %idx, %idx, 63;
+    shl.b32 %off, %idx, 2;
+    cvt.u64.u32 %off64, %off;
+    add.s64 %p_nbr, %p_base, %off64;
+
+    // BUG: no bar.sync 0 between the store and this load.
+    ld.shared.u32 %val, [%p_nbr];
+
+    st.global.u32 [%p_out], %val;
+    ret;
+}

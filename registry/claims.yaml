@@ -1,0 +1,45 @@
+# Claims / Provenance Registry — traceability нормативных утверждений
+# Модель: claim → source → section → skill. Позволяет автоматически проверять provenance.
+# Каждое НОРМАТИВНОЕ или критически важное утверждение должно быть traceable.
+
+meta:
+  updated: 2026-08-14
+  rule: "Нормативное утверждение без source-reference недопустимо в stable skill."
+  confidence:
+    MUST_VERIFY: "требует исполнимой проверки (см. verification method)"
+    MUST_CONSIDER: "необходимо учитывать при reasoning, проверка контекстная"
+    OPTIONAL: "справочная информация"
+  evidence_levels: ["KNOWN (source-backed)", "INFERRED (выведено из source)", "UNVERIFIED (нуждается в проверке)"]
+
+# ============================================================
+# Примеры core claims (расширяется при реализации skills)
+# ============================================================
+claims:
+  - {id: CL-001, claim: "strncpy не гарантирует NUL-терминацию при заполнении буфера целиком", source: "iso-c11-n1570", section: "7.24.2.4", skill: "c-string-and-buffer-safety", confidence: MUST_CONSIDER, evidence: KNOWN}
+  - {id: CL-002, claim: "Сдвиг на отрицательное число бит или на >= ширины типа — UB", source: "iso-c11-n1570", section: "6.5.7", skill: "c-undefined-behavior", confidence: MUST_VERIFY, evidence: KNOWN}
+  - {id: CL-003, claim: "Signed integer overflow — UB; unsigned — wrap (modulo 2^N)", source: "iso-c11-n1570", section: "6.5 p5, 6.2.5 p9", skill: "c-integer-promotion-and-conversion", confidence: MUST_VERIFY, evidence: KNOWN}
+  - {id: CL-004, claim: "Integer promotion: типы ранга ниже int продвигаются к int/unsigned int", source: "iso-c11-n1570", section: "6.3.1.1", skill: "c-integer-promotion-and-conversion", confidence: MUST_CONSIDER, evidence: KNOWN}
+  - {id: CL-005, claim: "SysV AMD64: первые 6 целочисленных аргументов в rdi/rsi/rdx/rcx/r8/r9, стек выровнен на 16 байт перед call", source: "sysv-amd64-abi", section: "3.2.1, 3.2.5", skill: "abi-layout-reasoning", confidence: MUST_VERIFY, evidence: KNOWN}
+  - {id: CL-006, claim: "Red zone (128 байт ниже rsp) не модифицируется сигнальными обработчиками", source: "sysv-amd64-abi", section: "3.2.2", skill: "abi-layout-reasoning", confidence: MUST_CONSIDER, evidence: KNOWN}
+  - {id: CL-007, claim: "AAPCS64: аргументы в x0-x7, результат в x0, indirect result в x8, стек выровнен на 16 байт", source: "aapcs64", section: "6.1-6.3, 7", skill: "abi-layout-reasoning", confidence: MUST_VERIFY, evidence: KNOWN}
+  - {id: CL-008, claim: "Borrow checker доказывает отсутствие data race только в safe-коде; ничего не доказывает про unsafe/panic/deadlock/memory-ordering/FFI ABI", source: "rust-reference", section: "unsafety.html", skill: "rust-unsafe-reasoning", confidence: MUST_CONSIDER, evidence: KNOWN}
+  - {id: CL-009, claim: "transmute между типами несовместимого размера/выравнивания — UB", source: "rust-reference", section: "behavior-considered-undefined.html", skill: "rust-unsafe-reasoning", confidence: MUST_VERIFY, evidence: KNOWN}
+  - {id: CL-010, claim: "Data race (два доступа к неатомарному объекту, минимум один — запись, без happens-before) — UB", source: "rust-reference", section: "behavior-considered-undefined.html", skill: "memory-ordering-reasoning", confidence: MUST_VERIFY, evidence: KNOWN}
+  - {id: CL-011, claim: "Relaxed не даёт ordering между потоками, только атомарность операции", source: "iso-cpp20-n4861", section: "[atomics.order]", skill: "memory-ordering-reasoning", confidence: MUST_VERIFY, evidence: KNOWN}
+  - {id: CL-012, claim: "Компилятор вправе считать UB недостижимым и удалять/трансформировать код на этом основании", source: "carruth-gigo", section: "whole talk", skill: "compiler-ub-assumptions", confidence: MUST_CONSIDER, evidence: INFERRED}
+  - {id: CL-013, claim: "Panic/unwind через extern \"C\" границу — UB", source: "rustonomicon", section: "ffi", skill: "rust-ffi-boundary", confidence: MUST_VERIFY, evidence: KNOWN}
+  - {id: CL-014, claim: "void* → T* требует выравнивания по T, иначе UB при разыменовании", source: "iso-c11-n1570", section: "6.3.2.3, 6.2.8", skill: "c-undefined-behavior", confidence: MUST_VERIFY, evidence: KNOWN}
+  - {id: CL-015, claim: "Access к freed memory — UB (UAF)", source: "iso-c11-n1570", section: "7.22.3", skill: "c-undefined-behavior", confidence: MUST_VERIFY, evidence: KNOWN}
+  - {id: CL-016, claim: "volatile не даёт memory ordering — нужны барьеры/атомики для синхронизации с ISR", source: "arm-arm", section: "memory model", skill: "embedded-volatile-and-memory-ordering", confidence: MUST_VERIFY, evidence: KNOWN}
+  - {id: CL-017, claim: "Обработчик сигнала может вызывать только async-signal-safe функции (malloc/printf/лок — нельзя)", source: "cert-c", section: "SIG30-C", skill: "c-signal-handler-safety", confidence: MUST_VERIFY, evidence: KNOWN}
+
+# ============================================================
+# Provenance verification (автоматизируемая)
+# ============================================================
+provenance_checks:
+  - "Каждый claim в stable skill должен иметь непустой source и section"
+  - "source id должен существовать в registry/sources.yaml"
+  - "section должен быть реальным (не выдуманным)"
+  - "evidence: KNOWN только если источник нормативный/официальный"
+  - "UNVERIFIED claims запрещены в stable skill — только в draft/researched"
+  - "Различать: direct quotation (цитата) vs paraphrase (пересказ) vs inspiration (идея) — хранить в provenance"

@@ -1,0 +1,648 @@
+# Primary Source Registry — реестр нормативных и авторитетных источников
+# Приоритет: (1) стандарты/спецификации, (2) архитектурные мануалы, (3) языковые референсы,
+# (4) официальная документация компиляторов, (5) документация ОС/ядра, (6) ABI-спеки,
+# (7) CWE/security, (8) качественные вторичные источники.
+# authority: normative | official | authoritative | secondary
+# license: указывается для цитирования; стандарты-черновики обычно "freely redistributable draft".
+
+meta:
+  updated: 2026-08-14
+  rule: "Вторичные репозитории используются для поиска пробелов, НЕ как единственный технический authority нормативных утверждений."
+
+sources:
+
+  # ---------- C ----------
+  - id: iso-c11-n1570
+    title: "ISO/IEC 9899:2011 (C11), последний публичный черновик N1570"
+    url: "https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf"
+    authority: normative
+    license: "public draft (freely redistributable)"
+    version: "C11 (2011-04-12)"
+    topics: ["c", "ub", "integer promotion", "strings", "memory management"]
+    relevant_sections: ["6.3.1.1", "6.5", "6.5.7", "7.21", "7.22.3", "J.2 (191 UB)"]
+    last_verified: 2026-08-14
+
+  - id: iso-c23-n3096
+    title: "ISO/IEC 9899:2024 (C23), черновик N3096"
+    url: "https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf"
+    authority: normative
+    license: "public draft"
+    version: "C23 (2023-04 draft)"
+    topics: ["c", "ub", "nullptr", "typeof", "_BitInt"]
+    relevant_sections: ["6.5", "J.2", "7.24", "7.26"]
+    last_verified: 2026-08-14
+
+  - id: cppreference-c-behavior
+    title: "cppreference — C language behavior (UB list)"
+    url: "https://en.cppreference.com/w/c/language/behavior"
+    authority: authoritative
+    license: "CC-BY-SA-3.0 (site)"
+    version: "rolling"
+    topics: ["c", "ub"]
+    relevant_sections: ["UB list by C11/C17/C23"]
+    last_verified: 2026-08-14
+
+  - id: cert-c
+    title: "SEI CERT C Coding Standard"
+    url: "https://wiki.sei.cmu.edu/confluence/display/c/SEI+CERT+C+Coding+Standard"
+    authority: authoritative
+    license: "free for internal use (SEI terms)"
+    version: "2016 Edition (online current)"
+    topics: ["c", "security", "rules"]
+    relevant_sections: ["EXP33/34/35-C", "INT30/31/32/34-C", "ARR30/32-C", "STR30/31/32/35-C", "MEM30/31/34/35-C", "ERR30/33-C", "CON32/35/36-C", "SIG30/31-C", "POS44/47-C", "FIO30-C", "MSC30-C"]
+    last_verified: 2026-08-14
+
+  # ---------- C++ ----------
+  - id: iso-cpp20-n4861
+    title: "ISO/IEC 14882:2020 (C++20), черновик N4861"
+    url: "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2020/n4861.pdf"
+    authority: normative
+    license: "public draft"
+    version: "C++20 (2020-04)"
+    topics: ["cpp", "ub", "abstract machine"]
+    relevant_sections: ["[intro.abstract]", "[intro.execution]", "[intro.object]", "[expr.new/delete]"]
+    last_verified: 2026-08-14
+
+  - id: iso-cpp23-n4971
+    title: "ISO/IEC 14882:2024 (C++23), черновик N4971"
+    url: "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2023/n4971.pdf"
+    authority: normative
+    license: "public draft"
+    version: "C++23 (2023-09 draft)"
+    topics: ["cpp", "assume", "stdatomic"]
+    relevant_sections: ["[[assume]]", "<stdatomic.h>", "explicit object parameter"]
+    last_verified: 2026-08-14
+
+  - id: cppreference-cpp-ub
+    title: "cppreference — C++ UB list"
+    url: "https://en.cppreference.com/w/cpp/language/ub"
+    authority: authoritative
+    license: "CC-BY-SA-3.0 (site)"
+    version: "rolling"
+    topics: ["cpp", "ub"]
+    relevant_sections: ["7 blocks: signed overflow, OOB, uninit scalar, invalid scalar, null deref, realloc, infinite loop"]
+    last_verified: 2026-08-14
+
+  - id: cpp-core-guidelines
+    title: "C++ Core Guidelines"
+    url: "https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines"
+    authority: authoritative
+    license: "MIT (source)"
+    version: "rolling"
+    topics: ["cpp", "raii", "ownership", "bounds", "concurrency"]
+    relevant_sections: ["R.1/R.3/R.10-23/R.37", "ES.49/50/63/65/100-107", "Bounds.1-4", "E.12/28/30", "I.11-13/22/23", "CP.20/21/31/40"]
+    last_verified: 2026-08-14
+
+  # ---------- Rust ----------
+  - id: rust-reference
+    title: "The Rust Reference"
+    url: "https://doc.rust-lang.org/reference/"
+    authority: normative
+    license: "MIT/Apache-2.0"
+    version: "rolling"
+    topics: ["rust", "ub", "unsafe", "layout"]
+    relevant_sections: ["unsafety.html", "behavior-considered-undefined.html", "type-layout.html", "items/functions.html"]
+    last_verified: 2026-08-14
+
+  - id: rustonomicon
+    title: "The Rustonomicon"
+    url: "https://doc.rust-lang.org/nomicon/"
+    authority: authoritative
+    license: "MIT/Apache-2.0"
+    version: "rolling"
+    topics: ["rust", "unsafe", "aliasing", "ffi", "concurrency"]
+    relevant_sections: ["meet-safe-and-unsafe", "races", "ffi", "transmute", "unchecked-unwrapping", "unwinding"]
+    last_verified: 2026-08-14
+
+  - id: rust-api-guidelines
+    title: "Rust API Guidelines"
+    url: "https://rust-lang.github.io/api-guidelines/"
+    authority: authoritative
+    license: "MIT/Apache-2.0"
+    version: "rolling"
+    topics: ["rust", "api design", "ownership"]
+    relevant_sections: ["C-CONV-TRAITS", "C-SEND-SYNC", "C-GOOD-ERR", "C-NEWTYPE", "C-CUSTOM-TYPE", "C-BUILDER", "C-VALIDATE", "C-DTOR-FAIL", "C-COMMON-TRAITS", "C-QUESTION-MARK"]
+    last_verified: 2026-08-14
+
+  # ---------- ABI / архитектура ----------
+  - id: sysv-amd64-abi
+    title: "System V Application Binary Interface, AMD64 (x86-64 psABI)"
+    url: "https://gitlab.com/x86-psABIs/x86-64-ABI"
+    authority: normative
+    license: "open (psABI project)"
+    version: "rolling (CI artifacts)"
+    topics: ["abi", "x86-64", "calling convention", "elf"]
+    relevant_sections: ["3.2 Function Calling Sequence (regs, 16-byte align, red zone)", "3.3/3.4 varargs", "4 Data Representation", "5 Object Files", "6 DWARF"]
+    last_verified: 2026-08-14
+
+  - id: aapcs64
+    title: "ARM AAPCS64 (AArch64 Procedure Call Standard)"
+    url: "https://github.com/ARM-software/abi-aa/blob/main/aapcs64/aapcs64.rst"
+    authority: normative
+    license: "open (ARM abi-aa)"
+    version: "rolling"
+    topics: ["abi", "aarch64", "calling convention"]
+    relevant_sections: ["6.1 GP registers", "6.2 Parameter passing", "6.3 Result handling", "7 The Stack (16-byte align)", "8 Data representation"]
+    last_verified: 2026-08-14
+
+  - id: riscv-psabi
+    title: "RISC-V psABI (ELF + calling convention)"
+    url: "https://github.com/riscv-non-isa/riscv-elf-psabi-doc"
+    authority: normative
+    license: "open (CC-by-nc? verify)"
+    version: "rolling"
+    topics: ["abi", "riscv", "calling convention"]
+    relevant_sections: ["riscv-cc.adoc (a0-a7 args, ra/s0-11, gp/tp)", "stack layout 16-byte RV64", "RVV vector ABI"]
+    last_verified: 2026-08-14
+
+  - id: intel-sdm
+    title: "Intel 64 and IA-32 Architectures Software Developer's Manual"
+    url: "https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html"
+    authority: normative
+    license: "proprietary (free download)"
+    version: "current edition"
+    topics: ["x86", "x86-64", "instruction set", "memory ordering"]
+    relevant_sections: ["Vol.1 basic arch/addressing/stack", "Vol.2 instruction set reference (flags)", "Vol.3 memory ordering, cache, atomicity, MPX/SGX"]
+    last_verified: 2026-08-14
+
+  - id: amd64-apm
+    title: "AMD64 Architecture Programmer's Manual"
+    url: "https://www.amd.com/en/support/tech-docs/processor-programming-reference"
+    authority: normative
+    license: "proprietary (free download)"
+    version: "current edition"
+    topics: ["x86-64", "syscall", "segmentation"]
+    relevant_sections: ["Vol.1 §3 memory addressing, §4 segmentation", "Vol.2 System Programming", "Vol.3 syscall/sysret, REX"]
+    last_verified: 2026-08-14
+
+  - id: arm-abi-aa
+    title: "ARM ABI suite (abi-aa)"
+    url: "https://github.com/ARM-software/abi-aa"
+    authority: normative
+    license: "open"
+    version: "rolling"
+    topics: ["abi", "arm", "aarch64", "ehabi", "tls", "vector abi"]
+    relevant_sections: ["aapcs32", "aapcs64", "EHABI", "DWARF for ARM", "TLS ABI", "SVE/Neon vector ABI"]
+    last_verified: 2026-08-14
+
+  - id: riscv-isa-spec
+    title: "RISC-V ISA Specifications (unprivileged + privileged)"
+    url: "https://riscv.org/technical/specifications/"
+    authority: normative
+    license: "CC-BY-4.0"
+    version: "current ratified"
+    topics: ["riscv", "isa", "privileged"]
+    relevant_sections: ["unprivileged (base + extensions)", "privileged (S-mode, traps, PMP)"]
+    last_verified: 2026-08-14
+
+  - id: arm-arm
+    title: "Arm Architecture Reference Manual (A-profile)"
+    url: "https://developer.arm.com/documentation"
+    authority: normative
+    license: "proprietary (free download)"
+    version: "current"
+    topics: ["aarch64", "arm", "instruction set"]
+    relevant_sections: ["instruction set", "memory model", "barriers"]
+    last_verified: 2026-08-14
+
+  - id: itanium-cxx-abi
+    title: "Itanium C++ ABI"
+    url: "https://itanium-cxx-abi.github.io/cxx-abi/abi.html"
+    authority: authoritative
+    license: "open"
+    version: "rolling"
+    topics: ["abi", "cpp", "mangling", "vtable", "layout"]
+    relevant_sections: ["class layout", "name mangling", "virtual tables", "RTTI"]
+    last_verified: 2026-08-14
+
+  # ---------- Компиляторы / LLVM ----------
+  - id: gcc-manual
+    title: "GCC Manual (optimize options, inline asm, attributes)"
+    url: "https://gcc.gnu.org/onlinedocs/gcc/"
+    authority: official
+    license: "GFDL"
+    version: "current"
+    topics: ["gcc", "optimization", "inline asm", "builtins"]
+    relevant_sections: ["Optimize Options", "Extended Asm", "Function Attributes", "Other Builtins"]
+    last_verified: 2026-08-14
+
+  - id: clang-docs
+    title: "Clang Documentation"
+    url: "https://clang.llvm.org/docs/"
+    authority: official
+    license: "LLVM (Apache-2.0 with exceptions)"
+    version: "current"
+    topics: ["clang", "diagnostics", "sanitizers"]
+    relevant_sections: ["UsersManual", "UndefinedBehaviorSanitizer", "AddressSanitizer", "ThreadSanitizer", "DiagnosticsReference"]
+    last_verified: 2026-08-14
+
+  - id: llvm-langref
+    title: "LLVM Language Reference Manual"
+    url: "https://llvm.org/docs/LangRef.html"
+    authority: normative
+    license: "LLVM (Apache-2.0 with exceptions)"
+    version: "current"
+    topics: ["llvm", "ir"]
+    relevant_sections: ["IR structure", "instruction semantics", "atomic ordering", "poison/undef"]
+    last_verified: 2026-08-14
+
+  - id: llvm-programmers-manual
+    title: "LLVM Programmer's Manual"
+    url: "https://llvm.org/docs/ProgrammersManual.html"
+    authority: official
+    license: "LLVM"
+    version: "current"
+    topics: ["llvm", "pass", "ir manipulation"]
+    relevant_sections: ["Pass writing", "IRBuilder", "PreservedAnalyses"]
+    last_verified: 2026-08-14
+
+  - id: clang-tidy-checks
+    title: "clang-tidy checks list"
+    url: "https://clang.llvm.org/extra/clang-tidy/checks/list.html"
+    authority: official
+    license: "LLVM"
+    version: "current"
+    topics: ["lint", "clang-tidy"]
+    relevant_sections: ["bugprone-*", "clang-analyzer-*", "cert-*", "cppcoreguidelines-*"]
+    last_verified: 2026-08-14
+
+  - id: clippy-lints
+    title: "rust-clippy lint index"
+    url: "https://rust-lang.github.io/rust-clippy/master/index.html"
+    authority: official
+    license: "MIT/Apache-2.0"
+    version: "current"
+    topics: ["lint", "rust", "clippy"]
+    relevant_sections: ["missing_safety_doc", "cast_ptr_alignment", "unwrap_used", "arithmetic_side_effects", "use_after_move"]
+    last_verified: 2026-08-14
+
+  - id: pvs-studio-warnings
+    title: "PVS-Studio warning codes"
+    url: "https://pvs-studio.com/en/docs/warnings/"
+    authority: official
+    license: "proprietary (docs free)"
+    version: "current"
+    topics: ["lint", "static analysis"]
+    relevant_sections: ["V512", "V568", "V610", "V614", "V611", "V104-V126", "V527-V576"]
+    last_verified: 2026-08-14
+
+  - id: cppcheck
+    title: "Cppcheck manual"
+    url: "https://cppcheck.sourceforge.io/"
+    authority: official
+    license: "GPL-3.0"
+    version: "current"
+    topics: ["lint", "static analysis"]
+    relevant_sections: ["arrayIndexOutOfBounds", "uninitvar", "doubleFree", "integerOverflow"]
+    last_verified: 2026-08-14
+
+  # ---------- Toolchain / форматы ----------
+  - id: dwarf-v5
+    title: "DWARF Debugging Information Format, Version 5"
+    url: "https://dwarfstd.org/"
+    authority: normative
+    license: "open (DWARF standard)"
+    version: "DWARF v5"
+    topics: ["dwarf", "debug info", "location lists"]
+    relevant_sections: ["section layout", "debug_line", "location lists", "DW_OP expressions"]
+    last_verified: 2026-08-14
+
+  - id: binutils-docs
+    title: "GNU Binutils Documentation (as, ld, objdump, readelf, nm)"
+    url: "https://sourceware.org/binutils/docs/"
+    authority: official
+    license: "GFDL"
+    version: "current"
+    topics: ["elf", "linker", "objdump", "readelf"]
+    relevant_sections: ["ld (linker scripts)", "as (assembler)", "objdump", "readelf"]
+    last_verified: 2026-08-14
+
+  - id: gnu-ld-manual
+    title: "GNU ld — The GNU linker"
+    url: "https://sourceware.org/binutils/docs/ld/"
+    authority: official
+    license: "GFDL"
+    version: "current"
+    topics: ["linker", "linker script"]
+    relevant_sections: ["Linker Scripts", "MEMORY command", "SECTIONS command"]
+    last_verified: 2026-08-14
+
+  - id: gdb-manual
+    title: "GDB User Manual"
+    url: "https://sourceware.org/gdb/current/onlinedocs/gdb/"
+    authority: official
+    license: "GFDL"
+    version: "current"
+    topics: ["debugging", "gdb"]
+    relevant_sections: ["Breakpoints", "Examining Memory", "Optimized Code Debugging", "Core Files"]
+    last_verified: 2026-08-14
+
+  - id: sysv-elf
+    title: "System V ABI — ELF object format (generic + x86-64 psABI)"
+    url: "https://gitlab.com/x86-psABIs/x86-64-ABI"
+    authority: normative
+    license: "open"
+    version: "rolling"
+    topics: ["elf", "relocations", "dynamic linking"]
+    relevant_sections: ["ELF header", "sections", "symbol table", "relocation", "dynamic section"]
+    last_verified: 2026-08-14
+
+  # ---------- ОС / ядро ----------
+  - id: linux-memory-barriers
+    title: "Linux kernel — memory-barriers.txt"
+    url: "https://www.kernel.org/doc/Documentation/memory-barriers.txt"
+    authority: official
+    license: "GPL-2.0 (kernel docs)"
+    version: "current"
+    topics: ["kernel", "memory model", "barriers"]
+    relevant_sections: ["kernel I/O barriers", "ordering", "RCU"]
+    last_verified: 2026-08-14
+
+  - id: linux-rcu
+    title: "Linux kernel RCU documentation"
+    url: "https://www.kernel.org/doc/Documentation/RCU/"
+    authority: official
+    license: "GPL-2.0 (kernel docs)"
+    version: "current"
+    topics: ["kernel", "rcu"]
+    relevant_sections: ["whatisRCU", "rcu_dereference", "lockdep"]
+    last_verified: 2026-08-14
+
+  - id: ldd3
+    title: "Linux Device Drivers, 3rd Edition"
+    url: "https://lwn.net/Kernel/LDD3/"
+    authority: authoritative
+    license: "CC-BY-SA-2.0"
+    version: "3rd ed (2005, partially outdated)"
+    topics: ["kernel", "drivers", "char drivers", "interrupts"]
+    relevant_sections: ["char drivers", "copy_to_user", "interrupt handling", "mmap/ioctl"]
+    last_verified: 2026-08-14
+
+  - id: kernel-coding-style
+    title: "Linux kernel coding style"
+    url: "https://www.kernel.org/doc/html/latest/process/coding-style.html"
+    authority: official
+    license: "GPL-2.0 (kernel docs)"
+    version: "current"
+    topics: ["kernel", "style"]
+    relevant_sections: ["all"]
+    last_verified: 2026-08-14
+
+  # ---------- Embedded / RTOS / boot ----------
+  - id: cmsis
+    title: "Arm CMSIS (Cortex Microcontroller Software Interface Standard)"
+    url: "https://github.com/ARM-software/CMSIS_5"
+    authority: official
+    license: "Apache-2.0"
+    version: "CMSIS 5/6"
+    topics: ["embedded", "cortex-m", "arm"]
+    relevant_sections: ["core registers", "NVIC", "MPU"]
+    last_verified: 2026-08-14
+
+  - id: freertos-docs
+    title: "FreeRTOS documentation"
+    url: "https://www.freertos.org/Documentation/RTOS_book.html"
+    authority: official
+    license: "MIT (kernel)"
+    version: "current"
+    topics: ["rtos", "freertos"]
+    relevant_sections: ["tasks", "queue", "priority inversion", "ISR"]
+    last_verified: 2026-08-14
+
+  - id: zephyr-docs
+    title: "Zephyr RTOS documentation"
+    url: "https://docs.zephyrproject.org/"
+    authority: official
+    license: "Apache-2.0"
+    version: "current"
+    topics: ["rtos", "zephyr"]
+    relevant_sections: ["kernel", "threads", "ISR", "memory protection"]
+    last_verified: 2026-08-14
+
+  - id: uboot-docs
+    title: "U-Boot documentation"
+    url: "https://docs.u-boot.org/"
+    authority: official
+    license: "GPL-2.0"
+    version: "current"
+    topics: ["bootloader", "boot"]
+    relevant_sections: ["board bring-up", "relocation", "driver model"]
+    last_verified: 2026-08-14
+
+  - id: aarch64-boot-protocol
+    title: "Linux kernel AArch64 booting protocol (Documentation/arm64/booting.rst)"
+    url: "https://www.kernel.org/doc/Documentation/arm64/booting.rst"
+    authority: official
+    license: "GPL-2.0 (kernel docs)"
+    version: "current"
+    topics: ["aarch64", "boot"]
+    relevant_sections: ["boot protocol requirements"]
+    last_verified: 2026-08-14
+
+  # ---------- GPU ----------
+  - id: cuda-cpp-guide
+    title: "CUDA C++ Programming Guide"
+    url: "https://docs.nvidia.com/cuda/cuda-c-programming-guide/"
+    authority: official
+    license: "proprietary (free docs)"
+    version: "current"
+    topics: ["cuda", "gpu", "memory model"]
+    relevant_sections: ["memory model", "execution model", "shared memory", "synchronization"]
+    last_verified: 2026-08-14
+
+  - id: ptx-isa
+    title: "PTX ISA Specification"
+    url: "https://docs.nvidia.com/cuda/parallel-thread-execution/"
+    authority: normative
+    license: "proprietary (free docs)"
+    version: "current"
+    topics: ["ptx", "gpu", "assembly"]
+    relevant_sections: ["memory consistency model", "memory fence", "scope", "atomic"]
+    last_verified: 2026-08-14
+
+  - id: hip-docs
+    title: "AMD ROCm HIP documentation"
+    url: "https://rocm.docs.amd.com/"
+    authority: official
+    license: "proprietary (free docs)"
+    version: "current"
+    topics: ["rocm", "hip", "gpu"]
+    relevant_sections: ["HIP programming", "memory model"]
+    last_verified: 2026-08-14
+
+  - id: intel-intrinsics
+    title: "Intel Intrinsics Guide"
+    url: "https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html"
+    authority: official
+    license: "proprietary (free docs)"
+    version: "current"
+    topics: ["simd", "x86", "intrinsics"]
+    relevant_sections: ["SSE/AVX/AVX-512 intrinsics"]
+    last_verified: 2026-08-14
+
+  - id: arm-sve-acle
+    title: "Arm NEON / SVE ACLE"
+    url: "https://developer.arm.com/architectures/system-architectures/software-standards/acle"
+    authority: normative
+    license: "open (Arm)"
+    version: "current"
+    topics: ["simd", "arm", "neon", "sve"]
+    relevant_sections: ["NEON intrinsics", "SVE ACLE", "vector types"]
+    last_verified: 2026-08-14
+
+  # ---------- WASM ----------
+  - id: wasm-core-spec
+    title: "WebAssembly Core Specification"
+    url: "https://webassembly.github.io/spec/core/"
+    authority: normative
+    license: "W3C (CC/BSD)"
+    version: "2.0"
+    topics: ["wasm", "linear memory", "validation"]
+    relevant_sections: ["memory model", "validation algorithm", "module structure"]
+    last_verified: 2026-08-14
+
+  # ---------- eBPF ----------
+  - id: ebpf-docs
+    title: "Linux eBPF documentation"
+    url: "https://www.kernel.org/doc/html/latest/bpf/"
+    authority: official
+    license: "GPL-2.0 (kernel docs)"
+    version: "current"
+    topics: ["ebpf", "verifier"]
+    relevant_sections: ["verifier", "maps", "bounded loops"]
+    last_verified: 2026-08-14
+
+  # ---------- Performance ----------
+  - id: agner-fog
+    title: "Agner Fog — optimization manuals & instruction tables"
+    url: "https://www.agner.org/optimize/"
+    authority: authoritative
+    license: "CC-BY (attribution, free)"
+    version: "current"
+    topics: ["performance", "x86", "microarchitecture"]
+    relevant_sections: ["optimizing C++", "instruction latency tables"]
+    last_verified: 2026-08-14
+
+  - id: intel-opt-manual
+    title: "Intel 64 and IA-32 Architectures Optimization Reference Manual"
+    url: "https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html"
+    authority: official
+    license: "proprietary (free download)"
+    version: "current"
+    topics: ["performance", "x86"]
+    relevant_sections: ["memory/cache optimization", "vectorization"]
+    last_verified: 2026-08-14
+
+  - id: perf-wiki
+    title: "perf (Linux perf) wiki"
+    url: "https://perf.wiki.kernel.org/"
+    authority: official
+    license: "GPL (docs)"
+    version: "current"
+    topics: ["profiling", "perf"]
+    relevant_sections: ["perf stat", "perf record", "hardware counters"]
+    last_verified: 2026-08-14
+
+  # ---------- QEMU ----------
+  - id: qemu-docs
+    title: "QEMU documentation"
+    url: "https://www.qemu.org/docs/master/"
+    authority: official
+    license: "GPL-2.0"
+    version: "current"
+    topics: ["qemu", "emulation"]
+    relevant_sections: ["system emulation", "user mode", "gdb stub"]
+    last_verified: 2026-08-14
+
+  # ---------- CWE / security ----------
+  - id: cwe
+    title: "MITRE CWE — Common Weakness Enumeration"
+    url: "https://cwe.mitre.org/"
+    authority: authoritative
+    license: "free (MITRE)"
+    version: "current"
+    topics: ["security", "cwe"]
+    relevant_sections: ["CWE-787/119/190/170/457/416/415/367/22/362/833/674/479/248/252"]
+    last_verified: 2026-08-14
+
+  # ---------- Качественные вторичные (talks/статьи) ----------
+  - id: carruth-gigo
+    title: "Chandler Carruth — Garbage In, Garbage Out: Arguing about UB (CppCon 2016)"
+    url: "https://www.youtube.com/watch?v=yG1OZ69H_-o"
+    authority: authoritative
+    license: "video (citation)"
+    version: "2016"
+    topics: ["cpp", "ub", "compiler"]
+    relevant_sections: ["why UB cannot be 'patched'"]
+    last_verified: 2026-08-14
+
+  - id: godbolt-compiler
+    title: "Matt Godbolt — What Has My Compiler Done for Me Lately?"
+    url: "https://www.youtube.com/watch?v=bSkpMdDe4g4"
+    authority: authoritative
+    license: "video (citation)"
+    version: "2017/2022"
+    topics: ["compiler", "ub", "asm"]
+    relevant_sections: ["compiler interpreting UB in real asm"]
+    last_verified: 2026-08-14
+
+  - id: sean-parent-seasoning
+    title: "Sean Parent — C++ Seasoning (GoingNative 2013)"
+    url: "https://www.youtube.com/watch?v=W7tNzYJfVJY"
+    authority: authoritative
+    license: "video (citation)"
+    version: "2013"
+    topics: ["cpp", "value semantics"]
+    relevant_sections: ["value vs reference semantics", "no raw loops"]
+    last_verified: 2026-08-14
+
+  - id: matklad-preconditions
+    title: "matklad (Aleksey Kladov) — On API Design / Preconditions"
+    url: "https://matklad.github.io/"
+    authority: authoritative
+    license: "blog (citation)"
+    version: "rolling"
+    topics: ["api design", "rust", "preconditions"]
+    relevant_sections: ["Preconditions", "On Types as Interfaces", "handle types"]
+    last_verified: 2026-08-14
+
+  - id: herbsutter-gotw
+    title: "Herb Sutter — GotW / RAII articles"
+    url: "https://herbsutter.com/gotw/"
+    authority: authoritative
+    license: "blog (citation)"
+    version: "rolling"
+    topics: ["cpp", "raii"]
+    relevant_sections: ["GotW #90 multiple resources with exceptions"]
+    last_verified: 2026-08-14
+
+  # ---------- Исследования (для failure modes) ----------
+  - id: pearce-copilot
+    title: "Pearce et al. — Asleep at the Keyboard? (IEEE S&P 2022)"
+    url: "https://arxiv.org/abs/2108.09293"
+    authority: authoritative
+    license: "arXiv"
+    version: "2022"
+    topics: ["ai", "code generation", "security"]
+    relevant_sections: ["~40% of 1689 Copilot programs vulnerable (CWE-787/119)"]
+    last_verified: 2026-08-14
+
+  - id: perry-ai-code
+    title: "Perry et al. — Do Users Write More Insecure Code with AI Assistants? (CCS '23)"
+    url: "https://arxiv.org/abs/2211.03622"
+    authority: authoritative
+    license: "arXiv"
+    version: "2023"
+    topics: ["ai", "security", "overconfidence"]
+    relevant_sections: ["assistant users write less secure code but believe it is secure"]
+    last_verified: 2026-08-14
+
+  - id: cyberseceval
+    title: "Bhatt et al. — CyberSecEval"
+    url: "https://arxiv.org/abs/2312.04724"
+    authority: authoritative
+    license: "arXiv"
+    version: "2023"
+    topics: ["ai", "security", "unsafe code"]
+    relevant_sections: ["models generate unsafe code, panic patterns"]
+    last_verified: 2026-08-14

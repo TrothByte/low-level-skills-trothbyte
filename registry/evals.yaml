@@ -1,0 +1,94 @@
+# Evals Registry — evaluation cases
+# Виды: synthetic | historical | adversarial | regression | routing
+# Для каждого зрелого skill: easy/medium/hard/adversarial, минимум positive/negative/ambiguous.
+
+meta:
+  updated: 2026-08-14
+  rule: "Каждый важный skill требует eval. Проверяются: detection, reasoning, fix, verification."
+  false_positive_rule: "Проверять корректный код тоже: агент не должен находить несуществующие баги, переписывать рабочее, спекулировать. Метрики: precision, recall, FP-rate, warning density."
+
+# ============================================================
+# HISTORICAL CVE EVALS (ядро: минимальные диффы)
+# ============================================================
+historical_cves:
+  core_eval_set: # 8 рекомендованных из Энциклопедии
+    - {cve: CVE-2022-3602, skill: c-undefined-behavior, class: "off-by-one", detect: "punycode written_out > max_out", fix: "1 line > → >=", verify: "ASan + regression test"}
+    - {cve: CVE-2022-0185, skill: c-integer-promotion-and-conversion, class: "unsigned arithmetic underflow", detect: "len > PAGE_SIZE - 2 - size", fix: "1 line size+len+2 > PAGE_SIZE", verify: "KASAN + reproducer"}
+    - {cve: CVE-2022-0847, skill: c-undefined-behavior, class: "uninitialized memory", detect: "pipe_buffer.flags uninit", fix: "+2 lines buf->flags = 0", verify: "MSan/reproducer"}
+    - {cve: CVE-2016-8617, skill: c-integer-promotion-and-conversion, class: "integer overflow before alloc", detect: "malloc(insize*4/3+4)", fix: "+5 lines SIZEOF_SIZE_T guard", verify: "UBSan + 32-bit build"}
+    - {cve: CVE-2018-16890, skill: c-undefined-behavior, class: "integer overflow → OOB read", detect: "target_info_offset+len > size", fix: "+1 condition offset >= size", verify: "ASan"}
+    - {cve: CVE-2023-38545, skill: c-string-and-buffer-safety, class: "heap overflow oversized hostname", detect: "SOCKS5 state machine hostname", fix: "CURLPX_LONG_HOSTNAME", verify: "ASan + test"}
+    - {cve: CVE-2021-23017, skill: c-string-and-buffer-safety, class: "off-by-one write", detect: "ngx_resolver_copy NUL byte", fix: "small diff", verify: "ASan"}
+    - {cve: CVE-2020-36432, skill: rust-unsafe-reasoning, class: "uninitialized memory drop", detect: "Matrix::new fill_with *ptr = value", fix: "minimal Rust fix", verify: "Miri"}
+  secondary_eval_set:
+    - {cve: CVE-2014-0160, skill: c-string-and-buffer-safety, class: "missing bounds check (Heartbleed)"}
+    - {cve: CVE-2021-3711, skill: c-undefined-behavior, class: "size miscalc heap overflow"}
+    - {cve: CVE-2017-7529, skill: c-integer-promotion-and-conversion, class: "signed overflow OOB read"}
+    - {cve: CVE-2021-32714, skill: rust-unsafe-reasoning, class: "usize overflow"}
+    - {cve: CVE-2021-22555, skill: kernel-uaccess-safety, class: "OOB write"}
+    - {cve: CVE-2016-5195, skill: kernel-rcu-memory-barriers, class: "TOCTOU (Dirty COW)"}
+    - {cve: CVE-2021-33909, skill: c-integer-promotion-and-conversion, class: "size_t→int truncation"}
+    - {cve: CVE-2021-20227, skill: c-undefined-behavior, class: "use-after-free read"}
+
+# ============================================================
+# ADVERSARIAL EVALS (компилируется/тесты проходят, но неверно)
+# ============================================================
+adversarial:
+  - {id: AD-01, name: "compiles but wrong ordering", skill: memory-ordering-reasoning, desc: "Relaxed ordering где нужен Release — компилируется, наивные тесты проходят, TSan/Miri ловит"}
+  - {id: AD-02, name: "tests pass but wrong (signed overflow)", skill: compiler-ub-assumptions, desc: "Код полагается на signed overflow wrap — тесты на одной платформе проходят"}
+  - {id: AD-03, name: "works debug fails optimized", skill: compiler-ub-assumptions, desc: "UB-код работает на -O0, ломается на -O2 (optimizer assumed no UB)"}
+  - {id: AD-04, name: "works GCC fails Clang", skill: c-undefined-behavior, desc: "GCC-специфичное поведение (напр. struct layout или порядок eval) — Clang делает иначе"}
+  - {id: AD-05, name: "works x86 fails ARM", skill: abi-layout-reasoning, desc: "Невыровненный доступ / unaligned load работает на x86 (терпимо), ломается на ARM"}
+  - {id: AD-06, name: "ABI looks plausible but wrong", skill: abi-layout-reasoning, desc: "repr(C) struct с padding — агент считает layout «очевидным», но он неверен"}
+  - {id: AD-07, name: "sanitizer passes but concurrency bug", skill: memory-ordering-reasoning, desc: "ASan не ловит data race — нужен TSan/Miri"}
+  - {id: AD-08, name: "safe-looking pointer bug", skill: rust-unsafe-reasoning, desc: "raw pointer arithmetic без проверки provenance — Miri ловит"}
+  - {id: AD-09, name: "incorrect compiler assumption", skill: compiler-ub-assumptions, desc: "Агент думает компилятор «не может» переупорядочить/удалить код"}
+  - {id: AD-10, name: "incorrect assembly assumption", skill: asm-signed-unsigned-branches, desc: "Агент читает jge как unsigned (или наоборот)"}
+  - {id: AD-11, name: "volatile omission looks fine", skill: embedded-volatile-and-memory-ordering, desc: "Без volatile MMIO «работает» на -O0, ломается на -O2"}
+  - {id: AD-12, name: "fuzzer silently dies", skill: sanitizer-agent-ci-loop, desc: "ASan без -m none/-rss_limit_mb=0 → фаззер молча умирает → ложный вывод 'нет багов'"}
+
+# ============================================================
+# SYNTHETIC EVALS (шаблон на skill)
+# ============================================================
+synthetic_template:
+  structure:
+    - {level: easy, positive: "корректный случай — агент должен пройти", negative: "явный баг — агент должен найти", ambiguous: "спорный случай — агент должен маркировать uncertainty"}
+    - {level: medium, positive: "неочевидный корректный код", negative: "тонкий баг (signed/unsigned, off-by-one)", ambiguous: "зависит от платформы/версии"}
+    - {level: hard, positive: "корректный, но выглядит подозрительно (FP-тест)", negative: "многослойный баг (overflow → OOB → UAF)", ambiguous: "зависит от memory model интерпретации"}
+    - {level: adversarial, positive: "рабочий код, который агент склонен переписать", negative: "компилируется/тесты проходят, но неверно", ambiguous: "ABI-правдоподобно, но неверно"}
+  checked_dimensions: ["detection", "reasoning", "fix", "verification"]
+
+# ============================================================
+# ROUTING EVALS
+# ============================================================
+routing:
+  rule: "USER TASK → CORRECT SKILL → MINIMAL SKILL SET → CORRECT DEPENDENCIES (не 'load everything')"
+  cases:
+    - {task: "напиши функцию на C, копирующую строку в буфер", expected: ["c-string-and-buffer-safety"], optional: ["c-undefined-behavior"], forbidden: ["rust-unsafe-reasoning", "ptx-assembly"]}
+    - {task: "передай struct через FFI из Rust в C", expected: ["ffi-boundary-cross-language", "rust-ffi-boundary"], optional: ["abi-layout-reasoning"], forbidden: ["embedded-mpu-trustzone"]}
+    - {task: "почему код падает на -O2, но работает на -O0", expected: ["compiler-ub-assumptions"], optional: ["c-undefined-behavior"], forbidden: []}
+    - {task: "пойми порядок атомарных операций между потоками", expected: ["memory-ordering-reasoning"], optional: ["atomics-c11-cpp11-rust"], forbidden: ["c-string-and-buffer-safety"]}
+    - {task: "загрузи ARM Cortex-M прошивку и проверь ISR", expected: ["embedded-volatile-and-memory-ordering", "embedded-interrupt-and-nested"], optional: ["qemu-system-setup"], forbidden: ["ptx-assembly"]}
+
+# ============================================================
+# REGRESSION EVALS
+# ============================================================
+regression:
+  rule: "После изменения skill перезапускать его eval-набор + routing eval зависимых skills."
+  triggers: ["изменение SKILL.md", "изменение references", "изменение зависимостей", "изменение primary sources"]
+
+# ============================================================
+# FALSE POSITIVE (FP) EVALS — корректный код не должен флагаться
+# ============================================================
+false_positive:
+  cases:
+    - {id: FP-01, skill: c-string-and-buffer-safety, desc: "Правильный код с strncpy+явная NUL-терминация — агент не должен флагать"}
+    - {id: FP-02, skill: memory-ordering-reasoning, desc: "Корректный SeqCst код — агент не должен предлагать 'ослабить до Relaxed'"}
+    - {id: FP-03, skill: rust-unsafe-reasoning, desc: "Корректный unsafe с правильным SAFETY-комментарием — не флагать"}
+    - {id: FP-04, skill: compiler-ub-assumptions, desc: "Корректный код с signed int в известном диапазоне — не флагать signed overflow"}
+    - {id: FP-05, skill: embedded-volatile-and-memory-ordering, desc: "volatile + правильный barrier — не флагать 'нужен ещё один barrier'"}
+  metrics: ["precision", "recall", "false_positive_rate", "warning_density"]
+  calibration_notes:
+    - "noise floor 1-2 бага из 17 (trailofbits PR #238)"
+    - "completeness gate, падающий на корректный вывод, приучает игнорировать (issue #205)"
+    - "двухмодельный judge срезает FP (ToB blog)"

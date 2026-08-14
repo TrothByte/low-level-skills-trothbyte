@@ -1,0 +1,425 @@
+# Coverage Matrix — карта low-level engineering
+# Ключ: depth = 0 (нет) .. 5 (глубоко). priority = high/medium/low.
+# Источник данных: research-ingestion.yaml, Анализ скиллов.md, Энциклопедия.
+
+meta:
+  purpose: "Широкая карта низкоуровневой инженерии: существующее покрытие, глубина, пробелы, приоритеты, источники, потенциальные skills."
+  updated: 2026-08-14
+  legend:
+    depth: "0=отсутствует, 1=упоминание, 2=обзор, 3=учебно-практическая, 4=глубокая, 5=эталонная"
+    existing: "none / partial / good / strong"
+
+domains:
+
+  - name: C
+    existing_coverage: strong
+    repositories: ["trailofbits/skills (c-review, 47-64 bug classes)", "wshobson/agents", "mohitmishra786 (compilers/sanitizers)", "Jeffallan"]
+    depth: 4
+    gap: "Нет единого 'пиши безопасный C с нуля' скилла с UB/alignment/atomics как целостным reasoning-процессом; snprintf-return и errno/EINTR не имеют прямых lint-чеков."
+    priority: high
+    primary_sources: ["ISO C11 N1570", "ISO C23 N3096", "SEI CERT C", "cppreference C behavior"]
+    potential_skills: ["c-undefined-behavior", "c-integer-promotion-and-conversion", "c-string-and-buffer-safety", "c-errno-and-syscall-returns", "c-signal-handler-safety"]
+    verification: ["-Wall -Werror", "clang-tidy", "cppcheck", "ASan/UBSan", "compiler explorer"]
+    eval: ["CVE-2022-3602", "CVE-2018-16890", "CVE-2016-8617", "Juliet CWE-170/619"]
+
+  - name: C++
+    existing_coverage: strong
+    repositories: ["trailofbits/skills (cpp-semantics cluster)", "Jeffallan cpp-pro", "wshobson cpp-pro", "mohitmishra786 (cpp-modules/templates)"]
+    depth: 4
+    gap: "RAII-проектирование API (типы-дескрипторы, идиомы владения) не покрыто как позитивный скилл — только 'не делай так'; static init fiasco/move semantics глубоко, но разрозненно."
+    priority: high
+    primary_sources: ["ISO C++20 N4861", "ISO C++23 N4971", "C++ Core Guidelines", "cppreference C++ UB"]
+    potential_skills: ["cpp-raii-and-ownership", "cpp-object-lifecycle", "cpp-move-semantics", "cpp-static-init-fiasco", "cpp-iterator-invalidation"]
+    verification: ["clang-tidy", "scan-build", "ASan", "cppcheck", "compiler explorer"]
+    eval: ["synthetic static-init-fiasco case", "use-after-move case", "CVE-2020-13435 (NULL deref)"]
+
+  - name: Rust
+    existing_coverage: strong
+    repositories: ["trailofbits/skills (rust-review, 69 bug classes)", "wshobson rust-pro", "Jeffallan rust-engineer", "mohitmishra786 rust (12)"]
+    depth: 5
+    gap: "Позитивные паттерны (newtype/typed errors/RAII) есть в API Guidelines, но не собраны в operational skill; unsafe-семантика (aliasing, validity, provenance) нуждается в отдельном глубоком reference."
+    priority: high
+    primary_sources: ["Rust Reference", "Rustonomicon", "Rust API Guidelines"]
+    potential_skills: ["rust-unsafe-reasoning", "rust-ffi-boundary", "rust-send-sync", "rust-atomic-memory-ordering", "rust-panic-safety", "rust-positive-api-design"]
+    verification: ["cargo clippy -D warnings", "Miri", "cargo test", "kani", "cargo-geiger"]
+    eval: ["CVE-2020-36432 (uninit drop)", "CVE-2021-32714 (hyper usize overflow)", "RUSTSEC corpus"]
+
+  - name: Zig
+    existing_coverage: partial
+    repositories: ["rudedogg/zig-skills", "zigcc/skills", "nzrsky/zig-skills", "whit3rabbit/claude-zig-skill", "mohitmishra786 zig (7)"]
+    depth: 3
+    gap: "Всё завязано на версии (0.15/0.16/0.17-dev); нет скилла по unsafe-семантике Zig (pointer provenance, aliasing, @setRuntimeSafety tradeoffs) и нет Zig-specific eval. Требуется версионно-независимый 'концептуальный' слой + версионные справочники."
+    priority: medium
+    primary_sources: ["ziglang.org langref", "zig std lib source", "zig release notes"]
+    potential_skills: ["zig-version-pinning-and-migration", "zig-comptime-generics", "zig-c-interop", "zig-build-system", "zig-pointer-and-safety-semantics"]
+    verification: ["zig build test", "zig fmt", "zig test", "ReleaseSafe vs ReleaseFast"]
+    eval: ["WRONG/CORRECT API migration cases", "comptime generic case"]
+
+  - name: Assembly (generic)
+    existing_coverage: partial
+    repositories: ["SnailSploit/Claude-Red (offensive)", "mohitmishra786 (assembly-x86/arm/riscv)", "wshobson (binary-analysis-patterns)"]
+    depth: 3
+    gap: "Нет 'пиши корректный asm' скилла, не привязанного к shellcode; нет скилла по inline asm в Rust (asm!) и GCC extended asm constraints как систематический reference; нет MASM/Windows-driver asm."
+    priority: high
+    primary_sources: ["Intel SDM", "AMD64 APM", "ARM ARM (A-profile)", "RISC-V ISA spec"]
+    potential_skills: ["asm-x86-64-registers-and-addressing", "asm-calling-conventions", "asm-inline-asm-constraints", "asm-signed-unsigned-branches", "asm-optimizer-artifacts", "rust-inline-asm"]
+    verification: ["assemble+disassemble (objdump round-trip)", "run under debugger", "compare -O0 vs -O2 output"]
+    eval: ["signed vs unsigned branch case", "stack alignment movaps case", "wrong register convention case"]
+
+  - name: x86 / x86-64
+    existing_coverage: partial
+    repositories: ["SnailSploit/Claude-Red", "mohitmishra786 assembly-x86", "wshobson binary-analysis-patterns"]
+    depth: 3
+    gap: "Адресация/сегментация/rex-префиксы/канонические адреса покрыты фрагментарно; нет систематического скилла по x86-64 адресным режимам и флагам."
+    priority: medium
+    primary_sources: ["Intel SDM Vol.1-3", "AMD64 APM"]
+    potential_skills: ["x86-64-addressing-modes", "x86-64-flags-and-condition-codes"]
+    verification: ["objdump", "gdb disas", "compiler explorer"]
+    eval: ["addressing mode case", "flag confusion case"]
+
+  - name: ARM / AArch64
+    existing_coverage: partial
+    repositories: ["mohitmishra786 assembly-arm/arm-sve", "wshobson arm-cortex (agent)", "ios-reverse-skills", "zeroize-audit aarch64"]
+    depth: 3
+    gap: "AAPCS64 покрыт, но нет систематического скилла по AArch64 инструкциям/адресации/инструкциям памяти; PAC/BTI только у Claude-Red (Windows)."
+    priority: medium
+    primary_sources: ["AAPCS64 (abi-aa)", "ARM ARM", "ARM SVE ACLE"]
+    potential_skills: ["aarch64-calling-convention", "aarch64-memory-and-addressing", "arm-pac-bti"]
+    verification: ["qemu-aarch64", "objdump", "gdb multiarch"]
+    eval: ["AAPCS64 arg passing case", "stack alignment case"]
+
+  - name: RISC-V
+    existing_coverage: partial
+    repositories: ["mohitmishra786 (assembly-riscv, riscv-privileged)"]
+    depth: 2
+    gap: "psABI есть в mohitmishra786, но глубина учебная; нет скилла по privileged ISA (S-mode, traps, PMP) с верификацией."
+    priority: medium
+    primary_sources: ["RISC-V ISA spec (unprivileged/privileged)", "RISC-V psABI"]
+    potential_skills: ["riscv-calling-convention", "riscv-privileged-isa"]
+    verification: ["qemu-riscv", "spike", "objdump"]
+    eval: ["psABI arg passing", "trap handling case"]
+
+  - name: MIPS
+    existing_coverage: none
+    repositories: []
+    depth: 0
+    gap: "Полностью не покрыто (кроме упоминания в firmware-RE)."
+    priority: low
+    primary_sources: ["MIPS ABI", "MIPS ISA"]
+    potential_skills: ["mips-calling-convention"]
+    verification: ["qemu-mips", "objdump"]
+    eval: []
+
+  - name: WASM
+    existing_coverage: partial
+    repositories: ["mohitmishra786 (wasm-emscripten, wasm-wasmtime)", "zigcc (zig→wasm)"]
+    depth: 2
+    gap: "Нет 'пиши WASM-рантайм/валидатор' с нуля; нет скилла по WASM memory model / linear memory / table."
+    priority: low
+    primary_sources: ["WebAssembly core spec", "WASM JS API"]
+    potential_skills: ["wasm-memory-model", "wasm-runtime-internals"]
+    verification: ["wasmtime", "wasm-interp", "wat2wasm round-trip"]
+    eval: ["linear memory bounds case"]
+
+  - name: ABI
+    existing_coverage: good
+    repositories: ["mohitmishra786 abi-and-calling-conventions", "trailofbits rust-review repr-c", "zhaoxuya520 languages"]
+    depth: 3
+    gap: "Нет скилла, объединяющего ABI + компилятор + assembly в единый cross-layer reasoning (layout вычисление, varargs, struct passing); SysV/AAPCS64 есть как справочник, но не как reasoning-процесс."
+    priority: high
+    primary_sources: ["SysV AMD64 ABI", "AAPCS64", "RISC-V psABI", "Itanium C++ ABI"]
+    potential_skills: ["abi-struct-layout-and-alignment", "abi-varargs-and-vector-calls", "abi-cpp-itanium-abi"]
+    verification: ["compile + objdump prologue", "ABI compliance tests", "compare compiler output"]
+    eval: ["struct passing case (registers vs stack)", "varargs case", "alignment trap case"]
+
+  - name: FFI
+    existing_coverage: good
+    repositories: ["trailofbits rust-review ffi-cross-language", "mohitmishra786", "zig c-interop"]
+    depth: 3
+    gap: "Нет cross-language скилла (C↔Rust↔C++↔Zig↔WASM) с единой таблицей layout/ownership/error-translation; foreign-drop/opaque-pointer/closure-ffi покрыты для Rust, но не обобщены."
+    priority: high
+    primary_sources: ["Rust FFI chapter (Rustonomicon)", "C++ Core Guidelines I.*", "Itanium ABI"]
+    potential_skills: ["ffi-layout-and-ownership-boundary", "ffi-error-and-unwind-translation", "ffi-opaque-handles"]
+    verification: ["cross-language test harness", "valgrind across boundary", "abi-checker"]
+    eval: ["foreign drop case", "CString dangling case", "panic across FFI case"]
+
+  - name: Memory model / atomics
+    existing_coverage: partial
+    repositories: ["trailofbits rust-review atomic-race", "mohitmishra786 memory-model", "gpu-memory-model"]
+    depth: 2
+    gap: "Memory ordering (Relaxed/Acquire/Release/SeqCst) как reasoning-процесс не покрыт глубоко; нет скилла по C11/C++11 memory model vs Rust Ordering; нет Decoding of atomic instructions в asm."
+    priority: high
+    primary_sources: ["C11 5.1.2.4", "C++ [intro.races]", "Rust Reference memory model", "Intel SDM Vol.3 ch.8", "ARM ARM barrier litmus"]
+    potential_skills: ["memory-ordering-reasoning", "atomics-c11-cpp11-rust", "lock-free-progress-guarantees", "happens-before-and-synchronizes-with"]
+    verification: ["TSan", "Miri", "cdschecker", "litmus tests (herd7)"]
+    eval: ["wrong ordering case (compiles but UB)", "ABA problem case", "Dekker/Peterson litmus"]
+
+  - name: Concurrency
+    existing_coverage: strong
+    repositories: ["trailofbits rust-review concurrency clusters", "wshobson go-concurrency", "mohitmishra786 concurrency-debugging"]
+    depth: 4
+    gap: "Lock-free structures и hazard pointers/Rcu не покрыты; deadlock-детекция (ABBA) покрыта для Rust, но не для C/pthreads глубоко."
+    priority: medium
+    primary_sources: ["C++ CP.* guidelines", "POSIX threads", "Rust Reference"]
+    potential_skills: ["concurrency-deadlock-and-lock-ordering", "concurrency-condvar-and-spurious-wakeup", "lock-free-programming"]
+    verification: ["TSan", "stress tests", "helgrind", "cdschecker"]
+    eval: ["ABBA deadlock case", "condvar spurious wakeup case"]
+
+  - name: Compiler (GCC/Clang/MSVC)
+    existing_coverage: good
+    repositories: ["mohitmishra786 compilers (8)", "trailofbits sharp-edges"]
+    depth: 3
+    gap: "Нет скилла 'как компилятор интерпретирует UB' (assumption-based optimization) с asm-демонстрацией; нет systematic скилла по -fstrict-aliasing / signed-overflow assumptions."
+    priority: high
+    primary_sources: ["GCC manual", "Clang docs", "Carruth GIGO talk", "Godbolt talk"]
+    potential_skills: ["compiler-ub-assumptions", "compiler-optimization-flags", "compiler-strict-aliasing", "compiler-intrinsics-and-builtins"]
+    verification: ["compiler explorer", "-fopt-info", "compare -O0/-O2 asm"]
+    eval: ["signed overflow loop becomes infinite case", "strict-aliasing violation case"]
+
+  - name: LLVM / MLIR / JIT
+    existing_coverage: partial
+    repositories: ["mohitmishra786 compiler-internals (7)", "llvm-passes"]
+    depth: 2
+    gap: "Есть справочники, нет скиллов по написанию pass с evals/бенчмарками; MLIR/JIT поверхностны."
+    priority: medium
+    primary_sources: ["LLVM LangRef", "LLVM Programmer's Manual", "MLIR docs"]
+    potential_skills: ["llvm-ir-reading", "llvm-pass-writing", "jit-compilation"]
+    verification: ["opt -passes=", "llvm-lit/FileCheck", "lli"]
+    eval: ["write a pass that transforms IR", "read optimized IR case"]
+
+  - name: Linker / ELF / DWARF
+    existing_coverage: partial
+    repositories: ["mohitmishra786 (linkers-lto, elf-inspection, dwarf-debug-format, binutils, dynamic-linking)", "trailofbits dwarf-expert"]
+    depth: 3
+    gap: "Нет cross-layer скилла ELF+linker+loader+debugger как единого процесса (relocation, GOT/PLT, lazy binding, .init_array); DWARF-экспертиза тонкая."
+    priority: medium
+    primary_sources: ["SysV ABI ELF chapters", "DWARF v5 spec", "binutils docs", "lld/gold docs"]
+    potential_skills: ["elf-layout-and-relocations", "elf-dynamic-linking-got-plt", "dwarf-debug-info", "linker-scripts"]
+    verification: ["readelf", "objdump -R", "nm", "llvm-dwarfdump", "gdb backtrace"]
+    eval: ["relocation resolution case", "PLT/GOT lazy binding case", "DWARF variable location case"]
+
+  - name: Debugging
+    existing_coverage: good
+    repositories: ["mohitmishra786 debuggers (6)", "zhinkgit (GDB)", "trailofbits"]
+    depth: 3
+    gap: "Нет скилла по debug-optimized-builds (value optimized out) как систематический reasoning + нет скилла по post-mortem core-dump анализу глубоко."
+    priority: medium
+    primary_sources: ["GDB manual", "LLDB docs", "DWARF v5"]
+    potential_skills: ["gdb-advanced", "debug-optimized-builds", "core-dump-analysis"]
+    verification: ["gdb batch scripts", "core dump reproduction"]
+    eval: ["optimized-out variable case", "core dump root cause case"]
+
+  - name: Profiling / Performance
+    existing_coverage: good
+    repositories: ["mohitmishra786 profilers (7)", "cpu-cache-opt", "hardware-counters"]
+    depth: 3
+    gap: "Нет скилла по cache/NUMA/vectorization как единый performance reasoning; нет скилла по 'измерить до оптимизации' дисциплине."
+    priority: medium
+    primary_sources: ["perf wiki", "Intel optimization manual", "Agner Fog"]
+    potential_skills: ["performance-measurement-discipline", "cache-and-numa-optimization", "vectorization-reasoning"]
+    verification: ["perf stat/record", "VTune/uProf", "flamegraphs", "benchmark suite"]
+    eval: ["cache-unfriendly case", "false sharing case", "vectorization blocker case"]
+
+  - name: Sanitizers
+    existing_coverage: strong
+    repositories: ["trailofbits testing-handbook (15)", "Z3 memory-safety", "mohitmishra786 sanitizers"]
+    depth: 4
+    gap: "Нет скилла 'sanitizer-integration in agent CI loop' (универсально, не привязан к Z3); cross-skill ASan flag caveats (issue #181) не покрыты."
+    priority: high
+    primary_sources: ["ASan docs", "UBSan docs", "TSan docs", "MSan docs"]
+    potential_skills: ["sanitizer-agent-workflow", "sanitizer-report-reading", "sanitizer-limits-and-false-negatives"]
+    verification: ["ASan/UBSan/TSan/MSan runs", "issue #181 reproduction"]
+    eval: ["ASan flag omission case (fuzzer silent death)", "false negative case (no bounds on struct padding)"]
+
+  - name: Fuzzing
+    existing_coverage: strong
+    repositories: ["trailofbits testing-handbook (libFuzzer/AFL++/cargo-fuzz/OSS-Fuzz)"]
+    depth: 4
+    gap: "Нет скилла по harness-writing для специфичных low-level доменов (kernel, embedded, драйверы) как отдельный; dictionary/obstacles есть."
+    priority: medium
+    primary_sources: ["libFuzzer docs", "AFL++ docs", "OSS-Fuzz docs"]
+    potential_skills: ["fuzzing-harness-design", "fuzzing-coverage-guidance", "fuzzing-dictionary-construction"]
+    verification: ["coverage report", "crash corpus", "OSS-Fuzz integration"]
+    eval: ["harness misses bug case", "dictionary improves coverage case"]
+
+  - name: Kernel / Linux kernel
+    existing_coverage: good
+    repositories: ["mohitmishra786 kernel-dev (9) + kernel-internals (5)", "trailofbits"]
+    depth: 3
+    gap: "Нет скилла по kernel memory model + concurrency (RCU, memory barriers) как единый cross-layer; нет глубокого скилла по copy_to/from_user и uaccess-безопасности с adversarial evals."
+    priority: high
+    primary_sources: ["Linux kernel docs (memory-barriers.txt)", "LKML", "kernel coding style"]
+    potential_skills: ["kernel-uaccess-safety", "kernel-rcu-and-memory-barriers", "kernel-driver-ioctl-mm", "kernel-atomic-context"]
+    verification: ["QEMU kernel boot", "KUnit/kselftest", "syzkaller", "lockdep", "KASAN"]
+    eval: ["CVE-2022-0185", "CVE-2022-0847", "CVE-2016-5195", "CVE-2021-33909"]
+
+  - name: Drivers
+    existing_coverage: good
+    repositories: ["mohitmishra786 writing-char-drivers, bus-drivers-i2c-spi"]
+    depth: 3
+    gap: "Нет скилла по PCIe/USB-драйверам глубоко; нет скилла по interrupt handling в ядре (top/bottom half, tasklet, workqueue) как отдельный."
+    priority: medium
+    primary_sources: ["Linux Device Drivers (LDD3)", "kernel docs"]
+    potential_skills: ["kernel-interrupt-handling", "kernel-pci-usb-drivers", "kernel-platform-and-devicetree"]
+    verification: ["QEMU device model", "KUnit", "KASAN"]
+    eval: ["ISR race case", "copy_from_user missing case"]
+
+  - name: Embedded / bare-metal
+    existing_coverage: good
+    repositories: ["Jeffallan embedded-systems", "mohitmishra786 bare-metal (14) + embedded (5)", "zhinkgit embeddedskills"]
+    depth: 3
+    gap: "Embedded-безопасность (MPU/TrustZone, безопасные MCU-библиотеки) не покрыта НИГДЕ; volatile/ISR есть, но нет adversarial evals."
+    priority: high
+    primary_sources: ["ARM Cortex-M TRM", "CMSIS", "MCU datasheets"]
+    potential_skills: ["embedded-volatile-and-memory-ordering", "embedded-mpu-trustzone", "embedded-interrupt-and-nested", "embedded-linker-script"]
+    verification: ["QEMU cortex-m", "J-Link/OpenOCD", "GDB", "logic analyzer"]
+    eval: ["volatile omission case", "ISR shared var race case", "stack overflow case"]
+
+  - name: Firmware / bootloader / RTOS
+    existing_coverage: partial
+    repositories: ["zhaoxuya520 firmware-pentest", "mohitmishra786 bare-metal"]
+    depth: 2
+    gap: "Нет скилла по написанию bootloader (stage 1/2, relocation, A20, long mode); RTOS-специфичные скиллы (FreeRTOS/Zephyr) отсутствуют; firmware RE есть (offensive), но не defensive writing."
+    priority: medium
+    primary_sources: ["U-Boot docs", "Zephyr RTOS docs", "FreeRTOS docs", "AArch64 boot protocol"]
+    potential_skills: ["bootloader-stages", "rtos-concurrency-and-isr", "firmware-build-and-link"]
+    verification: ["QEMU boot", "J-Link", "real hardware"]
+    eval: ["relocation bug case", "RTOS priority inversion case"]
+
+  - name: Interrupts / DMA / MMIO
+    existing_coverage: partial
+    repositories: ["Jeffallan (ISR)", "NVIDIA DOCA DMA", "mohitmishra786"]
+    depth: 2
+    gap: "Нет единого скилла по volatile+memory-barrier+DMA-coherency cross-layer; MMIO-порядок (device memory vs normal memory) не покрыт."
+    priority: medium
+    primary_sources: ["ARM memory types (Device/normal)", "Intel PAT/MTRR", "PCIe spec"]
+    potential_skills: ["mmio-and-device-memory-ordering", "dma-coherency", "interrupt-atomicity"]
+    verification: ["QEMU", "hardware", "perf cache behavior"]
+    eval: ["missing barrier case", "DMA cache coherency case"]
+
+  - name: PCIe / USB / CAN
+    existing_coverage: partial
+    repositories: ["NVIDIA DOCA", "CSS-Electronics CAN", "mohitmishra786 bus-drivers"]
+    depth: 2
+    gap: "PCIe-конфигурационное пространство/MSI-X не покрыто; USB-стек не покрыт; CAN покрыт только RE (не написание)."
+    priority: low
+    primary_sources: ["PCIe base spec", "USB 3.x spec", "CAN ISO 11898"]
+    potential_skills: ["pcie-config-space-and-msi", "usb-device-model", "can-bus-writing"]
+    verification: ["QEMU", "hardware"]
+    eval: []
+
+  - name: Networking / eBPF / storage
+    existing_coverage: partial
+    repositories: ["mohitmishra786 (ebpf, ebpf-rust, io-uring, dpdk, af-xdp)", "NVIDIA gpunetio"]
+    depth: 2
+    gap: "eBPF verifier-безопасность (map access, bounded loops) как отдельный скилл отсутствует; io_uring/DPDK/AF_XDP учебные."
+    priority: medium
+    primary_sources: ["eBPF docs (bpf.h)", "io_uring man pages", "Linux networking docs"]
+    potential_skills: ["ebpf-verifier-reasoning", "io-uring-patterns", "af-xdp-and-dpdk"]
+    verification: ["bpftool", "libbpf", "verifier log"]
+    eval: ["verifier rejection case", "bounded loop case"]
+
+  - name: Filesystems / storage
+    existing_coverage: none
+    repositories: []
+    depth: 0
+    gap: "Полностью не покрыто."
+    priority: low
+    primary_sources: ["Linux VFS docs", "ext4/xfs specs"]
+    potential_skills: ["filesystem-on-disk-layout"]
+    verification: ["fuse", "QEMU"]
+    eval: []
+
+  - name: QEMU / emulation
+    existing_coverage: partial
+    repositories: ["mohitmishra786 qemu (4) + qemu-for-kernel-development"]
+    depth: 3
+    gap: "Нет скилла по QEMU+firmware+bootloader как единый цикл; device-эмуляция не покрыта."
+    priority: medium
+    primary_sources: ["QEMU docs", "QEMU source"]
+    potential_skills: ["qemu-system-setup", "qemu-device-emulation", "qemu-gdb-stub"]
+    verification: ["qemu boot", "gdb remote"]
+    eval: ["boot protocol case"]
+
+  - name: Binary analysis / RE
+    existing_coverage: strong
+    repositories: ["zhaoxuya520 (85)", "trailofbits", "P4nda0s", "Masriyan", "wshobson binary-analysis"]
+    depth: 4
+    gap: "Наступательная направленность; нет defensive-скилла 'читать asm и сверять с исходником для поиска UB' (кроме zeroize-audit); нет систематического скилла по type recovery."
+    priority: medium
+    primary_sources: ["Intel SDM", "DWARF v5", "tool docs (IDA/Ghidra)"]
+    potential_skills: ["binary-analysis-type-recovery", "binary-analysis-compiler-patterns", "binary-diffing"]
+    verification: ["objdump", "IDA/Ghidra", "angr"]
+    eval: ["type recovery case", "optimizer artifact case"]
+
+  - name: SIMD / vectorization
+    existing_coverage: partial
+    repositories: ["mohitmishra786 simd-intrinsics", "arm-sve", "NVIDIA tilegym"]
+    depth: 3
+    gap: "Нет cross-layer скилла SIMD + compiler vectorization + assembly (как читать -fopt-info, блокеры векторизации, shuffle/gather/scatter); NEON/SVE глубоко не покрыт."
+    priority: high
+    primary_sources: ["Intel Intrinsics Guide", "ARM NEON/SVE ACLE", "Agner Fog"]
+    potential_skills: ["simd-vectorization-reasoning", "simd-intrinsics-x86", "simd-neon-sve"]
+    verification: ["-fopt-info-vec", "-Rpass=loop-vectorize", "perf", "runtime correctness"]
+    eval: ["vectorization blocker case", "aliasing case", "trip count case"]
+
+  - name: GPU / CUDA / ROCm
+    existing_coverage: partial
+    repositories: ["NVIDIA tilegym (cuTile/Triton)", "mohitmishra786 cuda/gpu-memory-model/hip-rocm"]
+    depth: 3
+    gap: "PTX-ассемблер не покрыт НИГДЕ; GPU memory model (coherence scope) учебно; ROCm/HIP поверхностно."
+    priority: medium
+    primary_sources: ["CUDA C++ Programming Guide", "PTX ISA", "HIP docs", "GPU memory model spec"]
+    potential_skills: ["gpu-memory-model-coherence", "ptx-assembly", "cuda-kernel-optimization"]
+    verification: ["nvcc", "Nsight Compute", "rocprof"]
+    eval: ["shared memory race case", "coalescing case"]
+
+  - name: Toolchains / build systems / cross-compilation
+    existing_coverage: good
+    repositories: ["mohitmishra786 build-systems (9) + cross-gcc", "zhinkgit gcc"]
+    depth: 3
+    gap: "Нет скилла по cross-compilation toolchain (sysroot, target triple, Canadian cross) как единый reasoning; build-acceleration есть."
+    priority: medium
+    primary_sources: ["GCC cross docs", "CMake toolchain docs", "Meson docs"]
+    potential_skills: ["cross-compilation-toolchains", "build-system-link-and-flags"]
+    verification: ["arm-none-eabi-gcc build", "qemu run"]
+    eval: ["wrong sysroot case", "target triple case"]
+
+  - name: Hardware/software interaction (cache/NUMA/PCIe)
+    existing_coverage: partial
+    repositories: ["mohitmishra786 (memory-hierarchy, cpu-pipelines, cpu-cache-opt, branch-prediction)", "NVIDIA jetson"]
+    depth: 2
+    gap: "NUMA-специфичный скилл отсутствует; cache-coherency protocol (MESI) как reasoning отсутствует."
+    priority: low
+    primary_sources: ["Intel optimization manual", "Agner Fog", "Hennessy & Patterson"]
+    potential_skills: ["cache-coherence-reasoning", "numa-affinity"]
+    verification: ["perf cache-misses", "numactl"]
+    eval: ["false sharing case"]
+
+# ============================================================
+# GAP ANALYSIS (сводка критических пробелов)
+# ============================================================
+gap_analysis:
+  critical:
+    - {gap: "no unified 'write safe new low-level code from scratch' skill", reason: "memory safety split between survey (wshobson) and audit (trailofbits)", opportunity: "cross-layer safe-writing skill"}
+    - {gap: "embedded security (MPU/TrustZone) uncovered everywhere", reason: "no repo covers it", opportunity: "unique"}
+    - {gap: "PTX assembly uncovered everywhere", reason: "NVIDIA has cuTile/Triton not PTX", opportunity: "unique"}
+    - {gap: "sanitizer-integration in agent CI loop (universal)", reason: "only Z3-specific sample", opportunity: "unique"}
+    - {gap: "RAII/descriptor-type API design as positive skill", reason: "only 'don't do X' rules exist", opportunity: "unique"}
+    - {gap: "compiler UB-interpretation reasoning (asm demonstration)", reason: "sharp-edges exists but not systematic", opportunity: "improved"}
+    - {gap: "memory-ordering reasoning (C11/C++11/Rust unified)", reason: "covered as bug-class, not reasoning process", opportunity: "improved"}
+    - {gap: "ABI+compiler+assembly cross-layer layout reasoning", reason: "each covered separately", opportunity: "cross-layer"}
+  notable:
+    - {gap: "auto-RE beyond CAN (industrial/UART protocols)", reason: "only CSS-Electronics CAN", opportunity: "unique"}
+    - {gap: "WASM runtime/validator from scratch", reason: "only emscripten/wasmtime usage", opportunity: "unique"}
+    - {gap: "Go/Rust separate RE methodology", reason: "only zhaoxuya520 single skill", opportunity: "improved"}
+    - {gap: "kernel RCU/memory-barriers cross-layer", reason: "kernel-dev + memory-model separate", opportunity: "cross-layer"}
+    - {gap: "SIMD + compiler vectorization + asm cross-layer", reason: "each covered separately", opportunity: "cross-layer"}
+    - {gap: "ELF+linker+loader+debugger cross-layer", reason: "separate references", opportunity: "cross-layer"}
+  closed:
+    - "Zig (4 repos + 7 mohitmishra786 skills)"
+    - "compilers/linkers writing (mohitmishra786)"
+    - "SIMD audit (mohitmishra786 simd-intrinsics)"
+    - "ordinary asm x86-64 ABI/inline asm (mohitmishra786)"
+    - "AArch64/ARM asm (mohitmishra786 + ios-reverse + zeroize)"
+    - "kernel drivers writing (mohitmishra786 writing-char-drivers)"

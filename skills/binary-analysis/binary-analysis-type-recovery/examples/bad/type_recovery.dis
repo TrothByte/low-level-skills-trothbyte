@@ -1,0 +1,136 @@
+﻿
+C:\Users\User\Desktop\Low-level skills\skills\binary-analysis\binary-analysis-type-recovery\examples\bad\type_recovery.o:     file format pe-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <f_char_ret>:
+   0:	8d 41 01             	lea    0x1(%rcx),%eax
+   3:	c3                   	ret
+   4:	90                   	nop
+   5:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+   c:	00 00 00 00 
+
+0000000000000010 <f_int_from_char>:
+  10:	0f be c1             	movsbl %cl,%eax
+  13:	c3                   	ret
+  14:	90                   	nop
+  15:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+  1c:	00 00 00 00 
+
+0000000000000020 <f_uint_from_uchar>:
+  20:	0f b6 c1             	movzbl %cl,%eax
+  23:	c3                   	ret
+  24:	90                   	nop
+  25:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+  2c:	00 00 00 00 
+
+0000000000000030 <f_long_from_short>:
+  30:	0f bf c1             	movswl %cx,%eax
+  33:	c3                   	ret
+  34:	90                   	nop
+  35:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+  3c:	00 00 00 00 
+
+0000000000000040 <f_float_add>:
+  40:	f3 0f 58 c1          	addss  %xmm1,%xmm0
+  44:	c3                   	ret
+  45:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+  4c:	00 00 00 00 
+
+0000000000000050 <f_double_mul>:
+  50:	f2 0f 59 c1          	mulsd  %xmm1,%xmm0
+  54:	c3                   	ret
+  55:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+  5c:	00 00 00 00 
+
+0000000000000060 <f_load_float>:
+  60:	f3 0f 10 01          	movss  (%rcx),%xmm0
+  64:	c3                   	ret
+  65:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+  6c:	00 00 00 00 
+
+0000000000000070 <f_load_double>:
+  70:	f2 0f 10 01          	movsd  (%rcx),%xmm0
+  74:	c3                   	ret
+  75:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+  7c:	00 00 00 00 
+
+0000000000000080 <f_load_u64>:
+  80:	48 8b 01             	mov    (%rcx),%rax
+  83:	c3                   	ret
+  84:	90                   	nop
+  85:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+  8c:	00 00 00 00 
+
+0000000000000090 <f_load_long>:
+  90:	8b 01                	mov    (%rcx),%eax
+  92:	c3                   	ret
+  93:	66 90                	xchg   %ax,%ax
+  95:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+  9c:	00 00 00 00 
+
+00000000000000a0 <f_big_d>:
+  a0:	48 8b 41 08          	mov    0x8(%rcx),%rax
+  a4:	c3                   	ret
+  a5:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+  ac:	00 00 00 00 
+
+00000000000000b0 <f_big_c>:
+  b0:	0f b6 41 06          	movzbl 0x6(%rcx),%eax
+  b4:	c3                   	ret
+  b5:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+  bc:	00 00 00 00 
+
+00000000000000c0 <f_arr_index>:
+  c0:	48 63 d2             	movslq %edx,%rdx
+  c3:	8b 04 91             	mov    (%rcx,%rdx,4),%eax
+  c6:	c3                   	ret
+  c7:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)
+  ce:	00 00 
+
+00000000000000d0 <f_sum_array>:
+  d0:	85 d2                	test   %edx,%edx
+  d2:	7e 1c                	jle    f0 <f_sum_array+0x20>
+  d4:	89 d2                	mov    %edx,%edx
+  d6:	31 c0                	xor    %eax,%eax
+  d8:	48 8d 14 91          	lea    (%rcx,%rdx,4),%rdx
+  dc:	0f 1f 40 00          	nopl   0x0(%rax)
+  e0:	03 01                	add    (%rcx),%eax
+  e2:	48 83 c1 04          	add    $0x4,%rcx
+  e6:	48 39 d1             	cmp    %rdx,%rcx
+  e9:	75 f5                	jne    e0 <f_sum_array+0x10>
+  eb:	c3                   	ret
+  ec:	0f 1f 40 00          	nopl   0x0(%rax)
+  f0:	31 c0                	xor    %eax,%eax
+  f2:	c3                   	ret
+  f3:	66 90                	xchg   %ax,%ax
+  f5:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+  fc:	00 00 00 00 
+
+0000000000000100 <f_three_args>:
+ 100:	01 d1                	add    %edx,%ecx
+ 102:	45 0f be c0          	movsbl %r8b,%r8d
+ 106:	42 8d 04 01          	lea    (%rcx,%r8,1),%eax
+ 10a:	c3                   	ret
+ 10b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+
+0000000000000110 <f_call_fp>:
+ 110:	48 89 c8             	mov    %rcx,%rax
+ 113:	89 d1                	mov    %edx,%ecx
+ 115:	48 ff e0             	rex.W jmp *%rax
+ 118:	0f 1f 84 00 00 00 00 	nopl   0x0(%rax,%rax,1)
+ 11f:	00 
+
+0000000000000120 <f_vtable_call>:
+ 120:	48 8b 41 08          	mov    0x8(%rcx),%rax
+ 124:	89 d1                	mov    %edx,%ecx
+ 126:	48 ff e0             	rex.W jmp *%rax
+ 129:	90                   	nop
+ 12a:	90                   	nop
+ 12b:	90                   	nop
+ 12c:	90                   	nop
+ 12d:	90                   	nop
+ 12e:	90                   	nop
+ 12f:	90                   	nop
+

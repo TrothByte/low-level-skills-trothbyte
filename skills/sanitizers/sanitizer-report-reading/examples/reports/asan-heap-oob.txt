@@ -1,0 +1,45 @@
+=== ILLUSTRATIVE FIXTURE (hand-written, modeled on real sanitizer output) ===
+Report:   heap-buffer-overflow (READ)
+Program:  tools/pktparse
+Build:    clang -O1 -g -fsanitize=address -fno-omit-frame-pointer -o pktparse tools/pktparse.c
+
+==12345==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x602000000030 at pc 0x55f0ab12c910 bp 0x7ffce83a2a10 sp 0x7ffce83a2a08
+READ of size 2 at 0x602000000030 thread T0
+    #0 0x55f0ab12c910 in parse_record tools/pktparse.c:42:18
+    #1 0x55f0ab12cb30 in decode_frame tools/pktparse.c:118:9
+    #2 0x55f0ab12cc40 in main tools/pktparse.c:31:7
+    #3 0x7f2e4a2d0083 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x24083)
+    #4 0x55f0ab12c4de in _start (/tmp/pktparse+0x14de)
+
+0x602000000030 is located 0 bytes to the right of 16-byte region [0x602000000020,0x602000000030)
+allocated by thread T0 here:
+    #0 0x55f0ab12e0a8 in __interceptor_malloc (/tmp/pktparse+0x200a8)
+    #1 0x55f0ab12cac0 in parse_record tools/pktparse.c:87:15
+    #2 0x55f0ab12cb30 in decode_frame tools/pktparse.c:118:9
+    #3 0x55f0ab12cc40 in main tools/pktparse.c:31:7
+
+Shadow bytes around the buggy address:
+  0x0c047fff7fe0: fa fa fa fa fa fa fa fa  fa fa fa fa fa fa fa fa
+  0x0c047fff7ff0: fa fa fa fa 00 00 fa fa  fa fa fa fa fa fa fa fa
+  0x0c047fff8000: fa fa fa fa fa fa fa fa  fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07
+  Heap left redzone:     fa
+  Freed heap region:     fd
+  Stack left redzone:    f1
+  Stack mid redzone:     f2
+  Stack right redzone:   f3
+  Stack after return:    f5
+  Stack use after scope: f8
+  Global redzone:        f9
+  Global init order:     f6
+  Poisoned by user:      f7
+  Container overflow:    fc
+  Array cookie:          ac
+  Intra object redzone:  bb
+  ASan internal:         fe
+  Left alloca redzone:   ca
+  Right alloca redzone:  cb
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow tools/pktparse.c:42:18 in parse_record

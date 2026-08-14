@@ -1,0 +1,86 @@
+# Cross-Links / Dependency Graph — связи между skills
+# rel: require | recommend | conflict | extend | verify
+# Правило: не загружать весь dependency tree автоматически — minimal relevant expansion.
+
+meta:
+  updated: 2026-08-14
+  rule: "Зависимости раскрываются минимально: при активации skill загружаются только 'require', 'recommend' — по запросу."
+
+cross_links:
+  # ===== Tier 1 flagship =====
+  - {from: safe-low-level-from-scratch, rel: recommend, to: c-undefined-behavior}
+  - {from: safe-low-level-from-scratch, rel: recommend, to: compiler-ub-assumptions}
+  - {from: safe-low-level-from-scratch, rel: recommend, to: memory-ordering-reasoning}
+  - {from: safe-low-level-from-scratch, rel: recommend, to: rust-unsafe-reasoning}
+
+  - {from: abi-layout-reasoning, rel: require, to: asm-calling-conventions}
+  - {from: abi-layout-reasoning, rel: recommend, to: elf-layout-and-relocations}
+  - {from: abi-layout-reasoning, rel: verify, to: ffi-boundary-cross-language}
+
+  - {from: memory-ordering-reasoning, rel: require, to: atomics-c11-cpp11-rust}
+  - {from: memory-ordering-reasoning, rel: verify, to: kernel-rcu-memory-barriers}
+  - {from: memory-ordering-reasoning, rel: verify, to: gpu-memory-model-coherence}
+
+  - {from: compiler-ub-assumptions, rel: recommend, to: asm-optimizer-artifacts}
+  - {from: compiler-ub-assumptions, rel: recommend, to: llvm-ir-reading}
+
+  - {from: ffi-boundary-cross-language, rel: require, to: abi-layout-reasoning}
+  - {from: ffi-boundary-cross-language, rel: recommend, to: rust-ffi-boundary}
+
+  # ===== Tier 2 =====
+  - {from: embedded-mpu-trustzone, rel: require, to: embedded-volatile-and-memory-ordering}
+  - {from: sanitizer-agent-ci-loop, rel: require, to: sanitizer-report-reading}
+  - {from: raii-descriptor-types-api-design, rel: require, to: cpp-object-lifecycle}
+
+  # ===== Tier 3 =====
+  - {from: c-undefined-behavior, rel: recommend, to: compiler-ub-assumptions}
+  - {from: c-integer-promotion-and-conversion, rel: require, to: c-undefined-behavior}
+  - {from: rust-unsafe-reasoning, rel: recommend, to: memory-ordering-reasoning}
+  - {from: rust-ffi-boundary, rel: require, to: ffi-boundary-cross-language}
+  - {from: simd-vectorization-cross-layer, rel: require, to: asm-x86-64-registers-and-addressing}
+  - {from: simd-vectorization-cross-layer, rel: recommend, to: vectorization-reasoning}
+  - {from: rust-panic-safety, rel: require, to: rust-unsafe-reasoning}
+  - {from: zeroize-constant-time, rel: require, to: compiler-ub-assumptions}
+
+  # ===== Tier 4 =====
+  - {from: elf-linker-loader-debugger, rel: require, to: elf-layout-and-relocations}
+  - {from: elf-linker-loader-debugger, rel: require, to: dwarf-debug-info}
+  - {from: kernel-rcu-memory-barriers, rel: require, to: memory-ordering-reasoning}
+  - {from: kernel-rcu-memory-barriers, rel: require, to: kernel-uaccess-safety}
+  - {from: kernel-uaccess-safety, rel: recommend, to: kernel-atomic-context}
+  - {from: ptx-assembly, rel: require, to: gpu-memory-model-coherence}
+  - {from: ebpf-verifier-reasoning, rel: recommend, to: kernel-rcu-memory-barriers}
+
+  # ===== Tier 5 =====
+  - {from: asm-calling-conventions, rel: recommend, to: asm-x86-64-registers-and-addressing}
+  - {from: asm-inline-asm-constraints, rel: require, to: asm-x86-64-registers-and-addressing}
+  - {from: asm-signed-unsigned-branches, rel: require, to: asm-x86-64-registers-and-addressing}
+  - {from: c-string-and-buffer-safety, rel: require, to: c-undefined-behavior}
+  - {from: c-errno-and-syscall-returns, rel: require, to: c-undefined-behavior}
+  - {from: embedded-volatile-and-memory-ordering, rel: require, to: memory-ordering-reasoning}
+  - {from: embedded-linker-script, rel: require, to: elf-linker-loader-debugger}
+  - {from: llvm-pass-writing, rel: require, to: llvm-ir-reading}
+  - {from: gpu-memory-model-coherence, rel: require, to: memory-ordering-reasoning}
+  - {from: cpp-move-semantics, rel: require, to: cpp-object-lifecycle}
+
+  # ===== Tier 6 =====
+  - {from: vectorization-reasoning, rel: recommend, to: simd-vectorization-cross-layer}
+  - {from: cache-and-numa-optimization, rel: require, to: performance-measurement-discipline}
+  - {from: kernel-atomic-context, rel: require, to: kernel-uaccess-safety}
+  - {from: concurrency-condvar-and-spurious-wakeup, rel: require, to: concurrency-deadlock-and-lock-ordering}
+  - {from: binary-analysis-type-recovery, rel: require, to: asm-optimizer-artifacts}
+  - {from: c-signal-handler-safety, rel: require, to: c-errno-and-syscall-returns}
+
+  # ===== Meta skills =====
+  - {from: meta-routing, rel: recommend, to: meta-evidence}
+  - {from: meta-verification, rel: require, to: meta-evidence}
+  - {from: meta-completion, rel: require, to: meta-verification}
+  - {from: meta-rationalizations, rel: recommend, to: meta-assumptions}
+
+# ============================================================
+# COLLISION RULES (конфликтующие рекомендации)
+# ============================================================
+collisions:
+  - {skills: ["rust-unsafe-reasoning", "safe-low-level-from-scratch"], rule: "safe-low-level — позитивный путь; rust-unsafe-reasoning — детальная семантика unsafe. При конфликте нормативных утверждений: Rust Reference/Rustonomicon > любые скиллы."}
+  - {skills: ["memory-ordering-reasoning", "atomics-c11-cpp11-rust"], rule: "reasoning-скилл — процесс; atomics-скилл — API-справочник. Не конфликтуют: один объясняет почему, другой что."}
+  - {skills: ["c-undefined-behavior", "compiler-ub-assumptions"], rule: "c-undefined-behavior — что UB; compiler-ub-assumptions — почему компилятор так делает. Порядок загрузки: c-undefined-behavior сначала."}

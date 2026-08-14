@@ -1,0 +1,26 @@
+=== ILLUSTRATIVE FIXTURE (hand-written, modeled on real sanitizer output) ===
+Report:   heap-use-after-free (READ)
+Program:  tools/connserver
+Build:    clang -O1 -g -fsanitize=address -fno-omit-frame-pointer -o connserver tools/connserver.c
+
+==23456==ERROR: AddressSanitizer: heap-use-after-free on address 0x6020000000c0 at pc 0x55f0ab14a220 bp 0x7f6b3b1ffa10 sp 0x7f6b3b1ffa08
+READ of size 8 at 0x6020000000c0 thread T1
+    #0 0x55f0ab14a220 in conn_poll tools/connserver.c:95:11
+    #1 0x55f0ab14a3b0 in timer_fire tools/connserver.c:44:9
+    #2 0x55f0ab14a4c0 in main_loop tools/connserver.c:120:5
+    #3 0x55f0ab14a560 in main tools/connserver.c:140:7
+
+0x6020000000c0 is located 0 bytes inside of 64-byte region [0x6020000000c0,0x602000000100)
+freed by thread T1 here:
+    #0 0x55f0ab14c0a8 in __interceptor_free (/tmp/connserver+0x200a8)
+    #1 0x55f0ab14a4e0 in conn_close tools/connserver.c:210:5
+    #2 0x55f0ab14a520 in handle_timeout tools/connserver.c:96:9
+    #3 0x55f0ab14a560 in main tools/connserver.c:140:7
+
+previously allocated by thread T1 here:
+    #0 0x55f0ab14c0a8 in __interceptor_malloc (/tmp/connserver+0x200a8)
+    #1 0x55f0ab14a200 in conn_new tools/connserver.c:120:9
+    #2 0x55f0ab14a300 in accept_conn tools/connserver.c:70:9
+    #3 0x55f0ab14a560 in main tools/connserver.c:140:7
+
+SUMMARY: AddressSanitizer: heap-use-after-free tools/connserver.c:95:11 in conn_poll

@@ -1,0 +1,156 @@
+# Priorities — scoring и ранжирование skills
+# Оценка по 5-балльной шкале. Формула: HIGH VALUE = важная проблема + слабое покрытие +
+# сильные источники + сильная верификация + значимый failure mode агента.
+
+meta:
+  updated: 2026-08-14
+  rubric:
+    uniqueness: "5 = практически отсутствует, 1 = хорошо покрыто"
+    agent_failure_importance: "5 = критичный систематический сбой агента, 1 = редкий"
+    coverage_gap: "5 = нигде не покрыто, 1 = покрыто глубоко"
+    technical_depth: "5 = глубокий cross-layer reasoning, 1 = поверхностный справочник"
+    verification_strength: "5 = сильная исполнимая верификация, 1 = нет верификации"
+    practical_value: "5 = ежедневная польза, 1 = нишевый"
+    source_quality: "5 = нормативный primary source, 1 = вторичный/ненадёжный"
+    maintenance_cost: "LOW/MEDIUM/HIGH (обратная метрика: ниже лучше)"
+    token_efficiency: "5 = компактное ядро + прогрессивное раскрытие, 1 = раздутое"
+  weight_note: "Упорядочение учитывает приоритетно: uniqueness + coverage_gap + agent_failure_importance + verification_strength."
+
+# ============================================================
+# RANKED IMPLEMENTATION ORDER (сводный score = сумма 7 метрик, max 35)
+# ============================================================
+ranking:
+  tier_1_flagship: # начинать здесь
+    - id: safe-low-level-from-scratch
+      score: 32
+      metrics: {uniqueness: 4, agent_failure_importance: 5, coverage_gap: 5, technical_depth: 5, verification_strength: 4, practical_value: 5, source_quality: 4}
+      maintenance_cost: HIGH
+      rationale: "Самый важный скилл: заполняет раскол между аудитом и написанием, прямо бьёт по 'it compiles therefore correct'."
+    - id: abi-layout-reasoning
+      score: 31
+      metrics: {uniqueness: 4, agent_failure_importance: 4, coverage_gap: 4, technical_depth: 5, verification_strength: 5, practical_value: 5, source_quality: 5}
+      maintenance_cost: MEDIUM
+      rationale: "ABI+compiler+assembly cross-layer с максимально сильной верификацией (objdump round-trip)."
+    - id: memory-ordering-reasoning
+      score: 30
+      metrics: {uniqueness: 4, agent_failure_importance: 5, coverage_gap: 4, technical_depth: 5, verification_strength: 5, practical_value: 4, source_quality: 4}
+      maintenance_cost: MEDIUM
+      rationale: "Неверный ordering компилируется и проходит наивные тесты — идеальная adversarial-зона."
+    - id: compiler-ub-assumptions
+      score: 30
+      metrics: {uniqueness: 4, agent_failure_importance: 5, coverage_gap: 4, technical_depth: 5, verification_strength: 5, practical_value: 4, source_quality: 4}
+      maintenance_cost: MEDIUM
+      rationale: "Объясняет 'почему компилятор удалил проверку' — корневая причина недоверия к компиляции."
+    - id: ffi-boundary-cross-language
+      score: 29
+      metrics: {uniqueness: 4, agent_failure_importance: 4, coverage_gap: 4, technical_depth: 5, verification_strength: 4, practical_value: 4, source_quality: 4}
+      maintenance_cost: MEDIUM
+      rationale: "FFI-граница — зона, где кончаются safe-гарантии; cross-language таблица уникальна."
+
+  tier_2_unique: # уникальные ниши
+    - id: embedded-mpu-trustzone
+      score: 28
+      metrics: {uniqueness: 5, agent_failure_importance: 4, coverage_gap: 5, technical_depth: 4, verification_strength: 3, practical_value: 4, source_quality: 3}
+      maintenance_cost: MEDIUM
+      rationale: "Полностью отсутствует; embedded-безопасность критична."
+    - id: sanitizer-agent-ci-loop
+      score: 28
+      metrics: {uniqueness: 5, agent_failure_importance: 5, coverage_gap: 4, technical_depth: 3, verification_strength: 5, practical_value: 5, source_quality: 4}
+      maintenance_cost: LOW
+      rationale: "Универсальный sanitizer-цикл; прямо бьёт по B5/B22."
+    - id: raii-descriptor-types-api-design
+      score: 27
+      metrics: {uniqueness: 5, agent_failure_importance: 4, coverage_gap: 5, technical_depth: 4, verification_strength: 3, practical_value: 4, source_quality: 4}
+      maintenance_cost: LOW
+      rationale: "Единственный позитивный скилл проектирования (типы-дескрипторы)."
+
+  tier_3_improved: # углубляем существующее
+    - id: c-undefined-behavior
+      score: 29
+      metrics: {uniqueness: 3, agent_failure_importance: 5, coverage_gap: 4, technical_depth: 5, verification_strength: 4, practical_value: 5, source_quality: 5}
+      maintenance_cost: MEDIUM
+      rationale: "J.2 → операционные категории; C — базис всего репозитория."
+    - id: c-integer-promotion-and-conversion
+      score: 27
+      metrics: {uniqueness: 3, agent_failure_importance: 5, coverage_gap: 4, technical_depth: 5, verification_strength: 4, practical_value: 5, source_quality: 4}
+      maintenance_cost: LOW
+      rationale: "Integer promotion — источник тонких багов; сильные CVE-evals."
+    - id: rust-unsafe-reasoning
+      score: 29
+      metrics: {uniqueness: 4, agent_failure_importance: 5, coverage_gap: 4, technical_depth: 5, verification_strength: 4, practical_value: 4, source_quality: 5}
+      maintenance_cost: MEDIUM
+      rationale: "Aliasing/validity/provenance — глубина, которой нет нигде."
+    - id: rust-ffi-boundary
+      score: 27
+      metrics: {uniqueness: 3, agent_failure_importance: 4, coverage_gap: 3, technical_depth: 5, verification_strength: 4, practical_value: 4, source_quality: 5}
+      maintenance_cost: MEDIUM
+      rationale: "repr(C) + ownership + unwind для Rust↔C."
+    - id: simd-vectorization-cross-layer
+      score: 27
+      metrics: {uniqueness: 4, agent_failure_importance: 3, coverage_gap: 4, technical_depth: 5, verification_strength: 4, practical_value: 4, source_quality: 4}
+      maintenance_cost: MEDIUM
+      rationale: "SIMD+compiler+asm в один verifiable процесс."
+    - id: sanitizer-report-reading
+      score: 25
+      metrics: {uniqueness: 4, agent_failure_importance: 4, coverage_gap: 4, technical_depth: 3, verification_strength: 4, practical_value: 5, source_quality: 3}
+      maintenance_cost: LOW
+      rationale: "Чтение отчётов — быстрый win, низкая стоимость."
+    - id: rust-panic-safety
+      score: 24
+      metrics: {uniqueness: 3, agent_failure_importance: 4, coverage_gap: 3, technical_depth: 4, verification_strength: 4, practical_value: 4, source_quality: 4}
+      maintenance_cost: LOW
+      rationale: "Panic reachability — не покрывается borrow checker."
+    - id: zeroize-constant-time
+      score: 24
+      metrics: {uniqueness: 4, agent_failure_importance: 3, coverage_gap: 3, technical_depth: 4, verification_strength: 4, practical_value: 3, source_quality: 4}
+      maintenance_cost: MEDIUM
+      rationale: "asm-верификация zeroization + constant-time."
+
+  tier_4_cross_layer: # интеграционные
+    - id: elf-linker-loader-debugger
+      score: 25
+      metrics: {uniqueness: 4, agent_failure_importance: 3, coverage_gap: 4, technical_depth: 4, verification_strength: 4, practical_value: 4, source_quality: 4}
+      maintenance_cost: MEDIUM
+      rationale: "Сквозной трейс от исходника до загрузки."
+    - id: kernel-rcu-memory-barriers
+      score: 25
+      metrics: {uniqueness: 4, agent_failure_importance: 4, coverage_gap: 4, technical_depth: 5, verification_strength: 3, practical_value: 3, source_quality: 4}
+      maintenance_cost: HIGH
+      rationale: "RCU + barriers + lockdep; сильные CVE-evals."
+    - id: dwarf-debug-info
+      score: 23
+      metrics: {uniqueness: 4, agent_failure_importance: 3, coverage_gap: 3, technical_depth: 4, verification_strength: 4, practical_value: 3, source_quality: 4}
+      maintenance_cost: MEDIUM
+      rationale: "DWARF + debug-optimized-builds."
+    - id: kernel-uaccess-safety
+      score: 24
+      metrics: {uniqueness: 3, agent_failure_importance: 4, coverage_gap: 3, technical_depth: 4, verification_strength: 4, practical_value: 4, source_quality: 4}
+      maintenance_cost: HIGH
+      rationale: "uaccess — источник kernel эксплойтов."
+    - id: ptx-assembly
+      score: 23
+      metrics: {uniqueness: 5, agent_failure_importance: 3, coverage_gap: 5, technical_depth: 4, verification_strength: 3, practical_value: 2, source_quality: 4}
+      maintenance_cost: MEDIUM
+      rationale: "PTX отсутствует, но ниша уже (GPU)."
+    - id: ebpf-verifier-reasoning
+      score: 23
+      metrics: {uniqueness: 4, agent_failure_importance: 3, coverage_gap: 3, technical_depth: 4, verification_strength: 4, practical_value: 3, source_quality: 4}
+      maintenance_cost: LOW
+      rationale: "Verifier reasoning — новый angle."
+
+  tier_5_foundational: # common-базис (создавать по мере необходимости зависимостей)
+    note: "Foundational-скиллы создаются, когда их требуют зависимости более приоритетных скиллов."
+    order: ["asm-x86-64-registers-and-addressing", "asm-calling-conventions", "asm-inline-asm-constraints", "asm-signed-unsigned-branches", "atomics-c11-cpp11-rust", "c-string-and-buffer-safety", "c-errno-and-syscall-returns", "cpp-object-lifecycle", "elf-layout-and-relocations", "embedded-volatile-and-memory-ordering", "gpu-memory-model-coherence", "llvm-ir-reading", "qemu-system-setup"]
+
+  tier_6_deferred: # низкий приоритет / нишевые
+    note: "Создаются после закрытия tiers 1-5."
+    ids: ["wasm-runtime-from-scratch", "bootloader-stages", "rtos-concurrency-and-isr", "auto-re-protocols-beyond-can", "go-rust-re", "cache-and-numa-optimization", "vectorization-reasoning", "llvm-pass-writing", "concurrency-deadlock-and-lock-ordering", "concurrency-condvar-and-spurious-wakeup", "c-signal-handler-safety", "elf-dynamic-linking-got-plt", "embedded-interrupt-and-nested", "embedded-linker-script", "cpp-move-semantics", "kernel-atomic-context", "binary-analysis-type-recovery", "performance-measurement-discipline"]
+
+# ============================================================
+# SEQUENCING RULE
+# ============================================================
+sequencing:
+  - "Tier 1 flagship создаётся первым (max value)."
+  - "Foundational-скиллы (tier 5) создаются ТОЛЬКО когда становятся зависимостью реализуемого скилла."
+  - "Каждый скилл: registry entry → SKILL.md → references → examples → tools → evals."
+  - "Stable-статус только после source-backed + verification + evals + routing + token + license валидации."

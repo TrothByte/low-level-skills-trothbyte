@@ -1,0 +1,42 @@
+// GOOD: cross-warp shared-memory exchange ordered by bar.sync.
+// Every thread stores sh[tid], then ALL threads reach bar.sync 0, then
+// every thread reads sh[(tid+1)&63] (a slot written by another warp).
+// bar.sync orders the prior accesses for all participating threads of the CTA.
+
+.version 8.0
+.target sm_80
+.address_size 64
+
+.entry good_barrier_shared
+(
+    .param .u64 gbl_out
+)
+{
+    .reg .u32  %idx, %val, %off;
+    .reg .u64  %p_out, %p_base, %p_own, %p_nbr, %off64;
+    .shared .align 4 .u32 sh[64];
+
+    ld.param.u64 %p_out, [gbl_out];
+    cvta.to.shared.u64 %p_base, sh;
+
+    // own slot: sh[tid]
+    shl.b32 %off, %tid.x, 2;
+    cvt.u64.u32 %off64, %off;
+    add.s64 %p_own, %p_base, %off64;
+    mov.u32 %val, %tid.x;
+    st.shared.u32 [%p_own], %val;
+
+    // Barrier: all threads of the CTA must reach it (same id, same count).
+    bar.sync 0;
+
+    // neighbor slot: sh[(tid+1)&63]
+    add.s32 %idx, %tid.x, 1;
+    and.b32 %idx, %idx, 63;
+    shl.b32 %off, %idx, 2;
+    cvt.u64.u32 %off64, %off;
+    add.s64 %p_nbr, %p_base, %off64;
+    ld.shared.u32 %val, [%p_nbr];
+
+    st.global.u32 [%p_out], %val;
+    ret;
+}

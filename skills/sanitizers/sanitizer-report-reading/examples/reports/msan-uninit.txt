@@ -1,0 +1,16 @@
+=== ILLUSTRATIVE FIXTURE (hand-written, modeled on real sanitizer output) ===
+Report:   MemorySanitizer: use-of-uninitialized-value
+Program:  tools/pktcheck
+Build:    clang -O1 -g -fsanitize=memory -fsanitize-memory-track-origins=2 -fno-omit-frame-pointer -o pktcheck tools/pktcheck.c
+
+==54321==WARNING: MemorySanitizer: use-of-uninitialized-value
+    #0 0x55f0ab17d210 in checksum tools/pktcheck.c:25:16
+    #1 0x55f0ab17d300 in handle_packet tools/pktcheck.c:88:5
+    #2 0x55f0ab17d400 in main tools/pktcheck.c:40:7
+
+  Uninitialized value was created by a heap allocation
+    #0 0x55f0ab17e0a8 in __msan_malloc (/tmp/pktcheck+0x200a8)
+    #1 0x55f0ab17d250 in alloc_packet tools/pktcheck.c:41:16
+    #2 0x55f0ab17d400 in main tools/pktcheck.c:35:7
+
+SUMMARY: MemorySanitizer: use-of-uninitialized-value tools/pktcheck.c:25:16 in checksum

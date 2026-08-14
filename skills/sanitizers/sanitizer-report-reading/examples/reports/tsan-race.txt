@@ -1,0 +1,28 @@
+=== ILLUSTRATIVE FIXTURE (hand-written, modeled on real sanitizer output) ===
+Report:   data race (READ vs WRITE)
+Program:  tools/jobsched
+Build:    clang -O1 -g -fsanitize=thread -fno-omit-frame-pointer -o jobsched tools/jobsched.c
+
+==================
+WARNING: ThreadSanitizer: data race (pid=31648)
+  Read of size 4 at 0x7b100000a180 by thread T1:
+    #0 0x55f0ab15d210 in worker_report tools/jobsched.c:33:17
+    #1 0x55f0ab15d300 in worker_main tools/jobsched.c:78:5
+    #2 0x55f0ab15d3a0 in _thread_start libtsan.so+0x3a0
+
+  Previous write of size 4 at 0x7b100000a180 by thread T0:
+    #0 0x55f0ab15c500 in schedule_tick tools/jobsched.c:58:9
+    #1 0x55f0ab15c600 in sched_loop tools/jobsched.c:91:5
+    #2 0x55f0ab15c700 in main tools/jobsched.c:45:5
+
+  Location is heap block of size 24 at 0x7b100000a180 allocated by thread T0:
+    #0 0x55f0ab15e0a8 in __interceptor_malloc (/tmp/jobsched+0x200a8)
+    #1 0x55f0ab15c900 in stats_new tools/jobsched.c:12:9
+    #2 0x55f0ab15c700 in main tools/jobsched.c:45:5
+
+  Thread T1 'worker' (running) created by thread T0 at:
+    #0 0x55f0ab15d000 in pthread_create
+    #1 0x55f0ab15c800 in spawn_worker tools/jobsched.c:120:5
+    #2 0x55f0ab15c700 in main tools/jobsched.c:45:5
+
+SUMMARY: ThreadSanitizer: data race tools/jobsched.c:33:17 in worker_report

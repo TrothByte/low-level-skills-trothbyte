@@ -1,0 +1,36 @@
+// GOOD: device-wide atomics with explicit ordering and scope.
+// atom without .sem/.scope defaults to .relaxed and .gpu - usually NOT
+// what a flag protocol needs. State the ordering you require.
+
+.version 8.0
+.target sm_80
+.address_size 64
+
+.entry good_atomic_add
+(
+    .param .u64 gbl_counter
+)
+{
+    .reg .u32  %old;
+    .reg .u64  %p;
+
+    ld.param.u64 %p, [gbl_counter];
+
+    // Relaxed counter (atomicity only, no ordering) - correct for stats.
+    atom.global.add.u32 %old, [%p], 1;
+
+    // Release increment: prior writes become visible to an acquire reader.
+    atom.global.release.gpu.add.u32 %old, [%p], 1;
+
+    // Compare-and-swap loop: claim the resource only if it was free.
+    mov.u32 %old, 0;
+$cas:
+    atom.global.acq_rel.gpu.cas.b32 %old, [%p], 0, 1;
+    setp.eq.u32 %p0, %old, 0;
+    @!%p0 bra $cas;
+
+    // Fire-and-forget reduction (no returned value).
+    red.global.relaxed.gpu.add.u32 [%p], 1;
+
+    ret;
+}

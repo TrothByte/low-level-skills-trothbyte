@@ -1,0 +1,72 @@
+# Progress Tracking — Low-level skills TrothByte
+# Главный источник состояния проекта. Обновляется после каждого существенного действия.
+
+current_phase: "POLISH — брендинг TrothByte, docs консолидированы"
+current_task: "Поддержка: evals/calibration/license audit"
+current_subtask: "Репозиторий переименован в 'Low-level skills TrothByte'; docs консолидированы (ACKNOWLEDGMENTS перенесён в docs/, создан docs/SKILLS.md, неважные доки удалены); README переписан. Далее: PHASE 15-21 (evals), PHASE 22 (license audit)"
+completed_phases:
+  - "PHASE 0 — REPOSITORY BOOTSTRAP"
+  - "PHASE 1 — RESEARCH INGESTION"
+  - "PHASE 2 — COVERAGE MATRIX"
+  - "PHASE 3 — UNIQUE SKILL DISCOVERY"
+  - "PHASE 4 — PRIORITIZATION"
+  - "PHASE 5 — PRIMARY SOURCE REGISTRY"
+  - "PHASE 6 — CLAIM / PROVENANCE MODEL"
+  - "PHASE 7 — ARCHITECTURE"
+  - "PHASE 8 — SKILL SCHEMA"
+  - "PHASE 9 — KNOWLEDGE LAYER (references во всех skills)"
+  - "PHASE 10 — BEHAVIOR LAYER (6 meta-skills)"
+  - "PHASE 11 — TOOLING (4/22 shared tools реализованы, остальные зарегистрированы)"
+  - "PHASE 12 — DEPENDENCY GRAPH (cross-links.yaml)"
+  - "PHASE 13 — IMPLEMENT SKILLS (60/60)"
+  - "PHASE 23 — QUALITY GATES (валидаторы чистые)"
+completed_tasks:
+  - "PHASE 0-8: система (roadmap + registry + docs) создана"
+  - "PHASE 13: все 60 skills реализованы (5 параллельных батчей субагентов)"
+  - "Батч 1 (Tier 1-3): compiler-ub-assumptions, abi-layout-reasoning, memory-ordering-reasoning, safe-low-level-from-scratch, ffi-boundary-cross-language, embedded-mpu-trustzone, raii-descriptor-types-api-design, sanitizer-agent-ci-loop, rust-unsafe-reasoning, rust-ffi-boundary, simd-vectorization-cross-layer, sanitizer-report-reading, rust-panic-safety, zeroize-constant-time, c-undefined-behavior, c-integer-promotion-and-conversion, 6 meta-skills"
+  - "Батч 2 (Tier 4): elf-linker-loader-debugger, kernel-rcu-memory-barriers, dwarf-debug-info, kernel-uaccess-safety, ptx-assembly, ebpf-verifier-reasoning"
+  - "Батч 3 (Tier 5, 14): asm-x86-64-registers-and-addressing, asm-calling-conventions, asm-inline-asm-constraints, asm-signed-unsigned-branches, asm-optimizer-artifacts, atomics-c11-cpp11-rust, c-string-and-buffer-safety, c-errno-and-syscall-returns, cpp-object-lifecycle, elf-layout-and-relocations, embedded-volatile-and-memory-ordering, gpu-memory-model-coherence, llvm-ir-reading, qemu-system-setup"
+  - "Батч 4 (Tier 6, 18): wasm-runtime-from-scratch, bootloader-stages, rtos-concurrency-and-isr, auto-re-protocols-beyond-can, go-rust-re, cache-and-numa-optimization, vectorization-reasoning, llvm-pass-writing, concurrency-deadlock-and-lock-ordering, concurrency-condvar-and-spurious-wakeup, c-signal-handler-safety, elf-dynamic-linking-got-plt, embedded-interrupt-and-nested, embedded-linker-script, cpp-move-semantics, kernel-atomic-context, binary-analysis-type-recovery, performance-measurement-discipline"
+  - "PHASE 23: quality gates прогнаны финально — registry_check 0 ошибок, skill_lint 60/60 OK, source_check 0 WARN"
+  - "Фикс примера embedded-linker-script: векторная таблица переведена на CMSIS-паттерн (isr_t указатели) — исправлена ошибка host-компиляции"
+  - "POLISH: созданы 23 domain-README (навигация для нейросети/человека), переписан корневой README (product-grade), создан ACKNOWLEDGMENTS.md (18 репозиториев + стандарты + доклады + исследователи), удалён мусор из корня (10 asm/txt дампов + дубликат Agent.md), исследовательские документы перенесены в research/, docs/architecture.md обновлён, создан tools/reports/gen_domain_readmes.py"
+  - "POLISH 2 (TrothByte): проект переименован в 'Low-level skills TrothByte' (README, LICENSE.md, AGENTS.md, docs/*); ACKNOWLEDGMENTS.md перенесён в docs/; удалены 5 внутренних процесс-доков (authoring/evaluation/licensing/sources/token-optimization) — их содержание консолидировано в registry/*.yaml, LICENSE.md и architecture.md; создан docs/SKILLS.md (каталог всех 60 skills, генератор tools/reports/gen_skills_catalog.py); README переписан в красивом product-стиле; битые ссылки в 7 skill-файлах исправлены на registry/evals.yaml и registry/sources.yaml"
+blocked_tasks:
+  - "researched skills (13): требуют недоступного тулчейна — sanitizer-report-reading/ptx/ebpf/gpu/llvm/qemu (nvcc, clang-bpf, LLVM, QEMU, sanitizer-рантаймы). Возвышение до source-backed возможно на Linux/GPU-хосте"
+files_read:
+  - "Agent.md"
+  - "Анализ скиллов.md"
+  - "Энциклопедия — первичные источники и валидация.md"
+files_created:
+  - "AGENTS.md, README.md, LICENSE"
+  - "roadmap/: progress.yaml, research-ingestion.yaml, coverage.yaml, unique-skills.yaml, priorities.yaml"
+  - "registry/: sources.yaml, skills.yaml, claims.yaml, cross-links.yaml, tools.yaml, evals.yaml"
+  - "docs/: architecture.md, authoring.md, sources.md, evaluation.md, licensing.md, token-optimization.md"
+  - "tools/: lint/skill_lint.py, lint/registry_check.py, tokens/token_measure.py, source/source_check.py"
+  - "skills/: 60 skill-директорий (SKILL.md + references + examples + evals)"
+files_modified:
+  - "registry/skills.yaml (статусы 60 skills, summary)"
+  - "skills/embedded/embedded-linker-script/examples/good/startup.c (CMSIS vector table)"
+  - "tools/source/source_check.py (токен-матчинг, alias-цитаты)"
+research_status:
+  - "Все inventories: COMPLETE"
+skill_status:
+  registered: 60
+  implemented: 60
+  source_backed: 47
+  researched: 13
+  evaluated: 0
+  stable: 0
+  all_registered_implemented: true
+source_status:
+  registry_sources: 62
+  claims_registered: 17
+eval_status:
+  cve_core_set: 8
+  cve_secondary_set: 8
+  adversarial_cases: 12
+  routing_cases: 5
+  fp_cases: 5
+  eval_harnesses_built: "Каждый skill имеет evals/README.md с synthetic/FP/adversarial кейсами и verified facts"
+last_completed_action: "POLISH 2: брендинг 'Low-level skills TrothByte' во всех документах; docs консолидированы — ACKNOWLEDGMENTS перенесён в docs/, создан docs/SKILLS.md (каталог всех 60 skills с описаниями), удалены 5 внутренних доков, README переписан, LICENSE.md обновлён, ссылки в skills исправлены. Валидаторы чистые"
+next_action: "PHASE 15-21: прогнать synthetic/FP/CVE/adversarial evals по evals/README.md каждого skill; PHASE 22: license audit; PHASE 19-20: routing/collision тесты"

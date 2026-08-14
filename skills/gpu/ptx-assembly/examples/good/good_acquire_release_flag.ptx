@@ -1,0 +1,51 @@
+// GOOD: cross-CTA publish/consume with acquire/release at .gpu scope.
+// Block 0 thread 0: writes the data, then release-stores the flag.
+// Block 1 thread 0: acquire-loads the flag in a loop, then reads the data.
+// The release/acquire pair creates the happens-before edge; without it
+// (see bad_flag_ordering.ptx) the data read could be stale.
+
+.version 8.0
+.target sm_80
+.address_size 64
+
+.entry good_acquire_release_flag
+(
+    .param .u64 gbl_data,
+    .param .u64 gbl_flag
+)
+{
+    .reg .u32  %val, %flag;
+    .reg .u64  %p_data, %p_flag;
+    .reg .pred %p, %is_owner;
+
+    ld.param.u64 %p_data, [gbl_data];
+    ld.param.u64 %p_flag, [gbl_flag];
+
+    setp.eq.u32 %is_owner, %ctaid.x, 0;
+    @%is_owner bra $producer;
+
+    // Consumer: only block 1, thread 0.
+    setp.eq.u32 %p, %ctaid.x, 1;
+    @!%p bra $done;
+    setp.eq.u32 %p, %tid.x, 0;
+    @!%p bra $done;
+
+$retry:
+    ld.global.acquire.gpu.b32 %flag, [%p_flag];
+    setp.ne.u32 %p, %flag, 1;
+    @%p bra $retry;
+    // Data published before the release is now visible.
+    ld.global.u32 %val, [%p_data];
+    st.global.u32 [%p_flag], 0;
+    bra $done;
+
+$producer:
+    setp.eq.u32 %p, %tid.x, 0;
+    @!%p bra $done;
+    mov.u32 %val, 42;
+    st.global.u32 [%p_data], %val;
+    st.global.release.gpu.b32 [%p_flag], 1;
+
+$done:
+    ret;
+}

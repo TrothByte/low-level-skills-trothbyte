@@ -1,0 +1,829 @@
+# Unique Skills Registry — обнаружение и дифференциация уникальных skills
+# Каждый skill регистрируется ЗДЕСЬ ДО создания SKILL.md.
+# type: unique | improved | cross-layer | common
+# priority: high | medium | low
+
+meta:
+  purpose: "Обоснование уникальности каждого skill относительно существующих repositories."
+  updated: 2026-08-14
+  source_docs: ["research-ingestion.yaml", "coverage.yaml"]
+
+skills:
+
+  # ================= CROSS-LAYER FLAGSHIP =================
+
+  - id: safe-low-level-from-scratch
+    title: "Write Safe Low-Level Code From Scratch"
+    domain: cross-language
+    type: cross-layer
+    existing_coverage: "trailofbits (audit), wshobson (survey), mohitmishra786 (tools) — но нет единого reasoning-процесса написания безопасного нового кода"
+    gap: "Раскол между security-аудитом существующего кода и написанием нового безопасного кода"
+    uniqueness: "Интеграция UB-семантики + alignment + atomics + ownership в единый процесс написания"
+    why_it_matters: "Главная систематическая ошибка агентов — 'it compiles therefore correct'; нужен позитивный путь проектирования без UB"
+    target_agent_failure: ["B2", "B5", "A2", "A9"]
+    primary_sources: ["C11 J.2", "C++ [intro.abstract]", "Rust behavior-considered-undefined"]
+    verification: ["-Wall -Werror + sanitizers + compiler explorer asm review"]
+    eval_strategy: "synthetic: пиши с нуля 3 функции с UB-ловушками; проверка что агент сам не вносит UB"
+    dependencies: []
+    priority: high
+
+  - id: abi-layout-reasoning
+    title: "ABI Struct Layout & Calling Convention Reasoning"
+    domain: abi
+    type: cross-layer
+    existing_coverage: "mohitmishra786 abi-and-calling-conventions (справочник), trailofbits repr-c (баг-класс)"
+    gap: "Нет единого reasoning-процесса: layout вычисление + регистровое/стековое распределение + asm-проверка"
+    uniqueness: "ABI + compiler + assembly в единый verifiable процесс"
+    why_it_matters: "ABI-ошибки компилируются, но ломают FFI/вызовы — классическая скрытая ошибка"
+    target_agent_failure: ["B15", "A23", "A20"]
+    primary_sources: ["SysV AMD64 ABI 3.2/3.3", "AAPCS64 6", "RISC-V psABI", "Itanium C++ ABI"]
+    verification: ["компилировать + objdump prologue + ABI compliance tests"]
+    eval_strategy: "struct передача по регистрам vs стек; varargs; alignment trap"
+    dependencies: ["asm-calling-conventions", "elf-layout-and-relocations"]
+    priority: high
+
+  - id: memory-ordering-reasoning
+    title: "Memory Ordering & Atomics Reasoning (C11/C++11/Rust unified)"
+    domain: concurrency
+    type: improved
+    existing_coverage: "trailofbits atomic-race (баг-класс), mohitmishra786 memory-model (справочник)"
+    gap: "Memory ordering как reasoning-процесс (Relaxed/Acquire/Release/SeqCst, happens-before, synchronizes-with) не покрыт глубоко"
+    uniqueness: "Единый cross-language reasoning + litmus-проверка + связь с asm-инструкциями"
+    why_it_matters: "Неверный ordering компилируется и проходит наивные тесты, но UB/data race в рантайме"
+    target_agent_failure: ["A11", "B2"]
+    primary_sources: ["C11 5.1.2.4", "C++ [intro.races]", "Rust Reference memory model", "Intel SDM Vol.3 ch.8"]
+    verification: ["TSan", "Miri", "cdschecker", "herd7 litmus"]
+    eval_strategy: "adversarial: wrong-ordering код, который 'tests pass'; litmus-тесты Dekker/Peterson"
+    dependencies: ["atomics-c11-cpp11-rust"]
+    priority: high
+
+  - id: compiler-ub-assumptions
+    title: "How the Compiler Interprets Undefined Behavior"
+    domain: compiler
+    type: improved
+    existing_coverage: "trailofbits sharp-edges, Carruth/Godbolt talks (источники)"
+    gap: "Нет systematic скилла с asm-демонстрацией assumption-based оптимизаций"
+    uniqueness: "Превращает 'почему компилятор так сделал' в воспроизводимый reasoning с compiler explorer"
+    why_it_matters: "Агенты 'полагаются на компиляцию' и не понимают, что UB = компилятор может удалить проверку"
+    target_agent_failure: ["B2", "A2"]
+    primary_sources: ["Carruth GIGO", "Godbolt talk", "GCC/Clang optimization docs"]
+    verification: ["compiler explorer на -O0/-O2/-O3", "-fopt-info", "сравнение asm"]
+    eval_strategy: "signed overflow loop → infinite; deleted null check; strict aliasing violation"
+    dependencies: ["asm-optimizer-artifacts"]
+    priority: high
+
+  - id: ffi-boundary-cross-language
+    title: "Cross-Language FFI Boundary (C↔Rust↔C++↔Zig↔WASM)"
+    domain: ffi
+    type: cross-layer
+    existing_coverage: "trailofbits rust-review ffi-cross-language (Rust-centric), zig c-interop"
+    gap: "Единая таблица layout/ownership/error-translation/unwind для всех пар языков отсутствует"
+    uniqueness: "Cross-language ownership + unwind + opaque handle в один скилл"
+    why_it_matters: "FFI-граница — место, где safe-гарантии каждого языка заканчиваются"
+    target_agent_failure: ["A20", "A21", "A22", "B15"]
+    primary_sources: ["Rustonomicon FFI", "C++ Core Guidelines I.*", "Itanium ABI", "Zig c-interop docs"]
+    verification: ["cross-language test harness", "valgrind across boundary", "panic/unwind test"]
+    eval_strategy: "foreign drop, CString dangling, panic через extern C"
+    dependencies: ["abi-layout-reasoning"]
+    priority: high
+
+  - id: simd-vectorization-cross-layer
+    title: "SIMD & Auto-Vectorization Reasoning"
+    domain: simd
+    type: cross-layer
+    existing_coverage: "mohitmishra786 simd-intrinsics, arm-sve"
+    gap: "SIMD + compiler vectorization + assembly как единый процесс отсутствует"
+    uniqueness: "Чтение -fopt-info + блокеры векторизации + интринсики в один verifiable процесс"
+    why_it_matters: "Векторизация — главный источник перфоманс-регрессий и скрытых UB (aliasing)"
+    target_agent_failure: ["B22", "A9"]
+    primary_sources: ["Intel Intrinsics Guide", "ARM NEON/SVE ACLE", "Agner Fog"]
+    verification: ["-fopt-info-vec", "-Rpass=loop-vectorize", "runtime correctness + perf"]
+    eval_strategy: "векторизационный блокер (aliasing), trip count, shuffle/gather"
+    dependencies: ["asm-x86-64-registers-and-addressing"]
+    priority: high
+
+  - id: elf-linker-loader-debugger
+    title: "ELF + Linker + Loader + Debugger as One Pipeline"
+    domain: elf
+    type: cross-layer
+    existing_coverage: "mohitmishra786 (elf-inspection, linkers-lto, dynamic-linking отдельно)"
+    gap: "Relocation → GOT/PLT → lazy binding → .init_array → debugger как единый процесс отсутствует"
+    uniqueness: "Сквозной трейс от исходника до динамической загрузки"
+    why_it_matters: "Символьные/линковочные/загрузочные ошибки — отдельный класс, который агенты не связывают вместе"
+    target_agent_failure: ["B19", "A23"]
+    primary_sources: ["SysV ABI ELF chapters", "binutils docs", "DWARF v5"]
+    verification: ["readelf", "objdump -R", "nm", "gdb", "llvm-dwarfdump"]
+    eval_strategy: "relocation resolution, PLT/GOT lazy binding, .init_array order"
+    dependencies: ["dwarf-debug-info"]
+    priority: medium
+
+  - id: kernel-rcu-memory-barriers
+    title: "Kernel Concurrency: RCU & Memory Barriers"
+    domain: kernel
+    type: cross-layer
+    existing_coverage: "mohitmishra786 kernel-concurrency + memory-model (отдельно)"
+    gap: "RCU + memory barriers + lockdep + atomic context как единый cross-layer отсутствует"
+    uniqueness: "Kernel memory model + concurrency в один скилл с KASAN/lockdep верификацией"
+    why_it_matters: "Kernel concurrency bugs — самые дорогие и трудно воспроизводимые"
+    target_agent_failure: ["A10", "A11", "B5"]
+    primary_sources: ["Linux memory-barriers.txt", "RCU documentation", "LKML"]
+    verification: ["QEMU boot", "lockdep", "KASAN", "syzkaller"]
+    eval_strategy: "CVE-2022-0185, CVE-2016-5195; missing barrier case"
+    dependencies: ["memory-ordering-reasoning", "kernel-uaccess-safety"]
+    priority: medium
+
+  # ================= UNIQUE (практически отсутствуют) =================
+
+  - id: embedded-mpu-trustzone
+    title: "Embedded Security: MPU & TrustZone"
+    domain: embedded
+    type: unique
+    existing_coverage: "none — не покрыто ни одним репозиторием"
+    gap: "embedded-безопасность (MPU/TrustZone, безопасные MCU-библиотеки) отсутствует везде"
+    uniqueness: "Полностью отсутствует"
+    why_it_matters: "Embedded-безопасность критична для firmware, но ни один skill репозиторий не покрывает"
+    target_agent_failure: ["B20"]
+    primary_sources: ["ARM Cortex-M TRM", "ARM TrustZone TRM", "CMSIS"]
+    verification: ["QEMU cortex-m", "hardware fault injection test"]
+    eval_strategy: "MPU region misconfiguration, TrustZone transition"
+    dependencies: ["embedded-volatile-and-memory-ordering"]
+    priority: high
+
+  - id: ptx-assembly
+    title: "PTX Assembly & SASS Reasoning"
+    domain: gpu
+    type: unique
+    existing_coverage: "none — NVIDIA имеет cuTile/Triton, не PTX"
+    gap: "PTX-ассемблер не покрыт нигде"
+    uniqueness: "Полностью отсутствует"
+    why_it_matters: "Понимание PTX/SASS нужно для GPU-оптимизации и отладки memory divergence"
+    target_agent_failure: ["B2"]
+    primary_sources: ["PTX ISA spec", "CUDA C++ Programming Guide", "SASS disassembly"]
+    verification: ["nvcc -ptx", "cuobjdump", "Nsight Compute"]
+    eval_strategy: "PTX memory fence/scope case, warp divergence"
+    dependencies: ["gpu-memory-model-coherence"]
+    priority: medium
+
+  - id: sanitizer-agent-ci-loop
+    title: "Sanitizer Integration in the Agent CI Loop"
+    domain: sanitizers
+    type: unique
+    existing_coverage: "Z3 (специфичный образец), trailofbits testing-handbook (методичка)"
+    gap: "Универсальный скилл 'встроить ASan/TSan/MSan в агентский цикл' отсутствует"
+    uniqueness: "Готовый workflow, не привязанный к Z3"
+    why_it_matters: "Агенты не запускают санитайзеры даже на C/C++ где это обязательно"
+    target_agent_failure: ["B5", "B22"]
+    primary_sources: ["ASan/UBSan/TSan/MSan docs"]
+    verification: ["ASan/UBSan/TSan runs + regression DB pattern"]
+    eval_strategy: "issue #181 (ASan без -m none → fuzzer молча умирает)"
+    dependencies: ["sanitizer-report-reading"]
+    priority: high
+
+  - id: raii-descriptor-types-api-design
+    title: "RAII & Descriptor-Type API Design (positive patterns)"
+    domain: cpp
+    type: unique
+    existing_coverage: "только 'не делай X'; позитивных паттернов проектирования нет"
+    gap: "Типы-дескрипторы, идиомы владения, error-модель как позитивный скилл отсутствуют"
+    uniqueness: "Позитивный скилл проектирования (C-NEWTYPE, R.12, matklad Preconditions)"
+    why_it_matters: "Агенты знают 'не use raw pointer', но не умеют проектировать типы-дескрипторы"
+    target_agent_failure: ["B8", "A6"]
+    primary_sources: ["C++ CG R.*", "Rust API C-NEWTYPE", "matklad Preconditions"]
+    verification: ["API review checklist", "compile + sanitizers"]
+    eval_strategy: "спроектируй RAII-обёртку над fd/handle; исключение-безопасность"
+    dependencies: ["cpp-object-lifecycle"]
+    priority: high
+
+  - id: auto-re-protocols-beyond-can
+    title: "Auto Reverse-Engineering of Protocols (beyond CAN)"
+    domain: reverse-engineering
+    type: unique
+    existing_coverage: "только CSS-Electronics (CAN)"
+    gap: "Промышленные/UART-протоколы не покрыты"
+    uniqueness: "Обобщение детерминированного RE-конвейера на другие протоколы"
+    why_it_matters: "Авто-RE конвейер (survey→correlate→bitsearch→verify-as-gate) — переносимый паттерн"
+    target_agent_failure: ["B10"]
+    primary_sources: ["CSS-Electronics methodology", "protocol specs"]
+    verification: ["verify-as-gate PASS/UNCONFIRMED"]
+    eval_strategy: "UART-протокол декодирование, rolling counter detection"
+    dependencies: []
+    priority: low
+
+  - id: wasm-runtime-from-scratch
+    title: "WASM Runtime & Validator Internals"
+    domain: wasm
+    type: unique
+    existing_coverage: "только emscripten/wasmtime usage"
+    gap: "Написание WASM-рантайма/валидатора с нуля отсутствует"
+    uniqueness: "Полностью отсутствует"
+    why_it_matters: "Понимание WASM memory model / linear memory / table критично для WASM-безопасности"
+    target_agent_failure: ["B2"]
+    primary_sources: ["WebAssembly core spec", "WASM JS API"]
+    verification: ["wat2wasm round-trip", "spec tests"]
+    eval_strategy: "linear memory bounds case, validation case"
+    dependencies: []
+    priority: low
+
+  - id: bootloader-stages
+    title: "Bootloader Stages & Early Boot"
+    domain: bootloader
+    type: unique
+    existing_coverage: "только firmware-RE (offensive)"
+    gap: "Написание bootloader (stage 1/2, relocation, long mode, A20) отсутствует"
+    uniqueness: "Полностью отсутствует"
+    why_it_matters: "Early boot — зона максимальной хрупкости; нет defensive скилла"
+    target_agent_failure: ["B20"]
+    primary_sources: ["U-Boot docs", "AArch64 boot protocol", "Intel SDM boot"]
+    verification: ["QEMU boot", "GDB early boot"]
+    eval_strategy: "relocation bug, A20 gate, long mode transition"
+    dependencies: ["asm-x86-64-registers-and-addressing"]
+    priority: low
+
+  - id: rtos-concurrency-and-isr
+    title: "RTOS Concurrency & ISR Discipline"
+    domain: rtos
+    type: unique
+    existing_coverage: "Jeffallan embedded (шаблоны), но не RTOS-специфично"
+    gap: "FreeRTOS/Zephyr concurrency (priority inversion, ISR deferral) не покрыт"
+    uniqueness: "Полностью отсутствует"
+    why_it_matters: "RTOS-специфичные ошибки (priority inversion, blocking in ISR) не покрыты"
+    target_agent_failure: ["A14"]
+    primary_sources: ["FreeRTOS docs", "Zephyr RTOS docs"]
+    verification: ["QEMU", "hardware", "tracing"]
+    eval_strategy: "priority inversion, blocking in ISR"
+    dependencies: ["embedded-interrupt-and-nested"]
+    priority: low
+
+  # ================= IMPROVED (тема есть, но мы глубже) =================
+
+  - id: c-undefined-behavior
+    title: "C Undefined Behavior Taxonomy & Detection"
+    domain: c
+    type: improved
+    existing_coverage: "trailofbits c-review (баг-классы), cppreference (список)"
+    gap: "Нет скилла, систематизирующего J.2 191 UB-пункт в операционные категории с detection"
+    uniqueness: "Полный таксономический скилл J.2 → категории → как поймать (UBSan/compiler)"
+    why_it_matters: "UB — корень большинства C-багов; агенты не знают полную карту"
+    target_agent_failure: ["B2", "A2", "A7"]
+    primary_sources: ["C11 J.2", "cppreference C behavior", "CERT C"]
+    verification: ["UBSan", "compiler explorer", "clang-tidy"]
+    eval_strategy: "CVE-2022-3602 (off-by-one), signed overflow cases"
+    dependencies: ["compiler-ub-assumptions"]
+    priority: high
+
+  - id: c-integer-promotion-and-conversion
+    title: "C Integer Promotions & Conversions"
+    domain: c
+    type: improved
+    existing_coverage: "c-review INT (баг-класс), ES.100-107 (guidelines)"
+    gap: "6.3.1.1 integer promotion / usual arithmetic conversions как reasoning-процесс не покрыт"
+    uniqueness: "Глубокий скилл по promotion/conversion с контрпримерами (что агенты считают 'очевидным')"
+    why_it_matters: "Integer promotion — источник тонких багов (unsigned vs signed, narrowing)"
+    target_agent_failure: ["A2", "B14"]
+    primary_sources: ["C11 6.3.1.1, 6.5", "CERT INT30-34", "ES.100-107"]
+    verification: ["-Wconversion -Wsign-conversion", "UBSan", "compiler explorer"]
+    eval_strategy: "CVE-2022-0185 (unsigned arithmetic), CVE-2016-8617"
+    dependencies: ["c-undefined-behavior"]
+    priority: high
+
+  - id: rust-unsafe-reasoning
+    title: "Rust Unsafe Reasoning (aliasing/validity/provenance)"
+    domain: rust
+    type: improved
+    existing_coverage: "trailofbits rust-review (баг-классы), Rustonomicon (источник)"
+    gap: "Баг-классы есть, но нет скилла про саму семантику unsafe (aliasing rules, validity, pointer provenance)"
+    uniqueness: "Глубокий reference по unsafe-семантике, которого нет нигде"
+    why_it_matters: "Агенты пишут unsafe, не понимая aliasing/validity/Stacked Borrows"
+    target_agent_failure: ["B2", "A7", "A13"]
+    primary_sources: ["Rustonomicon", "Rust Reference behavior-considered-undefined", "Stacked Borrows (Ralf Jung)"]
+    verification: ["Miri", "cargo test", "kani"]
+    eval_strategy: "aliasing violation, transmute invalidity, provenance loss"
+    dependencies: ["memory-ordering-reasoning"]
+    priority: high
+
+  - id: rust-ffi-boundary
+    title: "Rust FFI & repr(C) Safety"
+    domain: rust
+    type: improved
+    existing_coverage: "trailofbits ffi-cross-language (баг-классы)"
+    gap: "Глубокий скилл по repr(C) layout + ownership + unwind именно для Rust↔C"
+    uniqueness: "repr(C)/repr(transparent) + enum discriminant + ownership transfer в один скилл"
+    why_it_matters: "Rust FFI — где safe-гарантии заканчиваются"
+    target_agent_failure: ["A20", "A21", "A22", "A23"]
+    primary_sources: ["Rust Reference type-layout", "Rustonomicon FFI"]
+    verification: ["Miri", "valgrind", "cross-language tests"]
+    eval_strategy: "CVE-2020-36432, CString dangling, foreign drop"
+    dependencies: ["ffi-boundary-cross-language"]
+    priority: high
+
+  - id: rust-panic-safety
+    title: "Rust Panic Safety & Unwind Discipline"
+    domain: rust
+    type: improved
+    existing_coverage: "trailofbits panic-dos cluster"
+    gap: "Нет скилла по panic-достижимости и unwind-safety как единый reasoning"
+    uniqueness: "Panic reachability + unwind through FFI + catch_unwind в один скилл"
+    why_it_matters: "Panic-достижимость не покрывается borrow checker — агенты её игнорируют"
+    target_agent_failure: ["A16", "A20"]
+    primary_sources: ["Rust Reference unwinding", "Rustonomicon Unwinding"]
+    verification: ["cargo test", "Miri", "panic=abort vs unwind"]
+    eval_strategy: "unwrap on untrusted input, panic through FFI"
+    dependencies: ["rust-unsafe-reasoning"]
+    priority: medium
+
+  - id: zeroize-constant-time
+    title: "Zeroization & Constant-Time Code"
+    domain: security
+    type: improved
+    existing_coverage: "trailofbits zeroize-audit + constant-time-analysis (уникальные находки)"
+    gap: "Нет consolidated скилла, объединяющего zeroization + constant-time с asm-верификацией"
+    uniqueness: "asm-уровневая верификация (check_rust_asm) + wycheproof в один скилл"
+    why_it_matters: "Compiler-индуцированные timing side-channels и незанулённые секреты"
+    target_agent_failure: ["B2"]
+    primary_sources: ["Rust Zeroize docs", "constant-time literature", "wycheproof"]
+    verification: ["check_rust_asm_x86/aarch64", "ctgrind", "dudect"]
+    eval_strategy: "decompose_vulnerable vs decompose_constant_time"
+    dependencies: ["compiler-ub-assumptions"]
+    priority: medium
+
+  - id: sanitizer-report-reading
+    title: "Sanitizer Report Reading & Triage"
+    domain: sanitizers
+    type: improved
+    existing_coverage: "trailofbits/Z3 запускают, но не учат читать отчёты"
+    gap: "Нет скилла по интерпретации ASan/UBSan/TSan отчётов (stack trace, shadow bytes, race report)"
+    uniqueness: "Глубокий скилл чтения отчётов с примерами"
+    why_it_matters: "Агенты запускают санитайзер, но не умеют читать вывод"
+    target_agent_failure: ["B5"]
+    primary_sources: ["ASan/UBSan/TSan docs"]
+    verification: ["реальные отчёты на примерах"]
+    eval_strategy: "дай отчёт → найди root cause"
+    dependencies: []
+    priority: medium
+
+  - id: dwarf-debug-info
+    title: "DWARF Debug Info & Optimized-Build Debugging"
+    domain: dwarf
+    type: improved
+    existing_coverage: "trailofbits dwarf-expert (единственный), mohitmishra786 dwarf-debug-format"
+    gap: "DWARF + optimization + debugging (value optimized out) как единый reasoning не покрыт"
+    uniqueness: "DWARF-экспертиза + debug-optimized-builds в один скилл"
+    why_it_matters: "Debug-optimized-builds — зона, где агенты путаются (value optimized out)"
+    target_agent_failure: ["B19"]
+    primary_sources: ["DWARF v5 spec", "GDB manual"]
+    verification: ["llvm-dwarfdump", "gdb", "readelf --debug-dump"]
+    eval_strategy: "optimized-out variable, location list case"
+    dependencies: ["elf-linker-loader-debugger"]
+    priority: medium
+
+  - id: go-rust-re
+    title: "Go & Rust Binary Reverse Engineering"
+    domain: reverse-engineering
+    type: improved
+    existing_coverage: "zhaoxuya520 go-rust-reverse (1,9 КБ)"
+    gap: "Глубокий скилл по pclntab/GoReSym и rust_begin_unwind/panic-strings"
+    uniqueness: "Раздельная методика Go/Rust-RE с глубиной"
+    why_it_matters: "Go/Rust бинари — растущий класс, агенты применяют C-методики"
+    target_agent_failure: ["B15"]
+    primary_sources: ["Go runtime source", "GoReSym", "Rust std source"]
+    verification: ["GoReSym", "objdump", "Ghidra"]
+    eval_strategy: "pclntab recovery, panic string xref"
+    dependencies: ["binary-analysis-type-recovery"]
+    priority: low
+
+  # ================= COMMON (нужны для полноты, приоритет ниже) =================
+
+  - id: asm-calling-conventions
+    title: "Assembly Calling Conventions (SysV/AAPCS64/psABI)"
+    domain: assembly
+    type: common
+    existing_coverage: "mohitmishra786 assembly-x86/arm/riscv"
+    gap: "Нужен как foundational dependency для cross-layer скиллов"
+    uniqueness: "Common, но обязателен для полноты"
+    why_it_matters: "Базис для ABI/FFI/asm скиллов"
+    target_agent_failure: ["A20", "A23"]
+    primary_sources: ["SysV AMD64 ABI", "AAPCS64", "RISC-V psABI"]
+    verification: ["objdump", "compile + disassemble"]
+    eval_strategy: "arg passing case, callee-saved case"
+    dependencies: []
+    priority: medium
+
+  - id: asm-x86-64-registers-and-addressing
+    title: "x86-64 Registers, Addressing & Flags"
+    domain: assembly
+    type: common
+    existing_coverage: "mohitmishra786 assembly-x86, wshobson binary-analysis-patterns"
+    gap: "Foundational reference"
+    uniqueness: "Common"
+    why_it_matters: "Базис для asm-скиллов"
+    target_agent_failure: ["B2"]
+    primary_sources: ["Intel SDM Vol.1-2", "AMD64 APM"]
+    verification: ["objdump", "gdb disas"]
+    eval_strategy: "addressing mode case"
+    dependencies: []
+    priority: medium
+
+  - id: asm-inline-asm-constraints
+    title: "Inline Assembly (GCC extended asm & Rust asm!)"
+    domain: assembly
+    type: common
+    existing_coverage: "mohitmishra786 assembly-x86 (constraint codes), НО Rust asm! отсутствует"
+    gap: "GCC extended asm constraints + Rust asm! как систематический reference"
+    uniqueness: "Common, но Rust asm! часть уникальна"
+    why_it_matters: "Inline asm — источник UB и ABI-ошибок"
+    target_agent_failure: ["B2", "A7"]
+    primary_sources: ["GCC inline asm docs", "Rust asm! RFC"]
+    verification: ["compile + objdump", "Miri"]
+    eval_strategy: "wrong clobber, missing memory clobber"
+    dependencies: ["asm-x86-64-registers-and-addressing"]
+    priority: medium
+
+  - id: asm-signed-unsigned-branches
+    title: "Signed vs Unsigned Branches & Division in Assembly"
+    domain: assembly
+    type: common
+    existing_coverage: "wshobson binary-analysis-patterns (идиомы)"
+    gap: "Foundational — jge/jae, sar/shr, cdq"
+    uniqueness: "Common"
+    why_it_matters: "Классическая путаница signed/unsigned"
+    target_agent_failure: ["B2"]
+    primary_sources: ["Intel SDM Vol.2"]
+    verification: ["objdump", "compile -O2"]
+    eval_strategy: "signed vs unsigned comparison case"
+    dependencies: ["asm-x86-64-registers-and-addressing"]
+    priority: medium
+
+  - id: asm-optimizer-artifacts
+    title: "Optimizer Artifacts in Assembly (tail-call, inline, PIC)"
+    domain: assembly
+    type: common
+    existing_coverage: "wshobson binary-analysis-patterns"
+    gap: "Foundational для RE/анализа"
+    uniqueness: "Common"
+    why_it_matters: "Агенты путают tail-call jmp с отсутствием вызова"
+    target_agent_failure: ["B19"]
+    primary_sources: ["GCC/Clang docs", "Intel SDM"]
+    verification: ["objdump -O0/-O2 сравнение"]
+    eval_strategy: "tail-call case, RIP-relative case"
+    dependencies: ["asm-x86-64-registers-and-addressing"]
+    priority: low
+
+  - id: atomics-c11-cpp11-rust
+    title: "Atomics API Reference (C11/C++11/Rust)"
+    domain: concurrency
+    type: common
+    existing_coverage: "mohitmishra786 memory-model, gpu-memory-model"
+    gap: "Foundational reference для memory-ordering-reasoning"
+    uniqueness: "Common"
+    why_it_matters: "API-справочник для атомиков"
+    target_agent_failure: ["A11"]
+    primary_sources: ["C11 7.17", "C++ [atomics]", "Rust std::sync::atomic"]
+    verification: ["TSan", "Miri"]
+    eval_strategy: "fetch_add ordering case"
+    dependencies: []
+    priority: medium
+
+  - id: concurrency-deadlock-and-lock-ordering
+    title: "Deadlock & Lock-Ordering Discipline"
+    domain: concurrency
+    type: common
+    existing_coverage: "trailofbits ABBA"
+    gap: "Foundational"
+    uniqueness: "Common"
+    why_it_matters: "ABBA deadlock"
+    target_agent_failure: ["A12"]
+    primary_sources: ["C++ CP.*", "CERT CON35-C"]
+    verification: ["TSan", "stress tests", "helgrind"]
+    eval_strategy: "ABBA case"
+    dependencies: ["atomics-c11-cpp11-rust"]
+    priority: low
+
+  - id: concurrency-condvar-and-spurious-wakeup
+    title: "Condition Variables & Spurious Wakeup"
+    domain: concurrency
+    type: common
+    existing_coverage: "trailofbits condvar-misuse"
+    gap: "Foundational"
+    uniqueness: "Common"
+    why_it_matters: "Spurious wakeup — классическая ошибка"
+    target_agent_failure: ["A15"]
+    primary_sources: ["CERT CON36-C", "POSIX pthread_cond"]
+    verification: ["stress tests", "TSan"]
+    eval_strategy: "missing predicate loop case"
+    dependencies: ["concurrency-deadlock-and-lock-ordering"]
+    priority: low
+
+  - id: kernel-uaccess-safety
+    title: "Kernel uaccess Safety (copy_to/from_user)"
+    domain: kernel
+    type: common
+    existing_coverage: "mohitmishra786 writing-char-drivers"
+    gap: "Foundational, но с adversarial evals углубить"
+    uniqueness: "Common (улучшенная версия)"
+    why_it_matters: "uaccess — источник kernel эксплойтов"
+    target_agent_failure: ["B15"]
+    primary_sources: ["Linux kernel docs", "LDD3"]
+    verification: ["QEMU", "KASAN", "KUnit"]
+    eval_strategy: "CVE-2021-22555, copy_from_user missing check"
+    dependencies: ["kernel-rcu-memory-barriers"]
+    priority: medium
+
+  - id: kernel-atomic-context
+    title: "Kernel Atomic Context & Interrupt Handling"
+    domain: kernel
+    type: common
+    existing_coverage: "mohitmishra786 kernel-concurrency"
+    gap: "top/bottom half, tasklet, workqueue"
+    uniqueness: "Common"
+    why_it_matters: "Сон в atomic context — критичный баг"
+    target_agent_failure: ["A14"]
+    primary_sources: ["Linux kernel docs"]
+    verification: ["lockdep", "KASAN", "QEMU"]
+    eval_strategy: "sleep in atomic context case"
+    dependencies: ["kernel-uaccess-safety"]
+    priority: low
+
+  - id: embedded-volatile-and-memory-ordering
+    title: "Embedded volatile & MMIO Memory Ordering"
+    domain: embedded
+    type: common
+    existing_coverage: "Jeffallan embedded (MUST DO volatile)"
+    gap: "volatile + barrier + device memory ordering как единый скилл"
+    uniqueness: "Common (улучшенная)"
+    why_it_matters: "volatile/MMIO — фундамент embedded"
+    target_agent_failure: ["A14", "B20"]
+    primary_sources: ["ARM memory types", "CMSIS"]
+    verification: ["QEMU", "hardware", "logic analyzer"]
+    eval_strategy: "volatile omission, missing barrier"
+    dependencies: ["memory-ordering-reasoning"]
+    priority: medium
+
+  - id: embedded-interrupt-and-nested
+    title: "Embedded Interrupts & Nested Preemption"
+    domain: embedded
+    type: common
+    existing_coverage: "Jeffallan ISR шаблоны"
+    gap: "Nested interrupts, priority, ISR deferral"
+    uniqueness: "Common"
+    why_it_matters: "ISR-дисциплина"
+    target_agent_failure: ["A14"]
+    primary_sources: ["ARM Cortex-M TRM", "CMSIS"]
+    verification: ["QEMU", "J-Link"]
+    eval_strategy: "ISR shared var race"
+    dependencies: ["embedded-volatile-and-memory-ordering"]
+    priority: low
+
+  - id: embedded-linker-script
+    title: "Embedded Linker Scripts & Memory Maps"
+    domain: embedded
+    type: common
+    existing_coverage: "mohitmishra786 bare-metal (linker scripts)"
+    gap: "Foundational"
+    uniqueness: "Common"
+    why_it_matters: "Linker script — базис bare-metal"
+    target_agent_failure: ["B19"]
+    primary_sources: ["GNU ld manual"]
+    verification: ["arm-none-eabi-gcc build", "objdump"]
+    eval_strategy: "memory map mismatch"
+    dependencies: ["elf-linker-loader-debugger"]
+    priority: low
+
+  - id: gpu-memory-model-coherence
+    title: "GPU Memory Model & Coherence Scope"
+    domain: gpu
+    type: common
+    existing_coverage: "mohitmishra786 gpu-memory-model"
+    gap: "Foundational для ptx-assembly"
+    uniqueness: "Common"
+    why_it_matters: "Coherence scope — GPU-специфика"
+    target_agent_failure: ["A10"]
+    primary_sources: ["CUDA C++ Programming Guide", "PTX ISA"]
+    verification: ["Nsight Compute", "nvcc"]
+    eval_strategy: "shared memory race"
+    dependencies: ["memory-ordering-reasoning"]
+    priority: low
+
+  - id: cpp-object-lifecycle
+    title: "C++ Object Lifecycle (ctor/dtor/init-order)"
+    domain: cpp
+    type: common
+    existing_coverage: "trailofbits cpp-semantics"
+    gap: "Foundational"
+    uniqueness: "Common"
+    why_it_matters: "init-order fiasco, virtual calls"
+    target_agent_failure: ["A27", "A28"]
+    primary_sources: ["C++ [class.init]", "C++ CG I.22"]
+    verification: ["ASan", "clang-tidy"]
+    eval_strategy: "static init fiasco, virtual in ctor"
+    dependencies: []
+    priority: medium
+
+  - id: cpp-move-semantics
+    title: "C++ Move Semantics & Use-After-Move"
+    domain: cpp
+    type: common
+    existing_coverage: "trailofbits cpp-semantics MOVE"
+    gap: "Foundational"
+    uniqueness: "Common"
+    why_it_matters: "use-after-move — тонкий баг"
+    target_agent_failure: ["A30"]
+    primary_sources: ["C++ [class.copy]", "cppreference move"]
+    verification: ["clang-tidy bugprone-use-after-move", "ASan"]
+    eval_strategy: "use-after-move case"
+    dependencies: ["cpp-object-lifecycle"]
+    priority: low
+
+  - id: c-string-and-buffer-safety
+    title: "C String & Buffer Safety (strncpy/snprintf/memcpy)"
+    domain: c
+    type: common
+    existing_coverage: "trailofbits c-review (3 баг-класса)"
+    gap: "Foundational"
+    uniqueness: "Common"
+    why_it_matters: "snprintf/strncpy — классика"
+    target_agent_failure: ["A1", "A3", "A4"]
+    primary_sources: ["CERT STR30-35", "C11 7.21"]
+    verification: ["clang-tidy", "ASan", "cppcheck"]
+    eval_strategy: "strncpy non-termination, snprintf truncation"
+    dependencies: ["c-undefined-behavior"]
+    priority: medium
+
+  - id: c-errno-and-syscall-returns
+    title: "C errno & Syscall Return Handling"
+    domain: c
+    type: common
+    existing_coverage: "trailofbits syscall-retval cluster"
+    gap: "Foundational"
+    uniqueness: "Common"
+    why_it_matters: "errno/EINTR/negative retval"
+    target_agent_failure: ["A17", "A18", "A19"]
+    primary_sources: ["CERT ERR30/33", "POSIX"]
+    verification: ["unit tests", "strace"]
+    eval_strategy: "EINTR no retry, errno late check"
+    dependencies: ["c-undefined-behavior"]
+    priority: medium
+
+  - id: c-signal-handler-safety
+    title: "C Signal Handler Safety (async-signal-safe)"
+    domain: c
+    type: common
+    existing_coverage: "trailofbits signal cluster, CERT SIG30"
+    gap: "Foundational"
+    uniqueness: "Common"
+    why_it_matters: "malloc/printf в сигнале — deadlock"
+    target_agent_failure: ["A14"]
+    primary_sources: ["CERT SIG30/31", "POSIX signal"]
+    verification: ["stress tests", "strace"]
+    eval_strategy: "non-async-safe call case"
+    dependencies: ["c-errno-and-syscall-returns"]
+    priority: low
+
+  - id: elf-layout-and-relocations
+    title: "ELF Layout & Relocations"
+    domain: elf
+    type: common
+    existing_coverage: "mohitmishra786 elf-inspection"
+    gap: "Foundational"
+    uniqueness: "Common"
+    why_it_matters: "ELF — базис для linker/loader"
+    target_agent_failure: ["B19"]
+    primary_sources: ["SysV ABI ELF", "binutils"]
+    verification: ["readelf", "objdump -R"]
+    eval_strategy: "relocation type case"
+    dependencies: []
+    priority: medium
+
+  - id: elf-dynamic-linking-got-plt
+    title: "Dynamic Linking: GOT/PLT & Lazy Binding"
+    domain: elf
+    type: common
+    existing_coverage: "mohitmishra786 dynamic-linking"
+    gap: "Foundational"
+    uniqueness: "Common"
+    why_it_matters: "GOT/PLT — базис"
+    target_agent_failure: ["B19"]
+    primary_sources: ["SysV ABI dynamic linking", "binutils"]
+    verification: ["objdump -R", "gdb"]
+    eval_strategy: "lazy binding case"
+    dependencies: ["elf-layout-and-relocations"]
+    priority: low
+
+  - id: binary-analysis-type-recovery
+    title: "Type Recovery from Assembly"
+    domain: binary-analysis
+    type: common
+    existing_coverage: "wshobson binary-analysis-patterns (таблица тип↔asm)"
+    gap: "Foundational"
+    uniqueness: "Common"
+    why_it_matters: "movzx→char, movss→float"
+    target_agent_failure: ["B19"]
+    primary_sources: ["Intel SDM", "DWARF"]
+    verification: ["objdump", "Ghidra"]
+    eval_strategy: "type recovery case"
+    dependencies: ["asm-optimizer-artifacts"]
+    priority: low
+
+  - id: performance-measurement-discipline
+    title: "Performance Measurement Discipline (measure before optimize)"
+    domain: performance
+    type: common
+    existing_coverage: "mohitmishra786 profilers"
+    gap: "Foundational"
+    uniqueness: "Common"
+    why_it_matters: "Агенты оптимизируют без измерения"
+    target_agent_failure: ["B22"]
+    primary_sources: ["perf wiki", "Agner Fog"]
+    verification: ["perf stat", "benchmark suite"]
+    eval_strategy: "optimize wrong thing case"
+    dependencies: []
+    priority: medium
+
+  - id: cache-and-numa-optimization
+    title: "Cache & NUMA Optimization"
+    domain: performance
+    type: common
+    existing_coverage: "mohitmishra786 cpu-cache-opt"
+    gap: "Foundational (NUMA не покрыт)"
+    uniqueness: "Common (NUMA часть улучшена)"
+    why_it_matters: "cache-friendly код"
+    target_agent_failure: ["B22"]
+    primary_sources: ["Intel optimization manual", "Agner Fog"]
+    verification: ["perf cache-misses", "numactl"]
+    eval_strategy: "false sharing case"
+    dependencies: ["performance-measurement-discipline"]
+    priority: low
+
+  - id: vectorization-reasoning
+    title: "Vectorization Reasoning (loop analysis)"
+    domain: simd
+    type: common
+    existing_coverage: "mohitmishra786 simd-intrinsics"
+    gap: "Foundational для simd cross-layer"
+    uniqueness: "Common"
+    why_it_matters: "векторизационные блокеры"
+    target_agent_failure: ["B22"]
+    primary_sources: ["GCC -fopt-info docs", "Intel opt manual"]
+    verification: ["-fopt-info-vec", "perf"]
+    eval_strategy: "aliasing blocker case"
+    dependencies: ["simd-vectorization-cross-layer"]
+    priority: low
+
+  - id: llvm-ir-reading
+    title: "Reading LLVM IR"
+    domain: llvm
+    type: common
+    existing_coverage: "mohitmishra786 llvm-ir-and-passes"
+    gap: "Foundational"
+    uniqueness: "Common"
+    why_it_matters: "LLVM IR — базис для pass-писания"
+    target_agent_failure: ["B2"]
+    primary_sources: ["LLVM LangRef"]
+    verification: ["clang -S -emit-llvm", "opt"]
+    eval_strategy: "IR reading case"
+    dependencies: []
+    priority: low
+
+  - id: llvm-pass-writing
+    title: "Writing LLVM Passes"
+    domain: llvm
+    type: common
+    existing_coverage: "mohitmishra786 llvm-passes"
+    gap: "Foundational, добавить evals"
+    uniqueness: "Common (с evals улучшен)"
+    why_it_matters: "pass-писание — базис compiler internals"
+    target_agent_failure: ["B2"]
+    primary_sources: ["LLVM Programmer's Manual", "New Pass Manager docs"]
+    verification: ["opt -load-pass-plugin", "llvm-lit"]
+    eval_strategy: "write pass case"
+    dependencies: ["llvm-ir-reading"]
+    priority: low
+
+  - id: qemu-system-setup
+    title: "QEMU System Emulation Setup"
+    domain: qemu
+    type: common
+    existing_coverage: "mohitmishra786 qemu (4)"
+    gap: "Foundational"
+    uniqueness: "Common"
+    why_it_matters: "QEMU — базис для kernel/embedded верификации"
+    target_agent_failure: ["B20"]
+    primary_sources: ["QEMU docs"]
+    verification: ["qemu boot"]
+    eval_strategy: "boot case"
+    dependencies: []
+    priority: low
+
+  - id: ebpf-verifier-reasoning
+    title: "eBPF Verifier Reasoning (bounded loops, map access)"
+    domain: ebpf
+    type: improved
+    existing_coverage: "mohitmishra786 ebpf (2)"
+    gap: "Verifier-безопасность не покрыта глубоко"
+    uniqueness: "Verifier reasoning — новый angle"
+    why_it_matters: "eBPF verifier отклонит небезопасный код"
+    target_agent_failure: ["B2"]
+    primary_sources: ["bpf.h", "eBPF docs", "verifier log"]
+    verification: ["bpftool", "libbpf", "verifier log"]
+    eval_strategy: "verifier rejection case"
+    dependencies: ["kernel-rcu-memory-barriers"]
+    priority: low

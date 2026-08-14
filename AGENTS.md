@@ -26,6 +26,18 @@
 14. Update progress files after every completed unit.
 15. Run repository validators before committing.
 
+## Token economy (операционные правила — экономить токены при каждом запуске)
+
+1. Подавлять шум вывода команд: `2>$null` для ожидаемого stderr (CRLF-предупреждения,
+   PowerShell-«ошибки» от git/gh), `-q`-флаги (`git commit -q`, `git push -q`,
+   `git add 2>$null` — у `git add` нет `-q`), усечение вывода `Select-Object -First/-Last N`.
+2. Читать выборочно: `grep`/`glob`/`read` с `limit`/`offset` вместо чтения файлов целиком.
+3. Параллелить независимые вызовы инструментов в одном сообщении.
+4. Валидаторы запускать один раз с усечённым выводом, а не дампить все файлы.
+5. Итоговые сообщения — коротко (3–5 буллетов, без пересказа кода).
+6. Использовать относительные пути + `workdir` вместо длинных абсолютных.
+7. Между несвязанными задачами — свежая сессия или `/compact`.
+
 ## Core development rule
 
 Do not optimize this repository for number of SKILL.md files.

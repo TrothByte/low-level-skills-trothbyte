@@ -14,6 +14,7 @@ desktop.ini
 
 # Editor
 .idea/
+.vscode/
 
 # Leftover nested repo from directory rename (do not track)
 /Low-level skills by TrothByte+/

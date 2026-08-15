@@ -31,3 +31,8 @@ jobs:
         run: |
           python tools/reports/gen_skills_catalog.py
           git diff --exit-code docs/SKILLS.md || { echo "::error::docs/SKILLS.md is stale — run tools/reports/gen_skills_catalog.py"; exit 1; }
+
+      - name: Check landing data is up to date
+        run: |
+          python tools/reports/gen_landing_data.py
+          git diff --exit-code docs/assets/skills.js || { echo "::error::docs/assets/skills.js is stale — run tools/reports/gen_landing_data.py"; exit 1; }

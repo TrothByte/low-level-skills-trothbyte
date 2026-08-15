@@ -1,0 +1,14 @@
+# BAD: // intentionally incorrect — plain-cc Makefile, not Kbuild.
+# A module built with a bare `cc` recipe has no vermagic, no modpost symbol
+# resolution, no kernel flags, and will fail `insmod` with
+# "Invalid module format". The kernel build system must drive the compile.
+all: bad_mod.ko
+
+bad_mod.o: bad_mod.c
+	cc -I/usr/src/linux-headers-6.0.0/include -c bad_mod.c -o bad_mod.o
+
+bad_mod.ko: bad_mod.o
+	ld -r bad_mod.o -o bad_mod.ko
+
+clean:
+	rm -f bad_mod.o bad_mod.ko

@@ -1,0 +1,9 @@
+rule cc
+  command = gcc -MMD -MF $out.d -c $in -o $out
+  depfile = $out.d
+  deps = gcc
+rule link
+  command = gcc $in -o $out
+build hello.o: cc hello.c
+build hello.exe: link hello.o
+default hello.exe

@@ -1,0 +1,17 @@
+// intentionally incorrect: two children of spi1 both use unit-address @0.
+// The devicetree spec requires unique unit-addresses among sibling nodes;
+// here one node shadows the other and reg overlap is ambiguous.
+&spi1 {
+    status = "okay";
+
+    st7789a: st7789@0 {
+        compatible = "sitronix,st7789v";
+        reg = <0>;
+        mdac = <0x68>;
+    };
+
+    flash0: flash@0 {
+        compatible = "jedec,spi-nor";
+        reg = <0>;
+    };
+};

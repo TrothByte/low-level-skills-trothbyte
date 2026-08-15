@@ -1,5 +1,32 @@
 # WORKLOG — Low-level skills TrothByte
 
+## 2026-08-15 — Сессия 14 (Батч 1: asm×5, source-backed + researched)
+
+### Выполнено
+
+1. **as-verification-hallucination-gate** (source-backed): примеры собраны
+   реально — gcc 16.1.0/as 2.46/objdump 2.46 (MSYS2 ucrt64, PE/COFF).
+   Зафиксированы exit-коды: invented_mnemonic=1, cdc_compass=1, att_inverted=1,
+   silent_swap/ax/esp/imul/byte_blind=0 (silent, ловятся ревью). Баиты:
+   `6b c0 26` (imul $38), `69 c0 00 00 00 00` (imul $0, nulled imm — BBoeOS
+   PR#584), `8b 00` = mov (%rax),%eax (не (%r8) — byte-blind), runtime-тесты
+   стека/AT&T swap exit 0.
+2. **asm-syntax-dialects-nasm-gas-att** (source-backed GAS-половина):
+   `gcc -S` (AT&T) vs `gcc -S -masm=intel`; `.intel_syntax noprefix` и
+   uppercase-мнемоники в GAS собраны (exit 0); bad/att_order=1, bad/att_immediate=0
+   (silent: `8b 04 25 05 00 00 00` = mov 0x5,%eax). NASM-правила (4 класса
+   ocrosby, `$` в 3.x) — researched, nasm отсутствует, честно помечено.
+3. **asm-arm-thumb-2-encoding** (researched): cbz r0–r7, IT-блоки, диапазоны.
+   Verification cmd: `clang --target=armv7m-none-eabi -mthumb -c`. Не запускалось.
+4. **asm-aarch64-neon-simd-safety** (researched): per-lane overflow guard
+   (Lemire 1200→154), насыщение sq*/uq*. Verification cmd:
+   `clang --target=aarch64-none-elf -march=armv8-a+simd -c`. Не запускалось.
+5. **asm-risc-v-registers-and-calling-conventions** (researched): s0/ra-кадр
+   16 байт, callee-saved, leaf. Verification cmd:
+   `clang --target=riscv64-unknown-elf -march=rv64gc -S`. Не запускалось.
+6. **Валидаторы**: skill_lint 5/5 OK (все 9 секций, body ≤300 строк, description
+   ≤50 слов), source_check 0 WARN по новым скиллам, registry не трогался.
+
 ## 2026-08-14 — Сессия 1
 
 ### Выполнено
@@ -129,3 +156,209 @@ nvcc, clang-bpf, LLVM, QEMU, sanitizer-рантаймы).
 2. PHASE 19-20: routing evals + collision testing.
 3. PHASE 22: license audit по всем references.
 4. PHASE 14: token-оптимизация; перепроверка researched skills на хосте с CUDA/LLVM/QEMU/Linux.
+
+## 2026-08-15 — Сессия 9 (survey отказов ИИ-агентов в low-level программировании)
+
+1. **Research survey**: 5 параллельных субагентов (Reddit / GitHub API / HN Algolia / блоги /
+   arxiv API) собрали ~55 задокументированных кейсов отказов ИИ-агентов в low-level коде;
+   все ключевые источники верифицированы fetch'ем.
+2. **Якоря**: CONCUR (2603.03683), RustEvo² (2503.16922), крейт-галлюцинации (2606.08444) —
+   подтверждены. Ghostty — первичный разбор mitchellh.com (янв 2026), не Medium (май 2026);
+   Claude Code = триггер, не причина. Кроа-Хартман — 60 проблем, ~⅓ FP, ~⅔ патчей верны.
+3. **Подтверждены 3 пробела**: concurrency (нет проверки реальной параллельности),
+   rust (API/version drift), supply-chain (домена нет).
+4. **Новые кандидаты в скиллы**: embedded-hw-register-verification, rust-api-evolution,
+   rust-dependency-supply-chain, concurrency-actual-parallelism, rust-crypto-primitives.
+5. **Артефакт**: `research/2026-08-15-agent-failures-survey.md` (сводная таблица, разбор
+   пробелов, калибровочные данные FP, кандидаты в evals/historical и FP, отчёт «не удалось
+   проверить»).
+
+## 2026-08-15 — Сессия 10 (аудит внешних low-level skill-репозиториев)
+
+1. **Аудит**: 5 параллельных субагентов (Zig / специфичные ниши / компиляторы-perf /
+   security-методология / новые ниши) проверили 18 известных репо + дельту новых
+   (CHERI, RISC-V/RVV, FPGA/HDL, Ghidra-RPC, fuzz-skill, UEFI и др.). Все находки — из
+   фактически открытых файлов (gh api/tree/raw/LICENSE).
+2. **Пробел подтверждён**: Zig отсутствует как домен; ни один из 5 Zig-репо не имеет
+   evals/верификации/CI и не пинит стабильную актуальную версию (контент mohitmishra-zig
+   вообще 0.13-эры, не компилируется).
+3. **Новые домены**: zig (HIGH), virtualization, risc-v(+CHERI), hpc, mobile-android-re,
+   hdl. **Доработки**: kernel (scheduler/MM/VFS, debug), sanitizers (fuzzing-evidence-gate),
+   auto-re (can-signal-extraction), bootloader (UEFI), networking (RDMA).
+4. **Методология**: trailofbits/wshobson сильнее в evals (ablation-Δ, Monte-Carlo активация,
+   статистические CI, coverage-gate, `--self-test`); зафиксирован прямой вызов meta-скиллов
+   TrothByte («скэффолдинг в промптах ухудшает вывод — гейт в валидаторе»).
+5. **Артефакт**: `research/2026-08-15-external-repos-audit.md` (сводная таблица, разбор
+   пробелов, лицензионная сводка, «не удалось проверить», дорожная карта).
+
+## 2026-08-15 — Сессия 11 (survey отказов ИИ-агентов в ассемблере)
+
+1. **Фокус-ресёрч**: 5 субагентов исключительно по ассемблеру/смежным задачам
+   (академия, Reddit, GitHub PR/issue, HN+блоги, RE-сообщества). ~40 находок.
+2. **Ядро — галлюцинации инструкций**: выдуманные mnemonics/pseudo-ops (CDC COMPASS),
+   инверсия AT&T-операндов, «AX = 8 бит», `[esp+4]` vs `[esp]`, `cbz` на Thumb-2
+   hi-registers, `$` в NASM-директивах 3.x, 4 класса NASM-ошибок (ocrosby).
+   Характерная черта — молчаливая порча без ошибки (54→6, AES-NI round-trip).
+3. **Количественные якоря**: Meta LLM Compiler 14% exact match; DeGPT CFR 37%;
+   NeuComBack 44/36%; SuperCoder 51.5%→95%; SCDBench 7%; cliff на 200 инструкциях.
+4. **Пробелы TrothByte**: нет скилла «проверь инструкцию/кодировку» (ядро темы), нет
+   синтаксических диалектов NASM/GAS/AT&T, нет проверки достоверности декомпиляции,
+   asm-домен x86-центричен (Thumb-2/6502/m68k/NEON/RISC-V вне).
+5. **Артефакт**: `research/2026-08-15-asm-agent-failures-survey.md` (таблицы, разбор
+   галлюцинаций, калибровка, evals-кандидаты, «не удалось проверить»).
+   Рекомендации: N asm-verification-hallucination-gate, N/E asm-syntax-dialects,
+   E disassembly-fidelity.
+
+## 2026-08-15 — Сессия 12 (промпт для создания 47 новых скиллов)
+
+1. **Артефакт**: `research/2026-08-15-new-skills-prompt.md` — самодостаточный промпт
+   для субагентов/Agent Manager по созданию 47 новых скиллов из 3 ресёрч-файлов.
+2. **Структура**: resume protocol → схема скилла → планка качества (source-backed,
+   claim→source, progressive disclosure, evals 4 категорий, регистрация до создания)
+   → список существующих 60 скиллов (анти-дубль) → 47 кандидатов по доменам
+   (каждый: проблема из ресёрча, первичные источники, тулчейн, evals) → батчи 1–6
+   → критерии приёмки → запреты.
+3. **Состав 47**: asm×5, binary/RE×5, concurrency×1, rust×3, embedded×2, kernel×3,
+   networking×1, sanitizers×1, gpu×2, zig×11 (новый домен), virtualization×1,
+   riscv×2 (новый домен), hpc×3 (новый домен), hdl×3 (новый домен), mobile×2
+   (новый домен), uefi×1, meta×1.
+4. Приоритет создания: батч asm (HIGH), затем zig (HIGH), затем остальные.
+
+## 2026-08-15 — Сессия 13 (финальный промпт на 64 скилла)
+
+1. **Дополнительный ресёрч**: 5 новых субагентов по непокрытым областям — build-системы
+   (CMake/linker/тулчейны), отладка/диагностика, kernel-драйверы, формальная
+   верификация/side-channel, embedded-цикл (flash/OTA/HIL). ~50 новых кейсов,
+   ключевые статьи верифицированы (LiveFMBench 2605.01394, loop-invariant 2511.06552,
+   ProVerif 2607.20712).
+2. **Новые уникальные скиллы #48–64 (17 шт.)**: build-systems×4 (cmake-diagnostics,
+   toolchain-drift, linker-errors, signal-state-safety), debugging×2 (crash-triage,
+   instrumentation), kernel-driver×3 (char-device-lifecycle, out-of-tree-build,
+   api-drift), side-channel/formal×3 (constant-time-verification, loop-invariants,
+   smt-z3-sound), embedded-cycle×4 (board-bringup, flash-debug, ota-safety, hil-ci),
+   rust-unsafe-contract×1.
+3. **Артефакт**: `research/2026-08-15-new-skills-prompt.md` обновлён до ФИНАЛЬНОГО:
+   64 скилла (A–W), 9 батчей, критерии приёмки 124 SKILL.md (60+64).
+
+## 2026-08-15 — Сессия 14 (rust×4 батч, source-backed)
+
+1. **Реализованы 4 rust-скилла** (все source-backed, только std/самописный код,
+   без сетевых зависимостей cargo):
+   - `rust-api-evolution-and-drift` — cargo check crate с `#[deprecated]`-варнингом;
+     edition-демо: `array.into_iter()` 2018 (компилируется, `6 3`) vs 2021 (E0614);
+     `env::set_var` 2021 (safe) vs 2024 (E0133, стал `unsafe fn`).
+   - `rust-dependency-supply-chain` — python-прокси (Levenshtein) + живые
+     `cargo info`/`cargo add` (exit 101 для `serde_jon`, `chacha20poly`,
+     `tokio-utils-rs`); находка: `cargo search` FUZZY (возвращает чужие крейты
+     для несуществующих имён), `tokio-utils` реален (0.1.2), `tokio-utils-rs` — нет.
+   - `rust-crypto-primitives-safety` — самописный ChaCha20-блок PASS по вектору
+     RFC 8439 §2.3.2 (`10f1e7e4d13b5915...`); nonce-reuse демо: C1^C2 == P1^P2
+     (46 байт); nonce-catalogue отклоняет повтор.
+   - `rust-unsafe-safety-contract-verification` — fake SAFETY (UAF, мусор 0/16/128
+     зависит от запуска) компилируется; PhantomData<&'a T> ловит misuse (E0597);
+     cargo check+test зелёные для ОБЕИХ структур (rustc не читает комментарии).
+2. **Валидаторы**: skill_lint 4/4 OK (0 ERROR/WARN), абсолютных путей нет,
+   bad-файлы с маркерами. Registry не трогали.
+3. **Ограничения**: Miri не установлен (документирован как target verification);
+   cargo-semver-checks/cargo-deny/cargo-audit отсутствуют — задокументированы.
+
+## 2026-08-15 — Сессия 15 (PHASE 13: все 64 новых скилла, 9 батчей субагентов)
+
+1. **Реестр расширен до 124 скиллов** (60 + 64):
+   - `registry/skills.yaml` — 64 новых записи (tier 7, домены A-W; 17 новых доменов/дополнений),
+     18 новых скиллов source-backed, 46 researched (честно, недоступный тулчейн);
+   - `registry/sources.yaml` — +~115 источников (177 всего): NASM, RVV/CHERI, DBC, UEFI,
+     Zig (langref/std/release-notes), CMake/Ninja/Make, dudect/ctgrind, Frama-C/CBMC/Kani/Z3,
+     OpenOCD/MCUboot/ESP-IDF, arxiv-якоря ресёрчей (Meta LLM Compiler, RustEvo², CONCUR, ISO-Bench...);
+   - `registry/claims.yaml` — +39 claim'ов (CL-018..CL-056, всего 56);
+   - `registry/cross-links.yaml` — ~70 новых связей (все from/to существуют в skills.yaml).
+
+2. **Реализовано 64 скилла** (SKILL.md + references + examples/good|bad + evals/README.md),
+   каждый прогнан через `skill_lint.py` (0 ERROR/WARN, все 9 обязательных секций):
+   - **A asm×5**: verification-hallucination-gate + syntax-dialects source-backed
+     (gcc 16.1.0/as 2.46/objdump: `movqad` exit 1, `69 c0 00 00 00 00` обнулённый imul
+     immediate = BBoeOS PR#584, `8b 00` = mov (%rax),%eax); thumb-2/neon/riscv researched.
+   - **J zig×11** (новый домен): все researched (zig не установлен), API 0.16-эры, команды
+     `zig build test` задокументированы; cross-links между zig-скиллами.
+   - **B+C+D**: binary-disassembly (objdump round-trip: `data16 outsb` из строки, -O1 vs -O2
+     дизассемблер различается), shellcode (syscalls 41/42/1/60, порт 4444 из 0x5c110002),
+     concurrency-actual-parallelism (fake parallel wall=1.206s max_working=1 vs real 0.304s/4),
+     rust×4 source-backed (см. Сессию 14).
+   - **E+F+G+H**: embedded-hw-register source-backed (static_assert по datasheet: TxE=0x40,
+     SR1=0x14, MADCTL=0x68, I2C1EN bit 21); device-tree/kconfig, scheduler-mm-vfs,
+     ftrace/kprobes/kdump, container-internals, rdma-nic-offload researched.
+   - **I+K+L+M**: gpu×2, hypervisor-vmx-svm, riscv×2, hpc×3 — researched, кроме
+     hpc-openmp source-backed (gcc -fopenmp реален: good_reduction 1/8/12 потоков верен,
+     bad_race даёт 174763/131072 вместо 1048576); python-симуляции (RVV strip-mining,
+     CHERI-модель 4 fault-паттерна, MPI deadlock Send/Send, ring allreduce N=3..8) записаны.
+   - **N+O+P+Q**: hdl×3 researched (+ python-симуляция 2-FF CDC: incoherent 0000/1000-слова),
+     android×2 researched, uefi researched, meta-verification-harness-validity source-backed
+     (ablation_delta: exit 0 корректный таргет vs assert abort 0xC0000409 на сломанном).
+   - **R+S**: build-systems×4 — cmake-diagnostics/toolchain-drift/linker-errors source-backed
+     (cmake -G Ninja реальная сборка, gcc --version/--print-file-name, undefined reference +
+     nm/readelf), process-signal-safety partial source-backed (ninja -t deps/recompact реально);
+     debugging×2 source-backed (gdb bt `ucrtbase!strlen ← print_owner(0x0) ← show ← main`,
+     файл-лог ловит коррупцию на 11-й итерации).
+   - **T+U+V+W**: kernel-driver×3 researched (stub-компиляция + kallsyms команды),
+     side-channel-constant-time source-backed (gcc -O2 500k×256B: early-exit memcmp 0.054s
+     vs constant-time ~0s; контраргумент CVE-2026-22705),
+     formal-spec/z3 researched (axiom_validation.py: 32640 x*x>=0-нарушений на int8,
+     контраргумент a=-128 b=-127), embedded-cycle×4 researched (stub+python-симуляции).
+
+3. **Валидаторы финально** (после всех батчей): `skill_lint.py` 124/124 OK (0 ERROR/WARN),
+   `registry_check.py` 0 WARN, `source_check.py` 0 WARN (177 источников, 56 claim'ов,
+   все `- **SOURCE**:` строки скиллов матчатся на зарегистрированные id).
+
+4. **Документация/чистка**: domain-README для 9 новых доменов (zig, virtualization, riscv,
+   hpc, hdl, mobile, build-systems, debugging, security) сгенерированы;
+   `docs/SKILLS.md` пересгенерирован (124 skills, 65 source-backed);
+   build-артефакты субагентов (CMake/`.o`/`.exe`/vcxproj в корне) удалены,
+   паттерны добавлены в `.gitignore`.
+
+5. **Ограничения**: 46 новых скиллов researched — требуют недоступного тулчейна
+   (zig/nasm/clang-cross/qemu/nvcc/mpicc/valgrind/verilator/jadx-frida/openocd/
+   frama-c-cbmc-kani/z3/Linux-ядро); точные команды верификации задокументированы
+   в каждом evals/README.md. Возвышение — на Linux/GPU-хосте с установленным тулчейном.
+
+### Следующие шаги
+
+1. PHASE 15-21: прогнать synthetic/FP/CVE/adversarial evals по evals/README.md (теперь 124 скилла).
+2. PHASE 19-20: routing evals + collision testing (64 новых скилла в cross-links).
+3. PHASE 22: license audit (новые ~115 источников).
+4. PHASE 14: token-оптимизация; возвышение researched-скиллов на хосте с zig/nasm/LLVM/QEMU/GPU/Linux.
+
+## 2026-08-15 — Сессия 16 (полировка: культурный вид репозитория)
+
+1. **Чистка мусора**: удалены `.vscode/`, MSVC-build-остатки батча 8 (`app.dir/`,
+   `greet.dir/`, `ZERO_CHECK.dir/`), файл `$null` (артефакт PowerShell-redirect),
+   сырые дампы ресёрча (`rudedogg_zig.txt`, `zig_incubator_readme.txt`,
+   `research/emse_zig_code/`). `.gitignore` уже покрывает build-артефакты.
+
+2. **Восстановлен `research/README.md`** (был удалён ранее): каталог 4 survey-документов
+   с описанием и правилом «нормативные claim'ы — из первичных источников, не из survey».
+
+3. **Инфраструктура солидного репозитория**:
+   - `tools/validate.py` — единый гейт: skill_lint (124 SKILL.md) + registry_check +
+     source_check, exit code по результату (прогнан: OK).
+   - `.github/workflows/ci.yml` — GitHub Actions (Python 3.11 + PyYAML → `tools/validate.py`)
+     на push/PR.
+   - `.pre-commit-config.yaml` — локальный хук на те же валидаторы.
+   - `.editorconfig` (utf-8, LF, отступы), `.gitattributes` (eol=lf, linguist для
+     сгенерированных файлов), `requirements-dev.txt` (PyYAML).
+   - `CHANGELOG.md` — Keep a Changelog: 0.1.0 (60 скиллов), 0.2.0 (64 новых, 124 итого),
+     Unreleased (инфраструктура).
+
+4. **Документация приведена в актуальное состояние**:
+   - `README.md`: бейджи обновлены (skills-124, domains-32, source-backed-65, sources-177,
+     claims-56, + CI-бейдж), repo-map дополнен (CHANGELOG/SECURITY/CONTRIBUTING/.github),
+     секция quality gates → `tools/validate.py` + CI.
+   - `docs/ACKNOWLEDGMENTS.md`: исправлены лицензии по аудиту (CSS-Electronics MIT,
+     SimoneAvogadro Apache-2.0, nzrsky/whit3rabbit/mohitmishra MIT, NVIDIA CC-BY-4.0/Apache-2.0),
+     добавлены репозитории из второго ресёрча (0xazanul/fuzz-skill, oh-my-fpga, risc-v-skill,
+     cheri-skills, uefi-firmware-skill, ghidra-rpc, r0crawl, mukul975, hackersifu, rekit,
+     n132), расширены секции primary sources и research (arxiv-якоря всех трёх surveys,
+     Ghostty, Lemire, Kroah-Hartman).
+   - `AGENTS.md`: правило 15 → `python tools/validate.py`.
+
+5. **Валидаторы финально**: `tools/validate.py` → OK (124/124 SKILL.md, registry_check
+   0 WARN, source_check 0 WARN). Корень репозитория чист — ни одного stray-файла.

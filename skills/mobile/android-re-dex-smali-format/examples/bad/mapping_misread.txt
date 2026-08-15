@@ -1,0 +1,12 @@
+# intentionally incorrect: R8 mapping.txt misread.
+# The R8 mapping file lists obfuscated->original class mappings as:
+#   original.type -> obfuscated.type:
+#        1:1:void original.method():34 -> a
+# Reading this backwards (treating the obfuscated name as original) is the
+# classic misparse. Also: a comment was added claiming the *obfuscated*
+# name is the original class, which is backwards.
+com.example.payment.CheckoutActivity -> com.example.payment.CheckoutActivity:
+# WRONG comment: "a -> CheckoutActivity" reversed. The real R8 mapping
+# direction is original (left) -> obfuscated (right).
+com.example.payment.PaymentManager -> a:
+    1:1:void com.example.payment.PaymentManager.charge(java.lang.String):20 -> a

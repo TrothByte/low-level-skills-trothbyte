@@ -1,0 +1,45 @@
+// intentionally incorrect — Motorola (big-endian) start bit computed with
+// Intel (little-endian) bit numbering. Sawtooth position of the MSB of byte 0
+// is 0, not 7. This DBC loads fine in cantools and "decodes", but
+// WheelSpeedFL comes out as 112.64 km/h instead of 6.0 km/h on the fixture
+// frame — a silent, plausible-but-wrong result.
+VERSION ""
+
+NS_ :
+    NS_DESC_
+    CM_
+    BA_DEF_
+    BA_
+    VAL_
+    CAT_DEF_
+    CAT_
+    FILTER
+    BA_DEF_DEF_
+    EV_DATA_
+    ENVVAR_DATA_
+    SGTYPE_
+    SGTYPE_VAL_
+    BA_DEF_SGTYPE_
+    BA_SGTYPE_
+    SIG_TYPE_REF_
+    VAL_TABLE_
+    SIG_GROUP_
+    SIG_VALTYPE_
+    SIGTYPE_VALTYPE_
+    BO_TX_BU_
+    BA_DEF_REL_
+    BA_REL_
+    BA_DEF_DEF_REL_
+    BU_SG_REL_
+    BU_EV_REL_
+    BU_BO_REL_
+    SG_MUL_VAL_
+
+BS_:
+
+BU_: ECM VCU
+
+BO_ 512 VehicleState: 8 VCU
+ SG_ WheelSpeedFL : 7|16@0+ (0.01,0) [0|655] "km/h"  ECM
+ SG_ WheelSpeedFR : 32|16@0+ (0.01,0) [0|655] "km/h"  ECM
+ SG_ BrakePedal : 48|8@0+ (0.5,0) [0|100] "%"  ECM

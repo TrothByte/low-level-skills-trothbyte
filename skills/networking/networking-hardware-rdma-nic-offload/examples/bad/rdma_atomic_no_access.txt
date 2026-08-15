@@ -1,0 +1,10 @@
+# intentionally incorrect: ATOMIC_FETCH_AND_ADD posted against an MR that was
+# registered without remote_atomic. The NIC aborts the op (or the registration
+# itself rejects the combination); the atomic op must be paired with
+# IBV_ACCESS_REMOTE_ATOMIC on the target MR.
+init
+reg_mr local_write
+modify_qp init
+modify_qp rtr
+modify_qp rts
+post_send atomic_fetch_add

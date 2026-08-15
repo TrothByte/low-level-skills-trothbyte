@@ -1,9 +1,9 @@
 # Progress Tracking — Low-level skills TrothByte
 # Главный источник состояния проекта. Обновляется после каждого существенного действия.
 
-current_phase: "POLISH — брендинг TrothByte, docs консолидированы"
-current_task: "Поддержка: evals/calibration/license audit"
-current_subtask: "Репозиторий переименован в 'Low-level skills TrothByte'; docs консолидированы (ACKNOWLEDGMENTS перенесён в docs/, создан docs/SKILLS.md, неважные доки удалены); README переписан. Далее: PHASE 15-21 (evals), PHASE 22 (license audit)"
+current_phase: "PHASE 13 — ВСЕ 64 новых скилла РЕАЛИЗОВАНЫ (60 + 64 = 124), валидаторы чистые"
+current_task: "PHASE 13: 64 новых скилла по трём ресёрчам созданы и зарегистрированы"
+current_subtask: "Все 9 батчей выполнены: asm×5, zig×11, binary/RE×6, rust×4, embedded×6, kernel×6, networking×1, sanitizers×1, gpu×2, virtualization×1, riscv×2, hpc×3, hdl×3, mobile×2, bootloader-uefi×1, meta×1, build-systems×4, debugging×2, security×3. skill_lint 124/124 OK, registry_check 0 WARN, source_check 0 WARN. 18 новых скиллов source-backed, 46 researched (честно, недоступный тулчейн)"
 completed_phases:
   - "PHASE 0 — REPOSITORY BOOTSTRAP"
   - "PHASE 1 — RESEARCH INGESTION"
@@ -19,10 +19,26 @@ completed_phases:
   - "PHASE 11 — TOOLING (4/22 shared tools реализованы, остальные зарегистрированы)"
   - "PHASE 12 — DEPENDENCY GRAPH (cross-links.yaml)"
   - "PHASE 13 — IMPLEMENT SKILLS (60/60)"
+  - "PHASE 13 (продолжение) — IMPLEMENT SKILLS (64 новых; итого 124/124)"
   - "PHASE 23 — QUALITY GATES (валидаторы чистые)"
 completed_tasks:
   - "PHASE 0-8: система (roadmap + registry + docs) создана"
   - "PHASE 13: все 60 skills реализованы (5 параллельных батчей субагентов)"
+  - "PHASE 13 (продолжение): 64 новых скилла реализованы 9 батчами параллельных субагентов (A-W)"
+  - "Батч 1 (asm×5): asm-verification-hallucination-gate, asm-syntax-dialects-nasm-gas-att (source-backed: gcc 16.1.0/as 2.46/objdump реальные прогоны, байты записаны), asm-arm-thumb-2-encoding, asm-aarch64-neon-simd-safety, asm-risc-v-registers-and-calling-conventions (researched, честно UNVERIFIED)"
+  - "Батч 2 (zig×11): comptime/allocators/version-migration/inline-asm-abi/ffi-c/build-system/cross-compile/simd/error-model/concurrency/fuzzer — все researched (zig не установлен; команды zig build test задокументированы, версия 0.16 API)"
+  - "Батч 3 (binary/RE+concurrency×6): binary-disassembly-decompilation-fidelity, reverse-engineering-shellcode-analysis, concurrency-actual-parallelism-detection (source-backed: objdump round-trip, byteorder 4444, pthread wall-time 0.304 vs 1.206s); can-signal-extraction, ghidra-agent-automation, binary-memory-leak-vm (researched, python-симуляции)"
+  - "Батч 4 (rust×4, все source-backed): rust-api-evolution-and-drift (edition E0614/E0133), rust-dependency-supply-chain (cargo info exit 101, Levenshtein), rust-crypto-primitives-safety (ChaCha20 PASS по RFC 8439, nonce-reuse), rust-unsafe-safety-contract-verification (fake SAFETY=UAF, PhantomData E0597)"
+  - "Батч 5 (embedded×2+kernel×3+networking×1): embedded-hw-register-datasheet-verification source-backed (static_assert по datasheet); device-tree/kconfig, scheduler-mm-vfs, debugging-ftrace, container-internals, rdma-nic-offload researched"
+  - "Батч 6 (gpu×2+virt×1+riscv×2+hpc×3): все researched; hpc-openmp-parallel-programming source-backed (gcc -fopenmp реален: good_reduction 1/8/12 потоков, bad_race неверная сумма); python-симуляции RVV/CHERI/MPI/collectives записаны"
+  - "Батч 7 (hdl×3+mobile×2+uefi×1+meta×1): meta-verification-harness-validity source-backed (ablation_delta exit 0 vs assert abort 0xC0000409); cdc/timing/constraints/dex-smali/jni/uefi researched (python-симуляция CDC 2-FF)"
+  - "Батч 8 (build-systems×4+debugging×2): cmake-diagnostics, toolchain-version-drift, linker-error-diagnostics (source-backed: cmake -G Ninja, gcc --version/-std=, undefined reference + nm/readelf), debugging-crash-triage (gdb bt: strlen←print_owner←show), debugging-instrumentation (файл-лог ловит коррупцию на 11-й итерации), process-signal-safety (partial source-backed: ninja -t deps/recompact реально прогнаны)"
+  - "Батч 9 (kernel-driver×3+security×3+embedded-cycle×4): side-channel-constant-time-verification source-backed (gcc -O2: early-exit 0.054s vs consttime ~0s на 500k×256B); остальные researched (stub-компиляция + точные команды)"
+  - "Registry: 124 skills зарегистрированы, 177 sources, 56 claims, cross-links ~70 новых связей"
+  - "Генераторы: domain README для 9 новых доменов, docs/SKILLS.md обновлён (124 skills, 65 source-backed)"
+  - "PHASE 23: quality gates — registry_check 0 WARN, skill_lint 124/124 OK, source_check 0 WARN"
+  - "POLISH 3: культурный вид репозитория — чистка мусора, research/README восстановлен, tools/validate.py + GitHub Actions CI + pre-commit + editorconfig/gitattributes/requirements-dev + CHANGELOG.md (0.2.0); README бейджи/map обновлены, ACKNOWLEDGMENTS расширен, AGENTS.md правило 15 актуализировано"
+  - "POLISH: .gitignore расширен (build-артефакты), очищены мусорные CMake/obj/exe из корня и скиллов"
   - "Батч 1 (Tier 1-3): compiler-ub-assumptions, abi-layout-reasoning, memory-ordering-reasoning, safe-low-level-from-scratch, ffi-boundary-cross-language, embedded-mpu-trustzone, raii-descriptor-types-api-design, sanitizer-agent-ci-loop, rust-unsafe-reasoning, rust-ffi-boundary, simd-vectorization-cross-layer, sanitizer-report-reading, rust-panic-safety, zeroize-constant-time, c-undefined-behavior, c-integer-promotion-and-conversion, 6 meta-skills"
   - "Батч 2 (Tier 4): elf-linker-loader-debugger, kernel-rcu-memory-barriers, dwarf-debug-info, kernel-uaccess-safety, ptx-assembly, ebpf-verifier-reasoning"
   - "Батч 3 (Tier 5, 14): asm-x86-64-registers-and-addressing, asm-calling-conventions, asm-inline-asm-constraints, asm-signed-unsigned-branches, asm-optimizer-artifacts, atomics-c11-cpp11-rust, c-string-and-buffer-safety, c-errno-and-syscall-returns, cpp-object-lifecycle, elf-layout-and-relocations, embedded-volatile-and-memory-ordering, gpu-memory-model-coherence, llvm-ir-reading, qemu-system-setup"
@@ -32,7 +48,7 @@ completed_tasks:
   - "POLISH: созданы 23 domain-README (навигация для нейросети/человека), переписан корневой README (product-grade), создан ACKNOWLEDGMENTS.md (18 репозиториев + стандарты + доклады + исследователи), удалён мусор из корня (10 asm/txt дампов + дубликат Agent.md), исследовательские документы перенесены в research/, docs/architecture.md обновлён, создан tools/reports/gen_domain_readmes.py"
   - "POLISH 2 (TrothByte): проект переименован в 'Low-level skills TrothByte' (README, LICENSE.md, AGENTS.md, docs/*); ACKNOWLEDGMENTS.md перенесён в docs/; удалены 5 внутренних процесс-доков (authoring/evaluation/licensing/sources/token-optimization) — их содержание консолидировано в registry/*.yaml, LICENSE.md и architecture.md; создан docs/SKILLS.md (каталог всех 60 skills, генератор tools/reports/gen_skills_catalog.py); README переписан в красивом product-стиле; битые ссылки в 7 skill-файлах исправлены на registry/evals.yaml и registry/sources.yaml"
 blocked_tasks:
-  - "researched skills (13): требуют недоступного тулчейна — sanitizer-report-reading/ptx/ebpf/gpu/llvm/qemu (nvcc, clang-bpf, LLVM, QEMU, sanitizer-рантаймы). Возвышение до source-backed возможно на Linux/GPU-хосте"
+  - "researched skills: требуют недоступного тулчейна (zig, nasm, clang-cross, qemu, nvcc, mpicc, valgrind, verilator, jadx/frida, openocd, frama-c/cbmc/kani, z3, Linux-ядро). Возвышение до source-backed возможно на Linux/GPU-хосте с установленным тулчейном. Список из 46 researched-скиллов с точными командами верификации — в каждом evals/README.md"
 files_read:
   - "Agent.md"
   - "Анализ скиллов.md"
@@ -51,22 +67,22 @@ files_modified:
 research_status:
   - "Все inventories: COMPLETE"
 skill_status:
-  registered: 60
-  implemented: 60
-  source_backed: 47
-  researched: 13
+  registered: 124
+  implemented: 124
+  source_backed: 65
+  researched: 59
   evaluated: 0
   stable: 0
   all_registered_implemented: true
 source_status:
-  registry_sources: 62
-  claims_registered: 17
+  registry_sources: 177
+  claims_registered: 56
 eval_status:
   cve_core_set: 8
   cve_secondary_set: 8
   adversarial_cases: 12
   routing_cases: 5
   fp_cases: 5
-  eval_harnesses_built: "Каждый skill имеет evals/README.md с synthetic/FP/adversarial кейсами и verified facts"
-last_completed_action: "POLISH 2: брендинг 'Low-level skills TrothByte' во всех документах; docs консолидированы — ACKNOWLEDGMENTS перенесён в docs/, создан docs/SKILLS.md (каталог всех 60 skills с описаниями), удалены 5 внутренних доков, README переписан, LICENSE.md обновлён, ссылки в skills исправлены. Валидаторы чистые"
-next_action: "PHASE 15-21: прогнать synthetic/FP/CVE/adversarial evals по evals/README.md каждого skill; PHASE 22: license audit; PHASE 19-20: routing/collision тесты"
+  eval_harnesses_built: "Каждый skill имеет evals/README.md с synthetic/FP/adversarial/historical кейсами и verified facts; researched-скиллы честно помечены с точными командами верификации"
+last_completed_action: "PHASE 13 завершён (124 скилла) + POLISH 3: репозиторий приведён к культурному виду — удалён мусор (.vscode, MSVC-остатки, $null, сырые дампы ресёрча), восстановлен research/README.md, добавлены tools/validate.py (единый гейт), .github/workflows/ci.yml (Actions), .pre-commit-config.yaml, .editorconfig, .gitattributes, requirements-dev.txt, CHANGELOG.md (0.1.0/0.2.0); README-бейджи и repo-map актуализированы (+CI-бейдж), ACKNOWLEDGMENTS расширен (лицензии по аудиту + новые репо/источники), AGENTS.md правило 15 → tools/validate.py; валидаторы: validate.py OK (124/124, 0 WARN)"
+next_action: "PHASE 15-21: прогнать synthetic/FP/CVE/adversarial evals по evals/README.md; PHASE 19-20: routing evals + collision testing; PHASE 22: license audit; PHASE 14: token-оптимизация; возвышение researched-скиллов на хосте с zig/nasm/clang-cross/qemu/GPU/Linux"

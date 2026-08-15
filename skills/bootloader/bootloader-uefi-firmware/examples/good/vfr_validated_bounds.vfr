@@ -1,0 +1,19 @@
+/* Correct VFR: the numeric opcode's min/max is enforced by the driver via
+ * the NvData validation callback AND the HII form engine displays the
+ * bounds. The VFR declares the range; the driver validates on save.
+ *
+ * formset guid = {0x..., 0x..., ...}, title = STRING_TOKEN(STR_TITLE);
+ *   form formid = 1,
+ *     title = STRING_TOKEN(STR_TITLE);
+ *     numeric
+ *       varid = NV_DATA.Threshold,
+ *       prompt = STRING_TOKEN(STR_PROMPT),
+ *       help = STRING_TOKEN(STR_HELP),
+ *       minimum = 0,
+ *       maximum = 100,
+ *       step = 1,
+ *       default = 50,
+ *       endnumeric;
+ *   endform;
+ * endformset;
+ */

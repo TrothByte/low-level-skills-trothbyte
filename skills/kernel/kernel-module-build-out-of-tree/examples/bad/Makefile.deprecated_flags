@@ -1,0 +1,9 @@
+# BAD: // intentionally incorrect — deprecated EXTRA_CFLAGS + hardcoded headers
+# for a kernel that is not the target. EXTRA_CFLAGS is deprecated (ccflags-y is
+# correct), and the include path binds the build to 6.0 headers even when the
+# module will load on a different kernel, producing a version-magic mismatch.
+obj-m := bad_mod.o
+
+EXTRA_CFLAGS += -DDEBUG -I$(src)/include
+
+KDIR := /lib/modules/6.0.0-whatever/build

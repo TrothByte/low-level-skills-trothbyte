@@ -7,6 +7,7 @@ High-performance networking is kernel-adjacent. These skills cover the eBPF veri
 | Skill | What it does | Stability | Path |
 |---|---|---|---|
 | `ebpf-verifier-reasoning` | Use when writing, reviewing, or debugging eBPF C programs — map_lookup_elem null checks, bounded loops, pointer arithmetic on packet/map/stack pointers, helper argument constraints, and reading verifier rejection logs. Teaches how the kernel verifier proves safety and which patterns it rejects at load time. | researched | `skills/networking/ebpf-verifier-reasoning` |
+| `networking-hardware-rdma-nic-offload` | Use when writing or reviewing RDMA verbs code or NIC offload claims — QP/MR/CQ semantics, transport vs link layer (RC/RoCE/iWARP/InfiniBand), one-sided operations, and DPDK/eSwitch/rte_flow offload. Prevents invented verbs APIs and offload features misattributed to the wrong layer. | researched | `skills/networking/networking-hardware-rdma-nic-offload` |
 
 ## How to use
 

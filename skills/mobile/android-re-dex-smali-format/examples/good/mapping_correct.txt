@@ -1,0 +1,10 @@
+# Correct: R8 mapping.txt is read as original (left) -> obfuscated (right).
+# Class line: original.class -> obfuscated.class:
+# Member line: [range] [access]:[access]:original.member -> obfuscated
+#   [+offset] for inlined/merged methods
+com.example.payment.PaymentManager -> a:
+    1:1:void com.example.payment.PaymentManager.charge(java.lang.String):20 -> a
+    2:2:boolean com.example.payment.PaymentManager.isValid():25 -> b
+com.example.payment.CheckoutActivity -> com.example.payment.CheckoutActivity:
+    3:5:void com.example.payment.CheckoutActivity.onResume():10 -> onResume
+# Unmapped (unobfuscated) classes keep the same name on both sides.

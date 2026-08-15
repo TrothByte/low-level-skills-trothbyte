@@ -1,0 +1,8 @@
+# intentionally incorrect: post_send before the QP reaches RTS. In verbs a
+# data post on a QP still in RESET/INIT/RTR is invalid; the send queue is
+# only armed at RTS.
+init
+post_send send
+modify_qp init
+modify_qp rtr
+modify_qp rts

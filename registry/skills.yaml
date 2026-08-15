@@ -82,11 +82,100 @@ skills:
   - {id: meta-rationalizations, domain: _meta, type: common, priority: high, status: implemented, stability: researched, path: "skills/_meta/meta-rationalizations", tier: 0}
   - {id: meta-completion, domain: _meta, type: common, priority: high, status: implemented, stability: researched, path: "skills/_meta/meta-completion", tier: 0}
 
+  # ===== NEW SKILLS (PHASE 13, 64 skills from 3 surveys) =====
+  # Assembly (A) — tier 7, HIGH
+  - {id: asm-verification-hallucination-gate, domain: assembly, type: unique, priority: high, status: implemented, stability: source-backed, path: "skills/assembly/asm-verification-hallucination-gate", tier: 7}
+  - {id: asm-syntax-dialects-nasm-gas-att, domain: assembly, type: unique, priority: high, status: implemented, stability: source-backed, path: "skills/assembly/asm-syntax-dialects-nasm-gas-att", tier: 7}
+  - {id: asm-arm-thumb-2-encoding, domain: assembly, type: unique, priority: high, status: implemented, stability: researched, path: "skills/assembly/asm-arm-thumb-2-encoding", tier: 7}
+  - {id: asm-aarch64-neon-simd-safety, domain: assembly, type: unique, priority: high, status: implemented, stability: researched, path: "skills/assembly/asm-aarch64-neon-simd-safety", tier: 7}
+  - {id: asm-risc-v-registers-and-calling-conventions, domain: assembly, type: unique, priority: high, status: implemented, stability: researched, path: "skills/assembly/asm-risc-v-registers-and-calling-conventions", tier: 7}
+  # Binary analysis / RE (B) — tier 7
+  - {id: binary-disassembly-decompilation-fidelity, domain: binary-analysis, type: unique, priority: medium, status: implemented, stability: source-backed, path: "skills/binary-analysis/binary-disassembly-decompilation-fidelity", tier: 7}
+  - {id: reverse-engineering-shellcode-analysis, domain: reverse-engineering, type: unique, priority: medium, status: implemented, stability: source-backed, path: "skills/reverse-engineering/reverse-engineering-shellcode-analysis", tier: 7}
+  - {id: reverse-engineering-can-signal-extraction, domain: reverse-engineering, type: improved, priority: medium, status: implemented, stability: researched, path: "skills/reverse-engineering/reverse-engineering-can-signal-extraction", tier: 7}
+  - {id: reverse-engineering-ghidra-agent-automation, domain: reverse-engineering, type: unique, priority: medium, status: implemented, stability: researched, path: "skills/reverse-engineering/reverse-engineering-ghidra-agent-automation", tier: 7}
+  - {id: binary-memory-leak-vm-allocator-diagnosis, domain: binary-analysis, type: unique, priority: medium, status: implemented, stability: researched, path: "skills/binary-analysis/binary-memory-leak-vm-allocator-diagnosis", tier: 7}
+  # Concurrency (C) — tier 7
+  - {id: concurrency-actual-parallelism-detection, domain: concurrency, type: unique, priority: high, status: implemented, stability: source-backed, path: "skills/concurrency/concurrency-actual-parallelism-detection", tier: 7}
+  # Rust (D) — tier 7
+  - {id: rust-api-evolution-and-drift, domain: rust, type: unique, priority: high, status: implemented, stability: source-backed, path: "skills/rust/rust-api-evolution-and-drift", tier: 7}
+  - {id: rust-dependency-supply-chain, domain: rust, type: unique, priority: high, status: implemented, stability: source-backed, path: "skills/rust/rust-dependency-supply-chain", tier: 7}
+  - {id: rust-crypto-primitives-safety, domain: rust, type: unique, priority: high, status: implemented, stability: source-backed, path: "skills/rust/rust-crypto-primitives-safety", tier: 7}
+  # Embedded (E) — tier 7
+  - {id: embedded-hw-register-datasheet-verification, domain: embedded, type: unique, priority: high, status: implemented, stability: source-backed, path: "skills/embedded/embedded-hw-register-datasheet-verification", tier: 7}
+  - {id: embedded-device-tree-and-kconfig, domain: embedded, type: unique, priority: medium, status: implemented, stability: researched, path: "skills/embedded/embedded-device-tree-and-kconfig", tier: 7}
+  # Kernel (F) — tier 7
+  - {id: kernel-scheduler-mm-vfs-internals, domain: kernel, type: unique, priority: medium, status: implemented, stability: researched, path: "skills/kernel/kernel-scheduler-mm-vfs-internals", tier: 7}
+  - {id: kernel-debugging-ftrace-kprobes-kdump, domain: kernel, type: unique, priority: medium, status: implemented, stability: researched, path: "skills/kernel/kernel-debugging-ftrace-kprobes-kdump", tier: 7}
+  - {id: kernel-container-internals, domain: kernel, type: unique, priority: medium, status: implemented, stability: researched, path: "skills/kernel/kernel-container-internals", tier: 7}
+  # Networking (G) — tier 7
+  - {id: networking-hardware-rdma-nic-offload, domain: networking, type: unique, priority: medium, status: implemented, stability: researched, path: "skills/networking/networking-hardware-rdma-nic-offload", tier: 7}
+  # Sanitizers (H) — tier 7
+  - {id: fuzzing-harness-evidence-gate, domain: sanitizers, type: improved, priority: high, status: implemented, stability: researched, path: "skills/sanitizers/fuzzing-harness-evidence-gate", tier: 7}
+  # GPU (I) — tier 7
+  - {id: gpu-kernel-verification-beyond-oracle, domain: gpu, type: unique, priority: medium, status: implemented, stability: researched, path: "skills/gpu/gpu-kernel-verification-beyond-oracle", tier: 7}
+  - {id: gpu-communication-primitives, domain: gpu, type: unique, priority: medium, status: implemented, stability: researched, path: "skills/gpu/gpu-communication-primitives", tier: 7}
+  # Zig (J) — NEW DOMAIN, tier 7, HIGH
+  - {id: zig-comptime-metaprogramming, domain: zig, type: unique, priority: high, status: implemented, stability: researched, path: "skills/zig/zig-comptime-metaprogramming", tier: 7}
+  - {id: zig-allocators-and-memory-management, domain: zig, type: unique, priority: high, status: implemented, stability: researched, path: "skills/zig/zig-allocators-and-memory-management", tier: 7}
+  - {id: zig-version-migration, domain: zig, type: unique, priority: high, status: implemented, stability: researched, path: "skills/zig/zig-version-migration", tier: 7}
+  - {id: zig-inline-asm-and-abi, domain: zig, type: unique, priority: high, status: implemented, stability: researched, path: "skills/zig/zig-inline-asm-and-abi", tier: 7}
+  - {id: zig-ffi-c-interop, domain: zig, type: unique, priority: high, status: implemented, stability: researched, path: "skills/zig/zig-ffi-c-interop", tier: 7}
+  - {id: zig-build-system-and-packages, domain: zig, type: unique, priority: high, status: implemented, stability: researched, path: "skills/zig/zig-build-system-and-packages", tier: 7}
+  - {id: zig-cross-compilation-targets, domain: zig, type: unique, priority: high, status: implemented, stability: researched, path: "skills/zig/zig-cross-compilation-targets", tier: 7}
+  - {id: zig-simd-vector-intrinsics, domain: zig, type: unique, priority: high, status: implemented, stability: researched, path: "skills/zig/zig-simd-vector-intrinsics", tier: 7}
+  - {id: zig-error-model-and-defers, domain: zig, type: unique, priority: high, status: implemented, stability: researched, path: "skills/zig/zig-error-model-and-defers", tier: 7}
+  - {id: zig-concurrency-and-io-events, domain: zig, type: unique, priority: high, status: implemented, stability: researched, path: "skills/zig/zig-concurrency-and-io-events", tier: 7}
+  - {id: zig-fuzzer-and-testing, domain: zig, type: unique, priority: high, status: implemented, stability: researched, path: "skills/zig/zig-fuzzer-and-testing", tier: 7}
+  # Virtualization (K) — NEW DOMAIN, tier 7
+  - {id: hypervisor-vmx-svm-internals, domain: virtualization, type: unique, priority: medium, status: implemented, stability: researched, path: "skills/virtualization/hypervisor-vmx-svm-internals", tier: 7}
+  # RISC-V (L) — NEW DOMAIN, tier 7
+  - {id: riscv-isa-and-rvv-intrinsics, domain: riscv, type: unique, priority: medium, status: implemented, stability: researched, path: "skills/riscv/riscv-isa-and-rvv-intrinsics", tier: 7}
+  - {id: riscv-cheri-capability-safety, domain: riscv, type: unique, priority: medium, status: implemented, stability: researched, path: "skills/riscv/riscv-cheri-capability-safety", tier: 7}
+  # HPC (M) — NEW DOMAIN, tier 7
+  - {id: hpc-mpi-programming, domain: hpc, type: unique, priority: medium, status: implemented, stability: researched, path: "skills/hpc/hpc-mpi-programming", tier: 7}
+  - {id: hpc-openmp-parallel-programming, domain: hpc, type: unique, priority: medium, status: implemented, stability: source-backed, path: "skills/hpc/hpc-openmp-parallel-programming", tier: 7}
+  - {id: hpc-rdma-verbs, domain: hpc, type: unique, priority: medium, status: implemented, stability: researched, path: "skills/hpc/hpc-rdma-verbs", tier: 7}
+  # HDL/FPGA (N) — NEW DOMAIN, tier 7
+  - {id: hdl-cdc-audit, domain: hdl, type: unique, priority: medium, status: implemented, stability: researched, path: "skills/hdl/hdl-cdc-audit", tier: 7}
+  - {id: hdl-timing-closure, domain: hdl, type: unique, priority: medium, status: implemented, stability: researched, path: "skills/hdl/hdl-timing-closure", tier: 7}
+  - {id: hdl-constraints-authoring, domain: hdl, type: unique, priority: medium, status: implemented, stability: researched, path: "skills/hdl/hdl-constraints-authoring", tier: 7}
+  # Mobile Android RE (O) — NEW DOMAIN, tier 7
+  - {id: android-re-dex-smali-format, domain: mobile, type: unique, priority: medium, status: implemented, stability: researched, path: "skills/mobile/android-re-dex-smali-format", tier: 7}
+  - {id: android-re-native-jni-analysis, domain: mobile, type: unique, priority: medium, status: implemented, stability: researched, path: "skills/mobile/android-re-native-jni-analysis", tier: 7}
+  # UEFI (P) — tier 7
+  - {id: bootloader-uefi-firmware, domain: bootloader, type: improved, priority: medium, status: implemented, stability: researched, path: "skills/bootloader/bootloader-uefi-firmware", tier: 7}
+  # _meta (Q) — tier 7
+  - {id: meta-verification-harness-validity, domain: _meta, type: improved, priority: high, status: implemented, stability: source-backed, path: "skills/_meta/meta-verification-harness-validity", tier: 7}
+  # Build systems (R) — NEW DOMAIN, tier 7, HIGH
+  - {id: build-system-cmake-diagnostics, domain: build-systems, type: unique, priority: high, status: implemented, stability: source-backed, path: "skills/build-systems/build-system-cmake-diagnostics", tier: 7}
+  - {id: build-toolchain-version-drift, domain: build-systems, type: unique, priority: high, status: implemented, stability: source-backed, path: "skills/build-systems/build-toolchain-version-drift", tier: 7}
+  - {id: build-linker-error-diagnostics, domain: build-systems, type: unique, priority: high, status: implemented, stability: source-backed, path: "skills/build-systems/build-linker-error-diagnostics", tier: 7}
+  - {id: build-process-signal-and-state-safety, domain: build-systems, type: unique, priority: high, status: implemented, stability: researched, path: "skills/build-systems/build-process-signal-and-state-safety", tier: 7}
+  # Debugging (S) — NEW DOMAIN, tier 7
+  - {id: debugging-crash-triage-discipline, domain: debugging, type: unique, priority: high, status: implemented, stability: source-backed, path: "skills/debugging/debugging-crash-triage-discipline", tier: 7}
+  - {id: debugging-instrumentation-over-reasoning, domain: debugging, type: unique, priority: high, status: implemented, stability: source-backed, path: "skills/debugging/debugging-instrumentation-over-reasoning", tier: 7}
+  # Kernel drivers (T) — tier 7
+  - {id: kernel-driver-char-device-lifecycle, domain: kernel, type: unique, priority: medium, status: implemented, stability: researched, path: "skills/kernel/kernel-driver-char-device-lifecycle", tier: 7}
+  - {id: kernel-module-build-out-of-tree, domain: kernel, type: unique, priority: medium, status: implemented, stability: researched, path: "skills/kernel/kernel-module-build-out-of-tree", tier: 7}
+  - {id: kernel-api-drift-migration, domain: kernel, type: unique, priority: medium, status: implemented, stability: researched, path: "skills/kernel/kernel-api-drift-migration", tier: 7}
+  # Side-channel & formal verification (U) — NEW DOMAIN security, tier 7
+  - {id: side-channel-constant-time-verification, domain: security, type: improved, priority: high, status: implemented, stability: source-backed, path: "skills/security/side-channel-constant-time-verification", tier: 7}
+  - {id: formal-spec-loop-invariants, domain: security, type: unique, priority: medium, status: implemented, stability: researched, path: "skills/security/formal-spec-loop-invariants", tier: 7}
+  - {id: smt-z3-sound-usage, domain: security, type: unique, priority: high, status: implemented, stability: researched, path: "skills/security/smt-z3-sound-usage", tier: 7}
+  # Embedded bringup/flash/OTA/HIL (V) — tier 7
+  - {id: embedded-board-bringup-peripheral-init, domain: embedded, type: unique, priority: medium, status: implemented, stability: researched, path: "skills/embedded/embedded-board-bringup-peripheral-init", tier: 7}
+  - {id: embedded-flash-debug-cycle, domain: embedded, type: unique, priority: medium, status: implemented, stability: researched, path: "skills/embedded/embedded-flash-debug-cycle", tier: 7}
+  - {id: embedded-ota-bootloader-safety, domain: embedded, type: unique, priority: medium, status: implemented, stability: researched, path: "skills/embedded/embedded-ota-bootloader-safety", tier: 7}
+  - {id: embedded-hil-ci-testing, domain: embedded, type: unique, priority: medium, status: implemented, stability: researched, path: "skills/embedded/embedded-hil-ci-testing", tier: 7}
+  # Rust unsafe (W) — tier 7
+  - {id: rust-unsafe-safety-contract-verification, domain: rust, type: improved, priority: high, status: implemented, stability: source-backed, path: "skills/rust/rust-unsafe-safety-contract-verification", tier: 7}
+
 summary:
-  total_registered: 60
-  by_tier: {tier_0: 6, tier_1: 5, tier_2: 3, tier_3: 8, tier_4: 6, tier_5: 14, tier_6: 18}
-  implemented: 60
-  source_backed: 47
-  researched: 13
+  total_registered: 124
+  by_tier: {tier_0: 6, tier_1: 5, tier_2: 3, tier_3: 8, tier_4: 6, tier_5: 14, tier_6: 18, tier_7: 64}
+  implemented: 124
+  source_backed: 65
+  researched: 59
   tiers_complete: ["tier_0", "tier_1", "tier_2", "tier_3", "tier_4", "tier_5", "tier_6"]
   all_registered_implemented: true

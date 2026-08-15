@@ -7,6 +7,7 @@ Bootloaders own the first instructions of a machine. This skill covers the boot 
 | Skill | What it does | Stability | Path |
 |---|---|---|---|
 | `bootloader-stages` | Use when writing or debugging bootloaders and firmware — BIOS/UEFI stage-1 loading, MBR/GPT, x86 real to protected to long mode (A20, GDT, CR0/CR4/EFER, paging), AArch64 and RISC-V boot protocols, and link-address vs load-address relocation at stage-2 entry. | source-backed | `skills/bootloader/bootloader-stages` |
+| `bootloader-uefi-firmware` | Use when writing, reading, or debugging UEFI firmware and edk2 code: Boot vs Runtime Services, the PI spec boundary, ExitBootServices ordering, HII/VFR forms, ACPI/SMBIOS tables, and Secure Boot. Prevents boot-services-after-exit crashes, missing RUNTIME_ACCESS flags, and VFR bounds that the driver ignores. | researched | `skills/bootloader/bootloader-uefi-firmware` |
 
 ## How to use
 

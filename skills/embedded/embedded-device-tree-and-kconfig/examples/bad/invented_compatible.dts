@@ -1,0 +1,13 @@
+// intentionally incorrect: compatible "st,st7789" does not exist. The real
+// binding is "sitronix,st7789v". No driver binds to this node (and no
+// DT_HAS_ST_ST7789_ENABLED symbol is generated), so the display never comes
+// up; the error only appears at build time or silently at runtime.
+&spi1 {
+    status = "okay";
+
+    st7789: st7789@0 {
+        compatible = "st,st7789";
+        reg = <0>;
+        mdac = <0x68>;
+    };
+};

@@ -1,0 +1,30 @@
+// Correct ST7789V overlay. Ground truth: dts/bindings/display/sitronix,st7789v.yaml
+// (compatible "sitronix,st7789v"; x-offset/y-offset/mdac/mipi-mode required).
+// Kconfig gate: CONFIG_ST7789V depends on DT_HAS_SITRONIX_ST7789V_ENABLED.
+#include <dt-bindings/gpio/gpio.h>
+
+&spi1 {
+    status = "okay";
+    cs-gpios = <&gpioa 4 GPIO_ACTIVE_LOW>;
+
+    st7789v: st7789v@0 {
+        compatible = "sitronix,st7789v";
+        reg = <0>;
+        spi-max-frequency = <20000000>;
+        reset-gpios = <&gpioa 3 GPIO_ACTIVE_LOW>;
+        dc-gpios = <&gpioa 2 GPIO_ACTIVE_LOW>;
+        x-offset = <0>;
+        y-offset = <0>;
+        mdac = <0x68>;
+        vcom = <0x19>;
+        gctrl = <0x35>;
+        vrhs = <0x0c>;
+        vdvs = <0x20>;
+        lcm = <0x2c>;
+        gamma = <0x01>;
+        porch-param = [3a 35 38];
+        pwctrl1-param = [a4 a1];
+        pvgam-param = [d0 05 0a 09 08 05 2e 44 45 0f 17 16 2b 47];
+        nvgam-param = [d0 05 0a 09 08 05 2e 44 45 0f 17 16 2b 47];
+    };
+};

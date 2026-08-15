@@ -1,0 +1,5 @@
+# intentionally incorrect: QP jumps RESET -> RTS, skipping INIT and RTR.
+# modify_qp to RTS is only legal from RTR; the hardware rejects the transition.
+init
+modify_qp rts
+post_send send

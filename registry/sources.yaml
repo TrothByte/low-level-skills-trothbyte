@@ -646,3 +646,1174 @@ sources:
     topics: ["ai", "security", "unsafe code"]
     relevant_sections: ["models generate unsafe code, panic patterns"]
     last_verified: 2026-08-14
+
+  # ---------- Assembly dialects / ISA (new surveys) ----------
+  - id: nasm-manual
+    title: "NASM — The Netwide Assembler manual"
+    url: "https://www.nasm.us/doc/"
+    authority: official
+    license: "BSD-2-Clause"
+    version: "2.16/3.x current"
+    topics: ["assembly", "nasm", "intel syntax"]
+    relevant_sections: ["section 3 (syntax, case sensitivity)", "section 4 (macho/elf output)", "directives, $, default rel, size hints"]
+    last_verified: 2026-08-15
+
+  - id: riscv-v-spec
+    title: "RISC-V Vector Extension Specification, Version 1.0"
+    url: "https://github.com/riscv/riscv-v-spec"
+    authority: normative
+    license: "CC-BY-4.0"
+    version: "v1.0 ratified"
+    topics: ["riscv", "vector", "rvv"]
+    relevant_sections: ["VL/AVL strip-mining", "LMUL/SEW", "tail/mask policies", "strided/segmented loads"]
+    last_verified: 2026-08-15
+
+  - id: riscv-rvv-intrinsics
+    title: "RISC-V Vector C Intrinsics specification"
+    url: "https://github.com/riscv-non-isa/rvv-intrinsic-doc"
+    authority: normative
+    license: "CC-BY-4.0"
+    version: "current"
+    topics: ["riscv", "rvv", "intrinsics"]
+    relevant_sections: ["vint64m1_t types", "vle/vse", "vsetvl"]
+    last_verified: 2026-08-15
+
+  # ---------- Binary analysis / decompilation ----------
+  - id: arxiv-2407-02524
+    title: "Meta Large Language Model Compiler (LLM Compiler)"
+    url: "https://arxiv.org/abs/2407.02524"
+    authority: authoritative
+    license: "arXiv"
+    version: "2024"
+    topics: ["llm", "disassembly", "compiler"]
+    relevant_sections: ["disassembler asm->IR 45% round-trip, 14% exact match"]
+    last_verified: 2026-08-15
+
+  - id: arxiv-2403-05286
+    title: "LLM4Decompile — decompilation with re-executability"
+    url: "https://arxiv.org/abs/2403.05286"
+    authority: authoritative
+    license: "arXiv"
+    version: "2024"
+    topics: ["llm", "decompilation"]
+    relevant_sections: ["re-executability metric, refined V2 64.9%"]
+    last_verified: 2026-08-15
+
+  - id: arxiv-2510-19615
+    title: "FidelityGPT / DeGPT — fixing decompilations"
+    url: "https://arxiv.org/abs/2510.19615"
+    authority: authoritative
+    license: "arXiv"
+    version: "2025"
+    topics: ["llm", "decompilation", "fidelity"]
+    relevant_sections: ["DeGPT FR 83%, Corrected Fix Rate 37%"]
+    last_verified: 2026-08-15
+
+  - id: arxiv-2305-12520
+    title: "SLaDe — sequence-to-sequence decompilation"
+    url: "https://arxiv.org/abs/2305.12520"
+    authority: authoritative
+    license: "arXiv"
+    version: "2023"
+    topics: ["llm", "decompilation"]
+    relevant_sections: ["neural decompilation usually incorrect"]
+    last_verified: 2026-08-15
+
+  - id: arxiv-2605-29059
+    title: "SCDBench — EVM bytecode decompilation benchmark"
+    url: "https://arxiv.org/abs/2605.29059"
+    authority: authoritative
+    license: "arXiv"
+    version: "2026"
+    topics: ["llm", "decompilation", "evm"]
+    relevant_sections: ["7% ideal decompilation (42/600)"]
+    last_verified: 2026-08-15
+
+  - id: arxiv-2607-06125
+    title: "Decompilation capability cliff at ~200 instructions"
+    url: "https://arxiv.org/abs/2607.06125"
+    authority: authoritative
+    license: "arXiv"
+    version: "2026"
+    topics: ["llm", "decompilation", "capability"]
+    relevant_sections: ["compile@k vs pass@k divergence", "~200 instruction cliff"]
+    last_verified: 2026-08-15
+
+  - id: arxiv-2510-20975
+    title: "REx86 — x86 disassembly comment generation"
+    url: "https://arxiv.org/abs/2510.20975"
+    authority: authoritative
+    license: "arXiv"
+    version: "2025"
+    topics: ["llm", "disassembly", "x86"]
+    relevant_sections: ["base LLMs hallucinate x86 disassembly comments"]
+    last_verified: 2026-08-15
+
+  - id: linux-syscall-table
+    title: "Linux system call table (per-architecture)"
+    url: "https://github.com/torvalds/linux/tree/master/arch/x86/entry/syscalls/syscall_64.tbl"
+    authority: official
+    license: "GPL-2.0"
+    version: "current"
+    topics: ["linux", "syscall", "shellcode"]
+    relevant_sections: ["syscall_64.tbl", "syscall_32.tbl"]
+    last_verified: 2026-08-15
+
+  - id: capstone-docs
+    title: "Capstone disassembly framework"
+    url: "https://www.capstone-engine.org/"
+    authority: official
+    license: "BSD-3-Clause"
+    version: "5.x"
+    topics: ["disassembly", "shellcode"]
+    relevant_sections: ["multi-arch disasm API"]
+    last_verified: 2026-08-15
+
+  - id: dbc-spec
+    title: "CAN DBC file format (Vector DBC)"
+    url: "https://github.com/ebroecker/canmatrix"
+    authority: authoritative
+    license: "BSD-3-Clause (canmatrix)"
+    version: "current"
+    topics: ["can", "dbc", "automotive"]
+    relevant_sections: ["message/signal layout", "scale/offset", "little/big endian, sawtooth"]
+    last_verified: 2026-08-15
+
+  - id: cantools-docs
+    title: "cantools — CAN database library"
+    url: "https://cantools.readthedocs.io/"
+    authority: official
+    license: "MIT"
+    version: "current"
+    topics: ["can", "dbc", "python"]
+    relevant_sections: ["load_file/decode_message", "DBC parsing"]
+    last_verified: 2026-08-15
+
+  - id: iso-11898
+    title: "ISO 11898-1: CAN data link layer and physical signalling"
+    url: "https://www.iso.org/standard/63648.html"
+    authority: normative
+    license: "proprietary (ISO)"
+    version: "2015"
+    topics: ["can", "automotive"]
+    relevant_sections: ["frame format", "bit numbering"]
+    last_verified: 2026-08-15
+
+  - id: pyghidra-docs
+    title: "PyGhidra — Python API for Ghidra"
+    url: "https://github.com/clearbluejar/pyghidra"
+    authority: official
+    license: "Apache-2.0"
+    version: "current"
+    topics: ["ghidra", "reverse engineering", "python"]
+    relevant_sections: ["open_program, FlatProgramAPI, headless mode"]
+    last_verified: 2026-08-15
+
+  - id: ghidra-api
+    title: "Ghidra API documentation"
+    url: "https://ghidra.re/ghidra_docs/api/"
+    authority: official
+    license: "Apache-2.0"
+    version: "current"
+    topics: ["ghidra", "reverse engineering"]
+    relevant_sections: ["Program, Address, DecompInterface", "headless analyzer"]
+    last_verified: 2026-08-15
+
+  - id: ghostty-memory-leak
+    title: "Mitchell Hashimoto — Ghostty memory leak fix (VM/page pool)"
+    url: "https://mitchellh.com/writing/ghostty-memory-leak-fix"
+    authority: authoritative
+    license: "blog (citation)"
+    version: "2026-01-10"
+    topics: ["vm", "allocator", "zig", "mmap"]
+    relevant_sections: ["PageList.zig page pool, missing munmap, 37-130GB reports"]
+    last_verified: 2026-08-15
+
+  - id: linux-mm-docs
+    title: "Linux kernel memory management documentation"
+    url: "https://docs.kernel.org/mm/"
+    authority: official
+    license: "GPL-2.0"
+    version: "current"
+    topics: ["kernel", "mm", "mmap", "vm"]
+    relevant_sections: ["mmap/munmap semantics", "page allocator", "vmalloc vs kmalloc"]
+    last_verified: 2026-08-15
+
+  # ---------- Concurrency ----------
+  - id: arxiv-2603-03683
+    title: "CONCUR — concurrent code generation benchmark"
+    url: "https://arxiv.org/abs/2603.03683"
+    authority: authoritative
+    license: "arXiv"
+    version: "2026"
+    topics: ["concurrency", "llm", "benchmark"]
+    relevant_sections: ["43 tasks + 72 mutants, deadlock/race, single-thread 'fake parallelism'"]
+    last_verified: 2026-08-15
+
+  - id: posix-threads
+    title: "POSIX Threads (pthreads) — IEEE 1003.1"
+    url: "https://pubs.opengroup.org/onlinepubs/9699919799/"
+    authority: normative
+    license: "free (Open Group)"
+    version: "2017"
+    topics: ["posix", "threads", "concurrency"]
+    relevant_sections: ["pthread_create/join", "sched_getaffinity"]
+    last_verified: 2026-08-15
+
+  - id: codex-37653
+    title: "openai/codex issue #37653 — zsh parallelism limit bypass"
+    url: "https://github.com/openai/codex/issues/37653"
+    authority: authoritative
+    license: "empirical (citation)"
+    version: "2026-08-09"
+    topics: ["concurrency", "shell", "process"]
+    relevant_sections: ["jobs in command substitution, 86 processes, kernel panic"]
+    last_verified: 2026-08-15
+
+  # ---------- Rust API / supply chain / crypto ----------
+  - id: arxiv-2503-16922
+    title: "RustEvo² — Rust API evolution benchmark"
+    url: "https://arxiv.org/abs/2503.16922"
+    authority: authoritative
+    license: "arXiv"
+    version: "2025"
+    topics: ["rust", "api drift", "benchmark"]
+    relevant_sections: ["65.8% stabilized vs 38.0% behavioral", "56.1% pre vs 32.5% post cutoff", "RAG +13.5%"]
+    last_verified: 2026-08-15
+
+  - id: arxiv-2606-08444
+    title: "Crate hallucinations in Rust code generation"
+    url: "https://arxiv.org/abs/2606.08444"
+    authority: authoritative
+    license: "arXiv"
+    version: "2026"
+    topics: ["rust", "supply chain", "hallucination"]
+    relevant_sections: ["nonexistent crates resembling real ones, model-independent rate"]
+    last_verified: 2026-08-15
+
+  - id: arxiv-2406-10279
+    title: "We Have a Package for You — package hallucinations"
+    url: "https://arxiv.org/abs/2406.10279"
+    authority: authoritative
+    license: "arXiv"
+    version: "2024"
+    topics: ["supply chain", "hallucination"]
+    relevant_sections: ["5.2% commercial / 21.7% open-source package hallucination"]
+    last_verified: 2026-08-15
+
+  - id: arxiv-2505-05057
+    title: "MARIN / APIHulBench — API hallucination metrics"
+    url: "https://arxiv.org/abs/2505.05057"
+    authority: authoritative
+    license: "arXiv"
+    version: "2025"
+    topics: ["rust", "api hallucination", "rag"]
+    relevant_sections: ["MiHN/MaHR metrics, dependency-aware decoding"]
+    last_verified: 2026-08-15
+
+  - id: crates-io-api
+    title: "crates.io API"
+    url: "https://crates.io/data-access"
+    authority: official
+    license: "free (API)"
+    version: "current"
+    topics: ["rust", "crates.io", "supply chain"]
+    relevant_sections: ["/api/v1/crates endpoint, exact-name search"]
+    last_verified: 2026-08-15
+
+  - id: cargo-semver-checks
+    title: "cargo-semver-checks"
+    url: "https://github.com/obi1kenobi/cargo-semver-checks"
+    authority: official
+    license: "MIT/Apache-2.0"
+    version: "current"
+    topics: ["rust", "semver", "api"]
+    relevant_sections: ["API breaking-change lints"]
+    last_verified: 2026-08-15
+
+  - id: cargo-deny
+    title: "cargo-deny"
+    url: "https://embarkstudios.github.io/cargo-deny/"
+    authority: official
+    license: "MIT/Apache-2.0"
+    version: "current"
+    topics: ["rust", "supply chain", "licensing"]
+    relevant_sections: ["advisories, bans, licenses"]
+    last_verified: 2026-08-15
+
+  - id: nist-sp800-38d
+    title: "NIST SP 800-38D — GCM mode of operation"
+    url: "https://csrc.nist.gov/publications/detail/sp/800-38d/final"
+    authority: normative
+    license: "public (NIST)"
+    version: "2007"
+    topics: ["crypto", "gcm", "nonce"]
+    relevant_sections: ["nonce uniqueness requirement", "IV construction"]
+    last_verified: 2026-08-15
+
+  - id: rfc-8439
+    title: "RFC 8439 — ChaCha20 and Poly1305 for IETF Protocols"
+    url: "https://www.rfc-editor.org/rfc/rfc8439"
+    authority: normative
+    license: "public (IETF)"
+    version: "2018"
+    topics: ["crypto", "chacha20", "poly1305"]
+    relevant_sections: ["AEAD construction, 96-bit nonce, test vectors"]
+    last_verified: 2026-08-15
+
+  - id: rustcrypto
+    title: "RustCrypto — audited pure-Rust cryptography crates"
+    url: "https://github.com/RustCrypto"
+    authority: authoritative
+    license: "MIT/Apache-2.0"
+    version: "current"
+    topics: ["rust", "crypto", "aead"]
+    relevant_sections: ["aes-gcm, chacha20poly1305 crates"]
+    last_verified: 2026-08-15
+
+  - id: arxiv-2604-27001
+    title: "Crypto-Rust code generation study (AES-GCM/ChaCha20-Poly1305)"
+    url: "https://arxiv.org/abs/2604.27001"
+    authority: authoritative
+    license: "arXiv"
+    version: "2026"
+    topics: ["rust", "crypto", "llm"]
+    relevant_sections: ["23.3% compile, 57% vulnerable, nonce reuse, CoT 5x worse"]
+    last_verified: 2026-08-15
+
+  - id: arxiv-2503-02335
+    title: "RustBrain — automated unsafe-Rust UB repair"
+    url: "https://arxiv.org/abs/2503.02335"
+    authority: authoritative
+    license: "arXiv"
+    version: "2025"
+    topics: ["rust", "unsafe", "miri"]
+    relevant_sections: ["94.3% pass, 80.4% execution on Miri"]
+    last_verified: 2026-08-15
+
+  - id: rust-miri
+    title: "Miri — Rust interpreter for UB detection"
+    url: "https://github.com/rust-lang/miri"
+    authority: official
+    license: "MIT/Apache-2.0"
+    version: "current"
+    topics: ["rust", "ub", "unsafe"]
+    relevant_sections: ["cargo miri test"]
+    last_verified: 2026-08-15
+
+  # ---------- Embedded ----------
+  - id: st7789-datasheet
+    title: "Sitronix ST7789V TFT controller datasheet"
+    url: "https://www.adafruit.com/product/3787"
+    authority: authoritative
+    license: "datasheet (citation)"
+    version: "V1.x"
+    topics: ["embedded", "display", "st7789"]
+    relevant_sections: ["MADCTL register", "SPI protocol, pixel formats"]
+    last_verified: 2026-08-15
+
+  - id: stm32-ref-manual
+    title: "STM32 reference manual (RMxxxx, I2C/GPIO/RCC)"
+    url: "https://www.st.com/en/microcontrollers-microprocessors/stm32-32-bit-arm-cortex-mcus.html"
+    authority: authoritative
+    license: "datasheet (citation)"
+    version: "current"
+    topics: ["embedded", "stm32", "registers"]
+    relevant_sections: ["I2C CR1/CR2, GPIO MODER/OTYPER, RCC AHB/APB enable"]
+    last_verified: 2026-08-15
+
+  - id: devicetree-spec
+    title: "Devicetree Specification"
+    url: "https://www.devicetree.org/specifications/"
+    authority: normative
+    license: "open (devicetree.org)"
+    version: "v0.4"
+    topics: ["devicetree", "embedded", "dts"]
+    relevant_sections: ["node structure, compatible property, address-cells/size-cells"]
+    last_verified: 2026-08-15
+
+  - id: arxiv-2506-11003
+    title: "EmbedAgent — embedded code generation benchmark"
+    url: "https://arxiv.org/abs/2506.11003"
+    authority: authoritative
+    license: "arXiv"
+    version: "2025"
+    topics: ["embedded", "llm", "benchmark"]
+    relevant_sections: ["DeepSeek-R1 55.6% pass@1, ESP-IDF 29.4%"]
+    last_verified: 2026-08-15
+
+  - id: arxiv-2606-16190
+    title: "Embedded Arena — hardware-in-the-loop embedded code generation"
+    url: "https://arxiv.org/abs/2606.16190"
+    authority: authoritative
+    license: "arXiv"
+    version: "2026"
+    topics: ["embedded", "hil", "llm"]
+    relevant_sections: ["0% deploy without hardware feedback"]
+    last_verified: 2026-08-15
+
+  - id: arxiv-2509-09970
+    title: "FreeRTOS firmware vulnerability study"
+    url: "https://arxiv.org/abs/2509.09970"
+    authority: authoritative
+    license: "arXiv"
+    version: "2025"
+    topics: ["embedded", "freertos", "security"]
+    relevant_sections: ["buffer overflow, race CWE-362, DoS; 92.4% remediation"]
+    last_verified: 2026-08-15
+
+  # ---------- Kernel internals ----------
+  - id: kernel-docs-sched
+    title: "Linux kernel scheduler documentation"
+    url: "https://docs.kernel.org/scheduler/"
+    authority: official
+    license: "GPL-2.0"
+    version: "current"
+    topics: ["kernel", "scheduler", "eevdf"]
+    relevant_sections: ["EEVDF, CFS->EEVDF 6.6->6.12, vruntime"]
+    last_verified: 2026-08-15
+
+  - id: kernel-docs-mm
+    title: "Linux kernel memory management documentation"
+    url: "https://docs.kernel.org/mm/"
+    authority: official
+    license: "GPL-2.0"
+    version: "current"
+    topics: ["kernel", "mm", "slub", "vmalloc"]
+    relevant_sections: ["SLUB/buddy, vmalloc vs kmalloc, page cache"]
+    last_verified: 2026-08-15
+
+  - id: kernel-docs-fs
+    title: "Linux kernel filesystems documentation"
+    url: "https://docs.kernel.org/filesystems/"
+    authority: official
+    license: "GPL-2.0"
+    version: "current"
+    topics: ["kernel", "vfs", "dcache", "inode"]
+    relevant_sections: ["VFS, dcache, inode lifecycle"]
+    last_verified: 2026-08-15
+
+  - id: kernel-source
+    title: "Linux kernel source tree"
+    url: "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git"
+    authority: official
+    license: "GPL-2.0"
+    version: ">=6.12"
+    topics: ["kernel", "source"]
+    relevant_sections: ["kernel/sched", "mm/", "fs/"]
+    last_verified: 2026-08-15
+
+  - id: kernel-trace-docs
+    title: "Linux kernel tracing/debugging documentation (ftrace/kprobes/kdump)"
+    url: "https://docs.kernel.org/trace/"
+    authority: official
+    license: "GPL-2.0"
+    version: "current"
+    topics: ["kernel", "ftrace", "kprobes", "kgdb"]
+    relevant_sections: ["ftrace, kprobes, kdump/crash, kgdb/kdb, dyndbg"]
+    last_verified: 2026-08-15
+
+  - id: linux-namespaces
+    title: "Linux namespaces(7) man page"
+    url: "https://man7.org/linux/man-pages/man7/namespaces.7.html"
+    authority: official
+    license: "GPL (man-pages)"
+    version: "current"
+    topics: ["kernel", "namespaces", "containers"]
+    relevant_sections: ["PID/net/mount/user namespaces, unshare/nsenter"]
+    last_verified: 2026-08-15
+
+  - id: cgroup-v2
+    title: "Linux control group v2 documentation"
+    url: "https://docs.kernel.org/admin-guide/cgroup-v2.html"
+    authority: official
+    license: "GPL-2.0"
+    version: "current"
+    topics: ["kernel", "cgroup", "containers"]
+    relevant_sections: ["controllers, memory/cpu limits"]
+    last_verified: 2026-08-15
+
+  - id: oci-runtime-spec
+    title: "Open Container Initiative Runtime Specification"
+    url: "https://github.com/opencontainers/runtime-spec"
+    authority: normative
+    license: "Apache-2.0"
+    version: "current"
+    topics: ["containers", "oci", "runc"]
+    relevant_sections: ["bundle, seccomp, capabilities, namespaces"]
+    last_verified: 2026-08-15
+
+  # ---------- Networking hardware ----------
+  - id: libibverbs
+    title: "libibverbs — RDMA verbs library"
+    url: "https://github.com/linux-rdma/rdma-core"
+    authority: official
+    license: "GPL-2.0/MIT (rdma-core)"
+    version: "current"
+    topics: ["rdma", "verbs", "hpc"]
+    relevant_sections: ["QP/CQ/MR verbs, ibv_post_send/recv"]
+    last_verified: 2026-08-15
+
+  - id: rdma-verbs-docs
+    title: "InfiniBand / RoCE verbs documentation"
+    url: "https://docs.kernel.org/infiniband/"
+    authority: official
+    license: "GPL-2.0"
+    version: "current"
+    topics: ["rdma", "infiniband", "roce"]
+    relevant_sections: ["RC/UC/UD transport, RoCE vs IB"]
+    last_verified: 2026-08-15
+
+  - id: nvidia-doca
+    title: "NVIDIA DOCA SDK documentation"
+    url: "https://developer.nvidia.com/networking/doca"
+    authority: official
+    license: "proprietary (free docs)"
+    version: "current"
+    topics: ["doca", "dpu", "offload"]
+    relevant_sections: ["DPU offload, eSwitch, hardware-safety discipline"]
+    last_verified: 2026-08-15
+
+  # ---------- Fuzzing ----------
+  - id: aflpp-docs
+    title: "AFL++ documentation"
+    url: "https://aflplus.plus/"
+    authority: official
+    license: "Apache-2.0"
+    version: "current"
+    topics: ["fuzzing", "afl"]
+    relevant_sections: ["fuzzing modes, crash minimization (afl-tmin/cmin)"]
+    last_verified: 2026-08-15
+
+  - id: libfuzzer-docs
+    title: "libFuzzer documentation"
+    url: "https://llvm.org/docs/LibFuzzer.html"
+    authority: official
+    license: "LLVM"
+    version: "current"
+    topics: ["fuzzing", "libfuzzer", "sanitizers"]
+    relevant_sections: ["LLVMFuzzerTestOneInput, -fsanitize=fuzzer, corpora"]
+    last_verified: 2026-08-15
+
+  - id: oss-fuzz
+    title: "OSS-Fuzz documentation"
+    url: "https://google.github.io/oss-fuzz/"
+    authority: official
+    license: "Apache-2.0"
+    version: "current"
+    topics: ["fuzzing", "oss-fuzz", "ci"]
+    relevant_sections: ["reproduce, minimization, disclosure process"]
+    last_verified: 2026-08-15
+
+  # ---------- GPU ----------
+  - id: arxiv-2602-19594
+    title: "ISO-Bench — GPU kernel generation benchmark"
+    url: "https://arxiv.org/abs/2602.19594"
+    authority: authoritative
+    license: "arXiv"
+    version: "2026"
+    topics: ["gpu", "llm", "benchmark"]
+    relevant_sections: ["kernels pass review but segfault under load, off-by-one/shapes/barriers"]
+    last_verified: 2026-08-15
+
+  - id: arxiv-2606-20128
+    title: "The Correctness Illusion — GPU kernel verification"
+    url: "https://arxiv.org/abs/2606.20128"
+    authority: authoritative
+    license: "arXiv"
+    version: "2026"
+    topics: ["gpu", "verification", "oracle"]
+    relevant_sections: ["fixed-shape allclose oracle certifies buggy kernels; fuzz+fp64 catches 9/9"]
+    last_verified: 2026-08-15
+
+  - id: arxiv-2608-04450
+    title: "CommBench — GPU communication benchmark"
+    url: "https://arxiv.org/abs/2608.04450"
+    authority: authoritative
+    license: "arXiv"
+    version: "2026"
+    topics: ["gpu", "communication", "benchmark"]
+    relevant_sections: ["best model 30.7% correct + competitive perf"]
+    last_verified: 2026-08-15
+
+  - id: arxiv-2605-16819
+    title: "AgentKernelArena — GPU kernel generalization"
+    url: "https://arxiv.org/abs/2605.16819"
+    authority: authoritative
+    license: "arXiv"
+    version: "2026"
+    topics: ["gpu", "generalization", "llm"]
+    relevant_sections: ["near-perfect on seen, drop on unseen shapes"]
+    last_verified: 2026-08-15
+
+  - id: triton-docs
+    title: "Triton language documentation"
+    url: "https://triton-lang.org/"
+    authority: official
+    license: "MIT"
+    version: "current"
+    topics: ["gpu", "triton"]
+    relevant_sections: ["kernel language, tl.constexpr shapes"]
+    last_verified: 2026-08-15
+
+  - id: nccl-docs
+    title: "NCCL — NVIDIA Collective Communications Library"
+    url: "https://docs.nvidia.com/deeplearning/nccl/"
+    authority: official
+    license: "BSD-3-Clause"
+    version: "current"
+    topics: ["gpu", "nccl", "communication"]
+    relevant_sections: ["collectives, p2p, ring/tree algorithms"]
+    last_verified: 2026-08-15
+
+  # ---------- Zig ----------
+  - id: zig-langref
+    title: "Zig Language Reference (langref)"
+    url: "https://ziglang.org/documentation/master/"
+    authority: normative
+    license: "MIT"
+    version: "0.15-0.17"
+    topics: ["zig", "comptime", "allocators", "inline asm", "error model"]
+    relevant_sections: ["Comptime", "Memory/Allocators", "Inline Assembly", "Errors", "@Vector"]
+    last_verified: 2026-08-15
+
+  - id: zig-std-source
+    title: "Zig standard library source (std.heap, std.simd, std.Thread, std.testing)"
+    url: "https://github.com/ziglang/zig/tree/master/lib/std"
+    authority: official
+    license: "MIT"
+    version: "current"
+    topics: ["zig", "std", "allocators", "testing"]
+    relevant_sections: ["std/heap.zig, std/simd.zig, std/Thread.zig, std/testing/smith.zig"]
+    last_verified: 2026-08-15
+
+  - id: zig-release-notes
+    title: "Zig release notes (0.15/0.16/0.17)"
+    url: "https://ziglang.org/download/"
+    authority: official
+    license: "MIT"
+    version: "0.15-0.17"
+    topics: ["zig", "migration", "breaking changes"]
+    relevant_sections: ["std.Io/Writer, Juicy Main, @Type split"]
+    last_verified: 2026-08-15
+
+  - id: zig-build-guide
+    title: "Zig build system guide (build.zig / build.zig.zon)"
+    url: "https://ziglang.org/learn/build-system/"
+    authority: official
+    license: "MIT"
+    version: "current"
+    topics: ["zig", "build", "packages"]
+    relevant_sections: ["build.zig, build.zig.zon, dependency integration"]
+    last_verified: 2026-08-15
+
+  - id: io-uring-docs
+    title: "io_uring documentation"
+    url: "https://docs.kernel.org/io_uring/"
+    authority: official
+    license: "GPL-2.0"
+    version: "current"
+    topics: ["io_uring", "async io"]
+    relevant_sections: ["submission/completion queues"]
+    last_verified: 2026-08-15
+
+  # ---------- Virtualization ----------
+  - id: kvm-docs
+    title: "Linux KVM API documentation"
+    url: "https://docs.kernel.org/virt/kvm/api.html"
+    authority: official
+    license: "GPL-2.0"
+    version: "current"
+    topics: ["kvm", "virtualization"]
+    relevant_sections: ["KVM_CREATE_VM/KVM_RUN ioctls, vCPU"]
+    last_verified: 2026-08-15
+
+  # ---------- CHERI ----------
+  - id: cheri-spec
+    title: "CHERI C/C++ Programming Guide & ISA"
+    url: "https://www.cl.cam.ac.uk/research/security/ctsrd/cheri/"
+    authority: normative
+    license: "BSD-3-Clause"
+    version: "current"
+    topics: ["cheri", "capability", "memory safety"]
+    relevant_sections: ["capability bounds/tags, purecap/hybrid ABI"]
+    last_verified: 2026-08-15
+
+  - id: cheribsd-docs
+    title: "CheriBSD documentation"
+    url: "https://www.cheribsd.org/"
+    authority: official
+    license: "BSD-2-Clause"
+    version: "current"
+    topics: ["cheribsd", "cheri", "morello"]
+    relevant_sections: ["purecap userspace, QEMU-CHERI"]
+    last_verified: 2026-08-15
+
+  - id: cheribuild
+    title: "cheribuild — CHERI build tool"
+    url: "https://github.com/CTSRD-CHERI/cheribuild"
+    authority: official
+    license: "BSD-2-Clause"
+    version: "current"
+    topics: ["cheri", "build", "qemu"]
+    relevant_sections: ["qemu-cheri target, run-* targets"]
+    last_verified: 2026-08-15
+
+  # ---------- HPC ----------
+  - id: mpi-41
+    title: "MPI-4.1 standard"
+    url: "https://www.mpi-forum.org/docs/"
+    authority: normative
+    license: "open (MPI Forum)"
+    version: "4.1"
+    topics: ["mpi", "hpc"]
+    relevant_sections: ["p2p, collectives, non-blocking, comm_split, MPI-IO"]
+    last_verified: 2026-08-15
+
+  - id: openmp-spec
+    title: "OpenMP specification 5.x"
+    url: "https://www.openmp.org/specifications/"
+    authority: normative
+    license: "open (OpenMP ARB)"
+    version: "5.2"
+    topics: ["openmp", "hpc"]
+    relevant_sections: ["worksharing schedules, reduction, target offload, memory model"]
+    last_verified: 2026-08-15
+
+  # ---------- HDL ----------
+  - id: cummings-cdc
+    title: "Cliff Cummings — Clock Domain Crossing papers"
+    url: "http://www.sunburst-design.com/papers/"
+    authority: authoritative
+    license: "free (citation)"
+    version: "2008"
+    topics: ["hdl", "cdc", "fpga"]
+    relevant_sections: ["CDC classification, 2-FF synchronizer, FIFO CDC"]
+    last_verified: 2026-08-15
+
+  - id: xilinx-ug
+    title: "Xilinx/AMD user guides (timing, constraints)"
+    url: "https://www.xilinx.com/support/documentation-navigation/design-hubs.html"
+    authority: official
+    license: "proprietary (free docs)"
+    version: "current"
+    topics: ["fpga", "timing", "constraints"]
+    relevant_sections: ["UG903 Vivado constraints, timing closure methodology"]
+    last_verified: 2026-08-15
+
+  - id: verilator-docs
+    title: "Verilator documentation"
+    url: "https://verilator.org/guide/latest/"
+    authority: official
+    license: "LGPL-3.0/Artistic-2.0"
+    version: "current"
+    topics: ["verilog", "simulation", "lint"]
+    relevant_sections: ["--lint-only, coverage, verilation"]
+    last_verified: 2026-08-15
+
+  - id: yosys-docs
+    title: "Yosys + nextpnr open synthesis flow"
+    url: "https://yosyshq.net/yosys/"
+    authority: official
+    license: "ISC"
+    version: "current"
+    topics: ["hdl", "synthesis", "fpga"]
+    relevant_sections: ["synthesis, timing report, nextpnr"]
+    last_verified: 2026-08-15
+
+  - id: sdc-spec
+    title: "Synopsys Design Constraints (SDC) format"
+    url: "https://www.synopsys.com/sdc/"
+    authority: normative
+    license: "proprietary (SDC)"
+    version: "2.1"
+    topics: ["hdl", "sdc", "constraints"]
+    relevant_sections: ["create_clock, set_input_delay, set_false_path"]
+    last_verified: 2026-08-15
+
+  # ---------- Mobile Android RE ----------
+  - id: dex-spec
+    title: "Dalvik Executable (DEX) format specification"
+    url: "https://source.android.com/docs/core/runtime/dex-format"
+    authority: normative
+    license: "Apache-2.0"
+    version: "current"
+    topics: ["android", "dex", "smali"]
+    relevant_sections: ["dex format, instruction set, method/type encoding"]
+    last_verified: 2026-08-15
+
+  - id: art-docs
+    title: "Android Runtime (ART) documentation"
+    url: "https://source.android.com/docs/core/runtime"
+    authority: official
+    license: "Apache-2.0"
+    version: "current"
+    topics: ["android", "art", "jit"]
+    relevant_sections: ["ART, dex2oat, JIT, GC"]
+    last_verified: 2026-08-15
+
+  - id: smali-docs
+    title: "smali/baksmali documentation"
+    url: "https://github.com/google/smali"
+    authority: official
+    license: "BSD-3-Clause"
+    version: "current"
+    topics: ["android", "smali", "re"]
+    relevant_sections: ["smali syntax, register model"]
+    last_verified: 2026-08-15
+
+  - id: jadx-docs
+    title: "jadx — DEX to Java decompiler"
+    url: "https://github.com/skylot/jadx"
+    authority: official
+    license: "Apache-2.0"
+    version: "current"
+    topics: ["android", "decompiler", "re"]
+    relevant_sections: ["dex->java, CLI options"]
+    last_verified: 2026-08-15
+
+  - id: jni-spec
+    title: "Java Native Interface (JNI) specification"
+    url: "https://docs.oracle.com/javase/8/docs/technotes/guides/jni/spec/jniTOC.html"
+    authority: normative
+    license: "Oracle (free docs)"
+    version: "current"
+    topics: ["android", "jni", "ffi"]
+    relevant_sections: ["JNIEnv, native method registration, references"]
+    last_verified: 2026-08-15
+
+  - id: android-ndk
+    title: "Android NDK documentation"
+    url: "https://developer.android.com/ndk/guides"
+    authority: official
+    license: "Apache-2.0"
+    version: "current"
+    topics: ["android", "ndk", "native"]
+    relevant_sections: ["JNI, ABI (arm64-v8a/armeabi-v7a)"]
+    last_verified: 2026-08-15
+
+  - id: frida-docs
+    title: "Frida — dynamic instrumentation framework"
+    url: "https://frida.re/docs/"
+    authority: official
+    license: "wxWindows (LGPLv2.1+)"
+    version: "current"
+    topics: ["frida", "instrumentation", "re"]
+    relevant_sections: ["Interceptor, Java/native hooking"]
+    last_verified: 2026-08-15
+
+  # ---------- UEFI ----------
+  - id: uefi-spec
+    title: "UEFI Specification + PI Specification"
+    url: "https://uefi.org/specifications"
+    authority: normative
+    license: "UEFI (free download)"
+    version: "current"
+    topics: ["uefi", "firmware", "boot"]
+    relevant_sections: ["boot services, DXE, HII/VFR, ACPI/SMBIOS, Secure Boot"]
+    last_verified: 2026-08-15
+
+  - id: edk2-docs
+    title: "TianoCore EDK II documentation"
+    url: "https://github.com/tianocore/tianocore.github.io/wiki"
+    authority: official
+    license: "BSD-2-Clause"
+    version: "current"
+    topics: ["uefi", "edk2", "firmware"]
+    relevant_sections: ["build system, module INF/DSC, OVMF"]
+    last_verified: 2026-08-15
+
+  # ---------- Build systems ----------
+  - id: cmake-docs
+    title: "CMake documentation"
+    url: "https://cmake.org/cmake/help/latest/"
+    authority: official
+    license: "BSD-3-Clause"
+    version: "current"
+    topics: ["cmake", "build"]
+    relevant_sections: ["find_package, target_link_libraries, target_include_directories"]
+    last_verified: 2026-08-15
+
+  - id: pkgconfig-docs
+    title: "pkg-config guide"
+    url: "https://people.freedesktop.org/~dbn/pkg-config-guide.html"
+    authority: official
+    license: "GPL"
+    version: "current"
+    topics: ["pkg-config", "build"]
+    relevant_sections: ["pc files, Requires, --cflags --libs"]
+    last_verified: 2026-08-15
+
+  - id: glibc-abi
+    title: "glibc ABI / libstdc++ versioning (GLIBCXX symbols)"
+    url: "https://gcc.gnu.org/onlinedocs/libstdc++/manual/abi.html"
+    authority: official
+    license: "GFDL"
+    version: "current"
+    topics: ["abi", "glibc", "libstdc++"]
+    relevant_sections: ["GLIBCXX symbol versions, dual ABI"]
+    last_verified: 2026-08-15
+
+  - id: lld-docs
+    title: "LLD — the LLVM linker documentation"
+    url: "https://lld.llvm.org/"
+    authority: official
+    license: "LLVM"
+    version: "current"
+    topics: ["linker", "lld", "lto"]
+    relevant_sections: ["undefined symbols, LTO/ODR, --as-needed"]
+    last_verified: 2026-08-15
+
+  - id: ninja-manual
+    title: "Ninja build system manual"
+    url: "https://ninja-build.org/manual.html"
+    authority: official
+    license: "Apache-2.0"
+    version: "current"
+    topics: ["ninja", "build"]
+    relevant_sections: [".ninja_deps/.ninja_log, recompact, restat"]
+    last_verified: 2026-08-15
+
+  - id: make-manual
+    title: "GNU Make manual"
+    url: "https://www.gnu.org/software/make/manual/"
+    authority: official
+    license: "GFDL"
+    version: "current"
+    topics: ["make", "build"]
+    relevant_sections: ["signals/SIGTERM handling, .DELETE_ON_ERROR"]
+    last_verified: 2026-08-15
+
+  # ---------- Security / formal / side-channel ----------
+  - id: dudect
+    title: "dudect — differential constant-time testing (Reparaz et al.)"
+    url: "https://github.com/oreparaz/dudect"
+    authority: authoritative
+    license: "public domain (code)"
+    version: "2017"
+    topics: ["constant-time", "side-channel", "testing"]
+    relevant_sections: ["fixed-vs-random class separation, t-test"]
+    last_verified: 2026-08-15
+
+  - id: ctgrind
+    title: "BearSSL ctgrind — Valgrind-based constant-time checking"
+    url: "https://bearssl.org/ctgrind.html"
+    authority: authoritative
+    license: "MIT (BearSSL)"
+    version: "current"
+    topics: ["constant-time", "valgrind", "side-channel"]
+    relevant_sections: ["secret-dependent branches/table accesses"]
+    last_verified: 2026-08-15
+
+  - id: tob-constant-time
+    title: "Trail of Bits — constant-time analysis (ct, LLVM pass)"
+    url: "https://blog.trailofbits.com/"
+    authority: authoritative
+    license: "Apache-2.0 (tools)"
+    version: "current"
+    topics: ["constant-time", "llvm", "side-channel"]
+    relevant_sections: ["secret-dependent control flow detection"]
+    last_verified: 2026-08-15
+
+  - id: acsl-spec
+    title: "ACSL — ANSI/ISO C Specification Language"
+    url: "https://frama-c.com/html/acsl.html"
+    authority: normative
+    license: "open (CEA)"
+    version: "1.x"
+    topics: ["formal", "acsl", "c"]
+    relevant_sections: ["requires/ensures, loop invariant, assigns"]
+    last_verified: 2026-08-15
+
+  - id: cbmc-docs
+    title: "CBMC — C Bounded Model Checker"
+    url: "https://github.com/diffblue/cbmc"
+    authority: official
+    license: "BSD-4-Clause"
+    version: "current"
+    topics: ["formal", "cbmc", "c"]
+    relevant_sections: ["--bounds-check, --pointer-check, loop unwinding"]
+    last_verified: 2026-08-15
+
+  - id: frama-c-docs
+    title: "Frama-C — source analysis platform"
+    url: "https://frama-c.com/"
+    authority: official
+    license: "LGPL-2.1"
+    version: "current"
+    topics: ["formal", "frama-c", "acsl"]
+    relevant_sections: ["WP plugin, Eva value analysis"]
+    last_verified: 2026-08-15
+
+  - id: kani-docs
+    title: "Kani — Rust model checker"
+    url: "https://model-checking.github.io/kani/"
+    authority: official
+    license: "MIT/Apache-2.0"
+    version: "current"
+    topics: ["formal", "kani", "rust"]
+    relevant_sections: ["proof harness, kani::assert"]
+    last_verified: 2026-08-15
+
+  - id: z3-docs
+    title: "Z3 theorem prover documentation"
+    url: "https://z3prover.github.io/api/html/"
+    authority: official
+    license: "MIT"
+    version: "current"
+    topics: ["smt", "z3", "verification"]
+    relevant_sections: ["Solver API, check/unsat-core, quantifiers"]
+    last_verified: 2026-08-15
+
+  - id: smt-lib
+    title: "SMT-LIB standard"
+    url: "https://smt-lib.org/"
+    authority: normative
+    license: "open"
+    version: "2.6"
+    topics: ["smt", "logic", "verification"]
+    relevant_sections: ["theories, declare-const/assert"]
+    last_verified: 2026-08-15
+
+  - id: cwe-1254
+    title: "CWE-1254 — Incorrect Comparison of Strings"
+    url: "https://cwe.mitre.org/data/definitions/1254.html"
+    authority: authoritative
+    license: "free (MITRE)"
+    version: "current"
+    topics: ["security", "constant-time", "comparison"]
+    relevant_sections: ["early-exit string == leaks length"]
+    last_verified: 2026-08-15
+
+  # ---------- Embedded cycle ----------
+  - id: openocd-docs
+    title: "OpenOCD documentation"
+    url: "https://openocd.org/doc/html/"
+    authority: official
+    license: "GPL-2.0"
+    version: "current"
+    topics: ["embedded", "openocd", "debug"]
+    relevant_sections: ["SWD/JTAG, gdb remote, flash write"]
+    last_verified: 2026-08-15
+
+  - id: mcuboot
+    title: "MCUboot documentation"
+    url: "https://docs.mcuboot.com/"
+    authority: official
+    license: "Apache-2.0"
+    version: "current"
+    topics: ["bootloader", "ota", "mcuboot"]
+    relevant_sections: ["slot layout, swap, rollback"]
+    last_verified: 2026-08-15
+
+  - id: esp-idf-docs
+    title: "ESP-IDF documentation (OTA, partitions)"
+    url: "https://docs.espressif.com/projects/esp-idf/"
+    authority: official
+    license: "Apache-2.0"
+    version: "current"
+    topics: ["embedded", "esp32", "ota"]
+    relevant_sections: ["OTA updates, partition tables, rollback"]
+    last_verified: 2026-08-15
+
+  # ---------- Kernel drivers ----------
+  - id: kernel-driver-api
+    title: "Linux kernel driver API documentation"
+    url: "https://docs.kernel.org/driver-api/"
+    authority: official
+    license: "GPL-2.0"
+    version: "current"
+    topics: ["kernel", "drivers", "char device"]
+    relevant_sections: ["file_operations, cdev, class_create/class_destroy, copy_to/from_user"]
+    last_verified: 2026-08-15
+
+  - id: kernel-kbuild
+    title: "Linux kernel build system documentation (Documentation/kbuild)"
+    url: "https://docs.kernel.org/kbuild/"
+    authority: official
+    license: "GPL-2.0"
+    version: "current"
+    topics: ["kernel", "kbuild", "modules"]
+    relevant_sections: ["out-of-tree modules, Kconfig, MODULE_LICENSE"]
+    last_verified: 2026-08-15
+
+  # ---------- Additional failure surveys ----------
+  - id: arxiv-2607-00107
+    title: "The Illusion of Safety (C++ AI code verification)"
+    url: "https://arxiv.org/abs/2607.00107"
+    authority: authoritative
+    license: "arXiv"
+    version: "2026"
+    topics: ["cpp", "ai", "verification"]
+    relevant_sections: ["AI ~2x runtime violations, static analysis illusion"]
+    last_verified: 2026-08-15
+
+  - id: arxiv-2607-00700
+    title: "LLVM-Bench — LLVM issue resolution benchmark"
+    url: "https://arxiv.org/abs/2607.00700"
+    authority: authoritative
+    license: "arXiv"
+    version: "2026"
+    topics: ["llvm", "llm", "benchmark"]
+    relevant_sections: ["best ensemble 21.99% of 423 issues"]
+    last_verified: 2026-08-15
+
+  - id: arxiv-2607-12507
+    title: "Binaries Talk Back — adversarial binary RE"
+    url: "https://arxiv.org/abs/2607.12507"
+    authority: authoritative
+    license: "arXiv"
+    version: "2026"
+    topics: ["re", "adversarial", "llm"]
+    relevant_sections: ["35/40 unsafe actions vs 0/40 clean; provenance-gating 32/32->0/32"]
+    last_verified: 2026-08-15
+
+  - id: arxiv-2511-01183
+    title: "NeuComBack — IR-to-assembly generation"
+    url: "https://arxiv.org/abs/2511.01183"
+    authority: authoritative
+    license: "arXiv"
+    version: "2025"
+    topics: ["llm", "assembly", "ir"]
+    relevant_sections: ["44% x86_64 / 36% aarch64 functional correctness"]
+    last_verified: 2026-08-15
+
+  - id: arxiv-2505-11480
+    title: "SuperCoder — assembler superoptimization with RL"
+    url: "https://arxiv.org/abs/2505.11480"
+    authority: authoritative
+    license: "arXiv"
+    version: "2025"
+    topics: ["llm", "assembly", "superoptimization"]
+    relevant_sections: ["51.5% test-passing -> 95.0% with RL"]
+    last_verified: 2026-08-15
+
+  - id: arxiv-2605-01394
+    title: "LiveFMBench — LLM formal spec benchmark"
+    url: "https://arxiv.org/abs/2605.01394"
+    authority: authoritative
+    license: "arXiv"
+    version: "2026"
+    topics: ["formal", "llm", "specification"]
+    relevant_sections: ["vacuous/wrong invariants, -20% accuracy after filtering"]
+    last_verified: 2026-08-15
+
+  - id: arxiv-2511-06552
+    title: "Loop invariant repair study"
+    url: "https://arxiv.org/abs/2511.06552"
+    authority: authoritative
+    license: "arXiv"
+    version: "2025"
+    topics: ["formal", "loop invariant", "repair"]
+    relevant_sections: ["only 16% invariant repair success"]
+    last_verified: 2026-08-15
+
+  - id: arxiv-2607-20712
+    title: "ProVerif/OFMC protocol verification confidence study"
+    url: "https://arxiv.org/abs/2607.20712"
+    authority: authoritative
+    license: "arXiv"
+    version: "2026"
+    topics: ["formal", "protocol", "verification"]
+    relevant_sections: ["confidence != correctness in symbolic verification"]
+    last_verified: 2026-08-15

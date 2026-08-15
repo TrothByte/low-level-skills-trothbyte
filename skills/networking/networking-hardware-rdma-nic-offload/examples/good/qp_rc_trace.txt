@@ -1,0 +1,13 @@
+# Correct RC QP lifecycle: RESET -> INIT -> RTR -> RTS, MR registered with the
+# access flags the ops need, RDMA_READ/ATOMIC performed only after RTS.
+init
+reg_mr local_write remote_write remote_read remote_atomic
+modify_qp init
+modify_qp rtr
+modify_qp rts
+post_recv
+post_send send
+post_send rdma_write
+post_send rdma_read
+post_send atomic_fetch_add
+poll_cq

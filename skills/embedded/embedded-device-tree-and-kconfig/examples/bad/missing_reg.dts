@@ -1,0 +1,11 @@
+// intentionally incorrect: node has a unit-address @0 but no reg property.
+// The unit-address selects the reg entry; without reg the address is
+// meaningless and #address-cells/#size-cells decode fails.
+&spi1 {
+    status = "okay";
+
+    st7789v: st7789v@0 {
+        compatible = "sitronix,st7789v";
+        mdac = <0x68>;
+    };
+};

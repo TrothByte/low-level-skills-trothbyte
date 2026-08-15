@@ -1,0 +1,25 @@
+// intentionally incorrect: VFR that leaks an overflow check.
+// The VFR numeric edit prompt checks the value against 0..100, but the
+// corresponding driver ignores the numeric opcode's MAXLEN/MAXVALUE and
+// stores the raw value anyway. When the user enters 10000, the stored
+// value exceeds the display range and the next HII read truncates it —
+// the guard in the VFR is not enforced by the driver.
+// #include <.../VfrCompile.h>  (VFR form definition)
+//
+// formset
+//   form formid = 1,
+//     title = STRING_TOKEN(STR_TITLE);
+//     numeric
+//       varid = NV_DATA.Threshold,
+//       prompt = STRING_TOKEN(STR_PROMPT),
+//       help = STRING_TOKEN(STR_HELP),
+//       minimum = 0,
+//       maximum = 100,
+//       step = 1,
+//       default = 50,
+//       endnumeric;
+//   endform;
+// endformset;
+//
+// WRONG: the driver then does Threshold = value; without clamping or
+// validation, so the VFR bounds are advisory only.

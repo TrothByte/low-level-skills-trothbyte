@@ -77,6 +77,91 @@ cross_links:
   - {from: meta-completion, rel: require, to: meta-verification}
   - {from: meta-rationalizations, rel: recommend, to: meta-assumptions}
 
+  # ===== NEW SKILLS (PHASE 13) =====
+  # Assembly (A)
+  - {from: asm-verification-hallucination-gate, rel: recommend, to: asm-x86-64-registers-and-addressing}
+  - {from: asm-verification-hallucination-gate, rel: recommend, to: asm-signed-unsigned-branches}
+  - {from: asm-verification-hallucination-gate, rel: verify, to: meta-verification}
+  - {from: asm-syntax-dialects-nasm-gas-att, rel: recommend, to: asm-x86-64-registers-and-addressing}
+  - {from: asm-arm-thumb-2-encoding, rel: recommend, to: asm-verification-hallucination-gate}
+  - {from: asm-aarch64-neon-simd-safety, rel: recommend, to: simd-vectorization-cross-layer}
+  - {from: asm-risc-v-registers-and-calling-conventions, rel: recommend, to: asm-calling-conventions}
+  # Binary analysis / RE (B)
+  - {from: binary-disassembly-decompilation-fidelity, rel: extend, to: binary-analysis-type-recovery}
+  - {from: binary-disassembly-decompilation-fidelity, rel: recommend, to: asm-optimizer-artifacts}
+  - {from: reverse-engineering-shellcode-analysis, rel: require, to: asm-x86-64-registers-and-addressing}
+  - {from: reverse-engineering-can-signal-extraction, rel: extend, to: auto-re-protocols-beyond-can}
+  - {from: reverse-engineering-ghidra-agent-automation, rel: recommend, to: binary-analysis-type-recovery}
+  - {from: binary-memory-leak-vm-allocator-diagnosis, rel: recommend, to: performance-measurement-discipline}
+  # Concurrency (C)
+  - {from: concurrency-actual-parallelism-detection, rel: recommend, to: memory-ordering-reasoning}
+  - {from: concurrency-actual-parallelism-detection, rel: recommend, to: concurrency-deadlock-and-lock-ordering}
+  # Rust (D)
+  - {from: rust-api-evolution-and-drift, rel: recommend, to: rust-unsafe-reasoning}
+  - {from: rust-dependency-supply-chain, rel: recommend, to: rust-api-evolution-and-drift}
+  - {from: rust-crypto-primitives-safety, rel: require, to: zeroize-constant-time}
+  # Embedded (E)
+  - {from: embedded-hw-register-datasheet-verification, rel: require, to: embedded-volatile-and-memory-ordering}
+  - {from: embedded-device-tree-and-kconfig, rel: recommend, to: embedded-linker-script}
+  # Kernel (F)
+  - {from: kernel-scheduler-mm-vfs-internals, rel: recommend, to: kernel-uaccess-safety}
+  - {from: kernel-debugging-ftrace-kprobes-kdump, rel: recommend, to: qemu-system-setup}
+  # Networking (G)
+  - {from: networking-hardware-rdma-nic-offload, rel: recommend, to: ebpf-verifier-reasoning}
+  # Sanitizers (H)
+  - {from: fuzzing-harness-evidence-gate, rel: require, to: sanitizer-report-reading}
+  - {from: fuzzing-harness-evidence-gate, rel: require, to: sanitizer-agent-ci-loop}
+  # GPU (I)
+  - {from: gpu-kernel-verification-beyond-oracle, rel: require, to: gpu-memory-model-coherence}
+  - {from: gpu-communication-primitives, rel: recommend, to: gpu-memory-model-coherence}
+  # Zig (J)
+  - {from: zig-ffi-c-interop, rel: recommend, to: ffi-boundary-cross-language}
+  - {from: zig-inline-asm-and-abi, rel: recommend, to: asm-calling-conventions}
+  - {from: zig-simd-vector-intrinsics, rel: recommend, to: simd-vectorization-cross-layer}
+  - {from: zig-concurrency-and-io-events, rel: recommend, to: memory-ordering-reasoning}
+  - {from: zig-version-migration, rel: recommend, to: zig-comptime-metaprogramming}
+  - {from: zig-build-system-and-packages, rel: recommend, to: zig-cross-compilation-targets}
+  # Virtualization (K)
+  - {from: hypervisor-vmx-svm-internals, rel: recommend, to: qemu-system-setup}
+  # RISC-V (L)
+  - {from: riscv-isa-and-rvv-intrinsics, rel: recommend, to: simd-vectorization-cross-layer}
+  - {from: riscv-cheri-capability-safety, rel: recommend, to: safe-low-level-from-scratch}
+  # HPC (M)
+  - {from: hpc-mpi-programming, rel: recommend, to: concurrency-deadlock-and-lock-ordering}
+  - {from: hpc-openmp-parallel-programming, rel: recommend, to: memory-ordering-reasoning}
+  - {from: hpc-rdma-verbs, rel: recommend, to: networking-hardware-rdma-nic-offload}
+  # Mobile (O)
+  - {from: android-re-dex-smali-format, rel: recommend, to: binary-analysis-type-recovery}
+  - {from: android-re-native-jni-analysis, rel: recommend, to: go-rust-re}
+  # UEFI (P)
+  - {from: bootloader-uefi-firmware, rel: require, to: bootloader-stages}
+  # _meta (Q)
+  - {from: meta-verification-harness-validity, rel: require, to: meta-verification}
+  # Build systems (R)
+  - {from: build-system-cmake-diagnostics, rel: recommend, to: build-toolchain-version-drift}
+  - {from: build-toolchain-version-drift, rel: recommend, to: build-linker-error-diagnostics}
+  - {from: build-linker-error-diagnostics, rel: require, to: elf-linker-loader-debugger}
+  - {from: build-process-signal-and-state-safety, rel: recommend, to: build-system-cmake-diagnostics}
+  # Debugging (S)
+  - {from: debugging-crash-triage-discipline, rel: recommend, to: meta-verification}
+  - {from: debugging-instrumentation-over-reasoning, rel: recommend, to: debugging-crash-triage-discipline}
+  # Kernel drivers (T)
+  - {from: kernel-driver-char-device-lifecycle, rel: require, to: kernel-uaccess-safety}
+  - {from: kernel-driver-char-device-lifecycle, rel: recommend, to: kernel-atomic-context}
+  - {from: kernel-module-build-out-of-tree, rel: recommend, to: kernel-driver-char-device-lifecycle}
+  - {from: kernel-api-drift-migration, rel: recommend, to: kernel-driver-char-device-lifecycle}
+  # Security / formal (U)
+  - {from: side-channel-constant-time-verification, rel: require, to: zeroize-constant-time}
+  - {from: side-channel-constant-time-verification, rel: recommend, to: compiler-ub-assumptions}
+  - {from: smt-z3-sound-usage, rel: recommend, to: formal-spec-loop-invariants}
+  # Embedded cycle (V)
+  - {from: embedded-board-bringup-peripheral-init, rel: recommend, to: embedded-hw-register-datasheet-verification}
+  - {from: embedded-flash-debug-cycle, rel: recommend, to: embedded-board-bringup-peripheral-init}
+  - {from: embedded-ota-bootloader-safety, rel: recommend, to: bootloader-stages}
+  - {from: embedded-hil-ci-testing, rel: recommend, to: embedded-flash-debug-cycle}
+  # Rust unsafe (W)
+  - {from: rust-unsafe-safety-contract-verification, rel: require, to: rust-unsafe-reasoning}
+
 # ============================================================
 # COLLISION RULES (конфликтующие рекомендации)
 # ============================================================

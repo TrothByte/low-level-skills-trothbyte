@@ -409,3 +409,25 @@ nvcc, clang-bpf, LLVM, QEMU, sanitizer-рантаймы).
 
 5. **README** — добавлены опции установки (clone / npx skills add / Claude plugin) и
    ссылка на docs-сайт. Коммиты `9633780`, затем README-обновление; валидаторы OK.
+
+## 2026-08-15 — Сессия 19 (PR в awesome-списки + инфраструктура)
+
+1. **Открыто 3 PR** (через gh, форки под TrothByte):
+   - `ComposioHQ/awesome-claude-skills#1633` — Development & Code Tools (72.5k★);
+   - `travisvn/awesome-claude-skills#1120` — Community Skills → Collections & Libraries (14.7k★);
+   - `Shubhamsaboo/awesome-llm-apps#1099` — Agent Skills, внешняя запись (132.7k★).
+   Все — одна-две строки + описание PR (что это, source-tracing, install, MIT, CI).
+   Форки: TrothByte/awesome-claude-skills, TrothByte/awesome-claude-skills-1,
+   TrothByte/awesome-llm-apps (локальные клоны в %TEMP%\kilo\awesome-prs).
+
+2. **Инфраструктура репо** (коммиты `d36804b`, badge-fix):
+   - issue-шаблоны: `bug_report.md`, `skill_request.md`, `config.yml` → Discussions;
+   - stale-bot workflow (90 дней → close 14);
+   - Pages SEO: `docs/robots.txt` + `docs/sitemap.xml` (Jekyll liquid, site.url);
+   - лейблы `good first issue` (уже был), `skill request`;
+   - skills.sh-бейдж: ссылка исправлена на `https://skills.sh/owner/repo` (по докам).
+
+3. **Исследовано дополнительно**: skills.sh Packs — создание требует аккаунта Vercel
+   (не agent-doable, пропущено); Discussions API — 404 (пост создаётся вручную);
+   Anthropic Partner Skills — форма для пользователя. Проверка индексации skills.sh
+   и claudemarketplaces — через несколько дней.

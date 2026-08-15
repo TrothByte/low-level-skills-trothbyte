@@ -18,3 +18,20 @@ desktop.ini
 
 # Leftover nested repo from directory rename (do not track)
 /Low-level skills by TrothByte+/
+
+# Build artifacts (subagent runs)
+*.o
+*.obj
+*.exe
+*.lib
+*.a
+*.so
+*.dll
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+*.vcxproj
+*.vcxproj.filters
+*.sln
+ALL_BUILD.dir/
+

@@ -1,0 +1,14 @@
+# Pre-commit hooks for the TrothByte repository.
+#
+# Install with:  pip install pre-commit && pre-commit install
+# Run manually:  pre-commit run --all-files
+repos:
+  - repo: local
+    hooks:
+      - id: trothbyte-validators
+        name: TrothByte validators (skill_lint, registry_check, source_check)
+        description: Runs every repository validator against all skills and registries.
+        entry: python tools/validate.py
+        language: system
+        pass_filenames: false
+        always_run: true

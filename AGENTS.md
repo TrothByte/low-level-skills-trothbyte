@@ -24,7 +24,7 @@
 12. Mark uncertainty explicitly (KNOWN / INFERRED / UNVERIFIED).
 13. Never silently mark work complete.
 14. Update progress files after every completed unit.
-15. Run repository validators before committing.
+15. Run repository validators before committing: `python tools/validate.py` (skill_lint + registry_check + source_check).
 
 ## Token economy (операционные правила — экономить токены при каждом запуске)
 

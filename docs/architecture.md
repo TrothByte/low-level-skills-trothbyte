@@ -45,7 +45,7 @@ low-level-agent-skills/
 │   ├── tokens/          # token_measure.py
 │   └── reports/         # gen_domain_readmes.py
 └── docs/                # документация
-    ├── SKILLS.md        # каталог всех 60 skills (что делает каждый, stability, путь)
+    ├── SKILLS.md        # каталог всех 124 skills (что делает каждый, stability, путь)
     ├── ACKNOWLEDGMENTS.md  # благодарности авторам использованных репозиториев
     └── architecture.md  # этот документ
 ```

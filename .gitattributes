@@ -1,0 +1,27 @@
+# Normalize line endings; all text files are LF on commit.
+* text=auto
+
+*.md text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.py text eol=lf
+*.c text eol=lf
+*.h text eol=lf
+*.cpp text eol=lf
+*.hpp text eol=lf
+*.rs text eol=lf
+*.zig text eol=lf
+*.s text eol=lf
+*.txt text eol=lf
+
+# Binary files stay binary.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary
+*.ico binary
+
+# Generated files.
+docs/SKILLS.md linguist-generated=true
+skills/*/README.md linguist-generated=true

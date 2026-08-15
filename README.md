@@ -4,17 +4,18 @@
 
 **Production-grade low-level engineering knowledge for AI coding agents — verified, source-backed, and cheap to load.**
 
-[![skills](https://img.shields.io/badge/skills-60-blueviolet?style=flat-square)](docs/SKILLS.md)
-[![domains](https://img.shields.io/badge/domains-23-9cf?style=flat-square)](#skills-catalog)
-[![source-backed](https://img.shields.io/badge/source--backed-47-success?style=flat-square)](registry/skills.yaml)
-[![primary sources](https://img.shields.io/badge/primary--sources-62-informational?style=flat-square)](registry/sources.yaml)
-[![traced claims](https://img.shields.io/badge/traced--claims-17-important?style=flat-square)](registry/claims.yaml)
+[![skills](https://img.shields.io/badge/skills-124-blueviolet?style=flat-square)](docs/SKILLS.md)
+[![domains](https://img.shields.io/badge/domains-32-9cf?style=flat-square)](#skills-catalog)
+[![source-backed](https://img.shields.io/badge/source--backed-65-success?style=flat-square)](registry/skills.yaml)
+[![primary sources](https://img.shields.io/badge/primary--sources-177-informational?style=flat-square)](registry/sources.yaml)
+[![traced claims](https://img.shields.io/badge/traced--claims-56-important?style=flat-square)](registry/claims.yaml)
 [![license](https://img.shields.io/badge/license-MIT-brightgreen?style=flat-square)](LICENSE.md)
+[![CI](https://img.shields.io/github/actions/workflow/status/TrothByte/low-level-skills-trothbyte/ci.yml?style=flat-square&label=CI)](https://github.com/TrothByte/low-level-skills-trothbyte/actions)
 
 </div>
 
 > [!NOTE]
-> **60 skills · 23 domains · 47 source-backed · 62 primary sources · 17 traced claims.**
+> **124 skills · 32 domains · 65 source-backed · 177 primary sources · 56 traced claims.**
 > AI agents writing C, C++, Rust, assembly, kernels, or firmware fail in predictable ways —
 > they trust "it compiles", guess ABIs, ignore memory ordering, and skip verification.
 > TrothByte exists to fix exactly those failures.
@@ -73,13 +74,15 @@ The complete index — what each skill does, its stability, and where it lives �
 
 | Path | Purpose |
 |---|---|
-| `skills/` | 60 skills across 23 domains (`SKILL.md` + `references/` + `examples/` + `evals/`) |
+| `skills/` | 124 skills across 32 domains (`SKILL.md` + `references/` + `examples/` + `evals/`) |
 | `registry/` | machine-readable state: skills, sources, claims, cross-links, tools, evals |
 | `roadmap/` | coverage matrix, uniqueness analysis, priorities, live progress |
 | `research/` | the original research documents this repository was built from |
 | `docs/` | skill catalog, acknowledgments, architecture |
 | `tools/` | shared scripts: validators, token measurement, generators |
+| `.github/workflows/` | CI: runs `tools/validate.py` on every push and PR |
 | `AGENTS.md` | engineering rules and resume protocol |
+| `CONTRIBUTING.md` · `SECURITY.md` · `CHANGELOG.md` | contribution, security, and release metadata |
 | `WORKLOG.md` | development journal |
 
 ## 🛡️ Quality & provenance
@@ -91,11 +94,12 @@ The complete index — what each skill does, its stability, and where it lives �
 > honestly marked `researched` with the exact target commands documented.
 
 - **Every normative claim is traceable:** `claim → source → section → skill` in
-  [`registry/claims.yaml`](registry/claims.yaml), backed by 62 primary sources in
+  [`registry/claims.yaml`](registry/claims.yaml), backed by 177 primary sources in
   [`registry/sources.yaml`](registry/sources.yaml).
-- **Quality gates** run on every change:
-  [`skill_lint.py`](tools/lint/skill_lint.py) · [`registry_check.py`](tools/lint/registry_check.py) ·
-  [`source_check.py`](tools/source/source_check.py) · [`token_measure.py`](tools/tokens/token_measure.py).
+- **Quality gates** run on every change — locally via [`tools/validate.py`](tools/validate.py)
+  (skill_lint · registry_check · source_check) and in CI
+  ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) on every push and PR.
+  Token budgets are measured with [`token_measure.py`](tools/tokens/token_measure.py).
 - **Token budget is measured.** A typical `SKILL.md` costs ~1–2K tokens; deep knowledge stays
   in `references/` and loads only when needed.
 

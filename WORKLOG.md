@@ -431,3 +431,28 @@ nvcc, clang-bpf, LLVM, QEMU, sanitizer-рантаймы).
    (не agent-doable, пропущено); Discussions API — 404 (пост создаётся вручную);
    Anthropic Partner Skills — форма для пользователя. Проверка индексации skills.sh
    и claudemarketplaces — через несколько дней.
+
+## 2026-08-15 — Сессия 20 (ещё PR + подготовка публикации в npm/PyPI)
+
+1. **Четвёртый PR** — `BehiSecc/awesome-claude-skills#571` (Collections, 9.9k★):
+   форк `TrothByte/awesome-claude-skills-2`, одна строка в `## Collections`.
+   Итого 4 открытых PR: ComposioHQ#1633, travisvn#1120, awesome-llm-apps#1099,
+   BehiSecc#571.
+
+2. **Контент-вклад в superpowers-skills** — подготовлен адаптированный скилл
+   «Verifying Assembly Instructions» (формат name/description/when_to_use/version,
+   по мотивам нашего asm-verification-hallucination-gate), но репозиторий
+   `obra/superpowers-skills` оказался **заархивирован** (read-only) — PR невозможен;
+   форк `TrothByte/superpowers-skills` не удалился через API (403), оставлен.
+
+3. **Подготовлена публикация в реестры** (`publish/`, коммит `aecd0a2`):
+   - npm: `package.json` + `bin/trothbyte-skills.js`;
+   - PyPI: `pyproject.toml` + `trothbyte_skills/` (cli);
+   - оба = `trothbyte-skills install [dir]` — клонирует репо и раскладывает 124 SKILL.md
+     в целевую папку (default `~/.claude/skills`); **протестировано локально: 124/124**;
+   - `publish/README.md` — точные команды `npm publish` / `twine upload` (нужны аккаунты
+     пользователя, агент не может публиковать); `publish/` добавлен в README repo-map.
+
+4. **Исследовано**: skills.sh всё ещё не проиндексировал репо (404); anthropics/skills
+   принимает только партнёрские скиллы (не PR); superpowers-skills заархивирован —
+   контент-вклады в чужие коллекции ограничены, PR-со ссылкой остаются основным каналом.

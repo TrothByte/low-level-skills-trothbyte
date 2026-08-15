@@ -386,3 +386,26 @@ nvcc, clang-bpf, LLVM, QEMU, sanitizer-рантаймы).
    (готовые PR-диффы для 4 awesome-списков + бонус), libhunt-form.txt (значения формы).
 
 4. **Валидаторы**: `tools/validate.py` → OK после всех изменений.
+
+## 2026-08-15 — Сессия 18 (Tier 1 продвижение: CITATION, плагин-маркетплейс, Pages)
+
+1. **Профиль-README `TrothByte/TrothByte` восстановлен** (коммит `3205a066`): возвращён
+   оригинал «Reframe profile as a dreamer...» (EN/RU), упоминание репозитория сохранено
+   (бейдж Low-level Engineering + строки про TrothByte).
+
+2. **CITATION.cff** — добавлен (cff 1.2.0, MIT, v0.2.0): GitHub автоматически показывает
+   кнопку «Cite this repository» + BibTeX; Zenodo подхватит при релизах.
+
+3. **Claude Code plugin marketplace** — `.claude-plugin/marketplace.json` (формат проверен
+   по code.claude.com/docs): один плагин `low-level-skills` со всеми 124 SKILL.md;
+   установка: `/plugin marketplace add TrothByte/low-level-skills-trothbyte` →
+   `/plugin install low-level-skills@trothbyte-low-level-skills`. Генератор
+   `tools/gen_marketplace.py` (пересоздаёт список скиллов).
+
+4. **GitHub Pages лендинг** — `docs/index.md` (hero + install + домены + ссылки) +
+   `docs/_config.yml` (title/description/SEO); источник Pages = `main`/`/docs`;
+   сайт: https://trothbyte.github.io/low-level-skills-trothbyte (живой, SEO-заголовок
+   «Low-level skills TrothByte | 124 verified...»). Пустая ветка gh-pages удалена.
+
+5. **README** — добавлены опции установки (clone / npx skills add / Claude plugin) и
+   ссылка на docs-сайт. Коммиты `9633780`, затем README-обновление; валидаторы OK.

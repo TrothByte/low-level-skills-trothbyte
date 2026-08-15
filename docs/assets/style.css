@@ -262,6 +262,72 @@ button {
   margin-top: 28px;
 }
 
+.works-with {
+  color: var(--text-3);
+  font-size: 13px;
+  margin: 18px auto 0;
+  text-align: center;
+}
+
+/* Terminal demo */
+.terminal {
+  max-width: 640px;
+  margin: 36px auto 0;
+  text-align: left;
+  background: #05080d;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.terminal-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid var(--border);
+}
+
+.terminal-bar .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #3a4553;
+}
+
+.terminal-bar .dot:nth-child(1) {
+  background: #f87171;
+}
+
+.terminal-bar .dot:nth-child(2) {
+  background: #fbbf24;
+}
+
+.terminal-bar .dot:nth-child(3) {
+  background: #34d399;
+}
+
+.terminal-title {
+  margin-left: 8px;
+  color: var(--text-3);
+  font-size: 12px;
+}
+
+#terminal-body {
+  margin: 0;
+  padding: 14px;
+  color: var(--teal);
+  white-space: pre-wrap;
+  min-height: 132px;
+}
+
+#terminal-body .ok {
+  color: var(--green);
+}
+
 .btn {
   display: inline-flex;
   align-items: center;

@@ -98,7 +98,7 @@ The complete index — what each skill does, its stability, and where it lives �
 | `registry/` | machine-readable state: skills, sources, claims, cross-links, tools, evals |
 | `roadmap/` | coverage matrix, uniqueness analysis, priorities, live progress |
 | `research/` | the original research documents this repository was built from |
-| `docs/` | skill catalog, acknowledgments, architecture |
+| `docs/` | skill catalog, [evidence](docs/evidence.md), [roadmap](docs/roadmap.md), acknowledgments, architecture |
 | `tools/` | shared scripts: validators, token measurement, generators |
 | `publish/` | ready-to-publish npm & PyPI packages (`trothbyte-skills install`) |
 | `.github/workflows/` | CI: runs `tools/validate.py` on every push and PR |
@@ -141,3 +141,9 @@ TrothByte is built as a product, not a pile of files. Before contributing, read
 
 MIT — see [`LICENSE.md`](LICENSE.md). Attribution policy for the repositories, standards, talks,
 and research this work builds on: [`docs/ACKNOWLEDGMENTS.md`](docs/ACKNOWLEDGMENTS.md).
+
+## 📝 Cite
+
+Academic or benchmark use? Cite via [`CITATION.cff`](CITATION.cff) (GitHub renders a
+"Cite this repository" button automatically; Zenodo picks it up on releases).
+Verification evidence: [`docs/evidence.md`](docs/evidence.md).

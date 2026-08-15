@@ -118,6 +118,50 @@ const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").mat
   tick();
 })();
 
+/* ---------- 2b. Terminal demo ---------- */
+(function terminal() {
+  const body = document.getElementById("terminal-body");
+  if (!body) return;
+  const lines = [
+    ["$ python tools/validate.py", ""],
+    ["[validate] checking 124 SKILL.md files", ""],
+    ["[validate] skill_lint \u2026\u2026 124/124 OK", "ok"],
+    ["[validate] registry_check \u2026 0 warnings", "ok"],
+    ["[validate] source_check \u2026 0 warnings", "ok"],
+    ["[validate] OK", "ok"],
+  ];
+  let li = 0, ci = 0;
+
+  if (prefersReduced) {
+    body.textContent = lines.map((l) => l[0]).join("\n");
+    return;
+  }
+
+  function step() {
+    if (li >= lines.length) {
+      li = 0;
+      body.textContent = "";
+      setTimeout(step, 3000);
+      return;
+    }
+    const [text, cls] = lines[li];
+    if (ci === 0) {
+      const line = document.createElement("div");
+      if (cls) line.className = cls;
+      body.appendChild(line);
+    }
+    const last = body.lastElementChild;
+    last.textContent = text.slice(0, ci + 1);
+    ci++;
+    if (ci > text.length) {
+      ci = 0;
+      li++;
+    }
+    setTimeout(step, cls ? 26 : 44);
+  }
+  step();
+})();
+
 /* ---------- 3. Animated counters ---------- */
 (function counters() {
   const stats = document.querySelectorAll("[data-count]");

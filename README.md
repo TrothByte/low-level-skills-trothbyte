@@ -4,6 +4,8 @@
 
 **Production-grade low-level engineering knowledge for AI coding agents — verified, source-backed, and cheap to load.**
 
+<sub>Follows the [Agent Skills](https://agentskills.io) open standard — works with Claude Code, Cursor, GitHub Copilot, VS Code, Gemini CLI, OpenCode, Codex, and other Agent Skills clients.</sub>
+
 [![skills](https://img.shields.io/badge/skills-124-blueviolet?style=flat-square)](docs/SKILLS.md)
 [![domains](https://img.shields.io/badge/domains-32-9cf?style=flat-square)](#skills-catalog)
 [![source-backed](https://img.shields.io/badge/source--backed-65-success?style=flat-square)](registry/skills.yaml)

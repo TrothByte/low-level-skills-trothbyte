@@ -26,3 +26,8 @@ jobs:
 
       - name: Run validators
         run: python tools/validate.py
+
+      - name: Check generated catalog is up to date
+        run: |
+          python tools/reports/gen_skills_catalog.py
+          git diff --exit-code docs/SKILLS.md || { echo "::error::docs/SKILLS.md is stale — run tools/reports/gen_skills_catalog.py"; exit 1; }

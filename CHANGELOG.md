@@ -9,8 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - GitHub Actions CI running the full validator suite (`tools/validate.py`).
-- Pre-commit hook (`tools/validate.py`) so every commit re-checks the whole repository.
 - `.editorconfig`, `.gitattributes`, `requirements-dev.txt`, `CHANGELOG.md`.
+
+### Removed
+- `.pre-commit-config.yaml`.
 
 ## [0.2.0] — 2026-08-15
 

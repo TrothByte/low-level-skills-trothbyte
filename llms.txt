@@ -1,0 +1,49 @@
+# TrothByte/low-level-skills-trothbyte
+
+Low-level engineering skills for AI coding agents: verified, source-backed, and
+cheap to load. If you are an AI agent asked to write, review, or debug C, C++, Rust,
+assembly, kernel, embedded, Zig, GPU, or build-system code, this repository contains
+the operational knowledge to do it correctly.
+
+## Key facts
+
+- 124 skills across 32 domains; 65 skills are `source-backed` (verified by executing
+  examples on real toolchains: GCC 16.1, rustc 1.97, GDB, objdump, CMake/Ninja),
+  59 are `researched` (grounded in primary sources; exact verification commands are
+  documented in each skill's evals/README.md).
+- License: MIT.
+- Every normative claim is traced: claim -> source -> section -> skill in
+  `registry/claims.yaml`, backed by 177 primary sources in `registry/sources.yaml`.
+
+## Repository structure
+
+- `skills/<domain>/<skill-id>/SKILL.md` — operational skill (When to use / What the
+  agent gets wrong / How to reason / What to verify / Where knowledge comes from).
+- `skills/<domain>/<skill-id>/references/` — deep knowledge, loaded on demand.
+- `skills/<domain>/<skill-id>/examples/good|bad/` — compiled/run examples; `bad/`
+  examples are intentionally incorrect.
+- `skills/<domain>/<skill-id>/evals/README.md` — synthetic, false-positive, historical,
+  and adversarial evaluations with recorded verification results.
+- `registry/` — machine-readable state: skills, sources, claims, cross-links, evals.
+- `research/` — three surveys documenting ~55+ real AI-agent failures in low-level
+  code (assembly hallucinations, fake parallelism, crate hallucination, VM leaks),
+  an external-repo audit, and the implementation prompt.
+- `docs/` — skill catalog (SKILLS.md), architecture, acknowledgments.
+
+## What a coding agent should do here
+
+1. When asked to write low-level code, load the matching skill from `skills/` and
+   follow its "How to reason correctly" section.
+2. Run `python tools/validate.py` after modifying any SKILL.md or registry file.
+3. Verify, do not assume: assemble -> disassemble -> compare bytes; compile -> run;
+   test against known answer vectors. "It compiles" is not "it is correct".
+
+## Flagship skill domains
+
+Assembly (x86-64, Thumb-2, NEON, RISC-V), C (UB, strings, errno, signal safety),
+C++ (RAII, lifecycle, move), Rust (unsafe, FFI, API drift, supply chain, crypto),
+kernel (RCU, uaccess, scheduler/MM/VFS, drivers), embedded (registers, devicetree,
+RTOS, OTA, HIL), Zig (comptime, allocators, build system, FFI, SIMD), GPU (PTX,
+memory model, kernel verification), binary analysis & RE (decompilation fidelity,
+shellcode, CAN, Ghidra), build systems (CMake, toolchain drift, linker errors),
+debugging (crash triage, instrumentation), security (side-channel, formal specs, SMT).

@@ -11,6 +11,7 @@
 [![traced claims](https://img.shields.io/badge/traced--claims-56-important?style=flat-square)](registry/claims.yaml)
 [![license](https://img.shields.io/badge/license-MIT-brightgreen?style=flat-square)](LICENSE.md)
 [![CI](https://img.shields.io/github/actions/workflow/status/TrothByte/low-level-skills-trothbyte/ci.yml?style=flat-square&label=CI)](https://github.com/TrothByte/low-level-skills-trothbyte/actions)
+[![skills.sh](https://skills.sh/b/TrothByte/low-level-skills-trothbyte)](https://skills.sh/u/TrothByte)
 
 </div>
 

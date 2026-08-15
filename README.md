@@ -97,6 +97,7 @@ The complete index — what each skill does, its stability, and where it lives �
 | `research/` | the original research documents this repository was built from |
 | `docs/` | skill catalog, acknowledgments, architecture |
 | `tools/` | shared scripts: validators, token measurement, generators |
+| `publish/` | ready-to-publish npm & PyPI packages (`trothbyte-skills install`) |
 | `.github/workflows/` | CI: runs `tools/validate.py` on every push and PR |
 | `AGENTS.md` | engineering rules and resume protocol |
 | `CONTRIBUTING.md` · `SECURITY.md` · `CHANGELOG.md` | contribution, security, and release metadata |

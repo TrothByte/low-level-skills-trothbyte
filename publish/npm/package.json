@@ -1,0 +1,35 @@
+{
+  "name": "trothbyte-skills",
+  "version": "0.1.0",
+  "description": "Install the TrothByte low-level skills collection (124 verified skills for AI coding agents) into your agent's skills directory.",
+  "bin": {
+    "trothbyte-skills": "bin/trothbyte-skills.js"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TrothByte/low-level-skills-trothbyte"
+  },
+  "keywords": [
+    "ai",
+    "agents",
+    "skills",
+    "claude-code",
+    "low-level",
+    "c",
+    "cpp",
+    "rust",
+    "assembly",
+    "kernel",
+    "embedded",
+    "zig",
+    "gpu",
+    "reverse-engineering"
+  ],
+  "files": [
+    "bin/"
+  ]
+}

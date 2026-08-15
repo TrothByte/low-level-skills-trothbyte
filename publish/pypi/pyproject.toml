@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "trothbyte-skills"
+version = "0.1.0"
+description = "Install the TrothByte low-level skills collection (124 verified skills for AI coding agents) into your agent's skills directory."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+keywords = ["ai", "agents", "skills", "claude-code", "low-level", "c", "cpp", "rust", "assembly", "kernel", "embedded", "zig", "gpu", "reverse-engineering"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Topic :: Software Development",
+]
+
+[project.urls]
+Homepage = "https://github.com/TrothByte/low-level-skills-trothbyte"
+Source = "https://github.com/TrothByte/low-level-skills-trothbyte"
+
+[project.scripts]
+trothbyte-skills = "trothbyte_skills.cli:main"
+
+[tool.setuptools]
+packages = ["trothbyte_skills"]

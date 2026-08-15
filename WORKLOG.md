@@ -475,3 +475,20 @@ nvcc, clang-bpf, LLVM, QEMU, sanitizer-рантаймы).
    awesome-reverse-engineering (клонирование не удалось); agentbay-ai/agentbay-skills
    (продуктовая коллекция AgentBay); superpowers-skills (архив). Вывод: 4 открытых PR
    в awesome-списках — основной канал; контент-вклады в чужие коллекции закрыты.
+
+## 2026-08-15 — Сессия 22 (финальные автономные действия + ручная инструкция)
+
+1. **Выполнено** (коммит `cdec846`):
+   - `.github/social-preview.png` — автоподхват GitHub соцпревью (без ручных настроек);
+   - `CODE_OF_CONDUCT.md` (Contributor Covenant 2.1);
+   - CI: джоба «generated catalog up to date» — `gen_skills_catalog.py` + `git diff --exit-code`
+     (каталог не протухнет);
+   - README: строка про совместимость с Agent Skills-клиентами (Claude Code, Cursor,
+     Copilot, VS Code, Gemini CLI, OpenCode, Codex) — из проверенного списка agentskills.io.
+
+2. **Ручная инструкция** для пользователя: `%TEMP%\kilo\trothbyte-promo\manual-promotion-guide-ru.md` —
+   порядок действий (Discussions Announcement, npm/PyPI publish, Show HN, dev.to, Reddit,
+   X/Mastodon, письма claudemarketplaces + Anthropic Partner Skills, LibHunt, проверки через
+   5–7 дней, анти-спам запреты).
+
+3. **skills.sh** по-прежнему не проиндексировал репо (404) — мониторинг вручную.

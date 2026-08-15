@@ -9,6 +9,7 @@
 [![source-backed](https://img.shields.io/badge/source--backed-65-success?style=flat-square)](registry/skills.yaml)
 [![primary sources](https://img.shields.io/badge/primary--sources-177-informational?style=flat-square)](registry/sources.yaml)
 [![traced claims](https://img.shields.io/badge/traced--claims-56-important?style=flat-square)](registry/claims.yaml)
+[![stars](https://img.shields.io/github/stars/TrothByte/low-level-skills-trothbyte?style=flat-square&label=stars)](https://github.com/TrothByte/low-level-skills-trothbyte)
 [![license](https://img.shields.io/badge/license-MIT-brightgreen?style=flat-square)](LICENSE.md)
 [![CI](https://img.shields.io/github/actions/workflow/status/TrothByte/low-level-skills-trothbyte/ci.yml?style=flat-square&label=CI)](https://github.com/TrothByte/low-level-skills-trothbyte/actions)
 [![skills.sh](https://skills.sh/b/TrothByte/low-level-skills-trothbyte)](https://skills.sh/TrothByte/low-level-skills-trothbyte)

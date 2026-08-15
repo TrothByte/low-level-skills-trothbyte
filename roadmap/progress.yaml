@@ -84,5 +84,5 @@ eval_status:
   routing_cases: 5
   fp_cases: 5
   eval_harnesses_built: "Каждый skill имеет evals/README.md с synthetic/FP/adversarial/historical кейсами и verified facts; researched-скиллы честно помечены с точными командами верификации"
-last_completed_action: "POLISH 4: творческий лендинг на JavaScript (docs/index.html + assets/): изучены и применены дизайн-скиллы Vercel web-interface-guidelines (тёмная тема, focus-visible, reduced-motion, семантика) и ui-ux-pro-max; canvas-частицы, печатная машинка, счётчики, живой поиск по 124 скиллам, copy-табы; генератор данных gen_landing_data.py + CI-гейт; сайт пересобран и отдаёт лендинг + ассеты (200)"
-next_action: "Следующее: проверить лендинг в браузере (мобильный вид, частицы, поиск); далее пользователь — Discussions Announcement, npm/PyPI publish, Show HN, dev.to, письма; PHASE 15-21 evals/calibration"
+last_completed_action: "PROMO-волна 4 (11 задач): Announcement в Discussions через GraphQL (discussions/1), Release v0.3.0, 3 good-first-issue issues (#2-#4), docs/evidence.md + roadmap.md + agents-failures-cheatsheet.md, README «Cite», 5-й PR ai-for-developers/awesome-ai-coding-tools#625, лендинг: терминал-демо + «Works with», черновик 2-й статьи; VoltAgent отклонён (official-only); Pages built, validate.py OK"
+next_action: "Мониторинг 5 PR (ComposioHQ#1633, travisvn#1120, awesome-llm-apps#1099, BehiSecc#571, ai-for-developers#625) и обновлений issues/discussions; пользователь: Discussions-ответы, npm/PyPI publish, Show HN (текст руками), dev.to, письма; PHASE 15-21 evals/calibration"

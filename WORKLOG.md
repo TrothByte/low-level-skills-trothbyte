@@ -516,3 +516,28 @@ nvcc, clang-bpf, LLVM, QEMU, sanitizer-рантаймы).
 
 3. **Проверено**: node --check (app.js/skills.js OK), aria-controls refs resolve, один h1,
    `user-scalable` отсутствует, Pages пересобрался, сайт отдаёт index.html + все ассеты (200).
+
+## 2026-08-15 — Сессия 24 (10+ автономных пиар-задач)
+
+1. **Announcement Discussion** через GraphQL-мутацию `createDiscussion` (REST POST не
+   доступен, GraphQL — работает): https://github.com/TrothByte/low-level-skills-trothbyte/discussions/1.
+2. **Release v0.3.0** — «JS landing, Claude plugin marketplace, publish-ready packages»
+   (активность в ленте подписчиков).
+3. **3 good-first-issue** (#2 фильтр по языку, #3 CI-компиляция C-примеров, #4 i18n EN/RU).
+4. **docs/evidence.md** — агрегат реально выполненных проверок (байты imul, тайминги
+   memcmp 0.054s vs ~0s, E0614/E0133, exit 101, gdb-цепочка, race-суммы, ablation).
+5. **docs/roadmap.md** — публичный роадмап (PHASE 15-22, good-first-issue, возвышение
+   researched-скиллов).
+6. **README**: раздел «Cite» (CITATION.cff), ссылки evidence/roadmap в repo-map.
+7. **5-й PR**: ai-for-developers/awesome-ai-coding-tools#625 (Developer Productivity Tools).
+8. **VoltAgent/awesome-agent-skills отклонён** (исследовано): список только «official
+   skills от команд», формат individual-skills — коллекция не подходит; PR не открыт.
+9. **Лендинг**: интерактивный терминал-демо (`python tools/validate.py`, печатающий
+   вывод, reduced-motion-safe) + строка «Works with» (Claude Code/Cursor/Copilot/VS Code/
+   Gemini CLI/OpenCode).
+10. **docs/agents-failures-cheatsheet.md** — компактный каталог 5 классов отказов
+    (asm/конкурентность/Rust/иллюзии верификации/память) с фиксами; ссылка в футере.
+11. **Вторая статья** — черновик туториала «3-command gate» для r/asm/r/programming
+    (%TEMP%\kilo\trothbyte-promo\article-assembly-3-command-gate.md).
+
+Проверки: node --check OK, validate.py OK, Pages built, site 200 + terminal-demo.

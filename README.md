@@ -47,6 +47,22 @@ SKILL.md          small, operational, loads first
 3. Open that skill's `SKILL.md`; load its `references/` only as needed.
 4. Verify like the skill says: warnings-as-errors, sanitizers, asm inspection, runtime asserts.
 
+## 🛠️ Install as an agent-skill pack
+
+```bash
+# Clone the whole pack (works with any agent skills runtime)
+git clone https://github.com/TrothByte/low-level-skills-trothbyte
+
+# Or install via skills.sh
+npx skills add TrothByte/low-level-skills-trothbyte
+
+# Or as a Claude Code plugin marketplace
+/plugin marketplace add TrothByte/low-level-skills-trothbyte
+/plugin install low-level-skills@trothbyte-low-level-skills
+```
+
+Docs site: **[trothbyte.github.io/low-level-skills-trothbyte](https://trothbyte.github.io/low-level-skills-trothbyte)**
+
 ## 🗂️ Skills catalog
 
 The complete index — what each skill does, its stability, and where it lives — is in

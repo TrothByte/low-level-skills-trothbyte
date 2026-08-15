@@ -1,0 +1,18 @@
+# GitHub Pages site configuration (served from /docs)
+title: Low-level skills TrothByte
+description: 124 verified, source-backed low-level engineering skills for AI coding agents — C, C++, Rust, assembly, kernel, embedded, Zig, GPU, reverse engineering, build systems.
+url: https://trothbyte.github.io/low-level-skills-trothbyte
+author: TrothByte
+
+# SEO
+lang: en
+show_downloads: true
+
+# Markdown
+markdown: kramdown
+highlighter: rouge
+
+# Exclude files from the published site
+exclude:
+  - "*.png"
+  - "*.md.bak"

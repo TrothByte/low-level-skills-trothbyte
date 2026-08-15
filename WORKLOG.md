@@ -492,3 +492,27 @@ nvcc, clang-bpf, LLVM, QEMU, sanitizer-рантаймы).
    5–7 дней, анти-спам запреты).
 
 3. **skills.sh** по-прежнему не проиндексировал репо (404) — мониторинг вручную.
+
+## 2026-08-15 — Сессия 23 (творческий лендинг на JavaScript)
+
+1. **Изучены лучшие дизайн-скиллы** (по запросу): Vercel `web-design-guidelines` /
+   `web-interface-guidelines` (живые правила UI — применены: `color-scheme: dark`,
+   `theme-color`, focus-visible, анимация только transform/opacity,
+   `prefers-reduced-motion`, `tabular-nums`, семантическая разметка, `aria-live`,
+   кнопки/ссылки, без `user-scalable=no`); `ui-ux-pro-max` (структура изучена).
+
+2. **Лендинг создан** (коммит `8a36c7e`, живёт на main/docs):
+   - `docs/index.html` — семантический HTML, тёмная тема, glassmorphism, градиенты,
+     skip-link, h1-иерархия, aria-атрибуты, OG-теги, preconnect + font-display swap;
+   - `docs/assets/style.css` — дизайн-система (CSS-переменные, glass-карточки, бейджи
+     stability, reveal-анимации, responsive, reduced-motion);
+   - `docs/assets/app.js` — canvas-частицы с мышью (DPR/visibility/reduced-motion),
+     печатная машинка, счётчики (Intl + tabular-nums), scroll-reveal, живой поиск и
+     фильтр по 124 скиллам, copy-кнопки (clipboard + fallback), табы установки,
+     активная навигация;
+   - `docs/assets/skills.js` — данные 124 скиллов (генератор
+     `tools/reports/gen_landing_data.py`: registry/skills.yaml + frontmatter SKILL.md);
+   - старый `docs/index.md` удалён; CI-гейт проверяет актуальность skills.js.
+
+3. **Проверено**: node --check (app.js/skills.js OK), aria-controls refs resolve, один h1,
+   `user-scalable` отсутствует, Pages пересобрался, сайт отдаёт index.html + все ассеты (200).

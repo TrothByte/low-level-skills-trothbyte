@@ -362,3 +362,27 @@ nvcc, clang-bpf, LLVM, QEMU, sanitizer-рантаймы).
 
 5. **Валидаторы финально**: `tools/validate.py` → OK (124/124 SKILL.md, registry_check
    0 WARN, source_check 0 WARN). Корень репозитория чист — ни одного stray-файла.
+
+## 2026-08-15 — Сессия 17 (продвижение репозитория)
+
+1. **Ресёрч методов продвижения** (4 параллельных агента, все факты live-проверены):
+   HN/Reddit/Lobsters-правила, контент-маркетинг/SEO, кураторские списки/directories,
+   нестандартные методы. Ключевой вывод: HN/Reddit банят AI-генерированный текст;
+   самый горячий сегмент — «Claude/agent skills» (Show HN до 337 pts); skills.sh —
+   недооценённый пассивный канал индексации.
+
+2. **Выполнено на GitHub** (всё запушено):
+   - README: добавлен skills.sh install-бейдж; создан `llms.txt` (LLM-дискавери).
+   - Social preview `docs/social-preview.png` (1280×640, сгенерирован Pillow); API для
+     установки отсутствует — пользователь ставит вручную в Settings → Social preview.
+   - Discussions включены; Releases v0.1.0 и v0.2.0 созданы с notes из CHANGELOG.
+   - Профиль-README `TrothByte/TrothByte` обновлён (витрина репозитория).
+   - Коммит `a8beab8` → origin/main.
+
+3. **Промо-пакет для пользователя** (в `C:\Users\User\AppData\Local\Temp\kilo\trothbyte-promo\`):
+   00-README.md (индекс), claudemarketplaces-email.txt (питч на hi@claudemarketplaces.com),
+   show-hn-factsheet.md (факты + заголовки + план ответов), article-55-ai-failures.md
+   (статья «55 отказов»), posts-devto-mastodon-x.md (варианты постов), pr-diffs-awesome-lists.md
+   (готовые PR-диффы для 4 awesome-списков + бонус), libhunt-form.txt (значения формы).
+
+4. **Валидаторы**: `tools/validate.py` → OK после всех изменений.

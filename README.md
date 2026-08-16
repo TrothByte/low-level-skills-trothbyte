@@ -1,24 +1,19 @@
 <div align="center">
 
-<img src="docs/readme-banner.svg" width="100%" alt="Low-level skills TrothByte banner">
-
 # Low-level skills TrothByte
 
 **Production-grade low-level engineering knowledge for AI coding agents — verified, source-backed, and cheap to load.**
 
 <sub>Follows the [Agent Skills](https://agentskills.io) open standard — works with Claude Code, Cursor, GitHub Copilot, VS Code, Gemini CLI, OpenCode, Codex, and other Agent Skills clients.</sub>
 
-<br>
-
-[![skills](https://img.shields.io/badge/skills-124-8B5CF6?style=for-the-badge&logo=github&logoColor=white)](docs/SKILLS.md)
-[![domains](https://img.shields.io/badge/domains-32-A78BFA?style=for-the-badge)](#skills-catalog)
-[![source-backed](https://img.shields.io/badge/source--backed-65-C084FC?style=for-the-badge&logo=verified&logoColor=white)](registry/skills.yaml)
-[![primary sources](https://img.shields.io/badge/primary--sources-177-D946EF?style=for-the-badge)](registry/sources.yaml)
-[![traced claims](https://img.shields.io/badge/traced--claims-56-F0ABFC?style=for-the-badge)](registry/claims.yaml)
-
-[![stars](https://img.shields.io/github/stars/TrothByte/low-level-skills-trothbyte?style=for-the-badge&label=stars&color=9333EA)](https://github.com/TrothByte/low-level-skills-trothbyte)
-[![license](https://img.shields.io/badge/license-MIT-7C3AED?style=for-the-badge&logo=open-source-initiative&logoColor=white)](LICENSE.md)
-[![CI](https://img.shields.io/github/actions/workflow/status/TrothByte/low-level-skills-trothbyte/ci.yml?style=for-the-badge&label=CI&color=6D28D9)](https://github.com/TrothByte/low-level-skills-trothbyte/actions)
+[![skills](https://img.shields.io/badge/skills-124-blueviolet?style=flat-square)](docs/SKILLS.md)
+[![domains](https://img.shields.io/badge/domains-32-9cf?style=flat-square)](#skills-catalog)
+[![source-backed](https://img.shields.io/badge/source--backed-65-success?style=flat-square)](registry/skills.yaml)
+[![primary sources](https://img.shields.io/badge/primary--sources-177-informational?style=flat-square)](registry/sources.yaml)
+[![traced claims](https://img.shields.io/badge/traced--claims-56-important?style=flat-square)](registry/claims.yaml)
+[![stars](https://img.shields.io/github/stars/TrothByte/low-level-skills-trothbyte?style=flat-square&label=stars)](https://github.com/TrothByte/low-level-skills-trothbyte)
+[![license](https://img.shields.io/badge/license-MIT-brightgreen?style=flat-square)](LICENSE.md)
+[![CI](https://img.shields.io/github/actions/workflow/status/TrothByte/low-level-skills-trothbyte/ci.yml?style=flat-square&label=CI)](https://github.com/TrothByte/low-level-skills-trothbyte/actions)
 [![skills.sh](https://skills.sh/b/TrothByte/low-level-skills-trothbyte)](https://skills.sh/TrothByte/low-level-skills-trothbyte)
 
 </div>
@@ -31,7 +26,7 @@
 
 ---
 
-## ✨ What is TrothByte
+## 🎯 What is TrothByte
 
 Every skill answers the questions that matter **before** a single line is written:
 
@@ -95,8 +90,7 @@ The complete index — what each skill does, its stability, and where it lives �
 | [`abi-layout-reasoning`](skills/abi/abi-layout-reasoning/SKILL.md) | struct layout and calling conventions, verified with the compiler |
 | [`ffi-boundary-cross-language`](skills/ffi/ffi-boundary-cross-language/SKILL.md) | where one language's safety guarantees end |
 
-<details>
-<summary><b>📂 Full repository map</b></summary>
+## 📂 Repository map
 
 | Path | Purpose |
 |---|---|
@@ -111,8 +105,6 @@ The complete index — what each skill does, its stability, and where it lives �
 | `AGENTS.md` | engineering rules and resume protocol |
 | `CONTRIBUTING.md` · `SECURITY.md` · `CHANGELOG.md` | contribution, security, and release metadata |
 | `WORKLOG.md` | development journal |
-
-</details>
 
 ## 🛡️ Quality & provenance
 
@@ -139,13 +131,6 @@ The complete index — what each skill does, its stability, and where it lives �
 | `source-backed` | claims verified by execution on a real toolchain |
 | `researched` | grounded in primary sources; verification needs a toolchain not present here |
 | `evaluated` / `stable` | reached after evals and full review (next phases) |
-
-<details>
-<summary><b>📈 Star history</b></summary>
-
-[![Star History Chart](https://api.star-history.com/svg?repos=TrothByte/low-level-skills-trothbyte&type=Date)](https://star-history.com/#TrothByte/low-level-skills-trothbyte&Date)
-
-</details>
 
 ## 🤝 Contributing
 

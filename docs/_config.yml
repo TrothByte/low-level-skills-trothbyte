@@ -12,7 +12,5 @@ show_downloads: true
 markdown: kramdown
 highlighter: rouge
 
-# Exclude files from the published site
-exclude:
-  - "*.png"
-  - "*.md.bak"
+# Jekyll does not need extra excludes: markdown files without front matter and
+# assets (png/css/js) are copied verbatim, which is what the landing page needs.

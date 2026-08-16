@@ -36,3 +36,44 @@ jobs:
         run: |
           python tools/reports/gen_landing_data.py
           git diff --exit-code docs/assets/skills.js || { echo "::error::docs/assets/skills.js is stale — run tools/reports/gen_landing_data.py"; exit 1; }
+
+  compile-c-examples:
+    name: Compile C examples
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Compile C examples
+        run: |
+          echo "Compiling C source files in skills/**/examples/good/**/*.c"
+          C_FILES=$(find skills -path "*/examples/good/*.c" 2>/dev/null)
+
+          if [ -z "$C_FILES" ]; then
+            echo "No C example files found."
+            exit 0
+          fi
+
+          echo "Found C files:"
+          echo "$C_FILES"
+          echo ""
+
+          FAILED=0
+          for f in $C_FILES; do
+            echo "Compiling: $f"
+            if gcc -Wall -Wextra -Werror -c -o /dev/null "$f"; then
+              echo "  OK"
+            else
+              echo "  FAILED"
+              FAILED=1
+            fi
+          done
+
+          if [ "$FAILED" -eq 1 ]; then
+            echo ""
+            echo "::error::One or more C examples failed to compile."
+            exit 1
+          fi
+
+          echo ""
+          echo "All C examples compiled successfully."

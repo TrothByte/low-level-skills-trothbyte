@@ -1,0 +1,9 @@
+/* BAD: raw literals leaked into the component layer. */
+/* intentionally incorrect */
+.button {
+  background-color: #4F46E5;
+  color: #111827;
+  padding: 8px 16px;
+  font-size: 16px;
+  border-radius: 6px;
+}

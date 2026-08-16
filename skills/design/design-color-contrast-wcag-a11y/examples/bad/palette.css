@@ -1,0 +1,35 @@
+/* BAD: failing pairs (red-on-white and gray-on-white for normal text,
+   light-gray UI), and undersized interactive targets.
+
+   CONTRAST: #FF0000 on #FFFFFF text
+   CONTRAST: #999999 on #FFFFFF text
+   CONTRAST: #CCCCCC on #FFFFFF ui
+*/
+/* intentionally incorrect */
+:root {
+  --red: #FF0000;
+  --gray: #999999;
+  --light-gray: #CCCCCC;
+}
+
+.error-text {
+  color: var(--red);
+  background-color: #FFFFFF;
+}
+
+.muted-text {
+  color: var(--gray);
+  background-color: #FFFFFF;
+}
+
+.tab {
+  color: var(--light-gray);
+  background-color: #FFFFFF;
+  min-width: 20px;
+  min-height: 20px;
+}
+
+input.submit {
+  width: 16px;
+  height: 16px;
+}

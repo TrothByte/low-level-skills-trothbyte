@@ -13,12 +13,17 @@ import sys
 import yaml
 
 AREAS = [
-    ("Languages & semantics", ["c", "cpp", "rust", "concurrency"]),
+    ("Languages & semantics", ["c", "cpp", "rust", "concurrency", "zig"]),
     ("Compilers & IR", ["compiler", "llvm"]),
     ("Machine level", ["assembly", "abi", "ffi", "elf", "dwarf"]),
-    ("Systems engineering", ["kernel", "networking", "embedded", "bootloader", "qemu"]),
-    ("Analysis & performance", ["binary-analysis", "reverse-engineering", "performance", "simd", "gpu"]),
-    ("Tooling & agent behavior", ["sanitizers", "_meta"]),
+    ("Systems engineering", ["kernel", "networking", "embedded", "bootloader", "qemu", 
+                              "virtualization", "riscv"]),
+    ("Binary analysis & RE", ["binary-analysis", "reverse-engineering", "mobile"]),
+    ("Performance & HPC", ["performance", "simd", "gpu", "hpc"]),
+    ("Tooling & agent behavior", ["sanitizers", "_meta", "build-systems", "debugging"]),
+    ("Security & hardware", ["security", "hdl"]),
+    ("Accelerators", ["accelerator"]),
+    ("Design", ["design"]),
 ]
 
 DOMAIN_INTROS = {
@@ -29,7 +34,7 @@ DOMAIN_INTROS = {
     "compiler": "How compilers interpret undefined behavior — the root of '-O0 works, -O2 breaks'.",
     "llvm": "Reading LLVM IR and writing passes.",
     "assembly": "x86-64 registers, calling conventions, inline asm constraints, signed/unsigned branches, optimizer artifacts.",
-    "abi": "Struct layout and argument passing for SysV AMD64, AAPCS64, and RISC-V — verified with the compiler.",
+    "abi": "Struct layout and argument passing for SysV AMD64, AAPCS64, RISC-V psABI — verified with the compiler.",
     "ffi": "Cross-language boundaries: layout, ownership, errors, and the no-unwind rule.",
     "elf": "The ELF pipeline: layout, relocations, GOT/PLT dynamic linking.",
     "dwarf": "Debug info and debugging optimized builds.",
@@ -45,6 +50,16 @@ DOMAIN_INTROS = {
     "binary-analysis": "Type recovery from disassembly.",
     "reverse-engineering": "Go/Rust binaries and automated protocol RE.",
     "_meta": "Agent behavior: routing, evidence, verification, assumptions, rationalizations, completion — plus the flagship cross-layer skills.",
+    "build-systems": "Build systems turn source into binaries: CMake diagnostics, toolchain drift, linker errors.",
+    "debugging": "Crash triage and instrumentation-over-reasoning — log before you guess.",
+    "virtualization": "Hypervisor internals (VMX/SVM), KVM ioctls, paravirtualization.",
+    "riscv": "RISC-V ISA, vector extensions (RVV), and CHERI capability-based safety.",
+    "hpc": "MPI parallel programming, OpenMP offload, RDMA verbs for high-performance compute.",
+    "mobile": "Android reverse engineering: DEX/Smali format extraction and JNI/native layer analysis.",
+    "security": "Side-channel constant-time verification, formal spec loop invariants, SMT/Z3 sound usage.",
+    "hdl": "Clock domain crossing audit, timing closure, and constraint authoring for FPGA design.",
+    "accelerator": "AI accelerator pipeline programs: cross-unit (DMA/vector/matrix/scalar) synchronization and barrier coverage on shared on-chip buffers.",
+    "design": "Designer-mode skills for AI agents: design tokens (DTCG), typography hierarchy, WCAG 2.2 color/contrast accessibility, layout grids and reflow, visual hierarchy, and anti-AI-look originality review.",
 }
 
 

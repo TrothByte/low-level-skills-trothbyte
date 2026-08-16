@@ -3,14 +3,17 @@
 Public roadmap for **Low-level skills TrothByte**. Status and history live in
 `roadmap/progress.yaml` (machine-readable) and `WORKLOG.md` (journal).
 
-## Current state (2026-08-15)
+## Current state (2026-08-17)
 
-- **124 skills · 32 domains · 65 source-backed · 59 researched** (honestly marked).
-- Registry: 177 primary sources, 56 traced claims, ~70 cross-links.
-- Quality gates: `python tools/validate.py` (skill_lint + registry_check + source_check),
-  CI on every push/PR, generated-catalog and landing-data staleness checks.
+- **163 skills · 34 domains · 85 source-backed · 78 researched** (honestly marked).
+- Registry: 228 primary sources, 141 traced claims, ~233 cross-links.
+- Quality gates: `python tools/validate.py` (skill_lint + registry_check + source_check +
+  claim_extractor + token gate), CI on every push/PR, generated-catalog and landing-data
+  staleness checks.
 - Distribution: GitHub Pages landing, Claude Code plugin marketplace, skills.sh badge,
   llms.txt, CITATION.cff, ready-to-publish npm/PyPI packages.
+- v2.0: 33 new skills (gap set) + 6 design skills (designer-mode domain) + research-driven
+  new-weakness skills; new domains `accelerator` and `design`.
 
 ## Next phases
 
@@ -22,7 +25,7 @@ Public roadmap for **Low-level skills TrothByte**. Status and history live in
 4. **Elevate researched → source-backed** — on a Linux/GPU host with zig, nasm,
    clang-cross, qemu, nvcc, mpicc, valgrind, verilator, jadx/frida, frama-c/cbmc/kani,
    z3, and kernel toolchains installed. Each skill documents its exact command.
-5. **License audit (PHASE 22)** — full pass over the 177 registered sources.
+5. **License audit (PHASE 22)** — full pass over the 228 registered sources.
 6. **Calibration (PHASE 21)** — fold evals back into skill guidance.
 
 ## Good first issues

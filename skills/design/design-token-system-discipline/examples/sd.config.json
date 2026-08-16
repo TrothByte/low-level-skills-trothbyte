@@ -1,0 +1,15 @@
+{
+  "source": ["examples/good/tokens.json"],
+  "platforms": {
+    "css": {
+      "transformGroup": "css",
+      "buildPath": "examples/good/build/",
+      "files": [
+        {
+          "destination": "tokens.css",
+          "format": "css/variables"
+        }
+      ]
+    }
+  }
+}

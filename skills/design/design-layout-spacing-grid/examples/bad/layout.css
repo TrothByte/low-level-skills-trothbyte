@@ -1,0 +1,23 @@
+/* BAD: arbitrary spacing (13px, 7px, 23px), a non-12 grid, inconsistent
+   gutters, and fixed widths that break 320px reflow. */
+/* intentionally incorrect */
+.feature {
+  margin: 13px;
+  padding: 7px 23px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  column-gap: 12px;
+  row-gap: 24px;
+}
+
+.hero {
+  min-width: 1000px;
+  width: 960px;
+}
+
+body {
+  overflow-x: hidden;
+}

@@ -1,0 +1,21 @@
+# GOOD: syzlang description fragment for a virtual network device.
+# Setup calls produce the resource; the fuzzable operation consumes it,
+# so syzkaller-generated programs perform open -> setup -> fuzz call.
+# Compiled by syz-sysgen (target-side; researched).
+resource fd_vnet[fd]
+
+open$vnet(fd, ptr[in, string["/dev/vnet0"]], flags[0x2], mode[0]) fd_vnet
+ioctl$vnet_config(fd_vnet, cmd[0x4000], arg ptr[in, vnet_config])
+ioctl$vnet_tx(fd_vnet, cmd[0x4001], arg ptr[in, vnet_pkt])
+
+vnet_config {
+    queue_len  int32
+    mode       flags[vnet_mode, int32]
+}
+
+vnet_pkt {
+    len   int32
+    data  array[int8]
+}
+
+vnet_mode = MODE_FRAGMENTED, MODE_COALESCE, MODE_RAW

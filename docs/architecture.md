@@ -45,14 +45,15 @@ low-level-agent-skills/
 │   ├── tokens/          # token_measure.py
 │   └── reports/         # gen_domain_readmes.py
 └── docs/                # документация
-    ├── SKILLS.md        # каталог всех 124 skills (что делает каждый, stability, путь)
+    ├── SKILLS.md        # каталог всех 163 skills (что делает каждый, stability, путь)
     ├── ACKNOWLEDGMENTS.md  # благодарности авторам использованных репозиториев
     └── architecture.md  # этот документ
 ```
 
 ## 3. Skill architecture
 
-SKILL.md — operational (маленький), а не энциклопедия:
+SKILL.md — operational (маленький), а не энциклопедия. Единый стандарт — **9 секций**
+(контролируется `tools/lint/skill_lint.py`):
 
 1. WHEN TO USE — триггеры
 2. WHEN NOT TO USE — анти-триггеры
@@ -61,10 +62,11 @@ SKILL.md — operational (маленький), а не энциклопедия:
 5. WHAT TO VERIFY
 6. HOW TO VERIFY
 7. WHERE KNOWLEDGE COMES FROM — provenance
-8. WHAT OTHER SKILLS ARE RELEVANT
-9. WHAT EXAMPLES DEMONSTRATE THE RULE
-10. HOW THE SKILL IS EVALUATED
+8. RELATED SKILLS — cross-references с типом связи
+9. EVALUATION — как скилл оценивается
 
+Примеры НЕ являются секцией SKILL.md: они лежат в `examples/good|bad/` (compile-and-run
+фикстуры), а метаданные (type/stability/tier/priority) — в `registry/skills.yaml`.
 Подробные материалы (references/examples/scripts) загружаются только при
 необходимости (progressive disclosure).
 
@@ -130,14 +132,24 @@ validation + license validation.
 Разделяем inspiration / paraphrase / direct quotation / copied structure / copied code /
 copied documentation. Храним provenance. Не копируем материалы с несовместимой лицензией.
 
-## 13. Current status (2026-08-14)
+## 13. Current status (2026-08-17)
 
-- **60/60 зарегистрированных skills реализованы** в 23 доменных каталогах; в каждом домене
+> **Auto-regenerated data below is read from `registry/skills.yaml`, `registry/sources.yaml`,
+> `registry/claims.yaml`, `registry/cross-links.yaml` — keep those files in sync.**
+
+- **163/163 зарегистрированных skills реализованы** в 34 доменных каталогах; в каждом домене
   есть `README.md` для навигации (генератор: `tools/reports/gen_domain_readmes.py`).
-- **47 source-backed** (верифицированы GCC 16.1, rustc 1.97.1, gdb 17.2, as/objdump);
-  **13 researched** требуют недоступного в dev-среде тулчейна (NVIDIA CUDA, Linux eBPF,
-  LLVM, QEMU, sanitizer-рантаймы) и честно помечены.
-- Registry: 62 источника, 17 claims с полной provenance.
-- Quality gates: `tools/lint/skill_lint.py`, `tools/lint/registry_check.py`,
-  `tools/source/source_check.py`, `tools/tokens/token_measure.py` — все чистые.
+- **85 source-backed** (верифицированы GCC 16.1, rustc 1.97.1, gdb 17.2, as/objdump,
+  CMake/Ninja); **78 researched** требуют недоступного в dev-среде тулчейна (NVIDIA CUDA,
+  Linux eBPF, LLVM, QEMU, sanitizer-рантаймы, Zig, seL4, Kani/Verus и др.) и честно помечены
+  с точными командами верификации в `evals/README.md`.
+- Registry: 228 источников, 141 claims с полной provenance, ~233 cross-links
+  (require/recommend/conflict/extend/verify) + collision rules.
+- Quality gates (v2.0): `tools/lint/skill_lint.py` (9 секций, body ≤250 строк,
+  description ≤50 слов), `tools/lint/registry_check.py` (целостность + циклы в require-графе),
+  `tools/source/source_check.py` (provenance), `tools/lint/claim_extractor.py`
+  (вычитка SOURCE-цитат), `tools/lint/prose_lint.py` (advisory prose checks) — все чистые.
+  CI: `.github/workflows/ci.yml` прогоняет `tools/validate.py` + stale-проверки каталога.
+- Token-стратегия: SKILL.md ≈ 1–2K токенов; глубина — в `references/` (progressive disclosure),
+  бюджет измеряется `tools/tokens/token_measure.py`.
 - Актуальные счётчики и следующий шаг: `roadmap/progress.yaml`.

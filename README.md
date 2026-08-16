@@ -1,4 +1,4 @@
-<div align="center">
+﻿<div align="center">
 
 # Low-level skills TrothByte
 
@@ -6,12 +6,11 @@
 
 <sub>Follows the [Agent Skills](https://agentskills.io) open standard — works with Claude Code, Cursor, GitHub Copilot, VS Code, Gemini CLI, OpenCode, Codex, and other Agent Skills clients.</sub>
 
-[![skills](https://img.shields.io/badge/skills-124-blueviolet?style=flat-square)](docs/SKILLS.md)
-[![domains](https://img.shields.io/badge/domains-32-9cf?style=flat-square)](#skills-catalog)
-[![source-backed](https://img.shields.io/badge/source--backed-65-success?style=flat-square)](registry/skills.yaml)
-[![primary sources](https://img.shields.io/badge/primary--sources-177-informational?style=flat-square)](registry/sources.yaml)
-[![traced claims](https://img.shields.io/badge/traced--claims-56-important?style=flat-square)](registry/claims.yaml)
-[![stars](https://img.shields.io/github/stars/TrothByte/low-level-skills-trothbyte?style=flat-square&label=stars)](https://github.com/TrothByte/low-level-skills-trothbyte)
+[![skills](https://img.shields.io/badge/skills-163-0F766E?style=flat-square)](docs/SKILLS.md)
+[![domains](https://img.shields.io/badge/domains-34-475569?style=flat-square)](#skills-catalog)
+[![source-backed](https://img.shields.io/badge/source--backed-85-15803D?style=flat-square)](registry/skills.yaml)
+[![primary sources](https://img.shields.io/badge/primary--sources-228-1D4ED8?style=flat-square)](registry/sources.yaml)
+[![traced claims](https://img.shields.io/badge/traced--claims-141-9D174D?style=flat-square)](registry/claims.yaml)
 [![license](https://img.shields.io/badge/license-MIT-brightgreen?style=flat-square)](LICENSE.md)
 [![CI](https://img.shields.io/github/actions/workflow/status/TrothByte/low-level-skills-trothbyte/ci.yml?style=flat-square&label=CI)](https://github.com/TrothByte/low-level-skills-trothbyte/actions)
 [![skills.sh](https://skills.sh/b/TrothByte/low-level-skills-trothbyte)](https://skills.sh/TrothByte/low-level-skills-trothbyte)
@@ -19,14 +18,14 @@
 </div>
 
 > [!NOTE]
-> **124 skills · 32 domains · 65 source-backed · 177 primary sources · 56 traced claims.**
+> **163 skills · 34 domains · 85 source-backed · 228 primary sources · 141 traced claims.**
 > AI agents writing C, C++, Rust, assembly, kernels, or firmware fail in predictable ways —
 > they trust "it compiles", guess ABIs, ignore memory ordering, and skip verification.
 > TrothByte exists to fix exactly those failures.
 
 ---
 
-## 🎯 What is TrothByte
+## What is TrothByte
 
 Every skill answers the questions that matter **before** a single line is written:
 
@@ -43,14 +42,14 @@ SKILL.md          small, operational, loads first
         └─ evals/ synthetic · false-positive · historical CVE · adversarial
 ```
 
-## 🚀 Quick start for an agent
+## Quick start for an agent
 
 1. Read [`AGENTS.md`](AGENTS.md) — engineering rules and resume protocol.
 2. Route to the **minimal** skill set with [`meta-routing`](skills/_meta/meta-routing/SKILL.md).
 3. Open that skill's `SKILL.md`; load its `references/` only as needed.
 4. Verify like the skill says: warnings-as-errors, sanitizers, asm inspection, runtime asserts.
 
-## 🛠️ Install as an agent-skill pack
+## Install as an agent-skill pack
 
 ```bash
 # Clone the whole pack (works with any agent skills runtime)
@@ -66,21 +65,25 @@ npx skills add TrothByte/low-level-skills-trothbyte
 
 Docs site: **[trothbyte.github.io/low-level-skills-trothbyte](https://trothbyte.github.io/low-level-skills-trothbyte)**
 
-## 🗂️ Skills catalog
+## Skills catalog
 
 The complete index — what each skill does, its stability, and where it lives — is in
 **[`docs/SKILLS.md`](docs/SKILLS.md)**. The area map below is your orientation.
 
 | Area | Domains |
 |---|---|
-| 🔤 Languages & semantics | [`c`](skills/c/README.md) · [`cpp`](skills/cpp/README.md) · [`rust`](skills/rust/README.md) · [`concurrency`](skills/concurrency/README.md) |
-| ⚙️ Compilers & IR | [`compiler`](skills/compiler/README.md) · [`llvm`](skills/llvm/README.md) |
-| 🔩 Machine level | [`assembly`](skills/assembly/README.md) · [`abi`](skills/abi/README.md) · [`ffi`](skills/ffi/README.md) · [`elf`](skills/elf/README.md) · [`dwarf`](skills/dwarf/README.md) |
-| 🧠 Systems engineering | [`kernel`](skills/kernel/README.md) · [`networking`](skills/networking/README.md) · [`embedded`](skills/embedded/README.md) · [`bootloader`](skills/bootloader/README.md) · [`qemu`](skills/qemu/README.md) |
-| 🔬 Analysis & performance | [`binary-analysis`](skills/binary-analysis/README.md) · [`reverse-engineering`](skills/reverse-engineering/README.md) · [`performance`](skills/performance/README.md) · [`simd`](skills/simd/README.md) · [`gpu`](skills/gpu/README.md) |
-| 🧰 Tooling & agent behavior | [`sanitizers`](skills/sanitizers/README.md) · [`_meta`](skills/_meta/README.md) |
+| Languages & semantics | [`c`](skills/c/README.md) · [`cpp`](skills/cpp/README.md) · [`rust`](skills/rust/README.md) · [`concurrency`](skills/concurrency/README.md) · [`zig`](skills/zig/README.md) |
+| Compilers & IR | [`compiler`](skills/compiler/README.md) · [`llvm`](skills/llvm/README.md) |
+| Machine level | [`assembly`](skills/assembly/README.md) · [`abi`](skills/abi/README.md) · [`ffi`](skills/ffi/README.md) · [`elf`](skills/elf/README.md) · [`dwarf`](skills/dwarf/README.md) |
+| Systems engineering | [`kernel`](skills/kernel/README.md) · [`networking`](skills/networking/README.md) · [`embedded`](skills/embedded/README.md) · [`bootloader`](skills/bootloader/README.md) · [`qemu`](skills/qemu/README.md) · [`virtualization`](skills/virtualization/README.md) · [`riscv`](skills/riscv/README.md) |
+| Binary analysis & RE | [`binary-analysis`](skills/binary-analysis/README.md) · [`reverse-engineering`](skills/reverse-engineering/README.md) · [`mobile`](skills/mobile/README.md) |
+| Performance & HPC | [`performance`](skills/performance/README.md) · [`simd`](skills/simd/README.md) · [`gpu`](skills/gpu/README.md) · [`hpc`](skills/hpc/README.md) |
+| Security & hardware | [`security`](skills/security/README.md) · [`hdl`](skills/hdl/README.md) |
+| Accelerators | [`accelerator`](skills/accelerator/README.md) |
+| Design (designer mode) | [`design`](skills/design/README.md) |
+| Tooling & agent behavior | [`sanitizers`](skills/sanitizers/README.md) · [`build-systems`](skills/build-systems/README.md) · [`debugging`](skills/debugging/README.md) · [`_meta`](skills/_meta/README.md) |
 
-### 🏆 Flagships to start with
+### Flagships to start with
 
 | Skill | Solves |
 |---|---|
@@ -90,11 +93,11 @@ The complete index — what each skill does, its stability, and where it lives �
 | [`abi-layout-reasoning`](skills/abi/abi-layout-reasoning/SKILL.md) | struct layout and calling conventions, verified with the compiler |
 | [`ffi-boundary-cross-language`](skills/ffi/ffi-boundary-cross-language/SKILL.md) | where one language's safety guarantees end |
 
-## 📂 Repository map
+## Repository map
 
 | Path | Purpose |
 |---|---|
-| `skills/` | 124 skills across 32 domains (`SKILL.md` + `references/` + `examples/` + `evals/`) |
+| `skills/` | 163 skills across 34 domains (`SKILL.md` + `references/` + `examples/` + `evals/`) |
 | `registry/` | machine-readable state: skills, sources, claims, cross-links, tools, evals |
 | `roadmap/` | coverage matrix, uniqueness analysis, priorities, live progress |
 | `research/` | the original research documents this repository was built from |
@@ -106,7 +109,7 @@ The complete index — what each skill does, its stability, and where it lives �
 | `CONTRIBUTING.md` · `SECURITY.md` · `CHANGELOG.md` | contribution, security, and release metadata |
 | `WORKLOG.md` | development journal |
 
-## 🛡️ Quality & provenance
+## Quality & provenance
 
 > [!IMPORTANT]
 > **Verification is executed, not asserted.** Examples were compiled and run with
@@ -115,16 +118,16 @@ The complete index — what each skill does, its stability, and where it lives �
 > honestly marked `researched` with the exact target commands documented.
 
 - **Every normative claim is traceable:** `claim → source → section → skill` in
-  [`registry/claims.yaml`](registry/claims.yaml), backed by 177 primary sources in
+  [`registry/claims.yaml`](registry/claims.yaml), backed by 228 primary sources in
   [`registry/sources.yaml`](registry/sources.yaml).
 - **Quality gates** run on every change — locally via [`tools/validate.py`](tools/validate.py)
-  (skill_lint · registry_check · source_check) and in CI
+  (skill_lint · registry_check · source_check · claim_extractor · token gate) and in CI
   ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) on every push and PR.
-  Token budgets are measured with [`token_measure.py`](tools/tokens/token_measure.py).
-- **Token budget is measured.** A typical `SKILL.md` costs ~1–2K tokens; deep knowledge stays
-  in `references/` and loads only when needed.
+- **Token budget is enforced.** A typical `SKILL.md` costs ~1–2K tokens (hard gate: ≤2000
+  activation cost, measured with [`token_measure.py`](tools/tokens/token_measure.py));
+  deep knowledge stays in `references/` and loads only when needed.
 
-## 🧭 Stability levels
+## Stability levels
 
 | Level | Meaning |
 |---|---|
@@ -132,17 +135,17 @@ The complete index — what each skill does, its stability, and where it lives �
 | `researched` | grounded in primary sources; verification needs a toolchain not present here |
 | `evaluated` / `stable` | reached after evals and full review (next phases) |
 
-## 🤝 Contributing
+## Contributing
 
 TrothByte is built as a product, not a pile of files. Before contributing, read
 [`AGENTS.md`](AGENTS.md) (engineering rules) and [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
-## 📄 License
+## License
 
 MIT — see [`LICENSE.md`](LICENSE.md). Attribution policy for the repositories, standards, talks,
 and research this work builds on: [`docs/ACKNOWLEDGMENTS.md`](docs/ACKNOWLEDGMENTS.md).
 
-## 📝 Cite
+## Cite
 
 Academic or benchmark use? Cite via [`CITATION.cff`](CITATION.cff) (GitHub renders a
 "Cite this repository" button automatically; Zenodo picks it up on releases).

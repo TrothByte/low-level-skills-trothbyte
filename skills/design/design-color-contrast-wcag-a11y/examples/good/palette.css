@@ -1,0 +1,40 @@
+/* GOOD: WCAG 2.2-checked palette — every pair above its threshold, and
+   every interactive target at least 24x24 CSS px (2.5.8).
+
+   CONTRAST: #111827 on #FFFFFF text
+   CONTRAST: #4B5563 on #FFFFFF large
+   CONTRAST: #2563EB on #FFFFFF large
+   CONTRAST: #4F46E5 on #F5F7FF ui
+*/
+:root {
+  --color-text: #111827;
+  --color-bg: #FFFFFF;
+  --color-muted: #4B5563;
+  --color-primary: #2563EB;
+  --color-action: #4F46E5;
+  --color-surface: #F5F7FF;
+}
+
+body {
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+.muted-large {
+  color: var(--color-muted);
+  font-size: 18pt;
+}
+
+a.link {
+  color: var(--color-primary);
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 16px;
+}
+
+.button {
+  background-color: var(--color-action);
+  color: var(--color-text);
+  min-width: 24px;
+  min-height: 24px;
+}

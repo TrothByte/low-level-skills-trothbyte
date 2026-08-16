@@ -1,17 +1,17 @@
 ---
 title: Low-level skills TrothByte
-description: 124 verified, source-backed low-level engineering skills for AI coding agents — C, C++, Rust, assembly, kernel, embedded, Zig, GPU, reverse engineering, build systems.
+description: 163 verified, source-backed low-level engineering skills for AI coding agents — C, C++, Rust, assembly, kernel, embedded, Zig, GPU, reverse engineering, build systems.
 ---
 
 # Low-level skills TrothByte
 
-**124 verified, source-backed low-level engineering skills for AI coding agents.**
+**163 verified, source-backed low-level engineering skills for AI coding agents.**
 
 AI agents writing C, Rust, assembly, kernels, or firmware fail in predictable ways:
 they trust "it compiles", guess ABIs, ignore memory ordering, and skip verification.
 This repository fixes exactly those failures.
 
-- **124 skills** · **32 domains** · **65 source-backed** (executed on real toolchains) · **177 primary sources** · **56 traced claims**
+- **163 skills** · **34 domains** · **85 source-backed** (executed on real toolchains) · **228 primary sources** · **141 traced claims**
 - Every normative claim is traced: `claim → source → section → skill`
 - `research/` documents 55+ real, source-traced AI-agent failures in low-level code
 - MIT license · CI-green · Agent Skills spec-compliant

@@ -1,0 +1,12 @@
+/* GOOD: token-first component styles — every value is a var() reference,
+   no raw hex colors or px lengths in the component layer. */
+.button {
+  background-color: var(--semantic-color-action);
+  color: var(--semantic-color-text-primary);
+  padding: var(--semantic-space-sm) var(--semantic-space-md);
+}
+
+.card {
+  padding: var(--semantic-space-card);
+  border: 0;
+}

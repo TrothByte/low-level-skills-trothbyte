@@ -1,58 +1,155 @@
-# Tools Registry — общий инструментарий (не дублировать внутри skills)
-# Каждый tool — отдельный script в tools/<category>/<name>.<ext>, вызываемый из скиллов.
-
 meta:
-  updated: 2026-08-14
-  rule: "Один tool — одна обязанность. Skills вызывают shared tools, не копируют их."
-
+  updated: '2026-08-17'
+  rule: 'Один tool — одна обязанность. Skills вызывают shared tools, не копируют их. status: implemented = файл существует на диске; registered = зарегистрирован, файл ожидается.'
 tools:
   environment:
-    - {id: detect-env, path: "tools/lint/detect_env.sh", desc: "Определить ОС, shell, архитектуру, доступный toolchain", lang: shell}
-    - {id: detect-compiler, path: "tools/research/detect_compiler.sh", desc: "Обнаружить gcc/clang/msvc и версии + стандарт по умолчанию", lang: shell}
-    - {id: detect-arch, path: "tools/research/detect_arch.sh", desc: "Определить целевую архитектуру (uname -m, target triple)", lang: shell}
-
+  - id: detect-env
+    path: tools/lint/detect_env.sh
+    desc: Определить ОС, shell, архитектуру, доступный toolchain
+    lang: shell
+    status: registered
+  - id: detect-compiler
+    path: tools/research/detect_compiler.sh
+    desc: Обнаружить gcc/clang/msvc и версии + стандарт по умолчанию
+    lang: shell
+    status: registered
+  - id: detect-arch
+    path: tools/research/detect_arch.sh
+    desc: Определить целевую архитектуру (uname -m, target triple)
+    lang: shell
+    status: registered
   elf:
-    - {id: elf-summary, path: "tools/research/elf_summary.sh", desc: "readelf: заголовок, секции, символы, relocations — одним дайджестом", lang: shell}
-    - {id: elf-checksec, path: "tools/research/checksec.sh", desc: "NX/RELRO/PIE/Canary/RPATH — hardening-сводка", lang: shell}
-    - {id: symbol-lookup, path: "tools/research/symbol_lookup.sh", desc: "nm/objdump — разрешение символа и типа", lang: shell}
-
+  - id: elf-summary
+    path: tools/research/elf_summary.sh
+    desc: 'readelf: заголовок, секции, символы, relocations — одним дайджестом'
+    lang: shell
+    status: registered
+  - id: elf-checksec
+    path: tools/research/checksec.sh
+    desc: NX/RELRO/PIE/Canary/RPATH — hardening-сводка
+    lang: shell
+    status: registered
+  - id: symbol-lookup
+    path: tools/research/symbol_lookup.sh
+    desc: nm/objdump — разрешение символа и типа
+    lang: shell
+    status: registered
   disassembly:
-    - {id: disasm-fn, path: "tools/research/disasm_fn.sh", desc: "objdump -d конкретной функции (с AT&T/Intel)", lang: shell}
-    - {id: asm-diff-opt, path: "tools/research/asm_diff_opt.sh", desc: "Сравнить asm -O0 vs -O2 для выбранного файла", lang: shell}
-
+  - id: disasm-fn
+    path: tools/research/disasm_fn.sh
+    desc: objdump -d конкретной функции (с AT&T/Intel)
+    lang: shell
+    status: registered
+  - id: asm-diff-opt
+    path: tools/research/asm_diff_opt.sh
+    desc: Сравнить asm -O0 vs -O2 для выбранного файла
+    lang: shell
+    status: registered
   dwarf:
-    - {id: dwarf-dump, path: "tools/research/dwarf_dump.sh", desc: "llvm-dwarfdump — debug info, location lists", lang: shell}
-    - {id: dwarf-locals, path: "tools/research/dwarf_locals.sh", desc: "Извлечь переменные и их location из DWARF", lang: shell}
-
+  - id: dwarf-dump
+    path: tools/research/dwarf_dump.sh
+    desc: llvm-dwarfdump — debug info, location lists
+    lang: shell
+    status: registered
+  - id: dwarf-locals
+    path: tools/research/dwarf_locals.sh
+    desc: Извлечь переменные и их location из DWARF
+    lang: shell
+    status: registered
   abi:
-    - {id: abi-struct-layout, path: "tools/lint/abi_struct_layout.c", desc: "Сгенерировать layout структуры (offsetof/sizeof/alignof)", lang: c}
-    - {id: abi-prologue-check, path: "tools/lint/abi_prologue_check.sh", desc: "Проверить пролог функции против ABI (регистры аргументов)", lang: shell}
-
+  - id: abi-struct-layout
+    path: tools/lint/abi_struct_layout.c
+    desc: Сгенерировать layout структуры (offsetof/sizeof/alignof)
+    lang: c
+    status: registered
+  - id: abi-prologue-check
+    path: tools/lint/abi_prologue_check.sh
+    desc: Проверить пролог функции против ABI (регистры аргументов)
+    lang: shell
+    status: registered
   sanitizers:
-    - {id: sanitizer-run, path: "tools/eval/sanitizer_run.sh", desc: "Собрать и запустить с ASan/UBSan/TSan с правильными флагами (включая -m none для fuzz)", lang: shell}
-    - {id: sanitizer-parse, path: "tools/eval/sanitizer_parse.py", desc: "Парсить вывод ASan/UBSan/TSan и дедуплицировать по category/file/line", lang: python}
-
+  - id: sanitizer-run
+    path: tools/eval/sanitizer_run.sh
+    desc: Собрать и запустить с ASan/UBSan/TSan с правильными флагами (включая -m none для fuzz)
+    lang: shell
+    status: registered
+  - id: sanitizer-parse
+    path: tools/eval/sanitizer_parse.py
+    desc: Парсить вывод ASan/UBSan/TSan и дедуплицировать по category/file/line
+    lang: python
+    status: registered
   compiler:
-    - {id: ub-explorer, path: "tools/research/ub_explorer.sh", desc: "Скомпилировать сниппет на -O0/-O2 и показать asm для демонстрации UB-интерпретации", lang: shell}
-
+  - id: ub-explorer
+    path: tools/research/ub_explorer.sh
+    desc: Скомпилировать сниппет на -O0/-O2 и показать asm для демонстрации UB-интерпретации
+    lang: shell
+    status: registered
   benchmark:
-    - {id: bench-cmp, path: "tools/eval/bench_cmp.sh", desc: "Сравнить производительность двух бинарников (perf stat + hyperfine)", lang: shell}
-    - {id: perf-cache, path: "tools/eval/perf_cache.sh", desc: "perf stat — cache misses, branch misses, IPC", lang: shell}
-
+  - id: bench-cmp
+    path: tools/eval/bench_cmp.sh
+    desc: Сравнить производительность двух бинарников (perf stat + hyperfine)
+    lang: shell
+    status: registered
+  - id: perf-cache
+    path: tools/eval/perf_cache.sh
+    desc: perf stat — cache misses, branch misses, IPC
+    lang: shell
+    status: registered
   qemu:
-    - {id: qemu-boot-test, path: "tools/eval/qemu_boot_test.sh", desc: "Загрузка kernel/firmware в QEMU и проверка до userland/маркера", lang: shell}
-
+  - id: qemu-boot-test
+    path: tools/eval/qemu_boot_test.sh
+    desc: Загрузка kernel/firmware в QEMU и проверка до userland/маркера
+    lang: shell
+    status: registered
   skill:
-    - {id: skill-lint, path: "tools/lint/skill_lint.py", desc: "Проверка SKILL.md: frontmatter, структура, ссылки, token-бюджет", lang: python}
-    - {id: registry-check, path: "tools/lint/registry_check.py", desc: "Проверка целостности registry/*.yaml (ссылки, id, дубликаты)", lang: python}
-    - {id: token-measure, path: "tools/tokens/token_measure.py", desc: "Измерение token-бюджета SKILL.md и references", lang: python}
-    - {id: source-check, path: "tools/source/source_check.py", desc: "Проверка, что claims имеют source references", lang: python}
-
+  - id: skill-lint
+    path: tools/lint/skill_lint.py
+    desc: 'Проверка SKILL.md: frontmatter, структура, ссылки, token-бюджет'
+    lang: python
+    status: implemented
+  - id: registry-check
+    path: tools/lint/registry_check.py
+    desc: Проверка целостности registry/*.yaml (ссылки, id, дубликаты)
+    lang: python
+    status: implemented
+  - id: token-measure
+    path: tools/tokens/token_measure.py
+    desc: Измерение token-бюджета SKILL.md и references
+    lang: python
+    status: implemented
+  - id: source-check
+    path: tools/source/source_check.py
+    desc: Проверка, что claims имеют source references
+    lang: python
+    status: implemented
   eval:
-    - {id: eval-runner, path: "tools/eval/eval_runner.py", desc: "Запуск eval-набора (synthetic/historical/adversarial/routing)", lang: python}
-    - {id: cve-fixture-check, path: "tools/eval/cve_fixture_check.sh", desc: "Проверка CVE-фикстуры: vulnerable → sanitizer fails, fixed → passes", lang: shell}
-
+  - id: eval-runner
+    path: tools/eval/eval_runner.py
+    desc: Запуск eval-набора (synthetic/historical/adversarial/routing)
+    lang: python
+    status: registered
+  - id: cve-fixture-check
+    path: tools/eval/cve_fixture_check.sh
+    desc: 'Проверка CVE-фикстуры: vulnerable → sanitizer fails, fixed → passes'
+    lang: shell
+    status: registered
   reports:
-    - {id: report-progress, path: "tools/reports/report_progress.py", desc: "Генерация отчёта из progress.yaml", lang: python}
-    - {id: gen-domain-readmes, path: "tools/reports/gen_domain_readmes.py", desc: "Регенерация skills/<domain>/README.md из registry + frontmatter", lang: python}
-    - {id: gen-skills-catalog, path: "tools/reports/gen_skills_catalog.py", desc: "Генерация docs/SKILLS.md — каталог всех skills", lang: python}
+  - id: report-progress
+    path: tools/reports/report_progress.py
+    desc: Генерация отчёта из progress.yaml
+    lang: python
+    status: registered
+  - id: gen-domain-readmes
+    path: tools/reports/gen_domain_readmes.py
+    desc: Регенерация skills/<domain>/README.md из registry + frontmatter
+    lang: python
+    status: implemented
+  - id: gen-skills-catalog
+    path: tools/reports/gen_skills_catalog.py
+    desc: Генерация docs/SKILLS.md — каталог всех skills
+    lang: python
+    status: implemented
+summary:
+  total: 27
+  implemented: 6
+  registered: 21

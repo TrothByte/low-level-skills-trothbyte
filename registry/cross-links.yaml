@@ -1,171 +1,716 @@
-# Cross-Links / Dependency Graph — связи между skills
-# rel: require | recommend | conflict | extend | verify
-# Правило: не загружать весь dependency tree автоматически — minimal relevant expansion.
-
 meta:
-  updated: 2026-08-14
-  rule: "Зависимости раскрываются минимально: при активации skill загружаются только 'require', 'recommend' — по запросу."
-
+  updated: '2026-08-17'
+  rule: 'Зависимости раскрываются минимально: при активации skill загружаются только ''require'', ''recommend'' — по запросу.'
 cross_links:
-  # ===== Tier 1 flagship =====
-  - {from: safe-low-level-from-scratch, rel: recommend, to: c-undefined-behavior}
-  - {from: safe-low-level-from-scratch, rel: recommend, to: compiler-ub-assumptions}
-  - {from: safe-low-level-from-scratch, rel: recommend, to: memory-ordering-reasoning}
-  - {from: safe-low-level-from-scratch, rel: recommend, to: rust-unsafe-reasoning}
-
-  - {from: abi-layout-reasoning, rel: require, to: asm-calling-conventions}
-  - {from: abi-layout-reasoning, rel: recommend, to: elf-layout-and-relocations}
-  - {from: abi-layout-reasoning, rel: verify, to: ffi-boundary-cross-language}
-
-  - {from: memory-ordering-reasoning, rel: require, to: atomics-c11-cpp11-rust}
-  - {from: memory-ordering-reasoning, rel: verify, to: kernel-rcu-memory-barriers}
-  - {from: memory-ordering-reasoning, rel: verify, to: gpu-memory-model-coherence}
-
-  - {from: compiler-ub-assumptions, rel: recommend, to: asm-optimizer-artifacts}
-  - {from: compiler-ub-assumptions, rel: recommend, to: llvm-ir-reading}
-
-  - {from: ffi-boundary-cross-language, rel: require, to: abi-layout-reasoning}
-  - {from: ffi-boundary-cross-language, rel: recommend, to: rust-ffi-boundary}
-
-  # ===== Tier 2 =====
-  - {from: embedded-mpu-trustzone, rel: require, to: embedded-volatile-and-memory-ordering}
-  - {from: sanitizer-agent-ci-loop, rel: require, to: sanitizer-report-reading}
-  - {from: raii-descriptor-types-api-design, rel: require, to: cpp-object-lifecycle}
-
-  # ===== Tier 3 =====
-  - {from: c-undefined-behavior, rel: recommend, to: compiler-ub-assumptions}
-  - {from: c-integer-promotion-and-conversion, rel: require, to: c-undefined-behavior}
-  - {from: rust-unsafe-reasoning, rel: recommend, to: memory-ordering-reasoning}
-  - {from: rust-ffi-boundary, rel: require, to: ffi-boundary-cross-language}
-  - {from: simd-vectorization-cross-layer, rel: require, to: asm-x86-64-registers-and-addressing}
-  - {from: simd-vectorization-cross-layer, rel: recommend, to: vectorization-reasoning}
-  - {from: rust-panic-safety, rel: require, to: rust-unsafe-reasoning}
-  - {from: zeroize-constant-time, rel: require, to: compiler-ub-assumptions}
-
-  # ===== Tier 4 =====
-  - {from: elf-linker-loader-debugger, rel: require, to: elf-layout-and-relocations}
-  - {from: elf-linker-loader-debugger, rel: require, to: dwarf-debug-info}
-  - {from: kernel-rcu-memory-barriers, rel: require, to: memory-ordering-reasoning}
-  - {from: kernel-rcu-memory-barriers, rel: require, to: kernel-uaccess-safety}
-  - {from: kernel-uaccess-safety, rel: recommend, to: kernel-atomic-context}
-  - {from: ptx-assembly, rel: require, to: gpu-memory-model-coherence}
-  - {from: ebpf-verifier-reasoning, rel: recommend, to: kernel-rcu-memory-barriers}
-
-  # ===== Tier 5 =====
-  - {from: asm-calling-conventions, rel: recommend, to: asm-x86-64-registers-and-addressing}
-  - {from: asm-inline-asm-constraints, rel: require, to: asm-x86-64-registers-and-addressing}
-  - {from: asm-signed-unsigned-branches, rel: require, to: asm-x86-64-registers-and-addressing}
-  - {from: c-string-and-buffer-safety, rel: require, to: c-undefined-behavior}
-  - {from: c-errno-and-syscall-returns, rel: require, to: c-undefined-behavior}
-  - {from: embedded-volatile-and-memory-ordering, rel: require, to: memory-ordering-reasoning}
-  - {from: embedded-linker-script, rel: require, to: elf-linker-loader-debugger}
-  - {from: llvm-pass-writing, rel: require, to: llvm-ir-reading}
-  - {from: gpu-memory-model-coherence, rel: require, to: memory-ordering-reasoning}
-  - {from: cpp-move-semantics, rel: require, to: cpp-object-lifecycle}
-
-  # ===== Tier 6 =====
-  - {from: vectorization-reasoning, rel: recommend, to: simd-vectorization-cross-layer}
-  - {from: cache-and-numa-optimization, rel: require, to: performance-measurement-discipline}
-  - {from: kernel-atomic-context, rel: require, to: kernel-uaccess-safety}
-  - {from: concurrency-condvar-and-spurious-wakeup, rel: require, to: concurrency-deadlock-and-lock-ordering}
-  - {from: binary-analysis-type-recovery, rel: require, to: asm-optimizer-artifacts}
-  - {from: c-signal-handler-safety, rel: require, to: c-errno-and-syscall-returns}
-
-  # ===== Meta skills =====
-  - {from: meta-routing, rel: recommend, to: meta-evidence}
-  - {from: meta-verification, rel: require, to: meta-evidence}
-  - {from: meta-completion, rel: require, to: meta-verification}
-  - {from: meta-rationalizations, rel: recommend, to: meta-assumptions}
-
-  # ===== NEW SKILLS (PHASE 13) =====
-  # Assembly (A)
-  - {from: asm-verification-hallucination-gate, rel: recommend, to: asm-x86-64-registers-and-addressing}
-  - {from: asm-verification-hallucination-gate, rel: recommend, to: asm-signed-unsigned-branches}
-  - {from: asm-verification-hallucination-gate, rel: verify, to: meta-verification}
-  - {from: asm-syntax-dialects-nasm-gas-att, rel: recommend, to: asm-x86-64-registers-and-addressing}
-  - {from: asm-arm-thumb-2-encoding, rel: recommend, to: asm-verification-hallucination-gate}
-  - {from: asm-aarch64-neon-simd-safety, rel: recommend, to: simd-vectorization-cross-layer}
-  - {from: asm-risc-v-registers-and-calling-conventions, rel: recommend, to: asm-calling-conventions}
-  # Binary analysis / RE (B)
-  - {from: binary-disassembly-decompilation-fidelity, rel: extend, to: binary-analysis-type-recovery}
-  - {from: binary-disassembly-decompilation-fidelity, rel: recommend, to: asm-optimizer-artifacts}
-  - {from: reverse-engineering-shellcode-analysis, rel: require, to: asm-x86-64-registers-and-addressing}
-  - {from: reverse-engineering-can-signal-extraction, rel: extend, to: auto-re-protocols-beyond-can}
-  - {from: reverse-engineering-ghidra-agent-automation, rel: recommend, to: binary-analysis-type-recovery}
-  - {from: binary-memory-leak-vm-allocator-diagnosis, rel: recommend, to: performance-measurement-discipline}
-  # Concurrency (C)
-  - {from: concurrency-actual-parallelism-detection, rel: recommend, to: memory-ordering-reasoning}
-  - {from: concurrency-actual-parallelism-detection, rel: recommend, to: concurrency-deadlock-and-lock-ordering}
-  # Rust (D)
-  - {from: rust-api-evolution-and-drift, rel: recommend, to: rust-unsafe-reasoning}
-  - {from: rust-dependency-supply-chain, rel: recommend, to: rust-api-evolution-and-drift}
-  - {from: rust-crypto-primitives-safety, rel: require, to: zeroize-constant-time}
-  # Embedded (E)
-  - {from: embedded-hw-register-datasheet-verification, rel: require, to: embedded-volatile-and-memory-ordering}
-  - {from: embedded-device-tree-and-kconfig, rel: recommend, to: embedded-linker-script}
-  # Kernel (F)
-  - {from: kernel-scheduler-mm-vfs-internals, rel: recommend, to: kernel-uaccess-safety}
-  - {from: kernel-debugging-ftrace-kprobes-kdump, rel: recommend, to: qemu-system-setup}
-  # Networking (G)
-  - {from: networking-hardware-rdma-nic-offload, rel: recommend, to: ebpf-verifier-reasoning}
-  # Sanitizers (H)
-  - {from: fuzzing-harness-evidence-gate, rel: require, to: sanitizer-report-reading}
-  - {from: fuzzing-harness-evidence-gate, rel: require, to: sanitizer-agent-ci-loop}
-  # GPU (I)
-  - {from: gpu-kernel-verification-beyond-oracle, rel: require, to: gpu-memory-model-coherence}
-  - {from: gpu-communication-primitives, rel: recommend, to: gpu-memory-model-coherence}
-  # Zig (J)
-  - {from: zig-ffi-c-interop, rel: recommend, to: ffi-boundary-cross-language}
-  - {from: zig-inline-asm-and-abi, rel: recommend, to: asm-calling-conventions}
-  - {from: zig-simd-vector-intrinsics, rel: recommend, to: simd-vectorization-cross-layer}
-  - {from: zig-concurrency-and-io-events, rel: recommend, to: memory-ordering-reasoning}
-  - {from: zig-version-migration, rel: recommend, to: zig-comptime-metaprogramming}
-  - {from: zig-build-system-and-packages, rel: recommend, to: zig-cross-compilation-targets}
-  # Virtualization (K)
-  - {from: hypervisor-vmx-svm-internals, rel: recommend, to: qemu-system-setup}
-  # RISC-V (L)
-  - {from: riscv-isa-and-rvv-intrinsics, rel: recommend, to: simd-vectorization-cross-layer}
-  - {from: riscv-cheri-capability-safety, rel: recommend, to: safe-low-level-from-scratch}
-  # HPC (M)
-  - {from: hpc-mpi-programming, rel: recommend, to: concurrency-deadlock-and-lock-ordering}
-  - {from: hpc-openmp-parallel-programming, rel: recommend, to: memory-ordering-reasoning}
-  - {from: hpc-rdma-verbs, rel: recommend, to: networking-hardware-rdma-nic-offload}
-  # Mobile (O)
-  - {from: android-re-dex-smali-format, rel: recommend, to: binary-analysis-type-recovery}
-  - {from: android-re-native-jni-analysis, rel: recommend, to: go-rust-re}
-  # UEFI (P)
-  - {from: bootloader-uefi-firmware, rel: require, to: bootloader-stages}
-  # _meta (Q)
-  - {from: meta-verification-harness-validity, rel: require, to: meta-verification}
-  # Build systems (R)
-  - {from: build-system-cmake-diagnostics, rel: recommend, to: build-toolchain-version-drift}
-  - {from: build-toolchain-version-drift, rel: recommend, to: build-linker-error-diagnostics}
-  - {from: build-linker-error-diagnostics, rel: require, to: elf-linker-loader-debugger}
-  - {from: build-process-signal-and-state-safety, rel: recommend, to: build-system-cmake-diagnostics}
-  # Debugging (S)
-  - {from: debugging-crash-triage-discipline, rel: recommend, to: meta-verification}
-  - {from: debugging-instrumentation-over-reasoning, rel: recommend, to: debugging-crash-triage-discipline}
-  # Kernel drivers (T)
-  - {from: kernel-driver-char-device-lifecycle, rel: require, to: kernel-uaccess-safety}
-  - {from: kernel-driver-char-device-lifecycle, rel: recommend, to: kernel-atomic-context}
-  - {from: kernel-module-build-out-of-tree, rel: recommend, to: kernel-driver-char-device-lifecycle}
-  - {from: kernel-api-drift-migration, rel: recommend, to: kernel-driver-char-device-lifecycle}
-  # Security / formal (U)
-  - {from: side-channel-constant-time-verification, rel: require, to: zeroize-constant-time}
-  - {from: side-channel-constant-time-verification, rel: recommend, to: compiler-ub-assumptions}
-  - {from: smt-z3-sound-usage, rel: recommend, to: formal-spec-loop-invariants}
-  # Embedded cycle (V)
-  - {from: embedded-board-bringup-peripheral-init, rel: recommend, to: embedded-hw-register-datasheet-verification}
-  - {from: embedded-flash-debug-cycle, rel: recommend, to: embedded-board-bringup-peripheral-init}
-  - {from: embedded-ota-bootloader-safety, rel: recommend, to: bootloader-stages}
-  - {from: embedded-hil-ci-testing, rel: recommend, to: embedded-flash-debug-cycle}
-  # Rust unsafe (W)
-  - {from: rust-unsafe-safety-contract-verification, rel: require, to: rust-unsafe-reasoning}
-
-# ============================================================
-# COLLISION RULES (конфликтующие рекомендации)
-# ============================================================
+- from: safe-low-level-from-scratch
+  rel: recommend
+  to: c-undefined-behavior
+- from: safe-low-level-from-scratch
+  rel: recommend
+  to: compiler-ub-assumptions
+- from: safe-low-level-from-scratch
+  rel: recommend
+  to: memory-ordering-reasoning
+- from: safe-low-level-from-scratch
+  rel: recommend
+  to: rust-unsafe-reasoning
+- from: abi-layout-reasoning
+  rel: require
+  to: asm-calling-conventions
+- from: abi-layout-reasoning
+  rel: recommend
+  to: elf-layout-and-relocations
+- from: abi-layout-reasoning
+  rel: verify
+  to: ffi-boundary-cross-language
+- from: memory-ordering-reasoning
+  rel: require
+  to: atomics-c11-cpp11-rust
+- from: memory-ordering-reasoning
+  rel: verify
+  to: kernel-rcu-memory-barriers
+- from: memory-ordering-reasoning
+  rel: verify
+  to: gpu-memory-model-coherence
+- from: compiler-ub-assumptions
+  rel: recommend
+  to: asm-optimizer-artifacts
+- from: compiler-ub-assumptions
+  rel: recommend
+  to: llvm-ir-reading
+- from: ffi-boundary-cross-language
+  rel: require
+  to: abi-layout-reasoning
+- from: ffi-boundary-cross-language
+  rel: recommend
+  to: rust-ffi-boundary
+- from: embedded-mpu-trustzone
+  rel: require
+  to: embedded-volatile-and-memory-ordering
+- from: sanitizer-agent-ci-loop
+  rel: require
+  to: sanitizer-report-reading
+- from: raii-descriptor-types-api-design
+  rel: require
+  to: cpp-object-lifecycle
+- from: c-undefined-behavior
+  rel: recommend
+  to: compiler-ub-assumptions
+- from: c-integer-promotion-and-conversion
+  rel: require
+  to: c-undefined-behavior
+- from: rust-unsafe-reasoning
+  rel: recommend
+  to: memory-ordering-reasoning
+- from: rust-ffi-boundary
+  rel: require
+  to: ffi-boundary-cross-language
+- from: simd-vectorization-cross-layer
+  rel: require
+  to: asm-x86-64-registers-and-addressing
+- from: simd-vectorization-cross-layer
+  rel: recommend
+  to: vectorization-reasoning
+- from: rust-panic-safety
+  rel: require
+  to: rust-unsafe-reasoning
+- from: zeroize-constant-time
+  rel: require
+  to: compiler-ub-assumptions
+- from: elf-linker-loader-debugger
+  rel: require
+  to: elf-layout-and-relocations
+- from: elf-linker-loader-debugger
+  rel: require
+  to: dwarf-debug-info
+- from: kernel-rcu-memory-barriers
+  rel: require
+  to: memory-ordering-reasoning
+- from: kernel-rcu-memory-barriers
+  rel: require
+  to: kernel-uaccess-safety
+- from: kernel-uaccess-safety
+  rel: recommend
+  to: kernel-atomic-context
+- from: ptx-assembly
+  rel: require
+  to: gpu-memory-model-coherence
+- from: ebpf-verifier-reasoning
+  rel: recommend
+  to: kernel-rcu-memory-barriers
+- from: asm-calling-conventions
+  rel: recommend
+  to: asm-x86-64-registers-and-addressing
+- from: asm-inline-asm-constraints
+  rel: require
+  to: asm-x86-64-registers-and-addressing
+- from: asm-signed-unsigned-branches
+  rel: require
+  to: asm-x86-64-registers-and-addressing
+- from: c-string-and-buffer-safety
+  rel: require
+  to: c-undefined-behavior
+- from: c-errno-and-syscall-returns
+  rel: require
+  to: c-undefined-behavior
+- from: embedded-volatile-and-memory-ordering
+  rel: require
+  to: memory-ordering-reasoning
+- from: embedded-linker-script
+  rel: require
+  to: elf-linker-loader-debugger
+- from: llvm-pass-writing
+  rel: require
+  to: llvm-ir-reading
+- from: gpu-memory-model-coherence
+  rel: require
+  to: memory-ordering-reasoning
+- from: cpp-move-semantics
+  rel: require
+  to: cpp-object-lifecycle
+- from: vectorization-reasoning
+  rel: recommend
+  to: simd-vectorization-cross-layer
+- from: cache-and-numa-optimization
+  rel: require
+  to: performance-measurement-discipline
+- from: kernel-atomic-context
+  rel: require
+  to: kernel-uaccess-safety
+- from: concurrency-condvar-and-spurious-wakeup
+  rel: require
+  to: concurrency-deadlock-and-lock-ordering
+- from: binary-analysis-type-recovery
+  rel: require
+  to: asm-optimizer-artifacts
+- from: c-signal-handler-safety
+  rel: require
+  to: c-errno-and-syscall-returns
+- from: meta-routing
+  rel: recommend
+  to: meta-evidence
+- from: meta-verification
+  rel: require
+  to: meta-evidence
+- from: meta-completion
+  rel: require
+  to: meta-verification
+- from: meta-rationalizations
+  rel: recommend
+  to: meta-assumptions
+- from: asm-verification-hallucination-gate
+  rel: recommend
+  to: asm-x86-64-registers-and-addressing
+- from: asm-verification-hallucination-gate
+  rel: recommend
+  to: asm-signed-unsigned-branches
+- from: asm-verification-hallucination-gate
+  rel: verify
+  to: meta-verification
+- from: asm-syntax-dialects-nasm-gas-att
+  rel: recommend
+  to: asm-x86-64-registers-and-addressing
+- from: asm-arm-thumb-2-encoding
+  rel: recommend
+  to: asm-verification-hallucination-gate
+- from: asm-aarch64-neon-simd-safety
+  rel: recommend
+  to: simd-vectorization-cross-layer
+- from: asm-risc-v-registers-and-calling-conventions
+  rel: recommend
+  to: asm-calling-conventions
+- from: binary-disassembly-decompilation-fidelity
+  rel: extend
+  to: binary-analysis-type-recovery
+- from: binary-disassembly-decompilation-fidelity
+  rel: recommend
+  to: asm-optimizer-artifacts
+- from: reverse-engineering-shellcode-analysis
+  rel: require
+  to: asm-x86-64-registers-and-addressing
+- from: reverse-engineering-can-signal-extraction
+  rel: extend
+  to: auto-re-protocols-beyond-can
+- from: reverse-engineering-ghidra-agent-automation
+  rel: recommend
+  to: binary-analysis-type-recovery
+- from: binary-memory-leak-vm-allocator-diagnosis
+  rel: recommend
+  to: performance-measurement-discipline
+- from: concurrency-actual-parallelism-detection
+  rel: recommend
+  to: memory-ordering-reasoning
+- from: concurrency-actual-parallelism-detection
+  rel: recommend
+  to: concurrency-deadlock-and-lock-ordering
+- from: rust-api-evolution-and-drift
+  rel: recommend
+  to: rust-unsafe-reasoning
+- from: rust-dependency-supply-chain
+  rel: recommend
+  to: rust-api-evolution-and-drift
+- from: rust-crypto-primitives-safety
+  rel: require
+  to: zeroize-constant-time
+- from: embedded-hw-register-datasheet-verification
+  rel: require
+  to: embedded-volatile-and-memory-ordering
+- from: embedded-device-tree-and-kconfig
+  rel: recommend
+  to: embedded-linker-script
+- from: kernel-scheduler-mm-vfs-internals
+  rel: recommend
+  to: kernel-uaccess-safety
+- from: kernel-debugging-ftrace-kprobes-kdump
+  rel: recommend
+  to: qemu-system-setup
+- from: networking-hardware-rdma-nic-offload
+  rel: recommend
+  to: ebpf-verifier-reasoning
+- from: fuzzing-harness-evidence-gate
+  rel: require
+  to: sanitizer-report-reading
+- from: fuzzing-harness-evidence-gate
+  rel: require
+  to: sanitizer-agent-ci-loop
+- from: gpu-kernel-verification-beyond-oracle
+  rel: require
+  to: gpu-memory-model-coherence
+- from: gpu-communication-primitives
+  rel: recommend
+  to: gpu-memory-model-coherence
+- from: zig-ffi-c-interop
+  rel: recommend
+  to: ffi-boundary-cross-language
+- from: zig-inline-asm-and-abi
+  rel: recommend
+  to: asm-calling-conventions
+- from: zig-simd-vector-intrinsics
+  rel: recommend
+  to: simd-vectorization-cross-layer
+- from: zig-concurrency-and-io-events
+  rel: recommend
+  to: memory-ordering-reasoning
+- from: zig-version-migration
+  rel: recommend
+  to: zig-comptime-metaprogramming
+- from: zig-build-system-and-packages
+  rel: recommend
+  to: zig-cross-compilation-targets
+- from: hypervisor-vmx-svm-internals
+  rel: recommend
+  to: qemu-system-setup
+- from: riscv-isa-and-rvv-intrinsics
+  rel: recommend
+  to: simd-vectorization-cross-layer
+- from: riscv-cheri-capability-safety
+  rel: recommend
+  to: safe-low-level-from-scratch
+- from: hpc-mpi-programming
+  rel: recommend
+  to: concurrency-deadlock-and-lock-ordering
+- from: hpc-openmp-parallel-programming
+  rel: recommend
+  to: memory-ordering-reasoning
+- from: hpc-rdma-verbs
+  rel: recommend
+  to: networking-hardware-rdma-nic-offload
+- from: android-re-dex-smali-format
+  rel: recommend
+  to: binary-analysis-type-recovery
+- from: android-re-native-jni-analysis
+  rel: recommend
+  to: go-rust-re
+- from: bootloader-uefi-firmware
+  rel: require
+  to: bootloader-stages
+- from: meta-verification-harness-validity
+  rel: require
+  to: meta-verification
+- from: build-system-cmake-diagnostics
+  rel: recommend
+  to: build-toolchain-version-drift
+- from: build-toolchain-version-drift
+  rel: recommend
+  to: build-linker-error-diagnostics
+- from: build-linker-error-diagnostics
+  rel: require
+  to: elf-linker-loader-debugger
+- from: build-process-signal-and-state-safety
+  rel: recommend
+  to: build-system-cmake-diagnostics
+- from: debugging-crash-triage-discipline
+  rel: recommend
+  to: meta-verification
+- from: debugging-instrumentation-over-reasoning
+  rel: recommend
+  to: debugging-crash-triage-discipline
+- from: kernel-driver-char-device-lifecycle
+  rel: require
+  to: kernel-uaccess-safety
+- from: kernel-driver-char-device-lifecycle
+  rel: recommend
+  to: kernel-atomic-context
+- from: kernel-module-build-out-of-tree
+  rel: recommend
+  to: kernel-driver-char-device-lifecycle
+- from: kernel-api-drift-migration
+  rel: recommend
+  to: kernel-driver-char-device-lifecycle
+- from: side-channel-constant-time-verification
+  rel: require
+  to: zeroize-constant-time
+- from: side-channel-constant-time-verification
+  rel: recommend
+  to: compiler-ub-assumptions
+- from: smt-z3-sound-usage
+  rel: recommend
+  to: formal-spec-loop-invariants
+- from: embedded-board-bringup-peripheral-init
+  rel: recommend
+  to: embedded-hw-register-datasheet-verification
+- from: embedded-flash-debug-cycle
+  rel: recommend
+  to: embedded-board-bringup-peripheral-init
+- from: embedded-ota-bootloader-safety
+  rel: recommend
+  to: bootloader-stages
+- from: embedded-hil-ci-testing
+  rel: recommend
+  to: embedded-flash-debug-cycle
+- from: rust-unsafe-safety-contract-verification
+  rel: require
+  to: rust-unsafe-reasoning
+- from: memory-model-arm-x86-riscv
+  rel: require
+  to: atomics-c11-cpp11-rust
+- from: memory-model-arm-x86-riscv
+  rel: recommend
+  to: memory-ordering-reasoning
+- from: memory-model-arm-x86-riscv
+  rel: recommend
+  to: gpu-memory-model-coherence
+- from: memory-model-arm-x86-riscv
+  rel: verify
+  to: kernel-rcu-memory-barriers
+- from: page-table-management
+  rel: recommend
+  to: kernel-uaccess-safety
+- from: page-table-management
+  rel: recommend
+  to: hypervisor-vmx-svm-internals
+- from: dma-cache-coherency
+  rel: recommend
+  to: kernel-driver-char-device-lifecycle
+- from: dma-cache-coherency
+  rel: require
+  to: kernel-uaccess-safety
+- from: dma-cache-coherency
+  rel: recommend
+  to: cache-and-numa-optimization
+- from: capability-based-security
+  rel: require
+  to: riscv-cheri-capability-safety
+- from: capability-based-security
+  rel: recommend
+  to: embedded-mpu-trustzone
+- from: toctou-kernel
+  rel: require
+  to: kernel-uaccess-safety
+- from: toctou-kernel
+  rel: recommend
+  to: concurrency-deadlock-and-lock-ordering
+- from: formal-verification-kani-verus
+  rel: require
+  to: formal-spec-loop-invariants
+- from: formal-verification-kani-verus
+  rel: recommend
+  to: smt-z3-sound-usage
+- from: formal-verification-kani-verus
+  rel: recommend
+  to: meta-verification-harness-validity
+- from: interrupt-controller-gic-apic
+  rel: require
+  to: kernel-atomic-context
+- from: interrupt-controller-gic-apic
+  rel: recommend
+  to: embedded-interrupt-and-nested
+- from: iommu-smmu-isolation
+  rel: recommend
+  to: kernel-driver-char-device-lifecycle
+- from: iommu-smmu-isolation
+  rel: recommend
+  to: hypervisor-vmx-svm-internals
+- from: side-channel-mitigation
+  rel: require
+  to: side-channel-constant-time-verification
+- from: side-channel-mitigation
+  rel: recommend
+  to: zeroize-constant-time
+- from: side-channel-mitigation
+  rel: recommend
+  to: rust-crypto-primitives-safety
+- from: sel4-sddf-driver-framework
+  rel: conflict
+  to: kernel-driver-char-device-lifecycle
+- from: sel4-sddf-driver-framework
+  rel: recommend
+  to: invariant-identification
+- from: kernel-exploitation-primitives
+  rel: recommend
+  to: kernel-driver-char-device-lifecycle
+- from: kernel-exploitation-primitives
+  rel: recommend
+  to: kernel-uaccess-safety
+- from: invariant-identification
+  rel: require
+  to: meta-verification-harness-validity
+- from: invariant-identification
+  rel: recommend
+  to: formal-spec-loop-invariants
+- from: invariant-identification
+  rel: recommend
+  to: smt-z3-sound-usage
+- from: data-race-kernel-detection
+  rel: recommend
+  to: kernel-rcu-memory-barriers
+- from: data-race-kernel-detection
+  rel: recommend
+  to: deadlock-kernel-prevention
+- from: data-race-kernel-detection
+  rel: recommend
+  to: fuzzing-harness-kernel
+- from: data-race-kernel-detection
+  rel: conflict
+  to: memory-ordering-reasoning
+- from: deadlock-kernel-prevention
+  rel: conflict
+  to: concurrency-deadlock-and-lock-ordering
+- from: deadlock-kernel-prevention
+  rel: recommend
+  to: kernel-atomic-context
+- from: fuzzing-harness-kernel
+  rel: require
+  to: fuzzing-harness-evidence-gate
+- from: fuzzing-harness-kernel
+  rel: recommend
+  to: sanitizer-report-reading
+- from: agent-scope-management
+  rel: require
+  to: meta-completion
+- from: agent-scope-management
+  rel: require
+  to: meta-evidence
+- from: agent-scope-management
+  rel: recommend
+  to: meta-verification
+- from: framekernel-architecture
+  rel: conflict
+  to: sel4-sddf-driver-framework
+- from: framekernel-architecture
+  rel: recommend
+  to: kernel-uaccess-safety
+- from: framekernel-architecture
+  rel: recommend
+  to: rust-unsafe-reasoning
+- from: bootloader-uefi-acpi-dtb
+  rel: extend
+  to: bootloader-uefi-firmware
+- from: bootloader-uefi-acpi-dtb
+  rel: require
+  to: bootloader-stages
+- from: bootloader-uefi-acpi-dtb
+  rel: recommend
+  to: embedded-device-tree-and-kconfig
+- from: kernel-loader-elf
+  rel: require
+  to: elf-linker-loader-debugger
+- from: kernel-loader-elf
+  rel: require
+  to: elf-layout-and-relocations
+- from: property-based-testing-kernel
+  rel: recommend
+  to: fuzzing-harness-evidence-gate
+- from: property-based-testing-kernel
+  rel: recommend
+  to: formal-spec-loop-invariants
+- from: agent-tool-whitelist
+  rel: require
+  to: meta-verification
+- from: agent-tool-whitelist
+  rel: recommend
+  to: meta-routing
+- from: kernel-ub-patterns
+  rel: require
+  to: c-undefined-behavior
+- from: kernel-ub-patterns
+  rel: require
+  to: kernel-uaccess-safety
+- from: kernel-ub-patterns
+  rel: recommend
+  to: compiler-ub-assumptions
+- from: hardware-register-bringup
+  rel: require
+  to: embedded-hw-register-datasheet-verification
+- from: hardware-register-bringup
+  rel: require
+  to: embedded-volatile-and-memory-ordering
+- from: meta-eval-runner
+  rel: require
+  to: meta-verification-harness-validity
+- from: meta-eval-runner
+  rel: require
+  to: meta-verification
+- from: meta-eval-runner
+  rel: recommend
+  to: meta-evidence
+- from: meta-claim-extraction
+  rel: require
+  to: meta-evidence
+- from: meta-claim-extraction
+  rel: recommend
+  to: meta-eval-runner
+- from: meta-token-optimization
+  rel: recommend
+  to: meta-routing
+- from: meta-token-optimization
+  rel: recommend
+  to: meta-claim-extraction
+- from: meta-security-audit
+  rel: require
+  to: meta-verification
+- from: meta-security-audit
+  rel: require
+  to: meta-evidence
+- from: meta-security-audit
+  rel: recommend
+  to: side-channel-constant-time-verification
+- from: meta-formal-verification
+  rel: require
+  to: meta-verification
+- from: meta-formal-verification
+  rel: require
+  to: smt-z3-sound-usage
+- from: meta-formal-verification
+  rel: require
+  to: formal-spec-loop-invariants
+- from: gpu-kernel-reward-hacking-detection
+  rel: extend
+  to: gpu-kernel-verification-beyond-oracle
+- from: gpu-kernel-reward-hacking-detection
+  rel: require
+  to: performance-measurement-discipline
+- from: gpu-kernel-reward-hacking-detection
+  rel: recommend
+  to: gpu-memory-model-coherence
+- from: kernel-patch-review-commit-log-independence
+  rel: require
+  to: meta-evidence
+- from: kernel-patch-review-commit-log-independence
+  rel: recommend
+  to: llm-verifier-warning-disposition
+- from: accelerator-pipeline-synchronization
+  rel: recommend
+  to: memory-ordering-reasoning
+- from: accelerator-pipeline-synchronization
+  rel: recommend
+  to: gpu-memory-model-coherence
+- from: llm-verifier-warning-disposition
+  rel: require
+  to: meta-evidence
+- from: llm-verifier-warning-disposition
+  rel: require
+  to: meta-verification
+- from: llm-verifier-warning-disposition
+  rel: recommend
+  to: meta-rationalizations
+- from: ebpf-verifier-opaque-feedback-iteration
+  rel: extend
+  to: ebpf-verifier-reasoning
+- from: ebpf-verifier-opaque-feedback-iteration
+  rel: recommend
+  to: meta-verification
+- from: ebpf-verifier-opaque-feedback-iteration
+  rel: recommend
+  to: debugging-crash-triage-discipline
+- from: design-token-system-discipline
+  rel: recommend
+  to: design-typography-hierarchy
+- from: design-token-system-discipline
+  rel: recommend
+  to: design-color-contrast-wcag-a11y
+- from: design-token-system-discipline
+  rel: recommend
+  to: design-layout-spacing-grid
+- from: design-token-system-discipline
+  rel: recommend
+  to: design-anti-ai-look-originality-review
+- from: design-token-system-discipline
+  rel: recommend
+  to: meta-verification-harness-validity
+- from: design-typography-hierarchy
+  rel: recommend
+  to: design-token-system-discipline
+- from: design-typography-hierarchy
+  rel: recommend
+  to: design-color-contrast-wcag-a11y
+- from: design-typography-hierarchy
+  rel: recommend
+  to: design-layout-spacing-grid
+- from: design-typography-hierarchy
+  rel: recommend
+  to: design-visual-hierarchy-composition
+- from: design-typography-hierarchy
+  rel: recommend
+  to: design-anti-ai-look-originality-review
+- from: design-color-contrast-wcag-a11y
+  rel: recommend
+  to: design-token-system-discipline
+- from: design-color-contrast-wcag-a11y
+  rel: recommend
+  to: design-typography-hierarchy
+- from: design-color-contrast-wcag-a11y
+  rel: recommend
+  to: design-layout-spacing-grid
+- from: design-color-contrast-wcag-a11y
+  rel: recommend
+  to: design-visual-hierarchy-composition
+- from: design-color-contrast-wcag-a11y
+  rel: recommend
+  to: design-anti-ai-look-originality-review
+- from: design-color-contrast-wcag-a11y
+  rel: recommend
+  to: meta-verification-harness-validity
+- from: design-layout-spacing-grid
+  rel: recommend
+  to: design-token-system-discipline
+- from: design-layout-spacing-grid
+  rel: recommend
+  to: design-typography-hierarchy
+- from: design-layout-spacing-grid
+  rel: recommend
+  to: design-color-contrast-wcag-a11y
+- from: design-layout-spacing-grid
+  rel: recommend
+  to: design-visual-hierarchy-composition
+- from: design-layout-spacing-grid
+  rel: recommend
+  to: design-anti-ai-look-originality-review
+- from: design-visual-hierarchy-composition
+  rel: recommend
+  to: design-typography-hierarchy
+- from: design-visual-hierarchy-composition
+  rel: recommend
+  to: design-color-contrast-wcag-a11y
+- from: design-visual-hierarchy-composition
+  rel: recommend
+  to: design-layout-spacing-grid
+- from: design-visual-hierarchy-composition
+  rel: recommend
+  to: design-anti-ai-look-originality-review
+- from: design-anti-ai-look-originality-review
+  rel: recommend
+  to: design-token-system-discipline
+- from: design-anti-ai-look-originality-review
+  rel: recommend
+  to: design-typography-hierarchy
+- from: design-anti-ai-look-originality-review
+  rel: recommend
+  to: design-color-contrast-wcag-a11y
+- from: design-anti-ai-look-originality-review
+  rel: recommend
+  to: design-layout-spacing-grid
+- from: design-anti-ai-look-originality-review
+  rel: recommend
+  to: design-visual-hierarchy-composition
+- from: design-anti-ai-look-originality-review
+  rel: recommend
+  to: meta-verification-harness-validity
+- from: design-anti-ai-look-originality-review
+  rel: recommend
+  to: meta-verification
+- from: design-anti-ai-look-originality-review
+  rel: recommend
+  to: performance-measurement-discipline
+- from: design-typography-hierarchy
+  rel: recommend
+  to: meta-verification-harness-validity
+- from: design-layout-spacing-grid
+  rel: recommend
+  to: meta-verification-harness-validity
+- from: design-visual-hierarchy-composition
+  rel: recommend
+  to: meta-verification-harness-validity
 collisions:
-  - {skills: ["rust-unsafe-reasoning", "safe-low-level-from-scratch"], rule: "safe-low-level — позитивный путь; rust-unsafe-reasoning — детальная семантика unsafe. При конфликте нормативных утверждений: Rust Reference/Rustonomicon > любые скиллы."}
-  - {skills: ["memory-ordering-reasoning", "atomics-c11-cpp11-rust"], rule: "reasoning-скилл — процесс; atomics-скилл — API-справочник. Не конфликтуют: один объясняет почему, другой что."}
-  - {skills: ["c-undefined-behavior", "compiler-ub-assumptions"], rule: "c-undefined-behavior — что UB; compiler-ub-assumptions — почему компилятор так делает. Порядок загрузки: c-undefined-behavior сначала."}
+- skills:
+  - rust-unsafe-reasoning
+  - safe-low-level-from-scratch
+  rule: 'safe-low-level — позитивный путь; rust-unsafe-reasoning — детальная семантика unsafe. При конфликте нормативных утверждений: Rust Reference/Rustonomicon > любые скиллы.'
+- skills:
+  - memory-ordering-reasoning
+  - atomics-c11-cpp11-rust
+  rule: 'reasoning-скилл — процесс; atomics-скилл — API-справочник. Не конфликтуют: один объясняет почему, другой что.'
+- skills:
+  - c-undefined-behavior
+  - compiler-ub-assumptions
+  rule: 'c-undefined-behavior — что UB; compiler-ub-assumptions — почему компилятор так делает. Порядок загрузки: c-undefined-behavior сначала.'

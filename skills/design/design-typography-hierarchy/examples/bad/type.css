@@ -1,0 +1,17 @@
+/* BAD: default AI-slop type ramp — seven arbitrary sizes, Inter/system
+   stack, body line-height 1.2, all-light weights with no contrast. */
+/* intentionally incorrect */
+body {
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: 400;
+}
+
+h1 { font-size: 34px; font-weight: 100; }
+h2 { font-size: 23px; font-weight: 200; }
+h3 { font-size: 19px; font-weight: 300; }
+p { font-size: 15px; }
+.small { font-size: 12px; }
+.tiny { font-size: 11px; }
+.button { font-size: 14px; line-height: 1.1; }

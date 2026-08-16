@@ -91,7 +91,114 @@ def main() -> int:
             print(f"WARN skills.yaml: implemented skill {sk.get('id')} missing SKILL.md at {p}")
             rc = max(rc, 1)
 
-    print(f"registry_check: {len(documents)} files parsed, ids: {len(sources)} sources, {len(skills)} skills, {len(claims.get('claims', []))} claims")
+    # tools.yaml: implemented tools must exist on disk (V-002 gate)
+    tools_data = documents.get("tools.yaml", {})
+    tools_impl = 0
+    tools_total = 0
+    for cat, items in tools_data.get("tools", {}).items():
+        for t in items:
+            tools_total += 1
+            tpath = t.get("path", "")
+            tstatus = t.get("status", "registered")
+            if tstatus == "implemented" and tpath:
+                tools_impl += 1
+                p = os.path.join(os.path.dirname(base), tpath.replace("/", os.sep))
+                if not os.path.isfile(p):
+                    print(f"ERROR tools.yaml: tool {t.get('id')} marked implemented but missing at {tpath}")
+                    rc = 2
+            elif tstatus == "implemented":
+                print(f"WARN tools.yaml: tool {t.get('id')} has no path but marked implemented")
+                rc = max(rc, 1)
+    print(f"  tools: {tools_impl}/{tools_total} implemented on disk")
+
+    # Load cross-links for cycle detection
+    cross_links_data = documents.get("cross-links.yaml", {})
+
+    # === v2.0 CYCLE DETECTION on require edges (Level 2 quality gate) ===
+    from collections import defaultdict
+    graph: dict[str, list[str]] = defaultdict(list)
+    for cl in cross_links_data.get("cross_links", []):
+        rel_type = cl.get("rel", "")
+        fr = cl.get("from", "")
+        to = cl.get("to", "")
+        if rel_type == "require" and fr and to:
+            graph[fr].append(to)
+
+    # DFS-based cycle detection
+    WHITE, GRAY, BLACK = 0, 1, 2
+    color: dict[str, int] = defaultdict(lambda: WHITE)
+    parent: dict[str, str | None] = {}
+    cycles_found = 0
+
+    def dfs(node: str):
+        nonlocal cycles_found
+        color[node] = GRAY
+        for nbr in graph.get(node, []):
+            if color[nbr] == GRAY:
+                # Found a back edge => cycle
+                cycle_path = [nbr]
+                cur = node
+                parent_map = {v: k for k, vals in parent.items() for v in vals}
+                while cur != nbr and cur is not None:
+                    cycle_path.append(cur)
+                    cur = parent.get(cur)
+                cycle_path.append(nbr)
+                cycle_str = " => ".join(reversed(cycle_path))
+                print(f"ERROR cycle detected: {cycle_str}")
+                cycles_found += 1
+                rc = 2
+            elif color[nbr] == WHITE:
+                parent[nbr] = node
+                dfs(nbr)
+        color[node] = BLACK
+
+    all_nodes = set(graph.keys())
+    for targets in graph.values():
+        all_nodes.update(targets)
+    
+    # Use iterative approach to avoid recursion limit
+    stack_visited = []
+    def dfs_iter(start):
+        visited_local = set()
+        stk = [(start, iter(graph.get(start, [])))]
+        path = [start]
+        while stk:
+            node, neighbors = stk[-1]
+            try:
+                nxt = next(neighbors)
+                if color[nxt] == GRAY:
+                    idx = len(path) - 1
+                    while idx >= 0 and path[idx] != nxt:
+                        idx -= 1
+                    if idx >= 0:
+                        cycle = path[idx:] + [nxt]
+                        print(f"ERROR cycle detected: {' => '.join(cycle)}")
+                        cycles_found += 1
+    
+                    rc |= 2
+                elif color[nxt] == WHITE:
+                    parent[nxt] = node
+                    stk.append((nxt, iter(graph.get(nxt, []))))
+                    path.append(nxt)
+            except StopIteration:
+                stk.pop()
+                if path: path.pop()
+                color[node] = BLACK
+
+    for node in sorted(all_nodes):
+        if color[node] == WHITE:
+            dfs_iter(node)
+
+    if cycles_found == 0:
+        pass  # no cycles — clean graph
+    else:
+        print(f"  ^^^ {cycles_found} cycle(s) found — fix cross-links.yaml")
+
+    print(f"\nregistry_check: {len(documents)} files parsed\n"
+          f"  sources: {len(sources)}, skills: {len(skills)}, claims: {len(claims.get('claims', []))},\n"
+          f"  cross-links: {len(cross_links_data.get('cross_links', []))}\n"
+          f"  requires: {sum(len(v) for v in graph.values())}\n"
+          f"  cycles found: {cycles_found}")
     return rc
 
 

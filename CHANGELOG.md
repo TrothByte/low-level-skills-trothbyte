@@ -8,11 +8,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- GitHub Actions CI running the full validator suite (`tools/validate.py`).
-- `.editorconfig`, `.gitattributes`, `requirements-dev.txt`, `CHANGELOG.md`.
+- **v2.0 skill format migration**: 9 required sections enforced as errors, body ≤250
+  lines, description ≤50 words, token gate ≤2000 activation tokens.
+- **39 new skills** across 2 new domains:
+  - *v2.0 gap set (×33)*: memory-model-arm-x86-riscv, page-table-management,
+    dma-cache-coherency, capability-based-security, toctou-kernel,
+    formal-verification-kani-verus, interrupt-controller-gic-apic, iommu-smmu-isolation,
+    side-channel-mitigation, sel4-sddf-driver-framework, kernel-exploitation-primitives,
+    invariant-identification, data-race-kernel-detection, deadlock-kernel-prevention,
+    fuzzing-harness-kernel, agent-scope-management, framekernel-architecture,
+    bootloader-uefi-acpi-dtb, kernel-loader-elf, property-based-testing-kernel,
+    agent-tool-whitelist, kernel-ub-patterns, hardware-register-bringup, meta-eval-runner,
+    meta-claim-extraction, meta-token-optimization, meta-security-audit,
+    meta-formal-verification, gpu-kernel-reward-hacking-detection,
+    kernel-patch-review-commit-log-independence, accelerator-pipeline-synchronization,
+    llm-verifier-warning-disposition, ebpf-verifier-opaque-feedback-iteration.
+  - *Design (×6, designer mode)*: design-token-system-discipline,
+    design-typography-hierarchy, design-color-contrast-wcag-a11y, design-layout-spacing-grid,
+    design-visual-hierarchy-composition, design-anti-ai-look-originality-review.
+- **New domains**: `accelerator`, `design` (34 total).
+- **New validators**: `claim_extractor.py`, `prose_lint.py`; cycle detection + tools.yaml
+  gate in `registry_check.py`; blended token measurement + `--check` mode in
+  `token_measure.py`.
+- Registry now: **163 skills**, 228 primary sources, 141 traced claims, 233 cross-links.
 
-### Removed
-- `.pre-commit-config.yaml`.
+### Changed
+- README statistics updated (163 skills · 34 domains · 85 source-backed · 228 sources ·
+  141 claims); landing page, `llms.txt`, `docs/architecture.md`, `docs/roadmap.md`,
+  `docs/agents-failures-cheatsheet.md` regenerated/updated.
+- CI: added token budget gate and domain-README staleness check.
 
 ## [0.2.0] — 2026-08-15
 

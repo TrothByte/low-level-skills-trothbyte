@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   validate:
-    name: Validators
+    name: v2.0 Validators
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -24,15 +24,24 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements-dev.txt
 
-      - name: Run validators
+      - name: Run full validator suite (v2.0)
         run: python tools/validate.py
+
+      - name: Token budget gate (activation <= 2000 tokens)
+        run: |
+          python tools/tokens/token_measure.py --check 2000 $(find skills -name SKILL.md -exec dirname {} \;)
 
       - name: Check generated catalog is up to date
         run: |
           python tools/reports/gen_skills_catalog.py
-          git diff --exit-code docs/SKILLS.md || { echo "::error::docs/SKILLS.md is stale — run tools/reports/gen_skills_catalog.py"; exit 1; }
+          git diff --exit-code docs/SKILLS.md || { echo "::error::docs/SKILLS.md is stale — run gen_skills_catalog.py"; exit 1; }
 
       - name: Check landing data is up to date
         run: |
           python tools/reports/gen_landing_data.py
-          git diff --exit-code docs/assets/skills.js || { echo "::error::docs/assets/skills.js is stale — run tools/reports/gen_landing_data.py"; exit 1; }
+          git diff --exit-code docs/assets/skills.js || { echo "::error::docs/assets/skills.js is stale — run gen_landing_data.py"; exit 1; }
+
+      - name: Verify domain READMEs are regenerated
+        run: |
+          python tools/reports/gen_domain_readmes.py
+          git diff --quiet --exit-code skills/*/README.md || { echo "::warning::Some domain READMEs may have been regenerated — review diffs"; }

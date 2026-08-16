@@ -1,5 +1,89 @@
 # WORKLOG — Low-level skills TrothByte
 
+## 2026-08-17 — Сессия 16 (design-домен + полировка + публикация)
+
+### Выполнено
+
+1. **Design research** (субагент, 22 источника): задокументированы failure-классы
+   агентов в дизайне — AI-slop (Anthropic: «Inter fonts, purple gradients»),
+   WCAG-нарушения (WebAIM Million: 95.9% топ-1М страниц), layout-потери
+   (Design2Code), несоблюдение design-system (Portal UX Agent), расхождение
+   самооценки LLM с human-оценщиками (UICrit).
+
+2. **6 design-скиллов (НОВЫЙ домен design/)** — все source-backed с реальными
+   прогонами python-проверок на хосте:
+   - design-token-system-discipline (DTCG-валидатор, style-dictionary 5.5.1 build)
+   - design-typography-hierarchy (type-scale/heading/font-stack чекеры)
+   - design-color-contrast-wcag-a11y (WCAG 2.2 contrast math, 4.5:1/3:1/3:1)
+   - design-layout-spacing-grid (4/8pt scale, 12-col grid, 320px reflow)
+   - design-visual-hierarchy-composition (1×h1, heading order, squint test)
+   - design-anti-ai-look-originality-review (8-family fingerprint scanner)
+
+3. **Реестр интегрирован**: 163 skills (85 source-backed), 228 sources (+19 design),
+   141 claims (CL-128..CL-141), 233 cross-links (+36). Реестр-интеграция через
+   tools/reports/integrate_design_skills.py (затем скрипт удалён).
+
+4. **Документация полностью обновлена**: README (163/34/85/228/141, area-map на 34
+   домена, redesign без AI-look), docs/SKILLS.md + 34 domain README перегенерированы,
+   index.md, llms.txt, architecture.md, roadmap.md, agents-failures-cheatsheet.md,
+   CHANGELOG (Unreleased).
+
+5. **Лендинг отшлифован по design-скиллам**: Manrope + Source Sans 3 вместо
+   Space Grotesk + Inter, убран violet-градиент → 0 AI-look fingerprint'ов
+   (ai_look_fingerprint.py exit 0); вся палитра прошла WCAG-контраст (7/7 пар PASS,
+   min 4.60:1); social-preview.png перегенерирован (tools/reports/gen_social_preview.py);
+   marketplace.json + docs/assets/skills.js на 163 скилла.
+
+6. **Чистка**: удалены __pycache__, pypi dist/whl, egg-info, .o файлы, one-shot
+   миграционные скрипты, tmp_venv.
+
+7. **Валидация**: tools/validate.py ALL CHECKS PASSED (skill_lint 163/163, token gate
+   PASS, registry_check 0 WARN, source_check 0 WARN).
+
+## 2026-08-17 — Сессия 15 (v2.0: 33 новых скилла + интеграция registry)
+
+### Выполнено
+
+1. **Research-пасс** (субагент, 12+ веб-источников): найдены 8 НОВЫХ слабостей
+   агентов, не покрытых B1-B22/A1-A32: NW-01 commit-log bias в LLM-ревью (Sashiko,
+   lwn.net/Articles/1073583), NW-02 patch-scale unmergeable LLM-код (lwn 1080162),
+   NW-03 cross-unit sync в акселераторах (AccelSync, arxiv 2605.07881, 19.2%),
+   NW-04 no-bug dispositions без reachability (Evident, arxiv 2606.15122),
+   NW-05 agents give up на opaque BPF-verifier (lwn 1075067), NW-06 reward-hacking
+   hardcoded bypasses (KernelBench-Verified, arxiv 2607.16241), NW-07 audit без
+   read-coverage (aicov/ToB), NW-08 bogus bug-reports (lwn 1073583, arxiv 2605.07678).
+
+2. **28 скиллов v2.0 gap-набора** (4 субагента): CRITICAL×9 (memory-model-arm-x86-riscv,
+   page-table-management, dma-cache-coherency, capability-based-security, toctou-kernel,
+   formal-verification-kani-verus, interrupt-controller-gic-apic, iommu-smmu-isolation,
+   side-channel-mitigation), HIGH×8 (sel4-sddf-driver-framework, kernel-exploitation-primitives,
+   invariant-identification, data-race-kernel-detection, deadlock-kernel-prevention,
+   fuzzing-harness-kernel, agent-scope-management, framekernel-architecture), MEDIUM×6
+   (bootloader-uefi-acpi-dtb, kernel-loader-elf, property-based-testing-kernel,
+   agent-tool-whitelist, kernel-ub-patterns, hardware-register-bringup), META×5
+   (meta-eval-runner, meta-claim-extraction, meta-token-optimization, meta-security-audit,
+   meta-formal-verification). 12 source-backed (реальные gcc/rustc/pthread прогоны:
+   AB-BA deadlock exit 2, race counter 220574≠400000, coverage fuzzer iter 31770,
+   CT-vs-leaky 153ms, strict-aliasing 0 vs 1374389535), 16 researched (честно UNVERIFIED).
+
+3. **5 скиллов по новым слабостям** (1 субагент): gpu-kernel-reward-hacking-detection,
+   kernel-patch-review-commit-log-independence, accelerator-pipeline-synchronization
+   (НОВЫЙ домен accelerator/), llm-verifier-warning-disposition,
+   ebpf-verifier-opaque-feedback-iteration. Все 8 evidence-URL (arxiv/lwn) проверены.
+
+4. **Интеграция registry** (tools/reports/integrate_v2_skills.py): skills.yaml
+   124→157 (79 source-backed), sources.yaml 177→209 (вкл. 3 repo-internal +
+   29 новых: sel4, sddf, microkit, syzkaller, KCSAN, lockdep, ACPI, SMBIOS, proptest,
+   quickcheck, asterinas, arxiv/lwn evidence), claims.yaml 56→127 (CL-057..CL-127),
+   cross-links.yaml 113→197. 6 claims переведены на repo-internal source ids.
+
+5. **Регенерация**: docs/SKILLS.md (157, идемпотентно), 33 domain README
+   (новый accelerator/), docs/assets/skills.js (157), marketplace.json (157).
+
+6. **Валидация**: tools/validate.py ALL CHECKS PASSED — skill_lint 157/157,
+   token gate (worst 1689), registry_check 0 WARN, source_check 0 WARN,
+   claim_extractor 98% matched, prose_lint advisory 0 WARN.
+
 ## 2026-08-15 — Сессия 14 (Батч 1: asm×5, source-backed + researched)
 
 ### Выполнено

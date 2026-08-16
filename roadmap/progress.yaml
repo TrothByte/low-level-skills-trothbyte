@@ -1,9 +1,9 @@
 # Progress Tracking — Low-level skills TrothByte
 # Главный источник состояния проекта. Обновляется после каждого существенного действия.
 
-current_phase: "PHASE 13 — ВСЕ 64 новых скилла РЕАЛИЗОВАНЫ (60 + 64 = 124), валидаторы чистые"
-current_task: "PHASE 13: 64 новых скилла по трём ресёрчам созданы и зарегистрированы"
-current_subtask: "Все 9 батчей выполнены: asm×5, zig×11, binary/RE×6, rust×4, embedded×6, kernel×6, networking×1, sanitizers×1, gpu×2, virtualization×1, riscv×2, hpc×3, hdl×3, mobile×2, bootloader-uefi×1, meta×1, build-systems×4, debugging×2, security×3. skill_lint 124/124 OK, registry_check 0 WARN, source_check 0 WARN. 18 новых скиллов source-backed, 46 researched (честно, недоступный тулчейн)"
+current_phase: "PHASE 13 (v2.0+) — 163 СКИЛЛА (163 SKILL.md), включая новый design-домен; лендинг и документация обновлены; релиз-подготовка"
+current_task: "PHASE 13 (v2.0+): 6 design-скиллов (designer mode) + полировка документации + лендинг + публикация"
+current_subtask: "Добавлен НОВЫЙ домен design/ (6 скиллов: design-token-system-discipline, design-typography-hierarchy, design-color-contrast-wcag-a11y, design-layout-spacing-grid, design-visual-hierarchy-composition, design-anti-ai-look-originality-review — все source-backed с реальными python-проверками: DTCG-валидатор, type-scale checker, WCAG contrast math, reflow/spacing checker, ai_look_fingerprint (README/landing проверены: 0 fingerprint'ов), uniqueness self-test). skill_lint 163/163 OK. Реестр: 163 skills (85 source-backed), 228 sources, 141 claims, 233 cross-links. Лендинг: новые цифры, Manrope+Source Sans 3 вместо Space Grotesk+Inter, убран violet-градиент, WCAG-контраст всей палитры PASS; social-preview перегенерирован"
 completed_phases:
   - "PHASE 0 — REPOSITORY BOOTSTRAP"
   - "PHASE 1 — RESEARCH INGESTION"
@@ -75,8 +75,8 @@ skill_status:
   stable: 0
   all_registered_implemented: true
 source_status:
-  registry_sources: 177
-  claims_registered: 56
+  registry_sources: 228
+  claims_registered: 141
 eval_status:
   cve_core_set: 8
   cve_secondary_set: 8
@@ -84,5 +84,6 @@ eval_status:
   routing_cases: 5
   fp_cases: 5
   eval_harnesses_built: "Каждый skill имеет evals/README.md с synthetic/FP/adversarial/historical кейсами и verified facts; researched-скиллы честно помечены с точными командами верификации"
-last_completed_action: "v2.0 standard migration (2026-08-17): gen_skills_catalog.py расширен до всех 32 доменов; gen_domain_readmes.py создан и прогнан (32 README обновлены с curated intros); docs/SKILLS.md перегенерирован; claim_extractor.py + prose_lint.py созданы; skill_lint.py ужесточён (body ≤250 строк, desc ≤50 слов — ERROR); registry_check.py + цикл-детекция require-графа + tools.yaml gate; token_measure.py — blended эвристика + --check 2000 (все 124 скилла под гейтом, worst 1689); validate.py — 5 уровней (L1 structure, L1b token, L2 registry+cycles, L3 provenance, L4 prose advisory); CI обновлён (token gate + staleness); tools.yaml размечен status (6/27 implemented); docs/architecture.md обновлён (124/32/65/59/177/56, 9 секций) + PROMO-волна 5: опубликовано 2 статьи на dev.to (аккаунт trothbyte) — «55+ AI-agent failures» (https://dev.to/trothbyte/we-catalogued-55-ai-agent-failures-in-low-level-code-and-shipped-124-verified-skills-to-fix-them-369l) и «3-command gate» (https://dev.to/trothbyte/you-cant-trust-assembly-an-ai-wrote-heres-the-3-command-gate-4ige) с обложками, дисклеймером AI-ассистенции и явной ссылкой на репозиторий + пометкой о постоянном обновлении"
-next_action: "Мониторинг 2 статей dev.to (реакции/комментарии в первые часы), подача в This Week in Rust, перепост в X/Mastodon; v2.0 short-term: реализовать eval_runner.py (PHASE 15), sanitizer_run.sh, qemu_boot_test.sh; verification sprint researched→source-backed (+20 скиллов); PHASE 15-21 evals/calibration; добавить 26 unmatched цитат в sources.yaml или aliases; ротация dev.to API-ключа после кампании"
+last_completed_action: "PHASE 13 (v2.0+) 2026-08-17: 6 design-скиллов (НОВЫЙ домен design/, designer mode) — research 22 источника (WCAG 2.2, DTCG, WebAIM, NN/g, Anthropic frontend-design, Design2Code/A11YN/UICrit/DesignRepair), все source-backed с реальными прогонами (DTCG-валидатор, style-dictionary 5.5.1 build, type-scale/heading/font-stack чекеры, WCAG contrast math 7 пар PASS, reflow/spacing, composition, ai_look_fingerprint, uniqueness self-test). Реестр интегрирован: skills.yaml 163 (85 source-backed), sources.yaml 228 (+19 design-источников), claims.yaml 141 (CL-128..CL-141), cross-links.yaml 233 (+36 design-связей). Документация полностью обновлена: README (новые цифры 163/34/85/228/141, обновлённая area-map с 34 доменами, redesigned без AI-look), docs/SKILLS.md + 34 domain README перегенерированы, docs/index.md, llms.txt, docs/architecture.md, docs/roadmap.md, docs/agents-failures-cheatsheet.md, CHANGELOG (Unreleased). Лендинг отшлифован по design-скиллам: Manrope+Source Sans 3 вместо Space Grotesk+Inter, убран violet-градиент (0 AI-look fingerprint'ов), WCAG-контраст PASS, social-preview.png перегенерирован (tools/reports/gen_social_preview.py), marketplace.json + skills.js (163). Чистка: удалены __pycache__, dist/whl, egg-info, .o файлы, one-shot скрипты. validate.py ALL CHECKS PASSED."
+next_action: "Публикация: git push на GitHub, обновить repo description/topics через gh, очистить cancelled pages-deployments (удалить github-pages environment и пересоздать через push), проверить CI и Pages green. Дальше: PHASE 15-21 eval_runner.py, sanitizer_run.sh; verification sprint researched→source-backed; оставшиеся NW-скиллы (kernel-patch-submission-reviewability, audit-read-coverage-verification, kernel-bug-report-validity-triage)"
+next_action: "PHASE 15-21: eval_runner.py, sanitizer_run.sh, qemu_boot_test.sh; verification sprint researched→source-backed (+20 скиллов); добавить 25 unmatched цитат в sources.yaml или aliases claim_extractor.py; остальные NW-скиллы из research (kernel-patch-submission-reviewability, audit-read-coverage-verification, kernel-bug-report-validity-triage) — следующий батч"

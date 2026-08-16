@@ -14,13 +14,12 @@
   --text-3: #6b7c8f;
   --sky: #38bdf8;
   --teal: #5eead4;
-  --violet: #a78bfa;
   --amber: #fbbf24;
   --green: #34d399;
   --red: #f87171;
-  --grad: linear-gradient(120deg, var(--sky), var(--violet) 55%, var(--teal));
-  --font-display: "Space Grotesk", system-ui, sans-serif;
-  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --grad: linear-gradient(120deg, var(--sky), var(--teal));
+  --font-display: "Manrope", system-ui, sans-serif;
+  --font-body: "Source Sans 3", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
   --radius: 16px;
   --maxw: 1120px;
@@ -41,7 +40,7 @@ body {
   margin: 0;
   background:
     radial-gradient(1100px 600px at 85% -10%, rgba(56, 189, 248, 0.12), transparent 60%),
-    radial-gradient(900px 500px at -10% 20%, rgba(167, 139, 250, 0.10), transparent 55%),
+    radial-gradient(900px 500px at -10% 20%, rgba(56, 189, 248, 0.10), transparent 55%),
     radial-gradient(700px 700px at 50% 110%, rgba(94, 234, 212, 0.07), transparent 60%),
     var(--bg);
   color: var(--text);
@@ -605,9 +604,9 @@ button {
 
 .badge-evaluated,
 .badge-stable {
-  color: var(--violet);
-  border-color: rgba(167, 139, 250, 0.3);
-  background: rgba(167, 139, 250, 0.08);
+  color: var(--amber);
+  border-color: rgba(251, 191, 36, 0.3);
+  background: rgba(251, 191, 36, 0.08);
 }
 
 .domain-chip {
@@ -702,7 +701,7 @@ button {
 .research .tag {
   font-family: var(--font-mono);
   font-size: 12px;
-  color: var(--violet);
+  color: var(--teal);
 }
 
 /* Install */

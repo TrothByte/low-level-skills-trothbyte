@@ -1,0 +1,40 @@
+/* GOOD: brand-grounded, original design. Halcyon Transit palette — deep
+   forest green + amber on warm white; Fraunces display + Spline Sans body;
+   one bold CTA block (no gradient); spacing instead of hairline dividers;
+   no numbered labels, no purple gradients, no default stacks. */
+:root {
+  --ink: #0F3D2E;
+  --amber: #E8A33D;
+  --paper: #FAF7F2;
+  --paper-ink: #24342C;
+}
+
+body {
+  background: var(--paper);
+  color: var(--paper-ink);
+  font-family: "Spline Sans", sans-serif;
+}
+
+h1,
+.display {
+  font-family: "Fraunces", serif;
+  color: var(--ink);
+}
+
+.cta {
+  display: inline-block;
+  background: var(--amber);
+  color: var(--ink);
+  font-weight: 700;
+  padding: 12px 24px;
+}
+
+.card {
+  border: 0;
+  background: #FFFFFF;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.section + .section {
+  margin-top: 48px;
+}

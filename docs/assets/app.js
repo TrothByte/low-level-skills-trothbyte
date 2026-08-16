@@ -12,7 +12,7 @@ const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").mat
   const DPR = Math.min(window.devicePixelRatio || 1, 2);
   let W, H, particles = [], mouse = { x: -1e4, y: -1e4 }, raf = 0;
 
-  const COLORS = ["56,189,248", "167,139,250", "94,234,212"];
+  const COLORS = ["56,189,248", "94,234,212", "129,230,217"];
 
   function resize() {
     W = window.innerWidth;

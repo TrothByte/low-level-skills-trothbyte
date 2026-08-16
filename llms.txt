@@ -7,13 +7,13 @@ the operational knowledge to do it correctly.
 
 ## Key facts
 
-- 124 skills across 32 domains; 65 skills are `source-backed` (verified by executing
+- 163 skills across 34 domains; 85 skills are `source-backed` (verified by executing
   examples on real toolchains: GCC 16.1, rustc 1.97, GDB, objdump, CMake/Ninja),
-  59 are `researched` (grounded in primary sources; exact verification commands are
+  78 are `researched` (grounded in primary sources; exact verification commands are
   documented in each skill's evals/README.md).
 - License: MIT.
 - Every normative claim is traced: claim -> source -> section -> skill in
-  `registry/claims.yaml`, backed by 177 primary sources in `registry/sources.yaml`.
+  `registry/claims.yaml`, backed by 228 primary sources in `registry/sources.yaml`.
 
 ## Repository structure
 

@@ -1,0 +1,25 @@
+# BAD: syzlang description with the classic setup omission. The fuzzable
+# ioctls are declared, but no resource producer exists: fd_vnet is used
+# before any open, so generated programs fail in setup and the fuzzer only
+# reaches the ioctl error paths. Also uses a raw int fd with no lifecycle.
+# Marker: intentionally incorrect
+resource fd_vnet[fd]
+
+# intentionally incorrect: ioctl$vnet_config consumes fd_vnet but there is
+# no open/setup call anywhere that produces it, and no resource chain.
+ioctl$vnet_config(fd_vnet, cmd[0x4000], arg ptr[in, vnet_config])
+ioctl$vnet_tx(fd_vnet, cmd[0x4001], arg ptr[in, vnet_pkt])
+
+# intentionally incorrect: fd handled as a raw int in this description;
+# syzkaller can never construct a valid handle to chain the calls.
+vnet_config {
+    queue_len  int32
+    mode       flags[vnet_mode, int32]
+}
+
+vnet_pkt {
+    len   int32
+    data  array[int8]
+}
+
+vnet_mode = MODE_FRAGMENTED, MODE_COALESCE, MODE_RAW

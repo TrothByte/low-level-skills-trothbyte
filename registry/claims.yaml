@@ -1,84 +1,1006 @@
-# Claims / Provenance Registry — traceability нормативных утверждений
-# Модель: claim → source → section → skill. Позволяет автоматически проверять provenance.
-# Каждое НОРМАТИВНОЕ или критически важное утверждение должно быть traceable.
-
 meta:
-  updated: 2026-08-14
-  rule: "Нормативное утверждение без source-reference недопустимо в stable skill."
+  updated: '2026-08-17'
+  rule: Нормативное утверждение без source-reference недопустимо в stable skill.
   confidence:
-    MUST_VERIFY: "требует исполнимой проверки (см. verification method)"
-    MUST_CONSIDER: "необходимо учитывать при reasoning, проверка контекстная"
-    OPTIONAL: "справочная информация"
-  evidence_levels: ["KNOWN (source-backed)", "INFERRED (выведено из source)", "UNVERIFIED (нуждается в проверке)"]
-
-# ============================================================
-# Примеры core claims (расширяется при реализации skills)
-# ============================================================
+    MUST_VERIFY: требует исполнимой проверки (см. verification method)
+    MUST_CONSIDER: необходимо учитывать при reasoning, проверка контекстная
+    OPTIONAL: справочная информация
+  evidence_levels:
+  - KNOWN (source-backed)
+  - INFERRED (выведено из source)
+  - UNVERIFIED (нуждается в проверке)
 claims:
-  - {id: CL-001, claim: "strncpy не гарантирует NUL-терминацию при заполнении буфера целиком", source: "iso-c11-n1570", section: "7.24.2.4", skill: "c-string-and-buffer-safety", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-002, claim: "Сдвиг на отрицательное число бит или на >= ширины типа — UB", source: "iso-c11-n1570", section: "6.5.7", skill: "c-undefined-behavior", confidence: MUST_VERIFY, evidence: KNOWN}
-  - {id: CL-003, claim: "Signed integer overflow — UB; unsigned — wrap (modulo 2^N)", source: "iso-c11-n1570", section: "6.5 p5, 6.2.5 p9", skill: "c-integer-promotion-and-conversion", confidence: MUST_VERIFY, evidence: KNOWN}
-  - {id: CL-004, claim: "Integer promotion: типы ранга ниже int продвигаются к int/unsigned int", source: "iso-c11-n1570", section: "6.3.1.1", skill: "c-integer-promotion-and-conversion", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-005, claim: "SysV AMD64: первые 6 целочисленных аргументов в rdi/rsi/rdx/rcx/r8/r9, стек выровнен на 16 байт перед call", source: "sysv-amd64-abi", section: "3.2.1, 3.2.5", skill: "abi-layout-reasoning", confidence: MUST_VERIFY, evidence: KNOWN}
-  - {id: CL-006, claim: "Red zone (128 байт ниже rsp) не модифицируется сигнальными обработчиками", source: "sysv-amd64-abi", section: "3.2.2", skill: "abi-layout-reasoning", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-007, claim: "AAPCS64: аргументы в x0-x7, результат в x0, indirect result в x8, стек выровнен на 16 байт", source: "aapcs64", section: "6.1-6.3, 7", skill: "abi-layout-reasoning", confidence: MUST_VERIFY, evidence: KNOWN}
-  - {id: CL-008, claim: "Borrow checker доказывает отсутствие data race только в safe-коде; ничего не доказывает про unsafe/panic/deadlock/memory-ordering/FFI ABI", source: "rust-reference", section: "unsafety.html", skill: "rust-unsafe-reasoning", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-009, claim: "transmute между типами несовместимого размера/выравнивания — UB", source: "rust-reference", section: "behavior-considered-undefined.html", skill: "rust-unsafe-reasoning", confidence: MUST_VERIFY, evidence: KNOWN}
-  - {id: CL-010, claim: "Data race (два доступа к неатомарному объекту, минимум один — запись, без happens-before) — UB", source: "rust-reference", section: "behavior-considered-undefined.html", skill: "memory-ordering-reasoning", confidence: MUST_VERIFY, evidence: KNOWN}
-  - {id: CL-011, claim: "Relaxed не даёт ordering между потоками, только атомарность операции", source: "iso-cpp20-n4861", section: "[atomics.order]", skill: "memory-ordering-reasoning", confidence: MUST_VERIFY, evidence: KNOWN}
-  - {id: CL-012, claim: "Компилятор вправе считать UB недостижимым и удалять/трансформировать код на этом основании", source: "carruth-gigo", section: "whole talk", skill: "compiler-ub-assumptions", confidence: MUST_CONSIDER, evidence: INFERRED}
-  - {id: CL-013, claim: "Panic/unwind через extern \"C\" границу — UB", source: "rustonomicon", section: "ffi", skill: "rust-ffi-boundary", confidence: MUST_VERIFY, evidence: KNOWN}
-  - {id: CL-014, claim: "void* → T* требует выравнивания по T, иначе UB при разыменовании", source: "iso-c11-n1570", section: "6.3.2.3, 6.2.8", skill: "c-undefined-behavior", confidence: MUST_VERIFY, evidence: KNOWN}
-  - {id: CL-015, claim: "Access к freed memory — UB (UAF)", source: "iso-c11-n1570", section: "7.22.3", skill: "c-undefined-behavior", confidence: MUST_VERIFY, evidence: KNOWN}
-  - {id: CL-016, claim: "volatile не даёт memory ordering — нужны барьеры/атомики для синхронизации с ISR", source: "arm-arm", section: "memory model", skill: "embedded-volatile-and-memory-ordering", confidence: MUST_VERIFY, evidence: KNOWN}
-  - {id: CL-017, claim: "Обработчик сигнала может вызывать только async-signal-safe функции (malloc/printf/лок — нельзя)", source: "cert-c", section: "SIG30-C", skill: "c-signal-handler-safety", confidence: MUST_VERIFY, evidence: KNOWN}
-  - {id: CL-018, claim: "NASM чувствителен к регистру в большинстве символов: Loop, loop и LOOP — разные имена", source: "nasm-manual", section: "section 3.1", skill: "asm-syntax-dialects-nasm-gas-att", confidence: MUST_VERIFY, evidence: KNOWN}
-  - {id: CL-019, claim: "В Intel-синтаксисе mov rax,buf кладёт АДРЕС buf, а mov rax,[buf] — СОДЕРЖИМОЕ; отсутствие скобок молча меняет семантику", source: "nasm-manual", section: "section 3.3", skill: "asm-syntax-dialects-nasm-gas-att", confidence: MUST_VERIFY, evidence: KNOWN}
-  - {id: CL-020, claim: "Thumb-2 cbz/cbnz кодируют только low-регистры r0-r7; использование r8-r12 невалидно", source: "arm-arm", section: "Thumb-2 branch instructions", skill: "asm-arm-thumb-2-encoding", confidence: MUST_VERIFY, evidence: KNOWN}
-  - {id: CL-021, claim: "Повторное использование nonce с тем же ключом в AES-GCM фатально: вскрывается аутентичность и конфиденциальность", source: "nist-sp800-38d", section: "section 8 (IV/nonce uniqueness)", skill: "rust-crypto-primitives-safety", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-022, claim: "RISC-V calling convention: аргументы в a0-a7, возврат в a0, ra — return address, s0-s11 callee-saved, стек выровнен на 16", source: "riscv-psabi", section: "riscv-cc.adoc", skill: "asm-risc-v-registers-and-calling-conventions", confidence: MUST_VERIFY, evidence: KNOWN}
-  - {id: CL-023, claim: "AT&T-синтаксис: операнды source,dest (movl src,dst); Intel-синтаксис: dest,src (mov dst,src) — инверсия", source: "binutils-docs", section: "GNU as i386 syntax", skill: "asm-syntax-dialects-nasm-gas-att", confidence: MUST_VERIFY, evidence: KNOWN}
-  - {id: CL-024, claim: "Zig comptime выполняется на этапе компиляции; @typeInfo/@Type позволяют интроспекцию типов, comptime for разворачивается до генерации кода", source: "zig-langref", section: "Comptime", skill: "zig-comptime-metaprogramming", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-025, claim: "В Zig аллокаторы явные: нет скрытой аллокации; GeneralPurposeAllocator в Debug/ReleaseSafe ловит утечки и double-free", source: "zig-std-source", section: "std/heap.zig", skill: "zig-allocators-and-memory-management", confidence: MUST_VERIFY, evidence: KNOWN}
-  - {id: CL-026, claim: "LLM галлюцинируют несуществующие крейты, похожие на реальные (опечатка/дефис), с устойчивой между моделями частотой", source: "arxiv-2606-08444", section: "abstract", skill: "rust-dependency-supply-chain", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-027, claim: "VM-утечка: страница пула переиспользуется без munmap — RSS растёт, хотя heap-аллокатор чист", source: "ghostty-memory-leak", section: "whole post", skill: "binary-memory-leak-vm-allocator-diagnosis", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-028, claim: "Оракул allclose на фиксированном shape сертифицирует бажные GPU-ядра как корректные; нужен fuzz+fp64-референс", source: "arxiv-2606-20128", section: "abstract", skill: "gpu-kernel-verification-beyond-oracle", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-029, claim: "Дизассемблер LLM: asm->IR exact match всего 14% (round-trip 45%) — транспозиции почти всегда неверны", source: "arxiv-2407-02524", section: "abstract", skill: "binary-disassembly-decompilation-fidelity", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-030, claim: "compile@k не равен pass@k: «компилируется» не значит «верно», cliff на ~200 инструкциях", source: "arxiv-2607-06125", section: "abstract", skill: "binary-disassembly-decompilation-fidelity", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-031, claim: "CFS заменён на EEVDF (lag-based) в ядре 6.6; vruntime/lag определяют выбор задачи", source: "kernel-docs-sched", section: "sched-eevdf.rst", skill: "kernel-scheduler-mm-vfs-internals", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-032, claim: "file_operations-колбэки исполняются в контексте процесса; copy_from_user проверяется на частичное копирование", source: "kernel-driver-api", section: "char drivers", skill: "kernel-driver-char-device-lifecycle", confidence: MUST_VERIFY, evidence: KNOWN}
-  - {id: CL-033, claim: "CMake-зависимости объявляются через target_link_libraries + find_package, а не угадыванием версий в if()", source: "cmake-docs", section: "cmake-buildsystem", skill: "build-system-cmake-diagnostics", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-034, claim: "undefined reference может означать ABI/версионное несовпадение, а не отсутствующую функцию; проверяй nm/readelf символы", source: "lld-docs", section: "undefined symbols", skill: "build-linker-error-diagnostics", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-035, claim: "Miri исполняет MIR и детектирует UB (включая UAF и нарушение aliasing) в unsafe-коде", source: "rust-miri", section: "README", skill: "rust-unsafe-safety-contract-verification", confidence: MUST_VERIFY, evidence: KNOWN}
-  - {id: CL-036, claim: "SAFETY-комментарий обязан ссылаться на реальные инварианты, закодированные в типах/lifetimes; «caller guarantees» без PhantomData/lifetime не существует", source: "rustonomicon", section: "meet-safe-and-unsafe", skill: "rust-unsafe-safety-contract-verification", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-037, claim: "Сравнение строк с early-exit по длине утекает длину префикса (тайминг); нужен constant-time memcmp (CWE-1254)", source: "cwe-1254", section: "description", skill: "side-channel-constant-time-verification", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-038, claim: "Z3-unsat доказывает противоречивость ТОЛЬКО данных аксиом; «prover passed» ≠ верно, если аксиомы неверны", source: "z3-docs", section: "Solver", skill: "smt-z3-sound-usage", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-039, claim: "Инвариант цикла должен быть индуктивным и влечь постусловие; слишком слабый/vacuous инвариант «проходит» проверку, но ничего не доказывает", source: "acsl-spec", section: "loop invariant", skill: "formal-spec-loop-invariants", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-040, claim: "compatible-строка devicetree обязана совпадать с binding; node-адреса уникальны в рамках parent согласно #address-cells", source: "devicetree-spec", section: "node properties", skill: "embedded-device-tree-and-kconfig", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-041, claim: "Имена/биты регистров берутся из datasheet, а не из памяти модели; reserved-биты только читаются", source: "stm32-ref-manual", section: "GPIO/I2C registers", skill: "embedded-hw-register-datasheet-verification", confidence: MUST_VERIFY, evidence: KNOWN}
-  - {id: CL-042, claim: "VT-x: VMXON выполняется до VM entry; причина VMEXIT читается из VMCS", source: "intel-sdm", section: "Vol.3C ch 24-25", skill: "hypervisor-vmx-svm-internals", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-043, claim: "Блокирующие MPI_Send/Recv в неверном порядке дают deadlock; non-blocking + Waitall устраняет", source: "mpi-41", section: "ch 3 point-to-point", skill: "hpc-mpi-programming", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-044, claim: "Гонка на shared-переменных OpenMP-цикла без reduction; reduction-клауза даёт приватную копию на поток", source: "openmp-spec", section: "worksharing", skill: "hpc-openmp-parallel-programming", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-045, claim: "CDC: однобитные сигналы требуют 2-FF синхронизатора, многобитные — handshake/async FIFO; constraint не чинит CDC-bug", source: "cummings-cdc", section: "CDC papers", skill: "hdl-cdc-audit", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-046, claim: "DEX-инструкции оперируют виртуальными регистрами (v0/p0); dispatch через invoke-virtual", source: "dex-spec", section: "instruction set", skill: "android-re-dex-smali-format", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-047, claim: "JNI local-ссылки недействительны после возврата из native-метода; нужен NewGlobalRef для сохранения", source: "jni-spec", section: "references", skill: "android-re-native-jni-analysis", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-048, claim: "UEFI Boot Services действительны только до ExitBootServices(); после — только Runtime Services", source: "uefi-spec", section: "boot services", skill: "bootloader-uefi-firmware", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-049, claim: "Заявление о CVE без воспроизводимого sanitizer-отчёта + минимизированного инпута + достижимого пути недопустимо", source: "aflpp-docs", section: "crash minimization", skill: "fuzzing-harness-evidence-gate", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-050, claim: "«Фейковый параллелизм»: thread-safe примитивы (ConcurrentHashMap/atomic) при фактически однопоточном исполнении не дают параллельности", source: "arxiv-2603-03683", section: "abstract", skill: "concurrency-actual-parallelism-detection", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-051, claim: "Поведенческие изменения API Rust (та же сигнатура, другая семантика) модели решают 38% против 65.8% на стабилизированных", source: "arxiv-2503-16922", section: "abstract", skill: "rust-api-evolution-and-drift", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-052, claim: "Номера syscall'ов и константы shellcode читаются из таблицы/байтов, а не угадываются по памяти", source: "linux-syscall-table", section: "syscall_64.tbl", skill: "reverse-engineering-shellcode-analysis", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-053, claim: "Zig кросскомпиляция задаётся target triple через zig cc -target / build -Dtarget; std.Target.Query описывает", source: "zig-langref", section: "Targets", skill: "zig-cross-compilation-targets", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-054, claim: "Zig build-система: build.zig описывает шаги, зависимости пакетов — в build.zig.zon", source: "zig-build-guide", section: "packages", skill: "zig-build-system-and-packages", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-055, claim: "Zig error union error{T}!T с try/catch; defer/errdefer исполняются в обратном порядке (LIFO)", source: "zig-langref", section: "Errors/Defer", skill: "zig-error-model-and-defers", confidence: MUST_CONSIDER, evidence: KNOWN}
-  - {id: CL-056, claim: "KVM-модель: KVM_CREATE_VM создаёт VM, KVM_CREATE_VCPU — vCPU, KVM_RUN запускает гость до VMEXIT", source: "kvm-docs", section: "ioctls", skill: "hypervisor-vmx-svm-internals", confidence: MUST_CONSIDER, evidence: KNOWN}
-
-# ============================================================
-# Provenance verification (автоматизируемая)
-# ============================================================
+- id: CL-001
+  claim: strncpy не гарантирует NUL-терминацию при заполнении буфера целиком
+  source: iso-c11-n1570
+  section: 7.24.2.4
+  skill: c-string-and-buffer-safety
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-002
+  claim: Сдвиг на отрицательное число бит или на >= ширины типа — UB
+  source: iso-c11-n1570
+  section: 6.5.7
+  skill: c-undefined-behavior
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-003
+  claim: Signed integer overflow — UB; unsigned — wrap (modulo 2^N)
+  source: iso-c11-n1570
+  section: 6.5 p5, 6.2.5 p9
+  skill: c-integer-promotion-and-conversion
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-004
+  claim: 'Integer promotion: типы ранга ниже int продвигаются к int/unsigned int'
+  source: iso-c11-n1570
+  section: 6.3.1.1
+  skill: c-integer-promotion-and-conversion
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-005
+  claim: 'SysV AMD64: первые 6 целочисленных аргументов в rdi/rsi/rdx/rcx/r8/r9, стек выровнен на 16 байт перед call'
+  source: sysv-amd64-abi
+  section: 3.2.1, 3.2.5
+  skill: abi-layout-reasoning
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-006
+  claim: Red zone (128 байт ниже rsp) не модифицируется сигнальными обработчиками
+  source: sysv-amd64-abi
+  section: 3.2.2
+  skill: abi-layout-reasoning
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-007
+  claim: 'AAPCS64: аргументы в x0-x7, результат в x0, indirect result в x8, стек выровнен на 16 байт'
+  source: aapcs64
+  section: 6.1-6.3, 7
+  skill: abi-layout-reasoning
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-008
+  claim: Borrow checker доказывает отсутствие data race только в safe-коде; ничего не доказывает про unsafe/panic/deadlock/memory-ordering/FFI ABI
+  source: rust-reference
+  section: unsafety.html
+  skill: rust-unsafe-reasoning
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-009
+  claim: transmute между типами несовместимого размера/выравнивания — UB
+  source: rust-reference
+  section: behavior-considered-undefined.html
+  skill: rust-unsafe-reasoning
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-010
+  claim: Data race (два доступа к неатомарному объекту, минимум один — запись, без happens-before) — UB
+  source: rust-reference
+  section: behavior-considered-undefined.html
+  skill: memory-ordering-reasoning
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-011
+  claim: Relaxed не даёт ordering между потоками, только атомарность операции
+  source: iso-cpp20-n4861
+  section: '[atomics.order]'
+  skill: memory-ordering-reasoning
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-012
+  claim: Компилятор вправе считать UB недостижимым и удалять/трансформировать код на этом основании
+  source: carruth-gigo
+  section: whole talk
+  skill: compiler-ub-assumptions
+  confidence: MUST_CONSIDER
+  evidence: INFERRED
+- id: CL-013
+  claim: Panic/unwind через extern "C" границу — UB
+  source: rustonomicon
+  section: ffi
+  skill: rust-ffi-boundary
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-014
+  claim: void* → T* требует выравнивания по T, иначе UB при разыменовании
+  source: iso-c11-n1570
+  section: 6.3.2.3, 6.2.8
+  skill: c-undefined-behavior
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-015
+  claim: Access к freed memory — UB (UAF)
+  source: iso-c11-n1570
+  section: 7.22.3
+  skill: c-undefined-behavior
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-016
+  claim: volatile не даёт memory ordering — нужны барьеры/атомики для синхронизации с ISR
+  source: arm-arm
+  section: memory model
+  skill: embedded-volatile-and-memory-ordering
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-017
+  claim: Обработчик сигнала может вызывать только async-signal-safe функции (malloc/printf/лок — нельзя)
+  source: cert-c
+  section: SIG30-C
+  skill: c-signal-handler-safety
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-018
+  claim: 'NASM чувствителен к регистру в большинстве символов: Loop, loop и LOOP — разные имена'
+  source: nasm-manual
+  section: section 3.1
+  skill: asm-syntax-dialects-nasm-gas-att
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-019
+  claim: В Intel-синтаксисе mov rax,buf кладёт АДРЕС buf, а mov rax,[buf] — СОДЕРЖИМОЕ; отсутствие скобок молча меняет семантику
+  source: nasm-manual
+  section: section 3.3
+  skill: asm-syntax-dialects-nasm-gas-att
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-020
+  claim: Thumb-2 cbz/cbnz кодируют только low-регистры r0-r7; использование r8-r12 невалидно
+  source: arm-arm
+  section: Thumb-2 branch instructions
+  skill: asm-arm-thumb-2-encoding
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-021
+  claim: 'Повторное использование nonce с тем же ключом в AES-GCM фатально: вскрывается аутентичность и конфиденциальность'
+  source: nist-sp800-38d
+  section: section 8 (IV/nonce uniqueness)
+  skill: rust-crypto-primitives-safety
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-022
+  claim: 'RISC-V calling convention: аргументы в a0-a7, возврат в a0, ra — return address, s0-s11 callee-saved, стек выровнен на 16'
+  source: riscv-psabi
+  section: riscv-cc.adoc
+  skill: asm-risc-v-registers-and-calling-conventions
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-023
+  claim: 'AT&T-синтаксис: операнды source,dest (movl src,dst); Intel-синтаксис: dest,src (mov dst,src) — инверсия'
+  source: binutils-docs
+  section: GNU as i386 syntax
+  skill: asm-syntax-dialects-nasm-gas-att
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-024
+  claim: Zig comptime выполняется на этапе компиляции; @typeInfo/@Type позволяют интроспекцию типов, comptime for разворачивается до генерации кода
+  source: zig-langref
+  section: Comptime
+  skill: zig-comptime-metaprogramming
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-025
+  claim: 'В Zig аллокаторы явные: нет скрытой аллокации; GeneralPurposeAllocator в Debug/ReleaseSafe ловит утечки и double-free'
+  source: zig-std-source
+  section: std/heap.zig
+  skill: zig-allocators-and-memory-management
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-026
+  claim: LLM галлюцинируют несуществующие крейты, похожие на реальные (опечатка/дефис), с устойчивой между моделями частотой
+  source: arxiv-2606-08444
+  section: abstract
+  skill: rust-dependency-supply-chain
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-027
+  claim: 'VM-утечка: страница пула переиспользуется без munmap — RSS растёт, хотя heap-аллокатор чист'
+  source: ghostty-memory-leak
+  section: whole post
+  skill: binary-memory-leak-vm-allocator-diagnosis
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-028
+  claim: Оракул allclose на фиксированном shape сертифицирует бажные GPU-ядра как корректные; нужен fuzz+fp64-референс
+  source: arxiv-2606-20128
+  section: abstract
+  skill: gpu-kernel-verification-beyond-oracle
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-029
+  claim: 'Дизассемблер LLM: asm->IR exact match всего 14% (round-trip 45%) — транспозиции почти всегда неверны'
+  source: arxiv-2407-02524
+  section: abstract
+  skill: binary-disassembly-decompilation-fidelity
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-030
+  claim: 'compile@k не равен pass@k: «компилируется» не значит «верно», cliff на ~200 инструкциях'
+  source: arxiv-2607-06125
+  section: abstract
+  skill: binary-disassembly-decompilation-fidelity
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-031
+  claim: CFS заменён на EEVDF (lag-based) в ядре 6.6; vruntime/lag определяют выбор задачи
+  source: kernel-docs-sched
+  section: sched-eevdf.rst
+  skill: kernel-scheduler-mm-vfs-internals
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-032
+  claim: file_operations-колбэки исполняются в контексте процесса; copy_from_user проверяется на частичное копирование
+  source: kernel-driver-api
+  section: char drivers
+  skill: kernel-driver-char-device-lifecycle
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-033
+  claim: CMake-зависимости объявляются через target_link_libraries + find_package, а не угадыванием версий в if()
+  source: cmake-docs
+  section: cmake-buildsystem
+  skill: build-system-cmake-diagnostics
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-034
+  claim: undefined reference может означать ABI/версионное несовпадение, а не отсутствующую функцию; проверяй nm/readelf символы
+  source: lld-docs
+  section: undefined symbols
+  skill: build-linker-error-diagnostics
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-035
+  claim: Miri исполняет MIR и детектирует UB (включая UAF и нарушение aliasing) в unsafe-коде
+  source: rust-miri
+  section: README
+  skill: rust-unsafe-safety-contract-verification
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-036
+  claim: SAFETY-комментарий обязан ссылаться на реальные инварианты, закодированные в типах/lifetimes; «caller guarantees» без PhantomData/lifetime не существует
+  source: rustonomicon
+  section: meet-safe-and-unsafe
+  skill: rust-unsafe-safety-contract-verification
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-037
+  claim: Сравнение строк с early-exit по длине утекает длину префикса (тайминг); нужен constant-time memcmp (CWE-1254)
+  source: cwe-1254
+  section: description
+  skill: side-channel-constant-time-verification
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-038
+  claim: Z3-unsat доказывает противоречивость ТОЛЬКО данных аксиом; «prover passed» ≠ верно, если аксиомы неверны
+  source: z3-docs
+  section: Solver
+  skill: smt-z3-sound-usage
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-039
+  claim: Инвариант цикла должен быть индуктивным и влечь постусловие; слишком слабый/vacuous инвариант «проходит» проверку, но ничего не доказывает
+  source: acsl-spec
+  section: loop invariant
+  skill: formal-spec-loop-invariants
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-040
+  claim: 'compatible-строка devicetree обязана совпадать с binding; node-адреса уникальны в рамках parent согласно #address-cells'
+  source: devicetree-spec
+  section: node properties
+  skill: embedded-device-tree-and-kconfig
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-041
+  claim: Имена/биты регистров берутся из datasheet, а не из памяти модели; reserved-биты только читаются
+  source: stm32-ref-manual
+  section: GPIO/I2C registers
+  skill: embedded-hw-register-datasheet-verification
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-042
+  claim: 'VT-x: VMXON выполняется до VM entry; причина VMEXIT читается из VMCS'
+  source: intel-sdm
+  section: Vol.3C ch 24-25
+  skill: hypervisor-vmx-svm-internals
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-043
+  claim: Блокирующие MPI_Send/Recv в неверном порядке дают deadlock; non-blocking + Waitall устраняет
+  source: mpi-41
+  section: ch 3 point-to-point
+  skill: hpc-mpi-programming
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-044
+  claim: Гонка на shared-переменных OpenMP-цикла без reduction; reduction-клауза даёт приватную копию на поток
+  source: openmp-spec
+  section: worksharing
+  skill: hpc-openmp-parallel-programming
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-045
+  claim: 'CDC: однобитные сигналы требуют 2-FF синхронизатора, многобитные — handshake/async FIFO; constraint не чинит CDC-bug'
+  source: cummings-cdc
+  section: CDC papers
+  skill: hdl-cdc-audit
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-046
+  claim: DEX-инструкции оперируют виртуальными регистрами (v0/p0); dispatch через invoke-virtual
+  source: dex-spec
+  section: instruction set
+  skill: android-re-dex-smali-format
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-047
+  claim: JNI local-ссылки недействительны после возврата из native-метода; нужен NewGlobalRef для сохранения
+  source: jni-spec
+  section: references
+  skill: android-re-native-jni-analysis
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-048
+  claim: UEFI Boot Services действительны только до ExitBootServices(); после — только Runtime Services
+  source: uefi-spec
+  section: boot services
+  skill: bootloader-uefi-firmware
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-049
+  claim: Заявление о CVE без воспроизводимого sanitizer-отчёта + минимизированного инпута + достижимого пути недопустимо
+  source: aflpp-docs
+  section: crash minimization
+  skill: fuzzing-harness-evidence-gate
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-050
+  claim: '«Фейковый параллелизм»: thread-safe примитивы (ConcurrentHashMap/atomic) при фактически однопоточном исполнении не дают параллельности'
+  source: arxiv-2603-03683
+  section: abstract
+  skill: concurrency-actual-parallelism-detection
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-051
+  claim: Поведенческие изменения API Rust (та же сигнатура, другая семантика) модели решают 38% против 65.8% на стабилизированных
+  source: arxiv-2503-16922
+  section: abstract
+  skill: rust-api-evolution-and-drift
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-052
+  claim: Номера syscall'ов и константы shellcode читаются из таблицы/байтов, а не угадываются по памяти
+  source: linux-syscall-table
+  section: syscall_64.tbl
+  skill: reverse-engineering-shellcode-analysis
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-053
+  claim: Zig кросскомпиляция задаётся target triple через zig cc -target / build -Dtarget; std.Target.Query описывает
+  source: zig-langref
+  section: Targets
+  skill: zig-cross-compilation-targets
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-054
+  claim: 'Zig build-система: build.zig описывает шаги, зависимости пакетов — в build.zig.zon'
+  source: zig-build-guide
+  section: packages
+  skill: zig-build-system-and-packages
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-055
+  claim: Zig error union error{T}!T с try/catch; defer/errdefer исполняются в обратном порядке (LIFO)
+  source: zig-langref
+  section: Errors/Defer
+  skill: zig-error-model-and-defers
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-056
+  claim: 'KVM-модель: KVM_CREATE_VM создаёт VM, KVM_CREATE_VCPU — vCPU, KVM_RUN запускает гость до VMEXIT'
+  source: kvm-docs
+  section: ioctls
+  skill: hypervisor-vmx-svm-internals
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-057
+  claim: x86-64 TSO permits store->load reordering only; seq_cst store emits xchg
+  source: intel-sdm
+  section: Vol.3A §8.2
+  skill: memory-model-arm-x86-riscv
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-058
+  claim: relaxed atomics have no cross-location ordering on any ISA
+  source: iso-c11-n1570
+  section: §7.17.3
+  skill: memory-model-arm-x86-riscv
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-059
+  claim: AArch64 release/acquire map to STLR/LDAR
+  source: arm-arm
+  section: memory model
+  skill: memory-model-arm-x86-riscv
+  confidence: MUST_CONSIDER
+  evidence: UNVERIFIED
+- id: CL-060
+  claim: long mode uses 4 levels (PML4->PDPT->PD->PT), 9 bits each
+  source: intel-sdm
+  section: Vol.3A §4.4
+  skill: page-table-management
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-061
+  claim: PTE change requires scope-correct TLB invalidation (invlpg/tlbi/sfence.vma)
+  source: intel-sdm
+  section: §4.10
+  skill: page-table-management
+  confidence: MUST_CONSIDER
+  evidence: INFERRED
+- id: CL-062
+  claim: 'VMSAv8-64 4K granule: 4 levels, TTBR0/TTBR1'
+  source: arm-arm
+  section: VMSAv8-64
+  skill: page-table-management
+  confidence: MUST_VERIFY
+  evidence: UNVERIFIED
+- id: CL-063
+  claim: DMA_FROM_DEVICE requires dma_sync_single_for_cpu before CPU read
+  source: kernel-driver-api
+  section: DMA API
+  skill: dma-cache-coherency
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-064
+  claim: dma_mapping_error, not addr==0, detects map failure
+  source: kernel-driver-api
+  section: DMA API
+  skill: dma-cache-coherency
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-065
+  claim: capabilities are unforgeable, confined, non-ambient tokens
+  source: cheri-spec
+  section: capability model
+  skill: capability-based-security
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-066
+  claim: seL4 Revoke recursively revokes derived capabilities
+  source: sel4-manual
+  section: capability model, Revoke
+  skill: capability-based-security
+  confidence: MUST_VERIFY
+  evidence: UNVERIFIED
+- id: CL-067
+  claim: ACLs are ambient (object-side), capabilities are subject-side
+  source: cwe
+  section: CWE-269
+  skill: capability-based-security
+  confidence: MUST_CONSIDER
+  evidence: INFERRED
+- id: CL-068
+  claim: openat2 with RESOLVE_BENEATH makes check+open atomic
+  source: kernel-source
+  section: fs/open.c
+  skill: toctou-kernel
+  confidence: MUST_CONSIDER
+  evidence: INFERRED
+- id: CL-069
+  claim: access()+open() is the canonical CWE-367 TOCTOU pattern
+  source: cwe
+  section: CWE-367
+  skill: toctou-kernel
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-070
+  claim: Kani checks panics/OOB/overflow and asserts; harness must use kani::any + kani::assert to be non-vacuous
+  source: kani-docs
+  section: proof harness
+  skill: formal-verification-kani-verus
+  confidence: MUST_CONSIDER
+  evidence: INFERRED
+- id: CL-071
+  claim: CBMC/Kani results are bounded by loop unwinding
+  source: cbmc-docs
+  section: unwinding
+  skill: formal-verification-kani-verus
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-072
+  claim: LLM-generated invariants are often vacuous (~20% accuracy drop after filtering)
+  source: arxiv-2605-01394
+  section: abstract
+  skill: formal-verification-kani-verus
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-073
+  claim: GIC SPI range is 32-1019; device IRQ line n -> SPI 32+n
+  source: arm-gic-spec
+  section: distributor
+  skill: interrupt-controller-gic-apic
+  confidence: MUST_VERIFY
+  evidence: INFERRED
+- id: CL-074
+  claim: GIC requires explicit EOI (priority drop + deactivate); missing EOI blocks the IRQ
+  source: arm-gic-spec
+  section: CPU interface
+  skill: interrupt-controller-gic-apic
+  confidence: MUST_VERIFY
+  evidence: INFERRED
+- id: CL-075
+  claim: x86 spurious vector is 0xFF; IO-APIC RTE carries vector + trigger
+  source: intel-sdm
+  section: Vol.3B
+  skill: interrupt-controller-gic-apic
+  confidence: MUST_CONSIDER
+  evidence: INFERRED
+- id: CL-076
+  claim: SMMU identifies devices by StreamID, VT-d by BDF
+  source: arm-smmu-spec
+  section: stream table
+  skill: iommu-smmu-isolation
+  confidence: MUST_VERIFY
+  evidence: INFERRED
+- id: CL-077
+  claim: device TLB invalidation (CMDQ TLBI / IOTLB) is required after PTE change; CPU sfence.vma does not flush it
+  source: kernel-driver-api
+  section: IOMMU API
+  skill: iommu-smmu-isolation
+  confidence: MUST_CONSIDER
+  evidence: INFERRED
+- id: CL-078
+  claim: passthrough/bypass disables isolation and is a security hole for untrusted devices
+  source: cwe
+  section: CWE-284
+  skill: iommu-smmu-isolation
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-079
+  claim: early-exit compare leaks first-difference position (CWE-1254); XOR-fold does not
+  source: cwe-1254
+  section: CWE-1254
+  skill: side-channel-mitigation
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-080
+  claim: constant-time addresses timing only; power/EM need masking, speculation needs fences
+  source: intel-sdm
+  section: Speculative execution
+  skill: side-channel-mitigation
+  confidence: MUST_CONSIDER
+  evidence: INFERRED
+- id: CL-081
+  claim: compiler can undo constant-time idioms — verify in assembly
+  source: tob-constant-time
+  section: handbook
+  skill: side-channel-mitigation
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-082
+  claim: In seL4, device memory is reachable only via a granted frame capability; un-granted addresses fault
+  source: sel4-docs
+  section: capabilities
+  skill: sel4-sddf-driver-framework
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-083
+  claim: sDDF defines virtio-style ring protocols per device class; network is most mature
+  source: sddf
+  section: README/design
+  skill: sel4-sddf-driver-framework
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-084
+  claim: IRQs arrive as notifications bound via the IRQ capability, not handlers
+  source: sel4-docs
+  section: IRQ control
+  skill: sel4-sddf-driver-framework
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-085
+  claim: SLUB stores the freelist pointer in the first word of a freed object
+  source: kernel-source
+  section: mm/slub.c
+  skill: kernel-exploitation-primitives
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-086
+  claim: refcount overflow -> premature free; exploitability requires reclaim + stale use
+  source: cwe
+  section: CWE-190/CWE-416
+  skill: kernel-exploitation-primitives
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-087
+  claim: CVE-2016-5195 (Dirty COW) is a check-then-act TOCTOU, closed by re-check under lock
+  source: nvd-cve
+  section: CVE-2016-5195
+  skill: kernel-exploitation-primitives
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-088
+  claim: A loop invariant requires base, step, and post obligations
+  source: frama-c-docs
+  section: ACSL loop invariant
+  skill: invariant-identification
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-089
+  claim: a harness whose assertion cannot fail certifies nothing
+  source: arxiv-2607-00107
+  section: abstract
+  skill: invariant-identification
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-090
+  claim: 'Kani proof harness uses kani::assume/assert over #[kani::proof]'
+  source: kani-docs
+  section: proof harness
+  skill: invariant-identification
+  confidence: MUST_CONSIDER
+  evidence: INFERRED
+- id: CL-091
+  claim: A data race = two conflicting plain accesses, one a write
+  source: kernel-kcsan-docs
+  section: Data Races
+  skill: data-race-kernel-detection
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-092
+  claim: KCSAN sampling is unsound (false negatives possible)
+  source: kernel-kcsan-docs
+  section: Usage
+  skill: data-race-kernel-detection
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-093
+  claim: marked accesses are never race-reported; ASSERT_EXCLUSIVE_* covers exclusivity logic
+  source: kernel-kcsan-docs
+  section: ASSERT_EXCLUSIVE_*
+  skill: data-race-kernel-detection
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-094
+  claim: AB-BA cycles are deadlock classes independent of timing
+  source: kernel-lockdep-docs
+  section: Lock-class
+  skill: deadlock-kernel-prevention
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-095
+  claim: irq-safe locks cannot be acquired with IRQs enabled; hardirq-safe->hardirq-unsafe forbidden
+  source: kernel-lockdep-docs
+  section: State rules
+  skill: deadlock-kernel-prevention
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-096
+  claim: lockdep proves closure from any occurrence of each simple chain
+  source: kernel-lockdep-docs
+  section: Closure proof
+  skill: deadlock-kernel-prevention
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-097
+  claim: syzkaller generates syscall programs from syzlang; resources model object lifecycles
+  source: syzkaller-docs
+  section: syzlang
+  skill: fuzzing-harness-kernel
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-098
+  claim: coverage-guided selection is what distinguishes fuzzing from random testing
+  source: libfuzzer-docs
+  section: coverage
+  skill: fuzzing-harness-kernel
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-099
+  claim: syz-reproduce/syz-minimize are part of the triage loop
+  source: syzkaller-docs
+  section: reproduce/minimize
+  skill: fuzzing-harness-kernel
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-100
+  claim: In-context-only state is lost on interruption; durable files are the only resumable state
+  source: codex-37653
+  section: issue
+  skill: agent-scope-management
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-101
+  claim: unrecorded completion claims are untestable
+  source: arxiv-2607-00107
+  section: abstract
+  skill: agent-scope-management
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-102
+  claim: completion = acceptance criteria met + evidence recorded
+  source: registry-evals-yaml
+  section: meta-completion
+  skill: agent-scope-management
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-103
+  claim: The framekernel keeps the whole OS in one address space, split into privileged framework and unprivileged services
+  source: asterinas-book
+  section: framekernel architecture
+  skill: framekernel-architecture
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-104
+  claim: services are isolated by MMU page tables, not IPC
+  source: apsys24-framekernel
+  section: design
+  skill: framekernel-architecture
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-105
+  claim: the OS must be written in Rust; the design does not claim seL4-grade formal proof
+  source: arxiv-2506-03876
+  section: architecture
+  skill: framekernel-architecture
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-106
+  claim: ACPI RSDP + every table header carry a modulo-256 checksum
+  source: acpi-spec
+  section: table header
+  skill: bootloader-uefi-acpi-dtb
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-107
+  claim: R_X86_64_RELATIVE = B + A (load base + addend)
+  source: sysv-elf
+  section: relocation
+  skill: kernel-loader-elf
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-108
+  claim: ET_DYN requires load bias on PT_LOAD vaddrs and relative relocations
+  source: sysv-elf
+  section: program headers
+  skill: kernel-loader-elf
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-109
+  claim: Reading an object through a non-compatible lvalue is UB (6.5p7)
+  source: iso-c11-n1570
+  section: §6.5p7
+  skill: kernel-ub-patterns
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-110
+  claim: container_of requires member provenance; wrong member changes offset silently
+  source: kernel-source
+  section: include/linux/container_of.h
+  skill: kernel-ub-patterns
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-111
+  claim: 'Init order: clock -> ready-poll -> reset-deassert -> config -> enable last'
+  source: stm32-ref-manual
+  section: RCC
+  skill: hardware-register-bringup
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-112
+  claim: PBT finds counterexamples over sampled space, not proofs
+  source: quickcheck
+  section: overview
+  skill: property-based-testing-kernel
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-113
+  claim: Unlisted/destructive shell ops denied by default; read-only allowed
+  source: codex-37653
+  section: issue
+  skill: agent-tool-whitelist
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-114
+  claim: положительные-only фикстуры не измеряют recall
+  source: registry-evals-yaml
+  section: synthetic_template
+  skill: meta-eval-runner
+  confidence: MUST_CONSIDER
+  evidence: INFERRED
+- id: CL-115
+  claim: eval без gate не является eval
+  source: arxiv-2606-20128
+  section: abstract
+  skill: meta-eval-runner
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-116
+  claim: 'claim требует 4 части: text/source/section/skill'
+  source: registry-claims-yaml
+  section: provenance_checks
+  skill: meta-claim-extraction
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-117
+  claim: confidence != evidence; MUST_VERIFY может быть KNOWN
+  source: registry-claims-yaml
+  section: meta.confidence
+  skill: meta-claim-extraction
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-118
+  claim: activation cost = metadata + body SKILL.md; gate 2000 enforced as ERROR
+  source: tools-token-measure-py
+  section: --check
+  skill: meta-token-optimization
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-119
+  claim: 'CVE claim = пара сборок: vulnerable FAILS, fixed PASSES'
+  source: registry-evals-yaml
+  section: historical_cves
+  skill: meta-security-audit
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-120
+  claim: 'квантор решает: for-all требует формально, single-case — эмпирически'
+  source: arxiv-2605-01394
+  section: abstract
+  skill: meta-formal-verification
+  confidence: MUST_CONSIDER
+  evidence: INFERRED
+- id: CL-121
+  claim: hardcoded-bypass reward hacking; verified eval drops best-model 1.43x->0.88x
+  source: arxiv-2607-16241
+  section: abstract
+  skill: gpu-kernel-reward-hacking-detection
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-122
+  claim: 16% (323/1968) of agent-benchmark tasks hackable
+  source: arxiv-2606-08960
+  section: abstract
+  skill: gpu-kernel-reward-hacking-detection
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-123
+  claim: missing/misplaced accelerator sync escapes sim+golden; 19.2% LLM-kernel defect rate
+  source: arxiv-2605-07881
+  section: abstract
+  skill: accelerator-pipeline-synchronization
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-124
+  claim: dismissal requires unreachability, not plausibility; LLM filtering dismissed a real vuln
+  source: arxiv-2606-15122
+  section: abstract
+  skill: llm-verifier-warning-disposition
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-125
+  claim: Sashiko accepted commit-log bug-fix claims at face value
+  source: lwn-1073583
+  section: whole
+  skill: kernel-patch-review-commit-log-independence
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-126
+  claim: maintainers ignore LLM-written commit logs and read the patch (Starovoitov)
+  source: lwn-1075067
+  section: whole
+  skill: kernel-patch-review-commit-log-independence
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-127
+  claim: verifier dumps are opaque; BPF is the only case LLMs give up
+  source: lwn-1075067
+  section: whole
+  skill: ebpf-verifier-opaque-feedback-iteration
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-128
+  claim: 'DTCG: every token has $type+$value; aliases resolve within set'
+  source: dtcg-design-tokens
+  section: format
+  skill: design-token-system-discipline
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-129
+  claim: semantic token layer must alias primitives (no raw semantic literals)
+  source: dtcg-design-tokens
+  section: semantic tokens
+  skill: design-token-system-discipline
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-130
+  claim: no raw hex/px in component CSS; every value references a token
+  source: anthropic-frontend-design-skill
+  section: design tokens
+  skill: design-token-system-discipline
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-131
+  claim: body line-height >=1.5 (WCAG text spacing)
+  source: wcag-22
+  section: 1.4.8/1.4.12
+  skill: design-typography-hierarchy
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-132
+  claim: exactly one h1; heading levels never skipped
+  source: wcag-22
+  section: 1.3.1
+  skill: design-typography-hierarchy
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-133
+  claim: 4.5:1 normal / 3:1 large text / 3:1 non-text contrast thresholds
+  source: wcag-22
+  section: 1.4.3/1.4.11
+  skill: design-color-contrast-wcag-a11y
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-134
+  claim: '#FF0000/#FFF = 4.00:1 fails normal text contrast'
+  source: wcag-22
+  section: 1.4.3 (math)
+  skill: design-color-contrast-wcag-a11y
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-135
+  claim: interactive targets >=24x24 px (WCAG 2.5.8)
+  source: wcag-22
+  section: 2.5.8
+  skill: design-color-contrast-wcag-a11y
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-136
+  claim: spacing on 4/8pt scale; 12-col grid with consistent gutters
+  source: anthropic-frontend-design-skill
+  section: spacing
+  skill: design-layout-spacing-grid
+  confidence: MUST_CONSIDER
+  evidence: INFERRED
+- id: CL-137
+  claim: reflow at 320px with no 2D scroll (WCAG 1.4.10)
+  source: wcag-22
+  section: 1.4.10
+  skill: design-layout-spacing-grid
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-138
+  claim: 'low contrast is the #1 home-page a11y failure (83.9% of pages)'
+  source: webaim-million
+  section: contrast
+  skill: design-color-contrast-wcag-a11y
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-139
+  claim: 'AI-look fingerprints: default stacks, purple-on-white, hairline, Space Grotesk, 01/02/03'
+  source: claude-frontend-design-blog
+  section: AI-slop markers
+  skill: design-anti-ai-look-originality-review
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-140
+  claim: generated front-end passes visual checks but drops a11y items
+  source: arxiv-2501-03572
+  section: paper
+  skill: design-color-contrast-wcag-a11y
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-141
+  claim: generated UIs collapse to generic templates (Design2Code)
+  source: arxiv-2403-03163
+  section: paper
+  skill: design-anti-ai-look-originality-review
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
 provenance_checks:
-  - "Каждый claim в stable skill должен иметь непустой source и section"
-  - "source id должен существовать в registry/sources.yaml"
-  - "section должен быть реальным (не выдуманным)"
-  - "evidence: KNOWN только если источник нормативный/официальный"
-  - "UNVERIFIED claims запрещены в stable skill — только в draft/researched"
-  - "Различать: direct quotation (цитата) vs paraphrase (пересказ) vs inspiration (идея) — хранить в provenance"
+- Каждый claim в stable skill должен иметь непустой source и section
+- source id должен существовать в registry/sources.yaml
+- section должен быть реальным (не выдуманным)
+- 'evidence: KNOWN только если источник нормативный/официальный'
+- UNVERIFIED claims запрещены в stable skill — только в draft/researched
+- 'Различать: direct quotation (цитата) vs paraphrase (пересказ) vs inspiration (идея) — хранить в provenance'

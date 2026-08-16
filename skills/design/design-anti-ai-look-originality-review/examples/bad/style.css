@@ -1,0 +1,36 @@
+/* BAD: every AI-look fingerprint at once — Inter + Space Grotesk stacks,
+   purple gradients on white, numbered 01/02/03 labels, hairline dividers. */
+/* intentionally incorrect */
+:root {
+  --purple-1: #7C3AED;
+  --purple-2: #8B5CF6;
+  --ink: #111827;
+  --line: #E5E7EB;
+}
+
+body {
+  font-family: Inter, -apple-system, system-ui, sans-serif;
+  background: #FFFFFF;
+  color: var(--ink);
+}
+
+h1 {
+  font-family: "Space Grotesk", sans-serif;
+}
+
+.hero {
+  background: linear-gradient(135deg, #7C3AED 0%, #8B5CF6 100%);
+  color: #FFFFFF;
+}
+
+.cta {
+  background: linear-gradient(90deg, #8B5CF6, #6366F1);
+}
+
+.feature {
+  border-top: 1px solid #E5E7EB;
+}
+
+.step-01 { color: #8B5CF6; }
+.step-02 { color: #8B5CF6; }
+.step-03 { color: #8B5CF6; }

@@ -568,3 +568,21 @@ nvcc, clang-bpf, LLVM, QEMU, sanitizer-рантаймы).
 
 5. **Безопасность**: API-ключ dev.to был передан в чат — после завершения промо-кампании
    рекомендуется перевыпустить ключ (dev.to → Settings → Extensions).
+
+## 2026-08-16 — Сессия 26 (редизайн README в фиолетовой палитре)
+
+1. **Изучены лучшие практики оформления GitHub README** (abhisheknaiidu/awesome-github-profile-readme):
+   SVG-баннеры, shields.io-бейджи с кастомными цветами, `<div align="center">`,
+   GitHub-алерты (`> [!NOTE]`/`> [!IMPORTANT]`), collapsible `<details>/<summary>`,
+   star-history-виджет, эмодзи-заголовки.
+
+2. **Новый README** (коммит `...`, текст сохранён 1-в-1, только презентация):
+   - `docs/readme-banner.svg` (1200×240): тёмно-фиолетовый градиент, анимированное
+     свечение (pulse, работает в `<img>`), градиентный заголовок, слоган, статистика;
+   - бейджи переведены на `for-the-badge` с фиолетовой палитрой (#8B5CF6…#D946EF):
+     skills/domains/source-backed/sources/claims/stars/license/CI + skills.sh;
+   - секции «Full repository map» и «Star history» свёрнуты в `<details>`;
+   - все GitHub-алерты и таблицы сохранены.
+
+3. **Проверено**: SVG валиден (XML), все ключевые фразы сохранены, raw README (200),
+   banner (200), страница репозитория (200). Пуш в origin/main.

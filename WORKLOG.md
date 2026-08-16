@@ -541,3 +541,30 @@ nvcc, clang-bpf, LLVM, QEMU, sanitizer-рантаймы).
     (%TEMP%\kilo\trothbyte-promo\article-assembly-3-command-gate.md).
 
 Проверки: node --check OK, validate.py OK, Pages built, site 200 + terminal-demo.
+
+## 2026-08-15 — Сессия 25 (публикация статей на dev.to)
+
+1. **Изучены требования/навыки оформления**: Forem/dev.to API (create article, front matter
+   с приоритетом: `title/published/tags/description/cover_image`, rate limit 10/30s),
+   лучшие практики технических статей (hook, TL;DR, таблицы, подсвеченные код-блоки,
+   emoji-заголовки, дисклеймер об AI-ассистенции, CTA).
+
+2. **Обложки статей** (Pillow, 1000×420, тёмная тема): `docs/article-cover.png`,
+   `docs/article-cover-asm.png`; исправлен баг Pages — из `docs/_config.yml` убрано
+   исключение `*.png` (обложки не отдавались).
+
+3. **Опубликовано 2 статьи на dev.to** (аккаунт `trothbyte`, API-ключ в
+   `%TEMP%\kilo\apis.env`, вне репо):
+   - «We catalogued 55+ AI-agent failures in low-level code — and shipped 124 verified
+     skills to fix them» → https://dev.to/trothbyte/we-catalogued-55-ai-agent-failures-in-low-level-code-and-shipped-124-verified-skills-to-fix-them-369l
+   - «You can't trust assembly an AI wrote. Here's the 3-command gate» (явная ссылка на
+     репо + «repository is continuously updated») →
+     https://dev.to/trothbyte/you-cant-trust-assembly-an-ai-wrote-heres-the-3-command-gate-4ige
+   Обе: published=true, обложки подтянуты dev.to, дисклеймер AI-ассистенции, теги
+   ai/rust/llm/security и tutorial/ai/programming/security.
+
+4. **Инфраструктурная заметка**: с этой машины `github.io` временно недоступен
+   (github.com — OK); dev.to забирает обложки со своих серверов — публикация прошла.
+
+5. **Безопасность**: API-ключ dev.to был передан в чат — после завершения промо-кампании
+   рекомендуется перевыпустить ключ (dev.to → Settings → Extensions).

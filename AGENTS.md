@@ -1,41 +1,46 @@
 # AGENTS.md — Low-level skills TrothByte: Engineering Rules & Resume Protocol
 
-## Resume protocol (выполнять при каждом запуске)
+## Resume protocol (каждый запуск)
 
-1. Прочитать этот файл.
-2. Прочитать `roadmap/progress.yaml` (главный источник состояния).
-3. Прочитать `WORKLOG.md`.
-4. Только после этого продолжать работу.
-5. НЕ начинать уже выполненные этапы заново. Проверять `status` перед каждой задачей.
+1. Читать этот файл.
+2. Читать `registry/skills.min.yaml` — сжатый индекс (163 скилла: токен-бюджеты, триггеры, requires).
+   НЕ читать `docs/SKILLS.md` — 200+ KB, человеческий каталог.
+3. Маршрутизировать через `registry/triggers.yaml` (keyword → skill ids) → открыть ТОЛЬКО нужный SKILL.md.
+4. Читать `roadmap/progress.yaml` (главный источник состояния). `WORKLOG.md` — по необходимости.
+5. НЕ начинать выполненные этапы заново: проверять `status` перед каждой задачей.
+
+## Token budget при подключении
+
+- `docs/SKILLS.md` НЕ читать (200+ KB, для людей).
+- Вместо него — `registry/skills.min.yaml` (~10 KB).
+- SKILL.md открывать только для выбранных скиллов; `references/` — по требованию (progressive disclosure).
 
 ## Engineering rules
 
-1. Never create a skill without a registry entry.
-2. Never claim uniqueness without a gap analysis.
-3. Never use another skill repository as the sole technical authority.
-4. Prefer primary sources for normative claims.
-5. Preserve source provenance.
-6. Never copy source text unless licensing explicitly permits it.
-7. Keep SKILL.md operational and compact.
-8. Put detailed knowledge into references.
-9. Put deterministic operations into scripts (delegate to shared tools/).
-10. Every mature skill requires at least one verification method.
-11. Every important skill requires an eval.
-12. Mark uncertainty explicitly (KNOWN / INFERRED / UNVERIFIED).
-13. Never silently mark work complete.
-14. Update progress files after every completed unit.
-15. Run repository validators before committing: `python tools/validate.py` (skill_lint + registry_check + source_check).
+1. Skill без записи в registry не создавать.
+2. Uniqueness — только после gap analysis.
+3. Чужой skill-репозиторий — не единственный authority.
+4. Нормативные утверждения — из первичных источников.
+5. Сохранять provenance.
+6. Копировать текст источников только с разрешения лицензии.
+7. SKILL.md — operational и компактный.
+8. Глубина — в `references/`.
+9. Детерминированные операции — в скрипты (`tools/`).
+10. Mature skill требует метод верификации.
+11. Важный skill требует eval.
+12. Неопределённость помечать: KNOWN / INFERRED / UNVERIFIED.
+13. Не помечать работу выполненной молча.
+14. Обновлять `roadmap/progress.yaml` после каждой завершённой единицы.
+15. Перед коммитом: `python tools/validate.py` (skill_lint + registry_check + source_check).
 
-## Token economy (операционные правила — экономить токены при каждом запуске)
+## Token economy
 
-1. Подавлять шум вывода команд: `2>$null` для ожидаемого stderr (CRLF-предупреждения,
-   PowerShell-«ошибки» от git/gh), `-q`-флаги (`git commit -q`, `git push -q`,
-   `git add 2>$null` — у `git add` нет `-q`), усечение вывода `Select-Object -First/-Last N`.
-2. Читать выборочно: `grep`/`glob`/`read` с `limit`/`offset` вместо чтения файлов целиком.
-3. Параллелить независимые вызовы инструментов в одном сообщении.
-4. Валидаторы запускать один раз с усечённым выводом, а не дампить все файлы.
-5. Итоговые сообщения — коротко (3–5 буллетов, без пересказа кода).
-6. Использовать относительные пути + `workdir` вместо длинных абсолютных.
+1. Подавлять шум: `2>$null`, `-q`, усечение вывода.
+2. Читать выборочно: `grep`/`glob`/`read` с `limit`/`offset`.
+3. Параллелить независимые вызовы инструментов.
+4. Валидаторы — один раз, усечённый вывод.
+5. Итоговые сообщения — 3–5 буллетов, без пересказа кода.
+6. Относительные пути + `workdir`.
 7. Между несвязанными задачами — свежая сессия или `/compact`.
 
 ## Core development rule
@@ -60,10 +65,10 @@ CALIBRATED → TOKEN-OPTIMIZED → REGISTERED → MARKED COMPLETE.
 18. adversarial evals → 19. routing evals → 20. collision testing → 21. calibration →
 22. license audit → 23. quality gates → 24. progress management → ...
 
-## Stopping rule (если контекст заканчивается)
+## Stopping rule (контекст > 70%)
 
 1. Сохранить промежуточные результаты.
-2. Обновить progress.yaml (current_task, current_subtask, next_action).
-3. Обновить WORKLOG.md.
+2. Обновить `roadmap/progress.yaml` (current_task, current_subtask, next_action).
+3. Обновить `WORKLOG.md`.
 4. Сохранить найденные источники.
-5. Не оставлять незаписанную информацию только в памяти модели.
+5. Вызвать `/compact`.

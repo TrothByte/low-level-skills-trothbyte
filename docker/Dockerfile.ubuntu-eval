@@ -1,0 +1,61 @@
+# Purpose: dev/eval environment for the researched -> source-backed verification
+# sprint. Researched skills' documented verification commands should work here
+# where possible: GCC/Clang/LLD, binutils, NASM, CMake/Ninja, QEMU (user+system),
+# Rust stable+nightly with Miri, Python 3, Semgrep, and the CodeQL CLI.
+# CI eval jobs run on ubuntu-latest; this image mirrors that toolchain so
+# researchers can reproduce verification locally before CI sees it.
+
+FROM ubuntu:24.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    gcc \
+    g++ \
+    clang \
+    lld \
+    binutils \
+    nasm \
+    cmake \
+    ninja-build \
+    qemu-user \
+    qemu-system-x86 \
+    python3 \
+    python3-pip \
+    python3-venv \
+    git \
+    curl \
+    ca-certificates \
+    unzip \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV RUSTUP_HOME=/usr/local/rustup \
+    CARGO_HOME=/usr/local/cargo \
+    PATH=/usr/local/cargo/bin:$PATH
+
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs -o /tmp/rustup.sh \
+    && sh /tmp/rustup.sh -y --profile minimal --default-toolchain stable \
+    && rustup toolchain install nightly --profile minimal --component miri \
+    && rustup component add miri --toolchain nightly \
+    && rustup default stable \
+    && rm /tmp/rustup.sh
+
+RUN python3 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+RUN pip install --no-cache-dir semgrep
+
+RUN curl -sSfL https://github.com/github/codeql-cli-binaries/releases/latest/download/codeql-linux64.zip -o /tmp/codeql.zip \
+    && unzip -q /tmp/codeql.zip -d /opt/codeql \
+    && rm /tmp/codeql.zip
+ENV PATH="/opt/codeql/codeql:$PATH"
+
+RUN gcc --version \
+    && clang --version \
+    && rustc --version \
+    && cargo --version \
+    && semgrep --version \
+    && codeql version \
+    && qemu-x86_64 --version \
+    && qemu-system-x86_64 --version

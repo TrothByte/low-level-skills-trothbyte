@@ -10,8 +10,12 @@ permissions:
 
 jobs:
   validate:
-    name: v2.0 Validators
-    runs-on: ubuntu-latest
+    name: v3.0 Validators (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -24,12 +28,11 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements-dev.txt
 
-      - name: Run full validator suite (v2.0)
+      - name: Run full validator suite (v3.0)
         run: python tools/validate.py
 
-      - name: Token budget gate (activation <= 2000 tokens)
-        run: |
-          python tools/tokens/token_measure.py --check 2000 $(find skills -name SKILL.md -exec dirname {} \;)
+      - name: Token budget gate (activation <= 2000 tokens, cross-platform)
+        run: python -c "import glob,os,subprocess,sys; dirs=sorted({os.path.dirname(p) for p in glob.glob('skills/**/SKILL.md', recursive=True)}); sys.exit(subprocess.call([sys.executable,'tools/tokens/token_measure.py','--check','2000']+dirs))"
 
       - name: Check generated catalog is up to date
         run: |
@@ -45,3 +48,99 @@ jobs:
         run: |
           python tools/reports/gen_domain_readmes.py
           git diff --quiet --exit-code skills/*/README.md || { echo "::warning::Some domain READMEs may have been regenerated — review diffs"; }
+
+  eval-source-backed:
+    name: Eval source-backed
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Verify toolchains (gcc, clang, rust)
+        run: |
+          gcc --version
+          clang --version
+          rustc --version
+          rustup update stable
+
+      - name: Run source-backed evals
+        run: python tools/eval_runner.py --source-backed-only
+
+  eval-security:
+    name: Eval security (semgrep + codeql)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install semgrep
+        run: pip install semgrep
+
+      - name: Semgrep CWE-top-25 scan (fails on ERROR-severity findings)
+        run: semgrep --config=p/cwe-top-25 skills/ --output semgrep-report.txt --error
+
+      - uses: github/codeql-action/init@v3
+        with:
+          languages: c-cpp
+          build-mode: default
+
+      - name: CodeQL Autobuild (informational)
+        continue-on-error: true
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Compile representative good examples (toolchain check)
+        continue-on-error: true
+        run: |
+          find skills -path '*/examples/good/*.c' -print0 | xargs -0 -n 1 gcc -c -o /dev/null
+
+      - name: CodeQL analyze (informational gate; semgrep is the hard gate)
+        continue-on-error: true
+        uses: github/codeql-action/analyze@v3
+
+  eval-researched-stub:
+    name: Eval researched stubs
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Run full eval suite (incl. researched stub checks)
+        run: python tools/eval_runner.py
+
+  token-budget:
+    name: Token budget gate (<= 2000 tokens per SKILL.md)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Token budget gate (activation <= 2000 tokens)
+        run: python -c "import glob,os,subprocess,sys; dirs=sorted({os.path.dirname(p) for p in glob.glob('skills/**/SKILL.md', recursive=True)}); sys.exit(subprocess.call([sys.executable,'tools/tokens/token_measure.py','--check','2000']+dirs))"

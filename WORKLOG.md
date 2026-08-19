@@ -670,3 +670,13 @@ nvcc, clang-bpf, LLVM, QEMU, sanitizer-СЂР°РЅС‚Р°Р№РјС‹).
 
 3. **РџСЂРѕРІРµСЂРµРЅРѕ**: SVG РІР°Р»РёРґРµРЅ (XML), РІСЃРµ РєР»СЋС‡РµРІС‹Рµ С„СЂР°Р·С‹ СЃРѕС…СЂР°РЅРµРЅС‹, raw README (200),
    banner (200), СЃС‚СЂР°РЅРёС†Р° СЂРµРїРѕР·РёС‚РѕСЂРёСЏ (200). РџСѓС€ РІ origin/main.
+
+## Pre-flight analysis by agent
+
+1. **Состояние**: 163 skills / 34 домена / 85 source-backed / 78 researched; registry 228 sources, 141 claims, 233 cross-links (skills.yaml summary подтверждает 163/85/78).
+2. **tools/validate.py v2.0** — оркестратор: skill_lint > token gate (--check 2000) > registry_check > source_check > claim_extractor > prose_lint (advisory, sampling 3); exit 0/1.
+3. **Текущий CI (ci.yml)**: единственная джоба `validate` на ubuntu-latest; bash-`find` для token gate (не cross-platform!); freshness-чеки: gen_skills_catalog>docs/SKILLS.md (fail), gen_landing_data>docs/assets/skills.js (fail), gen_domain_readmes>warning-only. `permissions: contents: read`.
+4. **Windows-совместимость**: `find`/bash-подстановка не работают в pwsh; requirements-dev.txt содержит только PyYAML>=6.0; semgrep/clang не установлены на dev-хосте, но есть в ubuntu-latest.
+5. **Отсутствуют**: docker/ (создать), Makefile (создать), tools/eval_runner.py (создаёт фаза B — в CI ссылаться на merged tree), registry/skills.min.yaml, registry/triggers.yaml, tools/tool_schema.yaml, tools/sanitizer_run.sh (другие фазы).
+6. **token_measure.py** CLI: `--check 2000 <skill-dir...>`; tiktoken опционален (fallback-heuristic). Дирs-коллекция через python-глоб — cross-platform.
+7. **stale.yml** существует — не трогать. Git: ветка main, дерево чистое (head 73a400e).

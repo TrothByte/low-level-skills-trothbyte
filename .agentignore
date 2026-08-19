@@ -1,0 +1,17 @@
+# .agentignore — files an agent must NOT read at session start (token economy).
+# Each entry is literal; the line above explains why it is excluded.
+
+# docs/SKILLS.md — 200+ KB human catalog, never read at connect
+docs/SKILLS.md
+
+# research/ — historical surveys, read only when researching new skills
+research/
+
+# publish/ — npm/PyPI packaging, not runtime
+publish/
+
+# tools/reports/*.py — report generators, not runtime validation
+tools/reports/*.py
+
+# /evals/README.md — eval instructions, read only when running evals
+/evals/README.md

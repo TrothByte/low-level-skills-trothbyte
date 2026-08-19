@@ -680,3 +680,11 @@ nvcc, clang-bpf, LLVM, QEMU, sanitizer-—А–∞–љ—В–∞–є–Љ—Л).
 5. **ќтсутствуют**: docker/ (создать), Makefile (создать), tools/eval_runner.py (создаЄт фаза B Ч в CI ссылатьс€ на merged tree), registry/skills.min.yaml, registry/triggers.yaml, tools/tool_schema.yaml, tools/sanitizer_run.sh (другие фазы).
 6. **token_measure.py** CLI: `--check 2000 <skill-dir...>`; tiktoken опционален (fallback-heuristic). ƒирs-коллекци€ через python-глоб Ч cross-platform.
 7. **stale.yml** существует Ч не трогать. Git: ветка main, дерево чистое (head 73a400e).
+
+## 2026-08-19 Ч Session PHASE-C (v3.0)
+
+1. **C1: CI/CD matrix** Ч `.github/workflows/ci.yml` переписан: `validate` (matrix ubuntu/windows, skill_lint+registry_check+source_check через validate.py + €вный cross-platform token gate python -c-глобом + 3 freshness-чека), `eval-source-backed` (eval_runner.py --source-backed-only), `eval-security` (semgrep p/cwe-top-25 с --error + CodeQL init/autobuild/analyze, continue-on-error), `eval-researched-stub` (eval_runner.py полный прогон), `token-budget` (жЄсткий гейт 2000). `permissions: contents: read` сохранены. YAML парситс€ (python yaml.safe_load OK).
+2. **C2: docker/Dockerfile.ubuntu-eval** Ч ubuntu:24.04: build-essential/gcc/g++/clang/lld/binutils/nasm/cmake/ninja/qemu-user+qemu-system-x86/python3/pip/venv/git/curl; rustup stable+nightly (с miri); venv с semgrep; CodeQL CLI (releases/latest/download); RUN-верификаци€ версий всех тулчейнов.
+3. **C3: Makefile** Ч таргеты validate/eval/security/test (+бонус token), TAB-отступы проверены, 4/4 таргета на месте.
+4. ** оммиты**: `feat(ci): add multi-OS matrix with security and eval jobs`, `feat(docker): add ubuntu evaluation environment`, `feat(build): add Makefile with validate, eval, security targets`.
+5. **Discrepancy**: на диске нет tools/eval_runner.py (создаЄт фаза B) Ч CI-ссылки на него рассчитаны на merged tree; registry/skills.min.yaml + triggers.yaml + gen_skills_min.py по€вились в дереве от параллельной фазы Ч не трогались.

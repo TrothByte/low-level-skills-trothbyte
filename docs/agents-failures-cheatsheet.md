@@ -1,6 +1,6 @@
 # AI-agent failures in low-level code — quick reference
 
-A compact catalog of the failure classes behind this repository's 185 skills. Full
+A compact catalog of the failure classes behind this repository's 193 skills. Full
 source-traced detail: `research/` surveys and `registry/claims.yaml`.
 
 ## 1. Assembly & instruction-level
@@ -82,6 +82,6 @@ ideal decompilation ~7% (SCDBench); capability cliff at ~200 instructions.
 
 ## How this repository fixes them
 
-185 skills, each with: when to use / what the agent gets wrong / how to reason
+193 skills, each with: when to use / what the agent gets wrong / how to reason
 correctly / what+how to verify / source. 93 skills executed on real toolchains;
 every claim traces to a primary source. One command: `python tools/validate.py`.

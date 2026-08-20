@@ -8,6 +8,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Phase 1 expansion pipeline (×8 kernel/networking core skills)** — all
+  source-backed with host-verified compile-and-run examples (MinGW gcc 16.1):
+  - *kernel*: vfs-file-operations-and-fops (fops dispatch/return contract),
+    page-cache-writeback-semantics (fsync/dirty/writeback model),
+    workqueue-flush-and-cancellation (cancel_work_sync vs cancel_work,
+    flush-from-work deadlock), kernel-timers-hrtimer-vs-legacy (timer_list vs
+    hrtimer context and teardown), waitqueue-completion-synchronization
+    (lost wakeup, complete vs complete_all), kthread-create-and-teardown
+    (kthread_stop contract, unload ordering).
+  - *networking*: sk-buff-socket-buffer-management (head/data/tail layout,
+    skb_put/clone/copy/share), tcp-congestion-control-internals (RFC 5681
+    slow start/congestion avoidance, fast retransmit, CUBIC).
+- **12 new primary sources**: linux-vfs-docs, linux-writeback-docs,
+  kernel-workqueue-docs, kernel-timers-docs, kernel-completion-docs,
+  kernel-kthread-docs, linux-skbuff-docs, linux-networking-docs, linux-tcp-docs,
+  rfc-793, rfc-5681, rfc-8312.
+- Registry now: **193 skills**, 290 primary sources, 248 traced claims
+  (CL-185..CL-248), ~378 cross-links (+56 edges).
 - **v3.0 agent-failure-mode set (×22 skills)** across 1 new domain (`safety`, 35 total):
   - *CRITICAL*: misra-c-compliance (Top-k rules for LLM agents, MISRA C:2012/C++:2023,
     host checker), agent-deception-detection (raw-evidence gate vs fabricated output),

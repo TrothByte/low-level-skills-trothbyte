@@ -1,9 +1,9 @@
 # Progress Tracking — Low-level skills TrothByte
 # Главный источник состояния проекта. Обновляется после каждого существенного действия.
 
-current_phase: "PHASE 13 (v3.0) — 185 СКИЛЛА (185 SKILL.md), 35 доменов (НОВЫЙ safety), 22 agent-failure-mode скилла; лендинг и документация обновлены; релиз-подготовка"
-current_task: "PHASE 13 (v3.0): 22 новых скилла agent-failure-mode набора (MISRA, deception, refactoring-guard, differential testing, MTE, rust-for-linux, io_uring, BPF CO-RE, secure boot, hard-RT, hardening flags, Checked C, ML-KEM/ML-DSA, Vulkan compute, reproducible builds, USB, PCIe, core-dump, NAPI, KLEE/angr, IEEE 754, endianness) + полировка документации + публикация"
-current_subtask: "Добавлен НОВЫЙ домен safety/ (misra-c-compliance, hard-real-time-determinism). 22 новых скилла: 8 source-backed с реальными host-прогонами (gcc 16.1 MinGW: MISRA Top-k checker, evidence-gate, refactor diff-guard, -O0/-O2 divergence, canary/endbr64, gdb post-mortem, FP fast-math divergence, byte-order golden vectors), 14 researched с python-моделями и честными target-командами (MTE sim, io_uring ring protocol, CO-RE relocation, chain-of-trust 12/12, WCET budget, Checked C annotation inference, constant-time ML-KEM models, Vulkan binding/barrier check, SOURCE_DATE_EPOCH, USB descriptor validator, PCIe capability walk, NAPI state machine, angr 9.2.213 install+run, KLEE target). skill_lint 185/185 OK, token gate PASS (2 скилла ужаты). Реестр: 185 skills (93 source-backed), 278 sources (+50), 184 claims (CL-142..CL-184), 322 cross-links (+89). Лендинг и документация обновлены: README (185/35/93/278/184, v3.0-секция, area-map с safety), docs/SKILLS.md + 35 domain README перегенерированы, index.md, llms.txt, roadmap.md, agents-failures-cheatsheet.md (+секции 6-8), CHANGELOG, architecture.md. validate.py ALL CHECKS PASSED."
+current_phase: "PHASE 13 (v3.1) — 193 СКИЛЛА, Фаза 1 пайплайна расширения (8 kernel/networking core-скиллов); 35 доменов; релиз-подготовка"
+current_task: "PHASE 13 (v3.1): Фаза 1 пайплайна trothbyte_skills_expansion_pipeline — 8 source-backed core-скиллов (vfs-file-operations-and-fops, page-cache-writeback-semantics, workqueue-flush-and-cancellation, kernel-timers-hrtimer-vs-legacy, waitqueue-completion-synchronization, kthread-create-and-teardown, sk-buff-socket-buffer-management, tcp-congestion-control-internals) + реестр + документация"
+current_subtask: "Фаза 1 пайплайна завершена: 8/8 скиллов созданы, все source-backed с реальными host-прогонами (MinGW gcc 16.1, -Wall -Wextra -Werror -O2; 16 примеров: 8 good exit 0, 8 bad 'BUG reproduced' exit 0). SKILL.md все ≤2000 токенов (kernel-timers-hrtimer-vs-legacy ужат 2146→1999). Реестр: skills.yaml 193 (101 source-backed), sources.yaml 290 (+12: VFS/writeback/workqueue/timers/completion/kthread/skbuff/networking/tcp docs + RFC 793/5681/8312), claims.yaml 248 (CL-185..CL-248, +64), cross-links.yaml 378 (+56, 0 циклов). Документация: docs/SKILLS.md, skills.min.yaml, triggers.yaml, domain README kernel+networking, docs/assets/skills.js, README (193/101/290/248), architecture.md, agents-failures-cheatsheet.md, CHANGELOG (Phase 1 секция). validate.py ALL CHECKS PASSED под CI-heuristic backend (локально tiktoken строже: 11 pre-existing скиллов превышают gate на чистом дереве — не регрессия Фазы 1; новые 8 скиллов проходят оба backend'а)."
 completed_phases:
   - "PHASE 0 — REPOSITORY BOOTSTRAP"
   - "PHASE 1 — RESEARCH INGESTION"
@@ -68,16 +68,16 @@ files_modified:
 research_status:
   - "Все inventories: COMPLETE"
 skill_status:
-  registered: 185
-  implemented: 185
-  source_backed: 93
+  registered: 193
+  implemented: 193
+  source_backed: 101
   researched: 92
   evaluated: 0
   stable: 0
   all_registered_implemented: true
 source_status:
-  registry_sources: 278
-  claims_registered: 184
+  registry_sources: 290
+  claims_registered: 248
 eval_status:
   cve_core_set: 8
   cve_secondary_set: 8

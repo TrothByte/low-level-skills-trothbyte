@@ -1,5 +1,50 @@
 # WORKLOG — Low-level skills TrothByte
 
+## 2026-08-20 — Сессия 18 (Фаза 1 пайплайна расширения: 8 kernel/networking core-скиллов)
+
+### Выполнено
+
+1. **Фаза 1 пайплайна `trothbyte_skills_expansion_pipeline.md` выполнена полностью** —
+   8 из 8 скиллов созданы, все `source-backed` с реальными host-прогонами (MinGW gcc 16.1):
+   - *kernel*: `vfs-file-operations-and-fops` (fops dispatch, return-контракт read/write,
+     .owner, private_data lifetime, llseek, compat_ioctl; good: 9 assert-сценариев, bad:
+     4 BUG-класса), `page-cache-writeback-semantics` (dirty-lifecycle, fsync vs fdatasync,
+     O_SYNC/O_DSYNC, dirty_ratio/balance_dirty_pages; bad: "write() не durability"),
+     `workqueue-flush-and-cancellation` (IDLE/PENDING/RUNNING state-machine, flush vs
+     cancel_work_sync, self-requeue, flush-from-work deadlock; bad: UAF после
+     kfree(work_struct)), `kernel-timers-hrtimer-vs-legacy` (timer_list softirq vs hrtimer
+     hardirq context, del_timer_sync/hrtimer_cancel перед free; bad: timer после free),
+     `waitqueue-completion-synchronization` (lost-wakeup race, wait_event re-check,
+     complete vs complete_all, reinit, -ERESTARTSYS, sleep-in-atomic, UAF completion;
+     bad: 5 BUG-классов), `kthread-create-and-teardown` (kthread_create/run, stop contract,
+     unload ordering; bad: free-before-stop + stop-on-exited).
+   - *networking*: `sk-buff-socket-buffer-management` (head/data/tail/end layout,
+     skb_reserve/put/push/pull, clone vs copy vs share_check, refcount/ownership; bad:
+     tailroom overflow + shared-data write + double free), `tcp-congestion-control-internals`
+     (RFC 5681 slow start/congestion avoidance/fast retransmit, RTO, CUBIC RFC 8312; bad:
+     CA window too fast + timeout not collapsing + ssthresh not halved).
+   - ВСЕ 16 примеров (8 good + 8 bad) компилируются `gcc -Wall -Wextra -Werror -O2` и
+     запускаются на хосте (good: exit 0 "ALL CHECKS PASSED"; bad: exit 0, "BUG reproduced").
+   - SKILL.md все ≤2000 токенов (kernel-timers ужат 2146→1999; worst после фикса 1999).
+
+2. **Реестр интегрирован**: skills.yaml 193 (101 source-backed / 92 researched),
+   sources.yaml 290 (+12: linux-vfs-docs, linux-writeback-docs, kernel-workqueue-docs,
+   kernel-timers-docs, kernel-completion-docs, kernel-kthread-docs, linux-skbuff-docs,
+   linux-networking-docs, linux-tcp-docs, rfc-793, rfc-5681, rfc-8312), claims.yaml 248
+   (CL-185..CL-248, +64), cross-links.yaml 378 (+56). registry_check: 0 циклов.
+
+3. **Документация обновлена**: docs/SKILLS.md (193/101), skills.min.yaml + triggers.yaml
+   (генератор), domain README kernel/networking, docs/assets/skills.js (193), README
+   (193/101/290/248), architecture.md, agents-failures-cheatsheet.md, CHANGELOG (Phase 1
+   секция).
+
+4. **CI-эквивалентная проверка**: `tools/validate.py` ALL CHECKS PASSED под heuristic
+   backend (как в CI — requirements-dev.txt без tiktoken). Примечание: локально установлен
+   tiktoken 0.14.0, который считает строже; под ним 11 pre-existing скиллов
+   (binary-hardening-flags 2400, core-dump-analysis 2254, rust-for-linux-module-dev 2372,
+   kernel-ub-patterns 2318 и др.) превышают gate на чистом дереве ДО изменений — не
+   регрессия Фазы 1; новые 8 скиллов проходят gate в обоих backend'ах.
+
 ## 2026-08-20 — Сессия 17 (v3.0: 22 agent-failure-mode скилла + домен safety)
 
 ### Выполнено

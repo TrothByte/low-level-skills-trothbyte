@@ -9,7 +9,7 @@
 meta:
   generated_by: tools/reports/gen_skills_min.py
   updated: '2026-08-20'
-  total: 185
+  total: 193
 skills:
 - id: abi-layout-reasoning
   domain: abi
@@ -1367,6 +1367,18 @@ skills:
   priority_rules: ['uname -r', 'grep -E "vruntime|lag|deadline|avg_vruntime" /proc/sched_deb']
   requires: []
   path: skills/kernel/kernel-scheduler-mm-vfs-internals
+- id: kernel-timers-hrtimer-vs-legacy
+  domain: kernel
+  type: common
+  stability: source-backed
+  tokens: 1653
+  std_version: null
+  last_verified: '2026-08-20'
+  triggers: [kernel, legacy, linux, list, timer]
+  negative_triggers: []
+  priority_rules: ['gcc -Wall -Wextra -Werror -O2 examples/good/good_timers.c -o', 'gcc -Wall -Wextra -Werror -O2 examples/bad/bad_timers.c -o /']
+  requires: [kernel-atomic-context]
+  path: skills/kernel/kernel-timers-hrtimer-vs-legacy
 - id: kernel-uaccess-safety
   domain: kernel
   type: common
@@ -1391,6 +1403,18 @@ skills:
   priority_rules: ['# Host-verifiable: strict aliasing + container_of + overflow', 'gcc -Wall -Wextra -Werror -O2 examples/good/kernel_ub_good.c']
   requires: [c-undefined-behavior, kernel-uaccess-safety]
   path: skills/kernel/kernel-ub-patterns
+- id: kthread-create-and-teardown
+  domain: kernel
+  type: common
+  stability: source-backed
+  tokens: 1414
+  std_version: null
+  last_verified: '2026-08-20'
+  triggers: [create, kernel, kthread, linux, threads]
+  negative_triggers: []
+  priority_rules: ['gcc -Wall -Wextra -Werror -O2 examples/good/good_kthread.c -', 'gcc -Wall -Wextra -Werror -O2 examples/bad/bad_kthread.c -o ']
+  requires: [kernel-atomic-context, waitqueue-completion-synchronization]
+  path: skills/kernel/kthread-create-and-teardown
 - id: llm-verifier-warning-disposition
   domain: _meta
   type: unique
@@ -1631,6 +1655,18 @@ skills:
   priority_rules: ['ibv_devinfo -v # HCA caps, link layer, active MTU', 'rdma link show']
   requires: []
   path: skills/networking/networking-hardware-rdma-nic-offload
+- id: page-cache-writeback-semantics
+  domain: kernel
+  type: unique
+  stability: source-backed
+  tokens: 1587
+  std_version: null
+  last_verified: '2026-08-20'
+  triggers: [cache, depends, filesystem, kernel, page]
+  negative_triggers: []
+  priority_rules: ['gcc -Wall -Wextra -Werror -O2 examples/good/good_writeback.c', 'gcc -Wall -Wextra -Werror -O2 examples/bad/bad_writeback.c -']
+  requires: [kernel-scheduler-mm-vfs-internals, vfs-file-operations-and-fops]
+  path: skills/kernel/page-cache-writeback-semantics
 - id: page-table-management
   domain: kernel
   type: unique
@@ -2003,6 +2039,18 @@ skills:
   priority_rules: ['gcc -O2 -fopt-info-vec=vec.txt -S examples/good/loop.c', 'gcc -O2 -fopt-info-vec=vec_bad.txt -S examples/bad/loop.c']
   requires: [asm-x86-64-registers-and-addressing]
   path: skills/simd/simd-vectorization-cross-layer
+- id: sk-buff-socket-buffer-management
+  domain: networking
+  type: common
+  stability: source-backed
+  tokens: 1611
+  std_version: null
+  last_verified: '2026-08-20'
+  triggers: [linux, manipulates, networking, sk, struct]
+  negative_triggers: []
+  priority_rules: ['gcc -Wall -Wextra -Werror -O2 examples/good/good_skb.c -o /t', 'gcc -Wall -Wextra -Werror -O2 examples/bad/bad_skb.c -o /tmp']
+  requires: []
+  path: skills/networking/sk-buff-socket-buffer-management
 - id: smt-z3-sound-usage
   domain: security
   type: unique
@@ -2027,6 +2075,18 @@ skills:
   priority_rules: ['python examples/tools/path_exploration_model.py', '# KLEE: build bitcode, run, read stats and errors']
   requires: [smt-z3-sound-usage]
   path: skills/security/symbolic-execution-klee-angr
+- id: tcp-congestion-control-internals
+  domain: networking
+  type: common
+  stability: source-backed
+  tokens: 1487
+  std_version: null
+  last_verified: '2026-08-20'
+  triggers: [congestion, control, interface, ops, tcp]
+  negative_triggers: []
+  priority_rules: ['gcc -Wall -Wextra -Werror -O2 examples/good/good_tcpcc.c -o ', 'gcc -Wall -Wextra -Werror -O2 examples/bad/bad_tcpcc.c -o /t']
+  requires: []
+  path: skills/networking/tcp-congestion-control-internals
 - id: toctou-kernel
   domain: kernel
   type: unique
@@ -2063,6 +2123,18 @@ skills:
   priority_rules: ['gcc -O2 -fopt-info-vec=vec_good.txt -S examples/good/loops.c', 'gcc -O2 -fopt-info-vec=vec_bad.txt -S examples/bad/loops.c']
   requires: []
   path: skills/simd/vectorization-reasoning
+- id: vfs-file-operations-and-fops
+  domain: kernel
+  type: common
+  stability: source-backed
+  tokens: 1525
+  std_version: null
+  last_verified: '2026-08-20'
+  triggers: [drivers, file, kernel, linux, operations]
+  negative_triggers: []
+  priority_rules: ['gcc -Wall -Wextra -Werror -O2 examples/good/good_fops.c -o /', 'gcc -Wall -Wextra -Werror -O2 examples/bad/bad_fops.c -o /tm']
+  requires: [kernel-uaccess-safety]
+  path: skills/kernel/vfs-file-operations-and-fops
 - id: vulkan-compute-shaders
   domain: gpu
   type: unique
@@ -2075,6 +2147,18 @@ skills:
   priority_rules: ['python examples/tools/binding_check.py examples/good/compute', '# expected: PASS — shader and host bindings match 1:1']
   requires: [gpu-memory-model-coherence]
   path: skills/gpu/vulkan-compute-shaders
+- id: waitqueue-completion-synchronization
+  domain: kernel
+  type: common
+  stability: source-backed
+  tokens: 1624
+  std_version: null
+  last_verified: '2026-08-20'
+  triggers: [completions, kernel, linux, queues, wait]
+  negative_triggers: []
+  priority_rules: ['gcc -Wall -Wextra -Werror -O2 examples/good/good_waitqueue.c', 'gcc -Wall -Wextra -Werror -O2 examples/bad/bad_waitqueue.c -']
+  requires: [kernel-atomic-context]
+  path: skills/kernel/waitqueue-completion-synchronization
 - id: wasm-runtime-from-scratch
   domain: wasm
   type: unique
@@ -2087,6 +2171,18 @@ skills:
   priority_rules: ['gcc -Wall -Wextra -Werror -O2 interp.c -o interp && ./interp', '# good interpreter: tests 3,4,5 must exit 102/103/105 (traps']
   requires: []
   path: skills/_meta/wasm-runtime-from-scratch
+- id: workqueue-flush-and-cancellation
+  domain: kernel
+  type: common
+  stability: source-backed
+  tokens: 1680
+  std_version: null
+  last_verified: '2026-08-20'
+  triggers: [kernel, linux, must, queues, work]
+  negative_triggers: []
+  priority_rules: ['gcc -Wall -Wextra -Werror -O2 examples/good/good_flush.c -o ', 'gcc -Wall -Wextra -Werror -O2 examples/bad/bad_flush.c -o /t']
+  requires: [kernel-atomic-context, kernel-driver-char-device-lifecycle]
+  path: skills/kernel/workqueue-flush-and-cancellation
 - id: zeroize-constant-time
   domain: security
   type: improved

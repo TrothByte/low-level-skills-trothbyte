@@ -5,8 +5,8 @@ Public roadmap for **Low-level skills TrothByte**. Status and history live in
 
 ## Current state (2026-08-20)
 
-- **185 skills В· 35 domains В· 93 source-backed В· 92 researched** (honestly marked).
-- Registry: 278 primary sources, 184 traced claims, ~322 cross-links.
+- **193 skills · 35 domains · 101 source-backed · 92 researched** (honestly marked).
+- Registry: 290 primary sources, 248 traced claims, ~378 cross-links.
 - Quality gates: `python tools/validate.py` (skill_lint + registry_check + source_check +
   claim_extractor + token gate), CI on every push/PR, generated-catalog and landing-data
   staleness checks.
@@ -21,6 +21,11 @@ Public roadmap for **Low-level skills TrothByte**. Status and history live in
   Vulkan compute, reproducible firmware builds, USB device stack, PCIe config space,
   core-dump analysis, NAPI, symbolic execution (KLEE/angr), IEEE 754 semantics,
   endianness; new domain `safety`.
+- **v3.1: Phase 1 of the expansion pipeline (8 new kernel/networking core skills, all
+  source-backed)** — VFS file_operations/fops, page cache & writeback semantics,
+  workqueue flush & cancellation, timers (hrtimer vs legacy), waitqueue/completion
+  synchronization, kthread create & teardown, sk_buff buffer management, TCP congestion
+  control internals. +12 primary sources (kernel/networking docs, RFC 793/5681/8312).
 
 ## Next phases
 
@@ -32,7 +37,7 @@ Public roadmap for **Low-level skills TrothByte**. Status and history live in
 4. **Elevate researched → source-backed** — on a Linux/GPU host with zig, nasm,
    clang-cross, qemu, nvcc, mpicc, valgrind, verilator, jadx/frida, frama-c/cbmc/kani,
    z3, and kernel toolchains installed. Each skill documents its exact command.
-5. **License audit (PHASE 22)** — full pass over the 278 registered sources.
+5. **License audit (PHASE 22)** — full pass over the 290 registered sources.
 6. **Calibration (PHASE 21)** — fold evals back into skill guidance.
 
 ## Good first issues

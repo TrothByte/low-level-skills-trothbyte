@@ -45,7 +45,7 @@ low-level-agent-skills/
 │   ├── tokens/          # token_measure.py
 │   └── reports/         # gen_domain_readmes.py
 └── docs/                # документация
-    ├── SKILLS.md        # каталог всех 185 skills (что делает каждый, stability, путь)
+    ├── SKILLS.md        # каталог всех 193 skills (что делает каждый, stability, путь)
     ├── ACKNOWLEDGMENTS.md  # благодарности авторам использованных репозиториев
     └── architecture.md  # этот документ
 ```
@@ -137,13 +137,13 @@ copied documentation. Храним provenance. Не копируем матер�
 > **Auto-regenerated data below is read from `registry/skills.yaml`, `registry/sources.yaml`,
 > `registry/claims.yaml`, `registry/cross-links.yaml` — keep those files in sync.**
 
-- **185/185 зарегистрированных skills реализованы** в 35 доменных каталогах; в каждом домене
+- **193/193 зарегистрированных skills реализованы** в 35 доменных каталогах; в каждом домене
   есть `README.md` для навигации (генератор: `tools/reports/gen_domain_readmes.py`).
-- **93 source-backed** (верифицированы GCC 16.1, rustc 1.97.1, gdb 17.2, as/objdump,
+- **101 source-backed** (верифицированы GCC 16.1, rustc 1.97.1, gdb 17.2, as/objdump,
   CMake/Ninja); **92 researched** требуют недоступного в dev-среде тулчейна (NVIDIA CUDA,
   Linux eBPF, LLVM, QEMU, sanitizer-рантаймы, Zig, seL4, Kani/Verus и др.) и честно помечены
   с точными командами верификации в `evals/README.md`.
-- Registry: 278 источников, 184 claims с полной provenance, ~322 cross-links
+- Registry: 290 источников, 248 claims с полной provenance, ~378 cross-links
   (require/recommend/conflict/extend/verify) + collision rules.
 - Quality gates (v2.0): `tools/lint/skill_lint.py` (9 секций, body ≤250 строк,
   description ≤50 слов), `tools/lint/registry_check.py` (целостность + циклы в require-графе),

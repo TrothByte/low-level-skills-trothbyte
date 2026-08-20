@@ -7,13 +7,13 @@ the operational knowledge to do it correctly.
 
 ## Key facts
 
-- 185 skills across 35 domains; 93 skills are `source-backed` (verified by executing
+- 193 skills across 35 domains; 101 skills are `source-backed` (verified by executing
   examples on real toolchains: GCC 16.1, rustc 1.97, GDB, objdump, CMake/Ninja),
   92 are `researched` (grounded in primary sources; exact verification commands are
   documented in each skill's evals/README.md).
 - License: MIT.
 - Every normative claim is traced: claim -> source -> section -> skill in
-  `registry/claims.yaml`, backed by 278 primary sources in `registry/sources.yaml`.
+  `registry/claims.yaml`, backed by 290 primary sources in `registry/sources.yaml`.
 
 ## Repository structure
 
@@ -42,11 +42,13 @@ the operational knowledge to do it correctly.
 
 Assembly (x86-64, Thumb-2, NEON, RISC-V), C (UB, strings, errno, signal safety, FP
 semantics, endianness, Checked C migration), C++ (RAII, lifecycle, move),
-Rust (unsafe, FFI, API drift, supply chain, crypto), kernel (RCU, uaccess,
-scheduler/MM/VFS, drivers, io_uring, Rust modules), embedded (registers, devicetree,
-RTOS, OTA, HIL, USB, PCIe, MTE, reproducible builds), safety (MISRA compliance,
-hard real-time determinism), Zig (comptime, allocators, build system, FFI, SIMD),
-GPU (PTX, Vulkan compute, memory model, kernel verification),
+Rust (unsafe, FFI, API drift, supply chain, crypto), kernel (RCU, uaccess, VFS/fops,
+page cache & writeback, workqueues, timers/hrtimers, kthreads, waitqueues,
+scheduler/MM/VFS, drivers, io_uring, Rust modules), networking (sk_buff management,
+TCP congestion control, eBPF verifier, NAPI, BPF CO-RE), embedded (registers,
+devicetree, RTOS, OTA, HIL, USB, PCIe, MTE, reproducible builds), safety (MISRA
+compliance, hard real-time determinism), Zig (comptime, allocators, build system,
+FFI, SIMD), GPU (PTX, Vulkan compute, memory model, kernel verification),
 binary analysis & RE (decompilation fidelity, shellcode, CAN, Ghidra),
 build systems (CMake, toolchain drift, linker errors), debugging (crash triage,
 core dumps, instrumentation), security (side-channel, post-quantum ML-KEM/ML-DSA,

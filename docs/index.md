@@ -1,17 +1,17 @@
 ---
 title: Low-level skills TrothByte
-description: 185 verified, source-backed low-level engineering skills for AI coding agents — C, C++, Rust, assembly, kernel, embedded, Zig, GPU, reverse engineering, build systems.
+description: 193 verified, source-backed low-level engineering skills for AI coding agents — C, C++, Rust, assembly, kernel, networking, embedded, Zig, GPU, reverse engineering, build systems.
 ---
 
 # Low-level skills TrothByte
 
-**185 verified, source-backed low-level engineering skills for AI coding agents.**
+**193 verified, source-backed low-level engineering skills for AI coding agents.**
 
 AI agents writing C, Rust, assembly, kernels, or firmware fail in predictable ways:
 they trust "it compiles", guess ABIs, ignore memory ordering, and skip verification.
 This repository fixes exactly those failures.
 
-- **185 skills** · **35 domains** · **93 source-backed** (executed on real toolchains) · **278 primary sources** · **184 traced claims**
+- **193 skills** · **35 domains** · **101 source-backed** (executed on real toolchains) · **290 primary sources** · **248 traced claims**
 - Every normative claim is traced: `claim → source → section → skill`
 - `research/` documents 55+ real, source-traced AI-agent failures in low-level code
 - MIT license · CI-green · Agent Skills spec-compliant
@@ -44,7 +44,8 @@ npx skills add TrothByte/low-level-skills-trothbyte
 | [C](https://github.com/TrothByte/low-level-skills-trothbyte/tree/main/skills/c) | UB, integer promotion, strings, errno, signal safety |
 | [C++](https://github.com/TrothByte/low-level-skills-trothbyte/tree/main/skills/cpp) | RAII, lifecycle, move semantics |
 | [Rust](https://github.com/TrothByte/low-level-skills-trothbyte/tree/main/skills/rust) | unsafe, FFI, API drift, supply chain, crypto |
-| [Kernel](https://github.com/TrothByte/low-level-skills-trothbyte/tree/main/skills/kernel) | RCU, uaccess, scheduler/MM/VFS, drivers, io_uring, Rust modules |
+| [Kernel](https://github.com/TrothByte/low-level-skills-trothbyte/tree/main/skills/kernel) | RCU, uaccess, VFS/fops, page cache & writeback, workqueues, timers, kthreads, scheduler/MM, drivers, io_uring, Rust modules |
+| [Networking](https://github.com/TrothByte/low-level-skills-trothbyte/tree/main/skills/networking) | sk_buff management, TCP congestion control, eBPF verifier, NAPI, BPF CO-RE |
 | [Embedded](https://github.com/TrothByte/low-level-skills-trothbyte/tree/main/skills/embedded) | registers, devicetree, RTOS, OTA, HIL, USB, PCIe, MTE, reproducible builds |
 | [Safety](https://github.com/TrothByte/low-level-skills-trothbyte/tree/main/skills/safety) | MISRA compliance, hard real-time determinism |
 | [Zig](https://github.com/TrothByte/low-level-skills-trothbyte/tree/main/skills/zig) | comptime, allocators, build system, FFI, SIMD |

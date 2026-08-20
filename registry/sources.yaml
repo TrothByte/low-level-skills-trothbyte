@@ -3908,3 +3908,202 @@ sources:
   relevant_sections:
   - 'big-endian network byte order'
   last_verified: '2026-08-20'
+- id: linux-vfs-docs
+  title: 'Linux kernel — VFS documentation (Documentation/filesystems/vfs.rst)'
+  url: 'https://docs.kernel.org/filesystems/vfs.html'
+  authority: official
+  license: 'GPL-2.0'
+  version: current
+  topics:
+  - vfs
+  - file_operations
+  - fops
+  - super_block
+  relevant_sections:
+  - 'file_operations structure'
+  - 'open/read/write/llseek/release'
+  - 'inode and file lifetime'
+  - 'locking (i_rwsem, file_lock)'
+  last_verified: '2026-08-20'
+- id: linux-writeback-docs
+  title: 'Linux kernel — writeback & page cache documentation (mm/*, Documentation/mm)'
+  url: 'https://docs.kernel.org/mm/index.html'
+  authority: official
+  license: 'GPL-2.0'
+  version: current
+  topics:
+  - writeback
+  - 'page cache'
+  - dirty pages
+  - 'flusher threads'
+  relevant_sections:
+  - 'dirty ratio / bdi thresholds'
+  - 'balance_dirty_pages'
+  - 'wb_writeback loop'
+  - 'sync/fsync/fdatasync semantics'
+  last_verified: '2026-08-20'
+- id: kernel-workqueue-docs
+  title: 'Linux kernel — workqueue documentation (Documentation/core-api/workqueue.rst)'
+  url: 'https://docs.kernel.org/core-api/workqueue.html'
+  authority: official
+  license: 'GPL-2.0'
+  version: current
+  topics:
+  - workqueue
+  - work_struct
+  - 'flush_work'
+  - cancel_work
+  relevant_sections:
+  - 'workqueue API'
+  - 'flush and cancel'
+  - 'work items and reentrancy'
+  - 'ordered vs unbound'
+  last_verified: '2026-08-20'
+- id: kernel-timers-docs
+  title: 'Linux kernel — timers documentation (Documentation/timers/, kernel/time/)'
+  url: 'https://docs.kernel.org/timers/index.html'
+  authority: official
+  license: 'GPL-2.0'
+  version: current
+  topics:
+  - hrtimer
+  - 'timer_list'
+  - clockevents
+  - 'timekeeping'
+  relevant_sections:
+  - 'hrtimer API'
+  - 'timer API'
+  - 'dynamic ticks'
+  - 'context requirements'
+  last_verified: '2026-08-20'
+- id: kernel-completion-docs
+  title: 'Linux kernel — completion & waitqueue documentation (Documentation/scheduler/completion.rst, kernel/wait.c)'
+  url: 'https://docs.kernel.org/scheduler/completion.html'
+  authority: official
+  license: 'GPL-2.0'
+  version: current
+  topics:
+  - completion
+  - waitqueue
+  - 'wait_event'
+  - wake_up
+  relevant_sections:
+  - 'completion API'
+  - 'wait_event families'
+  - 'lost-wakeup pitfalls'
+  - 'spurious wakeups'
+  last_verified: '2026-08-20'
+- id: kernel-kthread-docs
+  title: 'Linux kernel — kernel threads documentation (Documentation/kernel-hacking/, kernel/kthread.c)'
+  url: 'https://docs.kernel.org/kernel-hacking/kernel-hacking.html'
+  authority: official
+  license: 'GPL-2.0'
+  version: current
+  topics:
+  - kthread
+  - 'kthread_create'
+  - kthread_stop
+  - 'kernel threads'
+  relevant_sections:
+  - 'kthread API'
+  - 'kthread_stop contract'
+  - 'thread lifecycle'
+  - 'module teardown'
+  last_verified: '2026-08-20'
+- id: linux-skbuff-docs
+  title: 'Linux kernel — sk_buff documentation (Documentation/networking/skbuff.rst)'
+  url: 'https://docs.kernel.org/networking/skbuff.html'
+  authority: official
+  license: 'GPL-2.0'
+  version: current
+  topics:
+  - sk_buff
+  - skb
+  - 'packet buffers'
+  - 'network memory'
+  relevant_sections:
+  - 'sk_buff layout'
+  - 'headroom/tailroom/data area'
+  - 'skb_clone vs skb_copy'
+  - 'ownership and freeing'
+  last_verified: '2026-08-20'
+- id: linux-networking-docs
+  title: 'Linux kernel — networking documentation (Documentation/networking/)'
+  url: 'https://docs.kernel.org/networking/index.html'
+  authority: official
+  license: 'GPL-2.0'
+  version: current
+  topics:
+  - networking
+  - 'network core'
+  - 'socket layer'
+  - 'protocol stack'
+  relevant_sections:
+  - 'netdev architecture'
+  - 'protocol handler dispatch'
+  - 'socket data path'
+  last_verified: '2026-08-20'
+- id: linux-tcp-docs
+  title: 'Linux kernel — TCP documentation (Documentation/networking/, net/ipv4/tcp_*.c)'
+  url: 'https://docs.kernel.org/networking/tcp.html'
+  authority: official
+  license: 'GPL-2.0'
+  version: current
+  topics:
+  - tcp
+  - 'congestion control'
+  - 'tcp_congestion_ops'
+  - 'TCP stack'
+  relevant_sections:
+  - 'tcp_congestion_ops'
+  - 'snd_cwnd / ssthresh'
+  - 'RTO and RTT estimation'
+  - 'tcp_write_queue'
+  last_verified: '2026-08-20'
+- id: rfc-793
+  title: 'RFC 793 — Transmission Control Protocol'
+  url: 'https://www.rfc-editor.org/rfc/rfc793.html'
+  authority: normative
+  license: 'IETF (public)'
+  version: 1981
+  topics:
+  - tcp
+  - 'transport protocol'
+  - 'segment format'
+  relevant_sections:
+  - 'retransmission timeout'
+  - 'window management'
+  - 'connection states'
+  last_verified: '2026-08-20'
+- id: rfc-5681
+  title: 'RFC 5681 — TCP Congestion Control'
+  url: 'https://www.rfc-editor.org/rfc/rfc5681.html'
+  authority: normative
+  license: 'IETF (public)'
+  version: 2009
+  topics:
+  - tcp
+  - 'congestion control'
+  - 'slow start'
+  - 'congestion avoidance'
+  relevant_sections:
+  - 'slow start and ssthresh'
+  - 'congestion avoidance'
+  - 'fast retransmit / fast recovery'
+  - 'loss recovery'
+  last_verified: '2026-08-20'
+- id: rfc-8312
+  title: 'RFC 8312 — CUBIC for Fast Long-Distance Networks'
+  url: 'https://www.rfc-editor.org/rfc/rfc8312.html'
+  authority: normative
+  license: 'IETF (public)'
+  version: 2018
+  topics:
+  - tcp
+  - 'congestion control'
+  - cubic
+  relevant_sections:
+  - 'window growth function'
+  - 'multiplicative decrease'
+  - 'TCP-friendly region'
+  last_verified: '2026-08-20'

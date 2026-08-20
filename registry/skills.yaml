@@ -1488,8 +1488,72 @@ skills:
   stability: source-backed
   path: skills/c/endianness-and-byte-order
   tier: 5
+- id: vfs-file-operations-and-fops
+  domain: kernel
+  type: common
+  priority: critical
+  status: implemented
+  stability: source-backed
+  path: skills/kernel/vfs-file-operations-and-fops
+  tier: 8
+- id: page-cache-writeback-semantics
+  domain: kernel
+  type: unique
+  priority: critical
+  status: implemented
+  stability: source-backed
+  path: skills/kernel/page-cache-writeback-semantics
+  tier: 8
+- id: workqueue-flush-and-cancellation
+  domain: kernel
+  type: common
+  priority: critical
+  status: implemented
+  stability: source-backed
+  path: skills/kernel/workqueue-flush-and-cancellation
+  tier: 8
+- id: kernel-timers-hrtimer-vs-legacy
+  domain: kernel
+  type: common
+  priority: critical
+  status: implemented
+  stability: source-backed
+  path: skills/kernel/kernel-timers-hrtimer-vs-legacy
+  tier: 8
+- id: waitqueue-completion-synchronization
+  domain: kernel
+  type: common
+  priority: high
+  status: implemented
+  stability: source-backed
+  path: skills/kernel/waitqueue-completion-synchronization
+  tier: 8
+- id: kthread-create-and-teardown
+  domain: kernel
+  type: common
+  priority: high
+  status: implemented
+  stability: source-backed
+  path: skills/kernel/kthread-create-and-teardown
+  tier: 8
+- id: sk-buff-socket-buffer-management
+  domain: networking
+  type: common
+  priority: critical
+  status: implemented
+  stability: source-backed
+  path: skills/networking/sk-buff-socket-buffer-management
+  tier: 8
+- id: tcp-congestion-control-internals
+  domain: networking
+  type: common
+  priority: critical
+  status: implemented
+  stability: source-backed
+  path: skills/networking/tcp-congestion-control-internals
+  tier: 8
 summary:
-  total_registered: 185
+  total_registered: 193
   by_tier:
     tier_0: 6
     tier_1: 5
@@ -1499,9 +1563,9 @@ summary:
     tier_5: 17
     tier_6: 27
     tier_7: 74
-    tier_8: 39
-  implemented: 185
-  source_backed: 93
+    tier_8: 47
+  implemented: 193
+  source_backed: 101
   researched: 92
   tiers_complete:
   - tier_0

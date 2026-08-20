@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 title: "Low-level skills TrothByte"
-abstract: "185 verified, source-backed low-level engineering skills for AI coding agents (C, C++, Rust, assembly, kernel, embedded, Zig, GPU, reverse engineering, build systems, safety). Every normative claim is traced to a primary source; 93 skills are verified by executing examples on real toolchains."
+abstract: "193 verified, source-backed low-level engineering skills for AI coding agents (C, C++, Rust, assembly, kernel, networking, embedded, Zig, GPU, reverse engineering, build systems, safety). Every normative claim is traced to a primary source; 101 skills are verified by executing examples on real toolchains."
 authors:
   - name: "TrothByte"
     website: "https://github.com/TrothByte"

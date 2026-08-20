@@ -1,0 +1,15 @@
+{
+  "speed": "full",
+  "comment": "Deliberately broken descriptor set. Config 1: EP0 max packet 0x33 (51, not 8/16/32/64), wTotalLength 29 while 32 bytes are serialized (one endpoint not counted), endpoint 0x81 placed BEFORE the interface, bNumInterfaces says 2 with only 1 interface present, interface bNumEndpoints says 2 but only 1 endpoint follows. Config 2: HID interface whose HID descriptor has bLength 7 instead of 9. Every bug must be named by the validator.",
+  "descriptors": [
+    [18, 1, 0, 2, 0, 0, 0, 51, 52, 18, 120, 86, 0, 1, 1, 2, 3, 2],
+    [9, 2, 29, 0, 2, 1, 0, 128, 50],
+    [7, 5, 129, 2, 64, 0, 0],
+    [9, 4, 0, 0, 2, 8, 6, 80, 0],
+    [7, 5, 2, 2, 64, 0, 0],
+    [9, 2, 32, 0, 1, 2, 0, 128, 50],
+    [9, 4, 0, 0, 1, 3, 0, 0, 0],
+    [7, 33, 17, 1, 0, 0, 1],
+    [7, 5, 129, 3, 64, 0, 10]
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "comment": "BAD: a barrier exists between the compute write and the compute read, but dstStage/dstAccess only cover a TRANSFER consumer (TRANSFER_READ), not the actual COMPUTE SHADER_READ consumer. The barrier is present but its masks do not cover the dependency. Must FLAG a wrong-mask hazard.",
+  "ops": [
+    {"op": "write", "buffer": "buf0", "stage": "COMPUTE", "access": "SHADER_WRITE"},
+    {"op": "barrier", "srcStage": ["COMPUTE"], "srcAccess": ["SHADER_WRITE"], "dstStage": ["TRANSFER"], "dstAccess": ["TRANSFER_READ"]},
+    {"op": "read", "buffer": "buf0", "stage": "COMPUTE", "access": "SHADER_READ"}
+  ]
+}

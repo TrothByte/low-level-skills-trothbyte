@@ -93,9 +93,9 @@ const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").mat
   if (!el) return;
   const phrases = [
     "AI agents trust \u201cit compiles\u201d \u2014 Bedrock teaches them to verify.",
-    "C, C++, Rust, assembly, kernels, firmware \u2014 124 skills, source-traced.",
+    "C, C++, Rust, assembly, kernels, firmware \u2014 185 skills, source-traced.",
     "Assemble \u2192 disassemble \u2192 compare bytes \u2192 then trust.",
-    "65 skills executed on real toolchains. 59 honestly marked researched.",
+    "93 skills executed on real toolchains. 92 honestly marked researched.",
     "Every claim traces to a primary source: claim \u2192 source \u2192 section \u2192 skill.",
   ];
   let pi = 0, ci = 0, deleting = false;
@@ -124,8 +124,8 @@ const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").mat
   if (!body) return;
   const lines = [
     ["$ python tools/validate.py", ""],
-    ["[validate] checking 124 SKILL.md files", ""],
-    ["[validate] skill_lint \u2026\u2026 124/124 OK", "ok"],
+    ["[validate] checking 185 SKILL.md files", ""],
+    ["[validate] skill_lint \u2026\u2026 185/185 OK", "ok"],
     ["[validate] registry_check \u2026 0 warnings", "ok"],
     ["[validate] source_check \u2026 0 warnings", "ok"],
     ["[validate] OK", "ok"],

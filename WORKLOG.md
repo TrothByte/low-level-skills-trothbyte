@@ -1,5 +1,42 @@
 # WORKLOG вЂ” Low-level skills TrothByte
 
+## 2026-08-20 вЂ” РЎРµСЃСЃРёСЏ 17 (v3.0: 22 agent-failure-mode СЃРєРёР»Р»Р° + РґРѕРјРµРЅ safety)
+
+### Р’С‹РїРѕР»РЅРµРЅРѕ
+
+1. **Web-СЂРµСЃС‘СЂС‡ failure-РєРµР№СЃРѕРІ**: РїРѕРґС‚РІРµСЂР¶РґРµРЅС‹ РїРµСЂРІРёС‡РЅС‹Рµ РёСЃС‚РѕС‡РЅРёРєРё РґР»СЏ РЅРѕРІС‹С… СЃРєРёР»Р»РѕРІ вЂ”
+   MISRA C++ LLM violations 23-29/KLOC Рё 0 РїРѕР»РЅРѕСЃС‚СЊСЋ compliant РјРѕРґРµР»РµР№ (Research Square
+   rs-8123173, arXiv 2506.23535), Top-k в†’ в€’83%; agent deception (PNAS 2317967121,
+   arXiv 2509.03518 В«Can LLMs Lie?В», arXiv 2509.18970 survey); differential compiler
+   testing (UBfuzz ASPLOS'24, DiffSpec 2410.04249, DESIL 2504.01379); Checked C
+   (3C, arXiv 2203.13445). Gap-Р°РЅР°Р»РёР·: IEEE 754 Рё endianness РЅРµ РїРѕРєСЂС‹С‚С‹ в†’ +2 СЃРєРёР»Р»Р°.
+
+2. **22 РЅРѕРІС‹С… СЃРєРёР»Р»Р°** (5 Р±Р°С‚С‡РµР№ РїР°СЂР°Р»Р»РµР»СЊРЅС‹С… СЃСѓР±Р°РіРµРЅС‚РѕРІ), 8 source-backed СЃ СЂРµР°Р»СЊРЅС‹РјРё
+   host-РїСЂРѕРіРѕРЅР°РјРё (MISRA Top-k checker 11 findings/clean, evidence-gate 2/4 FAIL,
+   refactor diff-guard в€’3057 LOC FLAG, -O0/-O2 signed-overflow divergence,
+   canary 0xC0000409 vs silent, gdb post-mortem stack corruption, fast-math errno=0
+   divergence, byte-order golden vector PASS) Рё 14 researched СЃ host-РІРµСЂРёС„РёС†РёСЂРѕРІР°РЅРЅС‹РјРё
+   python-РјРѕРґРµР»СЏРјРё (MTE sim 6/6, io_uring ring protocol 8 bug-РєР»Р°СЃСЃРѕРІ, CO-RE relocation,
+   chain-of-trust 12/12, WCET budget U=0.235 schedulable, Checked C annotation sound,
+   constant-time sampling 256 vs 4973 iterations, Vulkan binding/barrier check,
+   SOURCE_DATE_EPOCH sha256 match, USB validator 7 rule-fail, PCIe capability walk,
+   NAPI state machine 3/3, angr 9.2.213 СѓСЃС‚Р°РЅРѕРІР»РµРЅ Рё РЅР°С€С‘Р» magic input).
+
+3. **РќРћР’Р«Р™ РґРѕРјРµРЅ safety/** (misra-c-compliance, hard-real-time-determinism); СЂР°СЃС€РёСЂРµРЅС‹
+   _meta, compiler, c, kernel, networking, security, embedded, gpu, debugging.
+
+4. **Р РµРµСЃС‚СЂ РёРЅС‚РµРіСЂРёСЂРѕРІР°РЅ** (one-shot integrate_new_skills.py, Р·Р°С‚РµРј СѓРґР°Р»С‘РЅ):
+   skills.yaml 185 (93 source-backed/92 researched), sources.yaml 278 (+50), claims.yaml
+   184 (CL-142..CL-184), cross-links.yaml 322 (+89). registry_check 0 С†РёРєР»РѕРІ.
+
+5. **Р”РѕРєСѓРјРµРЅС‚Р°С†РёСЏ РїРѕР»РЅРѕСЃС‚СЊСЋ РѕР±РЅРѕРІР»РµРЅР°**: README (185/35/93/278/184, v3.0-СЃРµРєС†РёСЏ,
+   area-map СЃ safety), docs/SKILLS.md + 35 domain README + docs/assets/skills.js
+   РїРµСЂРµРіРµРЅРµСЂРёСЂРѕРІР°РЅС‹, index.md, llms.txt, roadmap.md, agents-failures-cheatsheet.md
+   (+СЃРµРєС†РёРё 6-8), CHANGELOG (v3.0 Unreleased), architecture.md, roadmap/progress.yaml.
+
+6. **Token gate**: core-dump-analysis (2101в†’1983) Рё rust-for-linux-module-dev
+   (2030в†’1999) СѓР¶Р°С‚С‹; validate.py ALL CHECKS PASSED (skill_lint 185/185).
+
 ## 2026-08-17 вЂ” РЎРµСЃСЃРёСЏ 16 (design-РґРѕРјРµРЅ + РїРѕР»РёСЂРѕРІРєР° + РїСѓР±Р»РёРєР°С†РёСЏ)
 
 ### Р’С‹РїРѕР»РЅРµРЅРѕ
@@ -673,18 +710,27 @@ nvcc, clang-bpf, LLVM, QEMU, sanitizer-СЂР°РЅС‚Р°Р№РјС‹).
 
 ## Pre-flight analysis by agent
 
-1. **Состояние**: 163 skills / 34 домена / 85 source-backed / 78 researched; registry 228 sources, 141 claims, 233 cross-links (skills.yaml summary подтверждает 163/85/78).
-2. **tools/validate.py v2.0** — оркестратор: skill_lint > token gate (--check 2000) > registry_check > source_check > claim_extractor > prose_lint (advisory, sampling 3); exit 0/1.
-3. **Текущий CI (ci.yml)**: единственная джоба `validate` на ubuntu-latest; bash-`find` для token gate (не cross-platform!); freshness-чеки: gen_skills_catalog>docs/SKILLS.md (fail), gen_landing_data>docs/assets/skills.js (fail), gen_domain_readmes>warning-only. `permissions: contents: read`.
-4. **Windows-совместимость**: `find`/bash-подстановка не работают в pwsh; requirements-dev.txt содержит только PyYAML>=6.0; semgrep/clang не установлены на dev-хосте, но есть в ubuntu-latest.
-5. **Отсутствуют**: docker/ (создать), Makefile (создать), tools/eval_runner.py (создаёт фаза B — в CI ссылаться на merged tree), registry/skills.min.yaml, registry/triggers.yaml, tools/tool_schema.yaml, tools/sanitizer_run.sh (другие фазы).
-6. **token_measure.py** CLI: `--check 2000 <skill-dir...>`; tiktoken опционален (fallback-heuristic). Дирs-коллекция через python-глоб — cross-platform.
-7. **stale.yml** существует — не трогать. Git: ветка main, дерево чистое (head 73a400e).
+1. **пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ**: 163 skills / 34 пїЅпїЅпїЅпїЅпїЅпїЅ / 85 source-backed / 78 researched; registry 228 sources, 141 claims, 233 cross-links (skills.yaml summary пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 163/85/78).
+2. **tools/validate.py v2.0** пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: skill_lint > token gate (--check 2000) > registry_check > source_check > claim_extractor > prose_lint (advisory, sampling 3); exit 0/1.
+3. **пїЅпїЅпїЅпїЅпїЅпїЅпїЅ CI (ci.yml)**: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ `validate` пїЅпїЅ ubuntu-latest; bash-`find` пїЅпїЅпїЅ token gate (пїЅпїЅ cross-platform!); freshness-пїЅпїЅпїЅпїЅ: gen_skills_catalog>docs/SKILLS.md (fail), gen_landing_data>docs/assets/skills.js (fail), gen_domain_readmes>warning-only. `permissions: contents: read`.
+4. **Windows-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ**: `find`/bash-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ pwsh; requirements-dev.txt пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ PyYAML>=6.0; semgrep/clang пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ dev-пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ ubuntu-latest.
+5. **пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ**: docker/ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅ), Makefile (пїЅпїЅпїЅпїЅпїЅпїЅпїЅ), tools/eval_runner.py (пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ B пїЅ пїЅ CI пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ merged tree), registry/skills.min.yaml, registry/triggers.yaml, tools/tool_schema.yaml, tools/sanitizer_run.sh (пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ).
+6. **token_measure.py** CLI: `--check 2000 <skill-dir...>`; tiktoken пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (fallback-heuristic). пїЅпїЅпїЅs-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ python-пїЅпїЅпїЅпїЅ пїЅ cross-platform.
+7. **stale.yml** пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ. Git: пїЅпїЅпїЅпїЅпїЅ main, пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (head 73a400e).
 
-## 2026-08-19 — Session PHASE-C (v3.0)
+## 2026-08-19 пїЅ Session PHASE-C (v3.0)
 
-1. **C1: CI/CD matrix** — `.github/workflows/ci.yml` переписан: `validate` (matrix ubuntu/windows, skill_lint+registry_check+source_check через validate.py + явный cross-platform token gate python -c-глобом + 3 freshness-чека), `eval-source-backed` (eval_runner.py --source-backed-only), `eval-security` (semgrep p/cwe-top-25 с --error + CodeQL init/autobuild/analyze, continue-on-error), `eval-researched-stub` (eval_runner.py полный прогон), `token-budget` (жёсткий гейт 2000). `permissions: contents: read` сохранены. YAML парсится (python yaml.safe_load OK).
-2. **C2: docker/Dockerfile.ubuntu-eval** — ubuntu:24.04: build-essential/gcc/g++/clang/lld/binutils/nasm/cmake/ninja/qemu-user+qemu-system-x86/python3/pip/venv/git/curl; rustup stable+nightly (с miri); venv с semgrep; CodeQL CLI (releases/latest/download); RUN-верификация версий всех тулчейнов.
-3. **C3: Makefile** — таргеты validate/eval/security/test (+бонус token), TAB-отступы проверены, 4/4 таргета на месте.
-4. **Коммиты**: `feat(ci): add multi-OS matrix with security and eval jobs`, `feat(docker): add ubuntu evaluation environment`, `feat(build): add Makefile with validate, eval, security targets`.
-5. **Discrepancy**: на диске нет tools/eval_runner.py (создаёт фаза B) — CI-ссылки на него рассчитаны на merged tree; registry/skills.min.yaml + triggers.yaml + gen_skills_min.py появились в дереве от параллельной фазы — не трогались.
+1. **C1: CI/CD matrix** пїЅ `.github/workflows/ci.yml` пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: `validate` (matrix ubuntu/windows, skill_lint+registry_check+source_check пїЅпїЅпїЅпїЅпїЅ validate.py + пїЅпїЅпїЅпїЅпїЅ cross-platform token gate python -c-пїЅпїЅпїЅпїЅпїЅпїЅ + 3 freshness-пїЅпїЅпїЅпїЅ), `eval-source-backed` (eval_runner.py --source-backed-only), `eval-security` (semgrep p/cwe-top-25 пїЅ --error + CodeQL init/autobuild/analyze, continue-on-error), `eval-researched-stub` (eval_runner.py пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ), `token-budget` (пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ 2000). `permissions: contents: read` пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ. YAML пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (python yaml.safe_load OK).
+2. **C2: docker/Dockerfile.ubuntu-eval** пїЅ ubuntu:24.04: build-essential/gcc/g++/clang/lld/binutils/nasm/cmake/ninja/qemu-user+qemu-system-x86/python3/pip/venv/git/curl; rustup stable+nightly (пїЅ miri); venv пїЅ semgrep; CodeQL CLI (releases/latest/download); RUN-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
+3. **C3: Makefile** пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ validate/eval/security/test (+пїЅпїЅпїЅпїЅпїЅ token), TAB-пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, 4/4 пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.
+4. **пїЅпїЅпїЅпїЅпїЅпїЅпїЅ**: `feat(ci): add multi-OS matrix with security and eval jobs`, `feat(docker): add ubuntu evaluation environment`, `feat(build): add Makefile with validate, eval, security targets`.
+5. **Discrepancy**: пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ tools/eval_runner.py (пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ B) пїЅ CI-пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ merged tree; registry/skills.min.yaml + triggers.yaml + gen_skills_min.py пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
+## Pre-flight analysis by agent
+
+1. Repo state (verified by reading AGENTS.md, progress.yaml, WORKLOG.md, registry/skills.yaml, architecture.md, validate.py, README.md): 163 SKILL.md in skills/<domain>/<skill>/; 85 source-backed / 78 researched; registry has 228 sources, 141 claims, 233 cross-links; summary block {total_registered: 163, tier_0: 6, implemented: 163}.
+2. Section order VARIES between files (skill_lint checks only presence, not order). 160/163 files use exact canonical headings; 3 files use 'How to reason correctly (<variant>)' headings; 12 files carry extra '## ' sections (meta checklists, 'Notes on claim confidence') that must be preserved after Evaluation. No CRITICAL REMINDER exists anywhere yet.
+3. Frontmatter is uniform (name + description only, <=50 words); body max 171 lines (kernel-ub-patterns); token worst ~1689 (heuristic) вЂ” adding a ~50-token CRITICAL REMINDER stays under the 2000 gate and 250-line cap.
+4. Missing (my scope): tools/restructure_skills.py, skills/_meta/meta-compaction/, skills/_meta/meta-self-consistency/, registry entries + summary update (163в†’166, tier_0 6в†’9, researched 78в†’81), regeneration of docs/SKILLS.md, docs/assets/skills.js, .claude-plugin/marketplace.json, skills/_meta/README.md.
+5. meta-silent-failure-detection (Phase E) does NOT exist yet вЂ” must be registered with status: registered (registry_check WARNs only on 'implemented' with missing SKILL.md), lead promotes in Phase 7.
+6. Reserved: skills/_meta/meta-routing/ and skills/_meta/agent-tool-whitelist/ (phases A/E) вЂ” restructure script must exclude them.
+7. Generators confirmed: gen_skills_catalog.py, gen_landing_data.py, gen_marketplace.py, gen_domain_readmes.py вЂ” all read registry/skills.yaml; CI freshness-gates docs/SKILLS.md and docs/assets/skills.js. Pre-existing WORKLOG section was rewritten from broken encoding to UTF-8 (discrepancy note).

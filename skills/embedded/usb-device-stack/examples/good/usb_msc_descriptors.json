@@ -1,0 +1,15 @@
+{
+  "speed": "full",
+  "comment": "USB Mass Storage Class (bInterfaceClass 8, SCSI/BOT) full-speed device: one configuration, one interface with IN+OUT bulk endpoints, three UTF-16 string descriptors after language-ID array 0. wTotalLength 32 = config(9) + interface(9) + EP IN(7) + EP OUT(7).",
+  "descriptors": [
+    [18, 1, 0, 2, 0, 0, 0, 64, 52, 18, 120, 86, 0, 1, 1, 2, 3, 1],
+    [9, 2, 32, 0, 1, 1, 0, 128, 50],
+    [9, 4, 0, 0, 2, 8, 6, 80, 0],
+    [7, 5, 129, 2, 64, 0, 0],
+    [7, 5, 2, 2, 64, 0, 0],
+    [4, 3, 9, 4],
+    [20, 3, 84, 0, 114, 0, 111, 0, 116, 0, 104, 0, 66, 0, 121, 0, 116, 0, 101, 0],
+    [20, 3, 77, 0, 83, 0, 67, 0, 32, 0, 68, 0, 114, 0, 105, 0, 118, 0, 101, 0],
+    [22, 3, 48, 0, 49, 0, 50, 0, 51, 0, 52, 0, 53, 0, 54, 0, 55, 0, 56, 0, 57, 0]
+  ]
+}

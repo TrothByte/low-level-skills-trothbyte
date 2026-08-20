@@ -1,0 +1,2 @@
+RELRO           STACK CANARY      NX            PIE             RPATH      RUNPATH      Symbols     FORTIFY Fortified Fortifiable  FILE
+Full RELRO      Canary found      NX enabled    PIE enabled     No RPATH   No RUNPATH   1423 Symbols     Yes    94        236         ./good_hardened

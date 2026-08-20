@@ -1,0 +1,10 @@
+Displaying notes found in: .note.gnu.property
+  Owner                Data size 	Description
+  GNU                  0x00000020	NT_GNU_PROPERTY_TYPE_0
+      Properties: aarch64 feature: BTI, PAC
+      aarch64 branch protection: BTI, PAC
+
+Displaying notes found in: .note.gnu.build-id
+  Owner                Data size 	Description
+  GNU                  0x00000014	NT_GNU_BUILD_ID (unique build ID bitstring)
+    Build ID: a1b2c3d4e5f60718293a4b5c6d7e8f901a2b3c4d

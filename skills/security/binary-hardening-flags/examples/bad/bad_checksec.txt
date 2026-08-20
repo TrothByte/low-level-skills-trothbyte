@@ -1,0 +1,2 @@
+RELRO           STACK CANARY      NX            PIE             RPATH      RUNPATH      Symbols     FORTIFY Fortified Fortifiable  FILE
+Partial RELRO   No canary found   NX disabled   No PIE          No RPATH   No RUNPATH   1324 Symbols     No     0         0          ./bad_plain

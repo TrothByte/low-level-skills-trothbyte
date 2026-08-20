@@ -6,11 +6,11 @@
 
 <sub>Follows the [Agent Skills](https://agentskills.io) open standard — works with Claude Code, Cursor, GitHub Copilot, VS Code, Gemini CLI, OpenCode, Codex, and other Agent Skills clients.</sub>
 
-[![skills](https://img.shields.io/badge/skills-163-0F766E?style=flat-square)](docs/SKILLS.md)
-[![domains](https://img.shields.io/badge/domains-34-475569?style=flat-square)](#skills-catalog)
-[![source-backed](https://img.shields.io/badge/source--backed-85-15803D?style=flat-square)](registry/skills.yaml)
-[![primary sources](https://img.shields.io/badge/primary--sources-228-1D4ED8?style=flat-square)](registry/sources.yaml)
-[![traced claims](https://img.shields.io/badge/traced--claims-141-9D174D?style=flat-square)](registry/claims.yaml)
+[![skills](https://img.shields.io/badge/skills-185-0F766E?style=flat-square)](docs/SKILLS.md)
+[![domains](https://img.shields.io/badge/domains-35-475569?style=flat-square)](#skills-catalog)
+[![source-backed](https://img.shields.io/badge/source--backed-93-15803D?style=flat-square)](registry/skills.yaml)
+[![primary sources](https://img.shields.io/badge/primary--sources-278-1D4ED8?style=flat-square)](registry/sources.yaml)
+[![traced claims](https://img.shields.io/badge/traced--claims-184-9D174D?style=flat-square)](registry/claims.yaml)
 [![license](https://img.shields.io/badge/license-MIT-brightgreen?style=flat-square)](LICENSE.md)
 [![CI](https://img.shields.io/github/actions/workflow/status/TrothByte/low-level-skills-trothbyte/ci.yml?style=flat-square&label=CI)](https://github.com/TrothByte/low-level-skills-trothbyte/actions)
 [![skills.sh](https://skills.sh/b/TrothByte/low-level-skills-trothbyte)](https://skills.sh/TrothByte/low-level-skills-trothbyte)
@@ -18,7 +18,7 @@
 </div>
 
 > [!NOTE]
-> **163 skills · 34 domains · 85 source-backed · 228 primary sources · 141 traced claims.**
+> **185 skills · 35 domains · 93 source-backed · 278 primary sources · 184 traced claims.**
 > AI agents writing C, C++, Rust, assembly, kernels, or firmware fail in predictable ways —
 > they trust "it compiles", guess ABIs, ignore memory ordering, and skip verification.
 > TrothByte exists to fix exactly those failures.
@@ -78,7 +78,7 @@ The complete index — what each skill does, its stability, and where it lives �
 | Systems engineering | [`kernel`](skills/kernel/README.md) · [`networking`](skills/networking/README.md) · [`embedded`](skills/embedded/README.md) · [`bootloader`](skills/bootloader/README.md) · [`qemu`](skills/qemu/README.md) · [`virtualization`](skills/virtualization/README.md) · [`riscv`](skills/riscv/README.md) |
 | Binary analysis & RE | [`binary-analysis`](skills/binary-analysis/README.md) · [`reverse-engineering`](skills/reverse-engineering/README.md) · [`mobile`](skills/mobile/README.md) |
 | Performance & HPC | [`performance`](skills/performance/README.md) · [`simd`](skills/simd/README.md) · [`gpu`](skills/gpu/README.md) · [`hpc`](skills/hpc/README.md) |
-| Security & hardware | [`security`](skills/security/README.md) · [`hdl`](skills/hdl/README.md) |
+| Security, safety & hardware | [`security`](skills/security/README.md) · [`safety`](skills/safety/README.md) · [`hdl`](skills/hdl/README.md) |
 | Accelerators | [`accelerator`](skills/accelerator/README.md) |
 | Design (designer mode) | [`design`](skills/design/README.md) |
 | Tooling & agent behavior | [`sanitizers`](skills/sanitizers/README.md) · [`build-systems`](skills/build-systems/README.md) · [`debugging`](skills/debugging/README.md) · [`_meta`](skills/_meta/README.md) |
@@ -92,12 +92,43 @@ The complete index — what each skill does, its stability, and where it lives �
 | [`memory-ordering-reasoning`](skills/concurrency/memory-ordering-reasoning/SKILL.md) | races that compile and pass naive tests |
 | [`abi-layout-reasoning`](skills/abi/abi-layout-reasoning/SKILL.md) | struct layout and calling conventions, verified with the compiler |
 | [`ffi-boundary-cross-language`](skills/ffi/ffi-boundary-cross-language/SKILL.md) | where one language's safety guarantees end |
+| [`agent-deception-detection`](skills/_meta/agent-deception-detection/SKILL.md) | agents fabricating evidence, logs, or git history |
+| [`compiler-unstable-code-detection`](skills/compiler/compiler-unstable-code-detection/SKILL.md) | code that behaves differently across compilers/-O levels |
+| [`misra-c-compliance`](skills/safety/misra-c-compliance/SKILL.md) | safety-critical C/C++ that must pass MISRA rule sets |
+
+## v3.0: agent-failure-mode skills
+
+22 new skills target the failure classes that dominate real agent incidents —
+research-grounded, host-verified where possible:
+
+- **CRITICAL**: [`misra-c-compliance`](skills/safety/misra-c-compliance/SKILL.md),
+  [`agent-deception-detection`](skills/_meta/agent-deception-detection/SKILL.md),
+  [`destructive-refactoring-guard`](skills/_meta/destructive-refactoring-guard/SKILL.md),
+  [`compiler-unstable-code-detection`](skills/compiler/compiler-unstable-code-detection/SKILL.md),
+  [`arm-mte-programming`](skills/embedded/arm-mte-programming/SKILL.md)
+- **HIGH**: [`rust-for-linux-module-dev`](skills/kernel/rust-for-linux-module-dev/SKILL.md),
+  [`io-uring-interface`](skills/kernel/io-uring-interface/SKILL.md),
+  [`bpf-core-relocation`](skills/networking/bpf-core-relocation/SKILL.md),
+  [`secure-boot-chain`](skills/security/secure-boot-chain/SKILL.md),
+  [`hard-real-time-determinism`](skills/safety/hard-real-time-determinism/SKILL.md),
+  [`binary-hardening-flags`](skills/security/binary-hardening-flags/SKILL.md),
+  [`checked-c-migration`](skills/c/checked-c-migration/SKILL.md),
+  [`post-quantum-crypto-mlkem`](skills/security/post-quantum-crypto-mlkem/SKILL.md),
+  [`vulkan-compute-shaders`](skills/gpu/vulkan-compute-shaders/SKILL.md),
+  [`reproducible-builds-firmware`](skills/embedded/reproducible-builds-firmware/SKILL.md)
+- **MEDIUM**: [`usb-device-stack`](skills/embedded/usb-device-stack/SKILL.md),
+  [`pcie-config-space`](skills/embedded/pcie-config-space/SKILL.md),
+  [`core-dump-analysis`](skills/debugging/core-dump-analysis/SKILL.md),
+  [`napi-network-driver`](skills/networking/napi-network-driver/SKILL.md),
+  [`symbolic-execution-klee-angr`](skills/security/symbolic-execution-klee-angr/SKILL.md)
+- **Gap-analysis extras**: [`floating-point-ieee-semantics`](skills/c/floating-point-ieee-semantics/SKILL.md),
+  [`endianness-and-byte-order`](skills/c/endianness-and-byte-order/SKILL.md)
 
 ## Repository map
 
 | Path | Purpose |
 |---|---|
-| `skills/` | 163 skills across 34 domains (`SKILL.md` + `references/` + `examples/` + `evals/`) |
+| `skills/` | 185 skills across 35 domains (`SKILL.md` + `references/` + `examples/` + `evals/`) |
 | `registry/` | machine-readable state: skills, sources, claims, cross-links, tools, evals |
 | `roadmap/` | coverage matrix, uniqueness analysis, priorities, live progress |
 | `research/` | the original research documents this repository was built from |
@@ -118,7 +149,7 @@ The complete index — what each skill does, its stability, and where it lives �
 > honestly marked `researched` with the exact target commands documented.
 
 - **Every normative claim is traceable:** `claim → source → section → skill` in
-  [`registry/claims.yaml`](registry/claims.yaml), backed by 228 primary sources in
+  [`registry/claims.yaml`](registry/claims.yaml), backed by 278 primary sources in
   [`registry/sources.yaml`](registry/sources.yaml).
 - **Quality gates** run on every change — locally via [`tools/validate.py`](tools/validate.py)
   (skill_lint · registry_check · source_check · claim_extractor · token gate) and in CI

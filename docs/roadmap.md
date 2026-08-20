@@ -3,10 +3,10 @@
 Public roadmap for **Low-level skills TrothByte**. Status and history live in
 `roadmap/progress.yaml` (machine-readable) and `WORKLOG.md` (journal).
 
-## Current state (2026-08-17)
+## Current state (2026-08-20)
 
-- **163 skills · 34 domains · 85 source-backed · 78 researched** (honestly marked).
-- Registry: 228 primary sources, 141 traced claims, ~233 cross-links.
+- **185 skills В· 35 domains В· 93 source-backed В· 92 researched** (honestly marked).
+- Registry: 278 primary sources, 184 traced claims, ~322 cross-links.
 - Quality gates: `python tools/validate.py` (skill_lint + registry_check + source_check +
   claim_extractor + token gate), CI on every push/PR, generated-catalog and landing-data
   staleness checks.
@@ -14,6 +14,13 @@ Public roadmap for **Low-level skills TrothByte**. Status and history live in
   llms.txt, CITATION.cff, ready-to-publish npm/PyPI packages.
 - v2.0: 33 new skills (gap set) + 6 design skills (designer-mode domain) + research-driven
   new-weakness skills; new domains `accelerator` and `design`.
+- **v3.0: 22 new skills (agent-failure-mode set)** — MISRA compliance, agent deception
+  detection, destructive-refactoring guard, compiler unstable-code detection (differential
+  testing), ARM MTE, Rust-for-Linux modules, io_uring, BPF CO-RE, secure boot chain,
+  hard real-time determinism, binary hardening flags, Checked C migration, ML-KEM/ML-DSA,
+  Vulkan compute, reproducible firmware builds, USB device stack, PCIe config space,
+  core-dump analysis, NAPI, symbolic execution (KLEE/angr), IEEE 754 semantics,
+  endianness; new domain `safety`.
 
 ## Next phases
 

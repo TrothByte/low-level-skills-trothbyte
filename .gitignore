@@ -35,3 +35,10 @@ cmake_install.cmake
 *.sln
 ALL_BUILD.dir/
 
+# Debugger core dumps (gdb/minidump artifacts from subagent runs)
+*.core
+core.*
+postmortem.core.*
+*.dmp
+*.pdb
+

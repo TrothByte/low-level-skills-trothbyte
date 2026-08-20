@@ -1,0 +1,8 @@
+{
+  "comment": "BAD: barrier srcStage is VERTEX — the 'VK_PIPELINE_STAGE_VERTEX_SHADER_BIT for a compute producer' mistake. srcStage does not cover the COMPUTE producer, so the write/read dependency is still unsynchronized. Must FLAG a wrong-stage hazard.",
+  "ops": [
+    {"op": "write", "buffer": "buf0", "stage": "COMPUTE", "access": "SHADER_WRITE"},
+    {"op": "barrier", "srcStage": ["VERTEX"], "srcAccess": ["SHADER_WRITE"], "dstStage": ["COMPUTE"], "dstAccess": ["SHADER_READ"]},
+    {"op": "read", "buffer": "buf0", "stage": "COMPUTE", "access": "SHADER_READ"}
+  ]
+}

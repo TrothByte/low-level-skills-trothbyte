@@ -1,0 +1,7 @@
+{
+  "comment": "BAD: two dispatches on one queue, the second reads buf0 written by the first, with NO vkCmdPipelineBarrier between them. Same-queue submission order does not imply visibility; this is the classic compute race. Must FLAG a missing-barrier hazard.",
+  "ops": [
+    {"op": "write", "buffer": "buf0", "stage": "COMPUTE", "access": "SHADER_WRITE"},
+    {"op": "read", "buffer": "buf0", "stage": "COMPUTE", "access": "SHADER_READ"}
+  ]
+}

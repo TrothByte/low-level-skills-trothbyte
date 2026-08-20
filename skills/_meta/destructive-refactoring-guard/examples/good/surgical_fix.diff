@@ -1,0 +1,38 @@
+--- src/format_size.c
++++ src/format_size.c
+@@ -1,9 +1,9 @@
+-/* src/format_size.c — human-readable byte formatting, v3.1.
++/* src/format_size.c — human-readable byte formatting, v3.2.
+  *
+- * Formats a byte count as B/KB/MB/GB. v3.1 has a precision bug:
+- * integer division truncates fractional units (1536 -> "1 KB",
+- * 1048576 -> "1 MB"). The fix in v3.2 changes only the formatting
+- * lines; the unit-selection logic is untouched.
++ * Surgical fix for v3.1's integer-division precision bug: 1536 was
++ * printed as "1 KB", 1048576 as "1 MB". The formatting lines now use
++ * floating point with one decimal; the unit-selection logic and the
++ * byte case are byte-for-byte identical to v3.1.
+  */
+ #include <stdio.h>
+ #include <string.h>
+@@ -17,14 +17,17 @@
+         return 0;
+     }
+     if (bytes < 1048576) {
+-        snprintf(out, cap, "%lld KB", bytes / 1024);
++        double kb = (double)bytes / 1024.0;
++        snprintf(out, cap, "%.1f KB", kb);
+         return 0;
+     }
+     if (bytes < 1073741824) {
+-        snprintf(out, cap, "%lld MB", bytes / 1048576);
++        double mb = (double)bytes / 1048576.0;
++        snprintf(out, cap, "%.1f MB", mb);
+         return 0;
+     }
+-    snprintf(out, cap, "%lld GB", bytes / 1073741824);
++    double gb = (double)bytes / 1073741824.0;
++    snprintf(out, cap, "%.1f GB", gb);
+     return 0;
+ }
+ 

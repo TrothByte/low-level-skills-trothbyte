@@ -1,9 +1,9 @@
 # Progress Tracking — Low-level skills TrothByte
 # Главный источник состояния проекта. Обновляется после каждого существенного действия.
 
-current_phase: "PHASE 13 (v2.0+) — 163 СКИЛЛА (163 SKILL.md), включая новый design-домен; лендинг и документация обновлены; релиз-подготовка"
-current_task: "PHASE 13 (v2.0+): 6 design-скиллов (designer mode) + полировка документации + лендинг + публикация"
-current_subtask: "Добавлен НОВЫЙ домен design/ (6 скиллов: design-token-system-discipline, design-typography-hierarchy, design-color-contrast-wcag-a11y, design-layout-spacing-grid, design-visual-hierarchy-composition, design-anti-ai-look-originality-review — все source-backed с реальными python-проверками: DTCG-валидатор, type-scale checker, WCAG contrast math, reflow/spacing checker, ai_look_fingerprint (README/landing проверены: 0 fingerprint'ов), uniqueness self-test). skill_lint 163/163 OK. Реестр: 163 skills (85 source-backed), 228 sources, 141 claims, 233 cross-links. Лендинг: новые цифры, Manrope+Source Sans 3 вместо Space Grotesk+Inter, убран violet-градиент, WCAG-контраст всей палитры PASS; social-preview перегенерирован"
+current_phase: "PHASE 13 (v3.0) — 185 СКИЛЛА (185 SKILL.md), 35 доменов (НОВЫЙ safety), 22 agent-failure-mode скилла; лендинг и документация обновлены; релиз-подготовка"
+current_task: "PHASE 13 (v3.0): 22 новых скилла agent-failure-mode набора (MISRA, deception, refactoring-guard, differential testing, MTE, rust-for-linux, io_uring, BPF CO-RE, secure boot, hard-RT, hardening flags, Checked C, ML-KEM/ML-DSA, Vulkan compute, reproducible builds, USB, PCIe, core-dump, NAPI, KLEE/angr, IEEE 754, endianness) + полировка документации + публикация"
+current_subtask: "Добавлен НОВЫЙ домен safety/ (misra-c-compliance, hard-real-time-determinism). 22 новых скилла: 8 source-backed с реальными host-прогонами (gcc 16.1 MinGW: MISRA Top-k checker, evidence-gate, refactor diff-guard, -O0/-O2 divergence, canary/endbr64, gdb post-mortem, FP fast-math divergence, byte-order golden vectors), 14 researched с python-моделями и честными target-командами (MTE sim, io_uring ring protocol, CO-RE relocation, chain-of-trust 12/12, WCET budget, Checked C annotation inference, constant-time ML-KEM models, Vulkan binding/barrier check, SOURCE_DATE_EPOCH, USB descriptor validator, PCIe capability walk, NAPI state machine, angr 9.2.213 install+run, KLEE target). skill_lint 185/185 OK, token gate PASS (2 скилла ужаты). Реестр: 185 skills (93 source-backed), 278 sources (+50), 184 claims (CL-142..CL-184), 322 cross-links (+89). Лендинг и документация обновлены: README (185/35/93/278/184, v3.0-секция, area-map с safety), docs/SKILLS.md + 35 domain README перегенерированы, index.md, llms.txt, roadmap.md, agents-failures-cheatsheet.md (+секции 6-8), CHANGELOG, architecture.md. validate.py ALL CHECKS PASSED."
 completed_phases:
   - "PHASE 0 — REPOSITORY BOOTSTRAP"
   - "PHASE 1 — RESEARCH INGESTION"
@@ -21,6 +21,7 @@ completed_phases:
   - "PHASE 13 — IMPLEMENT SKILLS (60/60)"
   - "PHASE 13 (продолжение) — IMPLEMENT SKILLS (64 новых; итого 124/124)"
   - "PHASE 23 — QUALITY GATES (валидаторы чистые)"
+  - "PHASE 13 (v3.0) — 22 agent-failure-mode скилла + домен safety + публикация"
 completed_tasks:
   - "PHASE 0-8: система (roadmap + registry + docs) создана"
   - "PHASE 13: все 60 skills реализованы (5 параллельных батчей субагентов)"
@@ -67,16 +68,16 @@ files_modified:
 research_status:
   - "Все inventories: COMPLETE"
 skill_status:
-  registered: 124
-  implemented: 124
-  source_backed: 65
-  researched: 59
+  registered: 185
+  implemented: 185
+  source_backed: 93
+  researched: 92
   evaluated: 0
   stable: 0
   all_registered_implemented: true
 source_status:
-  registry_sources: 228
-  claims_registered: 141
+  registry_sources: 278
+  claims_registered: 184
 eval_status:
   cve_core_set: 8
   cve_secondary_set: 8
@@ -84,6 +85,5 @@ eval_status:
   routing_cases: 5
   fp_cases: 5
   eval_harnesses_built: "Каждый skill имеет evals/README.md с synthetic/FP/adversarial/historical кейсами и verified facts; researched-скиллы честно помечены с точными командами верификации"
-last_completed_action: "PHASE 13 (v2.0+) 2026-08-17: 6 design-скиллов (НОВЫЙ домен design/, designer mode) — research 22 источника (WCAG 2.2, DTCG, WebAIM, NN/g, Anthropic frontend-design, Design2Code/A11YN/UICrit/DesignRepair), все source-backed с реальными прогонами (DTCG-валидатор, style-dictionary 5.5.1 build, type-scale/heading/font-stack чекеры, WCAG contrast math 7 пар PASS, reflow/spacing, composition, ai_look_fingerprint, uniqueness self-test). Реестр интегрирован: skills.yaml 163 (85 source-backed), sources.yaml 228 (+19 design-источников), claims.yaml 141 (CL-128..CL-141), cross-links.yaml 233 (+36 design-связей). Документация полностью обновлена: README (новые цифры 163/34/85/228/141, обновлённая area-map с 34 доменами, redesigned без AI-look), docs/SKILLS.md + 34 domain README перегенерированы, docs/index.md, llms.txt, docs/architecture.md, docs/roadmap.md, docs/agents-failures-cheatsheet.md, CHANGELOG (Unreleased). Лендинг отшлифован по design-скиллам: Manrope+Source Sans 3 вместо Space Grotesk+Inter, убран violet-градиент (0 AI-look fingerprint'ов), WCAG-контраст PASS, social-preview.png перегенерирован (tools/reports/gen_social_preview.py), marketplace.json + skills.js (163). Чистка: удалены __pycache__, dist/whl, egg-info, .o файлы, one-shot скрипты. validate.py ALL CHECKS PASSED."
-next_action: "Публикация: git push на GitHub, обновить repo description/topics через gh, очистить cancelled pages-deployments (удалить github-pages environment и пересоздать через push), проверить CI и Pages green. Дальше: PHASE 15-21 eval_runner.py, sanitizer_run.sh; verification sprint researched→source-backed; оставшиеся NW-скиллы (kernel-patch-submission-reviewability, audit-read-coverage-verification, kernel-bug-report-validity-triage)"
-next_action: "PHASE 15-21: eval_runner.py, sanitizer_run.sh, qemu_boot_test.sh; verification sprint researched→source-backed (+20 скиллов); добавить 25 unmatched цитат в sources.yaml или aliases claim_extractor.py; остальные NW-скиллы из research (kernel-patch-submission-reviewability, audit-read-coverage-verification, kernel-bug-report-validity-triage) — следующий батч"
+last_completed_action: "PHASE 13 (v3.0) 2026-08-20: 22 agent-failure-mode скилла (5 CRITICAL, 10 HIGH, 5 MEDIUM, 2 gap-analysis) — веб-ресёрч failure-кейсов (MISRA LLM: RS-8123173/arXiv 2506.23535; deception: PNAS 2317967121, arXiv 2509.03518/2509.18970; differential testing: UBfuzz ASPLOS'24/arXiv 2401.04538, DiffSpec 2410.04249, DESIL 2504.01379; Checked C: 3C 2203.13445). 8 source-backed с реальными прогонами на host (gcc 16.1, gdb 17.2, rustc 1.97, python 3.11, angr 9.2.213), 14 researched с host-верифицированными python-моделями и честными target-командами. НОВЫЙ домен safety/. Реестр: skills.yaml 185 (93 source-backed), sources.yaml 278 (+50), claims.yaml 184 (CL-142..CL-184), cross-links.yaml 322 (+89). Документация: README (v3.0-секция, area-map 35 доменов), docs/SKILLS.md + 35 domain README + skills.js перегенерированы, index.md, llms.txt, roadmap.md, agents-failures-cheatsheet.md (секции 6-8), CHANGELOG (v3.0 Unreleased), architecture.md. validate.py ALL CHECKS PASSED (token gate: core-dump-analysis и rust-for-linux-module-dev ужаты до <2000)."
+next_action: "Публикация: git push на GitHub; проверить CI и Pages green. Дальше: PHASE 15-21 eval_runner.py, sanitizer_run.sh; verification sprint researched→source-backed (+14 из v3.0 на Linux/ARM/GPU-хосте); оставшиеся NW-скиллы (kernel-patch-submission-reviewability, audit-read-coverage-verification, kernel-bug-report-validity-triage)"

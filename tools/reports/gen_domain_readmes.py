@@ -73,6 +73,7 @@ DOMAIN_INTROS = {
     "zig": "Zig gives explicit control over build, allocator, comptime, and FFI semantics.",
     "accelerator": "AI accelerator pipeline programs: cross-unit (DMA/vector/matrix/scalar) synchronization and barrier coverage on shared on-chip buffers.",
     "design": "Designer-mode skills for AI agents: design tokens (DTCG), typography hierarchy, WCAG 2.2 color/contrast accessibility, layout grids and reflow, visual hierarchy, and anti-AI-look originality review.",
+    "safety": "Functional-safety and deterministic-systems skills: MISRA C/C++ compliance and hard real-time determinism for automotive, aerospace, and medical code.",
     "_meta": "Meta-skills govern agent behavior: routing, evidence discipline, verification gates,\nassumption surfacing, rationalization rejection, harness validity, crypto safety, and honest completion.",
 }
 

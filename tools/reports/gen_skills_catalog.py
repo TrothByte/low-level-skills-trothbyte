@@ -21,7 +21,7 @@ AREAS = [
     ("Binary analysis & RE", ["binary-analysis", "reverse-engineering", "mobile"]),
     ("Performance & HPC", ["performance", "simd", "gpu", "hpc"]),
     ("Tooling & agent behavior", ["sanitizers", "_meta", "build-systems", "debugging"]),
-    ("Security & hardware", ["security", "hdl"]),
+    ("Security & hardware", ["security", "hdl", "safety"]),
     ("Accelerators", ["accelerator"]),
     ("Design", ["design"]),
 ]
@@ -60,6 +60,7 @@ DOMAIN_INTROS = {
     "hdl": "Clock domain crossing audit, timing closure, and constraint authoring for FPGA design.",
     "accelerator": "AI accelerator pipeline programs: cross-unit (DMA/vector/matrix/scalar) synchronization and barrier coverage on shared on-chip buffers.",
     "design": "Designer-mode skills for AI agents: design tokens (DTCG), typography hierarchy, WCAG 2.2 color/contrast accessibility, layout grids and reflow, visual hierarchy, and anti-AI-look originality review.",
+    "safety": "Functional-safety and deterministic-systems skills for AI agents: MISRA C/C++ compliance (Top-k rules LLMs break most), and hard real-time determinism (WCET-bounded code, no dynamic allocation/recursion/exceptions).",
 }
 
 

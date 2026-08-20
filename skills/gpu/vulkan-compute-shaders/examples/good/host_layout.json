@@ -1,0 +1,12 @@
+{
+  "sets": [
+    {
+      "set": 0,
+      "bindings": [
+        {"binding": 0, "type": "STORAGE_BUFFER", "count": 1, "stageFlags": ["COMPUTE"]},
+        {"binding": 1, "type": "STORAGE_BUFFER", "count": 1, "stageFlags": ["COMPUTE"]},
+        {"binding": 2, "type": "UNIFORM_BUFFER", "count": 1, "stageFlags": ["COMPUTE"]}
+      ]
+    }
+  ]
+}

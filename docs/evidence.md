@@ -71,9 +71,10 @@ Python 3.11, CMake 4.4, Ninja 1.13**. Exact reproduction commands are in each sk
 
 ## Toolchain and caveats
 
-- 59 skills are honestly marked `researched`: the toolchain is absent on this host
+- 92 skills are honestly marked `researched`: the toolchain is absent on this host
   (zig, nasm, clang-cross, qemu, nvcc, mpicc, valgrind, verilator, jadx/frida,
-  frama-c/cbmc/kani, z3, Linux kernel). Their `evals/README.md` lists the exact
-  command that would elevate them to source-backed on a suitable host.
+  frama-c/cbmc/kani, z3, Linux kernel, Vulkan SDK, KLEE, ARMv9). Their
+  `evals/README.md` lists the exact command that would elevate them to source-backed
+  on a suitable host.
 - Reproduce everything with `python tools/validate.py` (structure gates) and the
   per-skill commands in each `evals/README.md`.

@@ -1,0 +1,9 @@
+{
+  "comment": "GOOD: compute writes buf0, then a vkCmdPipelineBarrier whose masks cover BOTH a compute read (SHADER_READ) and a transfer read (TRANSFER_READ), then both consumers. No hazards.",
+  "ops": [
+    {"op": "write", "buffer": "buf0", "stage": "COMPUTE", "access": "SHADER_WRITE"},
+    {"op": "barrier", "srcStage": ["COMPUTE"], "srcAccess": ["SHADER_WRITE"], "dstStage": ["COMPUTE", "TRANSFER"], "dstAccess": ["SHADER_READ", "TRANSFER_READ"]},
+    {"op": "read", "buffer": "buf0", "stage": "COMPUTE", "access": "SHADER_READ"},
+    {"op": "read", "buffer": "buf0", "stage": "TRANSFER", "access": "TRANSFER_READ"}
+  ]
+}

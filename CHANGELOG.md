@@ -8,6 +8,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **v3.0 agent-failure-mode set (×22 skills)** across 1 new domain (`safety`, 35 total):
+  - *CRITICAL*: misra-c-compliance (Top-k rules for LLM agents, MISRA C:2012/C++:2023,
+    host checker), agent-deception-detection (raw-evidence gate vs fabricated output),
+    destructive-refactoring-guard (diff/LOC/compile-before-delete gates),
+    compiler-unstable-code-detection (differential testing across -O levels/compilers),
+    arm-mte-programming (SYNC/ASYNC/ASYMM, 16B granules, IRG/LDG/STG, TBI, prctl).
+  - *HIGH*: rust-for-linux-module-dev, io-uring-interface, bpf-core-relocation,
+    secure-boot-chain, hard-real-time-determinism, binary-hardening-flags,
+    checked-c-migration, post-quantum-crypto-mlkem (ML-KEM/ML-DSA, FIPS 203/204),
+    vulkan-compute-shaders, reproducible-builds-firmware.
+  - *MEDIUM*: usb-device-stack, pcie-config-space, core-dump-analysis,
+    napi-network-driver, symbolic-execution-klee-angr.
+  - *Gap-analysis extras*: floating-point-ieee-semantics, endianness-and-byte-order.
+- **New domain**: `safety` (MISRA compliance + hard real-time determinism).
+- Registry now: **185 skills**, 278 primary sources, 184 traced claims (CL-142..CL-184),
+  ~322 cross-links (+89 edges).
+- Web-research grounding: MISRA LLM studies (RS-8123173, arXiv 2506.23535), agent
+  deception research (PNAS 2317967121, arXiv 2509.03518/2509.18970), differential
+  compiler testing (UBfuzz ASPLOS'24, DiffSpec, DESIL), Checked C (3C, arXiv 2203.13445).
+
+### Changed
+- README statistics updated (185 skills · 35 domains · 93 source-backed · 278 sources ·
+  184 claims); landing page, `llms.txt`, `docs/architecture.md`, `docs/roadmap.md`,
+  `docs/agents-failures-cheatsheet.md` regenerated/updated; `safety` added to area map.
+
+### Added (v2.0)
 - **v2.0 skill format migration**: 9 required sections enforced as errors, body ≤250
   lines, description ≤50 words, token gate ≤2000 activation tokens.
 - **39 new skills** across 2 new domains:
@@ -32,7 +58,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `token_measure.py`.
 - Registry now: **163 skills**, 228 primary sources, 141 traced claims, 233 cross-links.
 
-### Changed
+### Changed (v2.0)
 - README statistics updated (163 skills · 34 domains · 85 source-backed · 228 sources ·
   141 claims); landing page, `llms.txt`, `docs/architecture.md`, `docs/roadmap.md`,
   `docs/agents-failures-cheatsheet.md` regenerated/updated.

@@ -1,0 +1,57 @@
+// GOOD: compute shader, one storage-buffer write per workgroup after a
+// workgroup barrier. TARGET-ONLY: compiles with
+//   glslangValidator -V compute.comp -o compute.spv
+// Host pipeline, descriptor layout, dispatch and barrier sequence:
+// examples/good/pipeline_setup.c. Shader bindings match
+// examples/good/host_layout.json 1:1:
+//   set=0 binding=0 STORAGE_BUFFER  (in_buf)
+//   set=0 binding=1 STORAGE_BUFFER  (out_buf)
+//   set=0 binding=2 UNIFORM_BUFFER  (uniforms)
+// Workgroup = 64 threads; the host must dispatch ceil(n/64) workgroups.
+//
+// NOTE on barriers: barrier() / memoryBarrierShared() only order accesses
+// within this workgroup. Visibility of out_buf.results[] to a LATER command
+// requires a host-side vkCmdPipelineBarrier after this dispatch (see
+// pipeline_setup.c). There is no way to express a cross-dispatch barrier in
+// GLSL.
+
+#version 450
+
+layout(local_size_x = 64, local_size_y = 1, local_size_z = 1) in;
+
+layout(set = 0, binding = 0, std430) buffer InBuf {
+    float values[];
+} in_buf;
+
+layout(set = 0, binding = 1, std430) buffer OutBuf {
+    float results[];
+} out_buf;
+
+layout(set = 0, binding = 2, std140) uniform Uniforms {
+    float scale;
+    uint offset;
+} u;
+
+layout(push_constant) uniform PushC {
+    uint n;
+    uint base;
+} pc;
+
+shared float ssum[64];
+
+void main() {
+    uint gid = gl_GlobalInvocationID.x;
+    uint lid = gl_LocalInvocationID.x;
+
+    ssum[lid] = (gid < pc.n) ? in_buf.values[gid] * u.scale : 0.0;
+
+    barrier();  // all 64 threads wrote ssum[]; now it is safe to read it
+
+    if (lid == 0u) {
+        float total = 0.0;
+        for (uint i = 0u; i < 64u; ++i) {
+            total += ssum[i];
+        }
+        out_buf.results[pc.base + gl_WorkGroupID.x] = total;
+    }
+}

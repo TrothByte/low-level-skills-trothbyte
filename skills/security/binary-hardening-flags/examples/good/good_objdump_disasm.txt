@@ -1,0 +1,47 @@
+good_hardened:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000401070 <process>:
+  401070:	55                   	push   %rbp
+  401071:	48 89 e5             	mov    %rsp,%rbp
+  401074:	48 83 ec 40          	sub    $0x40,%rsp
+  401078:	48 89 7d d8          	mov    %rdi,-0x28(%rbp)
+  40107c:	64 48 8b 04 25 28 00 	mov    %fs:0x28,%rax
+  401083:	00 00
+  401085:	48 89 45 f8          	mov    %rax,-0x8(%rbp)
+  401089:	31 c0                	xor    %eax,%eax
+  40108b:	48 8b 55 d8          	mov    -0x28(%rbp),%rdx
+  40108f:	48 8d 45 c0          	lea    -0x40(%rbp),%rax
+  401093:	b9 40 00 00 00       	mov    $0x40,%ecx
+  401098:	e8 43 0b 00 00       	call   4011e0 <__strcpy_chk@plt>
+  40109d:	48 8d 45 c0          	lea    -0x40(%rbp),%rax
+  4010a1:	48 89 c7             	mov    %rax,%rdi
+  4010a4:	e8 47 0b 00 00       	call   4011f0 <puts@plt>
+  4010a9:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+  4010ad:	64 48 2b 04 25 28 00 	sub    %fs:0x28,%rax
+  4010b4:	00 00
+  4010b6:	75 05                	jne    4010bd <process+0x4d>
+  4010b8:	48 83 c4 40          	add    $0x40,%rsp
+  4010bc:	5d                   	pop    %rbp
+  4010bd:	e8 3e 0b 00 00       	call   401200 <__stack_chk_fail@plt>
+  4010c2:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+
+00000000004010d0 <main>:
+  4010d0:	f3 0f 1e fa          	endbr64
+  4010d4:	55                   	push   %rbp
+  4010d5:	48 89 e5             	mov    %rsp,%rbp
+  4010d8:	48 83 ec 10          	sub    $0x10,%rsp
+  4010dc:	89 7d fc             	mov    %edi,-0x4(%rbp)
+  4010de:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+  4010e2:	83 7d fc 01          	cmpl   $0x1,-0x4(%rbp)
+  4010e6:	7e 0c                	jle    4010f4 <main+0x24>
+  4010e8:	48 8b 45 f0          	mov    -0x10(%rbp),%rax
+  4010ec:	48 83 c0 08          	add    $0x8,%rax
+  4010f0:	48 8b 00             	mov    (%rax),%rax
+  4010f3:	48 89 c7             	mov    %rax,%rdi
+  4010f6:	e8 75 ff ff ff       	call   401070 <process>
+  4010fb:	b8 00 00 00 00       	mov    $0x0,%eax
+  401100:	c9                   	leave
+  401101:	c3                   	ret

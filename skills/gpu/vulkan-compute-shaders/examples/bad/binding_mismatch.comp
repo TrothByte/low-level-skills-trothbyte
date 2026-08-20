@@ -1,0 +1,53 @@
+// BAD: binding mismatch between shader and host descriptor layout.
+// TARGET-ONLY: compiles with
+//   glslangValidator -V binding_mismatch.comp -o binding_mismatch.spv
+//
+// This file is VALID GLSL and compiles cleanly — the bug is invisible at
+// compile time and at pipeline-creation time. Without VK_LAYER_KHRONOS_validation
+// the device binds the wrong buffers and the shader reads garbage with no error.
+// This is the #1 silent Vulkan compute failure.
+//
+// examples/good/host_layout.json declares:
+//   set=0 binding=0 STORAGE_BUFFER
+//   set=0 binding=1 STORAGE_BUFFER
+//   set=0 binding=2 UNIFORM_BUFFER
+// This shader instead:
+//   - uses binding=1 as a UNIFORM_BUFFER (host says STORAGE_BUFFER)   [type mismatch]
+//   - uses binding=2 as a STORAGE_BUFFER  (host says UNIFORM_BUFFER)  [type mismatch]
+//   - declares binding=3, which the host layout does not contain       [missing binding]
+//
+// Detect with:  python examples/tools/binding_check.py \
+//                  examples/bad/binding_mismatch.comp examples/good/host_layout.json
+
+#version 450
+
+layout(local_size_x = 64, local_size_y = 1, local_size_z = 1) in;
+
+layout(set = 0, binding = 0, std430) buffer InBuf {
+    float values[];
+} in_buf;
+
+layout(set = 0, binding = 1, std140) uniform Uniforms {  // BUG: host says STORAGE_BUFFER
+    float scale;
+    uint offset;
+} u;
+
+layout(set = 0, binding = 2, std430) buffer OutBuf {     // BUG: host says UNIFORM_BUFFER
+    float results[];
+} out_buf;
+
+layout(set = 0, binding = 3) uniform image2D tex;        // BUG: no host binding 3
+
+layout(push_constant) uniform PushC {
+    uint n;
+} pc;
+
+void main() {
+    uint gid = gl_GlobalInvocationID.x;
+    if (gid >= pc.n) {
+        return;
+    }
+    out_buf.results[gid] = in_buf.values[gid] * u.scale + float(u.offset);
+    // tex reads from a descriptor the host never bound -> garbage on the device.
+    out_buf.results[gid] += imageLoad(tex, ivec2(int(gid), 0)).r;
+}

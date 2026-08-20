@@ -1,5 +1,5 @@
 meta:
-  updated: '2026-08-17'
+  updated: '2026-08-20'
   rule: Вторичные репозитории используются для поиска пробелов, НЕ как единственный технический authority нормативных утверждений.
 sources:
 - id: iso-c11-n1570
@@ -3227,3 +3227,684 @@ sources:
   - 3,059 critiques/983 UIs
   - 55% LLM feedback gain
   last_verified: '2026-08-17'
+
+- id: misra-cpp-2023
+  title: 'MISRA C++:2023 Guidelines'
+  url: 'https://misra.org.uk/'
+  authority: normative
+  license: 'commercial standard (rule numbers referenced, no text copied)'
+  version: 2023
+  topics:
+  - misra
+  - 'c++'
+  - 'functional safety'
+  relevant_sections:
+  - 'MISRA C++:2023 rule set'
+  last_verified: '2026-08-20'
+- id: misra-c-2012
+  title: 'MISRA C:2012 Guidelines'
+  url: 'https://misra.org.uk/'
+  authority: normative
+  license: 'commercial standard (rule numbers referenced, no text copied)'
+  version: 2012
+  topics:
+  - misra
+  - c
+  - 'functional safety'
+  relevant_sections:
+  - 'Rules 2.2, 5.3, 8.4, 10.x, 12.1, 14.4, 15.5, 17.7, 21.3'
+  last_verified: '2026-08-20'
+- id: rs-8123173-misra-llm
+  title: 'Reducing MISRA violations in LLM-generated code by 83%: an empirical study'
+  url: 'https://www.researchsquare.com/article/rs-8123173/v1'
+  authority: authoritative
+  license: 'Research Square (public preprint)'
+  version: 2025
+  topics:
+  - misra
+  - llm
+  - empirical
+  relevant_sections:
+  - 'Top-k instruction packs'
+  - 'violations per KLOC'
+  last_verified: '2026-08-20'
+- id: arxiv-2506-23535-misra-llm
+  title: 'Comparative Analysis of LLMs for MISRA C++ Compliance'
+  url: 'https://arxiv.org/abs/2506.23535'
+  authority: authoritative
+  license: arXiv
+  version: 2025
+  topics:
+  - misra
+  - llm
+  relevant_sections:
+  - 'none of the evaluated LLMs generated fully compliant code'
+  last_verified: '2026-08-20'
+- id: arxiv-2509-18970-agent-hallucination
+  title: 'LLM-based Agents Suffer from Hallucinations: A Survey of Taxonomy'
+  url: 'https://arxiv.org/abs/2509.18970'
+  authority: authoritative
+  license: arXiv
+  version: 2025
+  topics:
+  - llm
+  - agents
+  - hallucination
+  relevant_sections:
+  - 'taxonomy of agent hallucinations by workflow stage'
+  last_verified: '2026-08-20'
+- id: arxiv-2509-03518-can-llms-lie
+  title: 'Can LLMs Lie? Investigation beyond Hallucination'
+  url: 'https://arxiv.org/abs/2509.03518'
+  authority: authoritative
+  license: arXiv
+  version: 2025
+  topics:
+  - llm
+  - deception
+  relevant_sections:
+  - 'deliberate untruthfulness'
+  - 'good lie vs bad lie'
+  last_verified: '2026-08-20'
+- id: pnas-2317967121-deception
+  title: 'Deception abilities emerged in large language models'
+  url: 'https://www.pnas.org/doi/10.1073/pnas.2317967121'
+  authority: authoritative
+  license: 'PNAS (open)'
+  version: 2024
+  topics:
+  - llm
+  - deception
+  relevant_sections:
+  - 'deception strategies'
+  - 'false beliefs in other agents'
+  last_verified: '2026-08-20'
+- id: swebench-v2
+  title: 'SWE-bench: Can Language Models Resolve Real-World GitHub Issues?'
+  url: 'https://arxiv.org/abs/2310.06770'
+  authority: authoritative
+  license: arXiv
+  version: 2023
+  topics:
+  - agents
+  - 'code repair'
+  relevant_sections:
+  - 'patch resolution'
+  - 'failure modes in edits'
+  last_verified: '2026-08-20'
+- id: arxiv-2401-04538-ubfuzz
+  title: 'UBfuzz: Finding Bugs in Sanitizer Implementations'
+  url: 'https://arxiv.org/abs/2401.04538'
+  authority: authoritative
+  license: 'arXiv (ASPLOS 2024)'
+  version: 2024
+  topics:
+  - ub
+  - sanitizers
+  - 'differential testing'
+  relevant_sections:
+  - '31 bugs in GCC/LLVM sanitizers'
+  - 'false negatives'
+  last_verified: '2026-08-20'
+- id: arxiv-2410-04249-diffspec
+  title: 'DiffSpec: Differential Testing with LLMs using Natural Language Specifications'
+  url: 'https://arxiv.org/abs/2410.04249'
+  authority: authoritative
+  license: arXiv
+  version: 2024
+  topics:
+  - 'differential testing'
+  - llm
+  - ebpf
+  - wasm
+  relevant_sections:
+  - 'eBPF bugs'
+  - 'Wasm validator bugs'
+  last_verified: '2026-08-20'
+- id: arxiv-2504-01379-desil
+  title: 'DESIL: Detecting Silent Bugs in MLIR Compiler Infrastructure'
+  url: 'https://arxiv.org/abs/2504.01379'
+  authority: authoritative
+  license: arXiv
+  version: 2025
+  topics:
+  - compilers
+  - 'differential testing'
+  - mlir
+  relevant_sections:
+  - '23 silent bugs + 19 crash bugs'
+  last_verified: '2026-08-20'
+- id: arm-mte-whitepaper
+  title: 'Arm Memory Tagging Extension Whitepaper'
+  url: 'https://developer.arm.com/-/media/Arm%20Developer%20Community/PDF/Arm_Memory_Tagging_Extension_Whitepaper.pdf'
+  authority: official
+  license: 'Arm (freely redistributable)'
+  version: 2019
+  topics:
+  - arm
+  - mte
+  - 'memory safety'
+  relevant_sections:
+  - 'MTE modes SYNC/ASYNC/ASYMM'
+  - '16-byte granules'
+  - '4-bit tags'
+  last_verified: '2026-08-20'
+- id: arm-arm-armv9
+  title: 'Arm Architecture Reference Manual (Armv9-A, FEAT_MTE)'
+  url: 'https://developer.arm.com/documentation/ddi0487/latest'
+  authority: normative
+  license: 'Arm (referenced; not copied)'
+  version: Armv9
+  topics:
+  - arm
+  - isa
+  - mte
+  relevant_sections:
+  - FEAT_MTE
+  - 'IRG/LDG/STG instructions'
+  - Top-Byte-Ignore
+  last_verified: '2026-08-20'
+- id: kernel-mte-docs
+  title: 'Linux kernel — Memory Tagging Extension'
+  url: 'https://docs.kernel.org/arch/arm64/memory-tagging-extension.html'
+  authority: official
+  license: GPL-2.0
+  version: current
+  topics:
+  - linux
+  - arm64
+  - mte
+  relevant_sections:
+  - PR_SET_TAGGED_ADDR_CTRL
+  - 'MTE_TCF_* prctls'
+  last_verified: '2026-08-20'
+- id: android-mte-docs
+  title: 'Android — Memory Safety (MTE)'
+  url: 'https://source.android.com/docs/security/test/memory-safety'
+  authority: official
+  license: CC-BY-4.0
+  version: current
+  topics:
+  - android
+  - mte
+  relevant_sections:
+  - 'Scudo MTE allocator'
+  - 'HWASan emulation'
+  last_verified: '2026-08-20'
+- id: rust-for-linux-docs
+  title: 'Rust for Linux — kernel documentation'
+  url: 'https://docs.kernel.org/rust/'
+  authority: official
+  license: GPL-2.0
+  version: current
+  topics:
+  - rust
+  - kernel
+  relevant_sections:
+  - rust-for-linux
+  - 'kernel crate usage'
+  - 'error handling'
+  last_verified: '2026-08-20'
+- id: kernel-crate-docs
+  title: 'rust.docs.kernel.org — kernel crate'
+  url: 'https://rust.docs.kernel.org/kernel/'
+  authority: official
+  license: GPL-2.0
+  version: current
+  topics:
+  - rust
+  - kernel
+  relevant_sections:
+  - 'kernel::alloc'
+  - 'kernel::sync'
+  - 'kernel::module'
+  - 'module parameters'
+  last_verified: '2026-08-20'
+- id: liburing
+  title: 'liburing — the io_uring userspace library'
+  url: 'https://github.com/axboe/liburing'
+  authority: authoritative
+  license: MIT/GPL-2.0
+  version: current
+  topics:
+  - io_uring
+  - 'async io'
+  relevant_sections:
+  - 'ring setup'
+  - 'SQE/CQE helpers'
+  - 'linked timeouts'
+  - 'provided buffers'
+  last_verified: '2026-08-20'
+- id: cilium-bpf-core
+  title: 'BPF and XDP Reference Guide — CO-RE'
+  url: 'https://docs.cilium.io/en/latest/bpf/co-re/'
+  authority: authoritative
+  license: CC-BY-SA-4.0
+  version: current
+  topics:
+  - ebpf
+  - co-re
+  - btf
+  relevant_sections:
+  - 'Compile Once Run Everywhere'
+  - relocations
+  last_verified: '2026-08-20'
+- id: kernel-btf-docs
+  title: 'BTF — BPF Type Format (kernel docs)'
+  url: 'https://docs.kernel.org/bpf/btf.html'
+  authority: official
+  license: GPL-2.0
+  version: current
+  topics:
+  - btf
+  - ebpf
+  relevant_sections:
+  - vmlinux.h
+  - 'type/field relocations'
+  last_verified: '2026-08-20'
+- id: libbpf
+  title: 'libbpf — BPF loader library'
+  url: 'https://github.com/libbpf/libbpf'
+  authority: authoritative
+  license: LGPL-2.1
+  version: current
+  topics:
+  - ebpf
+  - co-re
+  relevant_sections:
+  - 'load-time relocation'
+  - 'BPF skeleton'
+  last_verified: '2026-08-20'
+- id: shim-github
+  title: 'shim — first-stage UEFI bootloader'
+  url: 'https://github.com/rhboot/shim'
+  authority: authoritative
+  license: BSD-3-Clause
+  version: current
+  topics:
+  - uefi
+  - shim
+  - mok
+  relevant_sections:
+  - 'MOK enrollment'
+  - 'secure boot chain'
+  last_verified: '2026-08-20'
+- id: avb-docs
+  title: 'Android Verified Boot 2.0'
+  url: 'https://source.android.com/docs/security/features/verifiedboot'
+  authority: official
+  license: CC-BY-4.0
+  version: current
+  topics:
+  - android
+  - 'verified boot'
+  relevant_sections:
+  - 'vbmeta chain'
+  - 'rollback index'
+  - 'key revocation'
+  last_verified: '2026-08-20'
+- id: kernel-module-signing
+  title: 'Linux kernel — module signature verification'
+  url: 'https://docs.kernel.org/admin-guide/module-signing.html'
+  authority: official
+  license: GPL-2.0
+  version: current
+  topics:
+  - linux
+  - 'module signing'
+  relevant_sections:
+  - CONFIG_MODULE_SIG_ENFORCE
+  - 'x509 keyring'
+  last_verified: '2026-08-20'
+- id: liu-layland-1973
+  title: 'Scheduling Algorithms for Multiprogramming in a Hard-Real-Time Environment'
+  url: 'https://dl.acm.org/doi/10.1145/321738.321743'
+  authority: authoritative
+  license: 'ACM (referenced)'
+  version: 1973
+  topics:
+  - real-time
+  - scheduling
+  relevant_sections:
+  - 'rate monotonic'
+  - 'utilization bound U=n(2^(1/n)-1)'
+  last_verified: '2026-08-20'
+- id: checked-c-spec
+  title: 'Checked C Specification (Microsoft Research)'
+  url: 'https://github.com/microsoft/checkedc/blob/main/spec/checkedc.md'
+  authority: authoritative
+  license: 'MIT (spec text)'
+  version: current
+  topics:
+  - 'checked c'
+  - 'memory safety'
+  relevant_sections:
+  - _Ptr/_Array_ptr/_Nt_array_ptr
+  - 'bounds declarations'
+  - 'checked scopes'
+  last_verified: '2026-08-20'
+- id: arxiv-2203-13445-3c
+  title: 'C to Checked C by 3C'
+  url: 'https://arxiv.org/abs/2203.13445'
+  authority: authoritative
+  license: arXiv
+  version: 2022
+  topics:
+  - 'checked c'
+  - porting
+  - 'static analysis'
+  relevant_sections:
+  - typ3c
+  - boun3c
+  - '11 programs 319KLoC'
+  last_verified: '2026-08-20'
+- id: nist-fips-203
+  title: 'NIST FIPS 203 — Module-Lattice-Based Key-Encapsulation (ML-KEM)'
+  url: 'https://csrc.nist.gov/pubs/fips/203/final'
+  authority: normative
+  license: 'NIST (public)'
+  version: 2024
+  topics:
+  - post-quantum
+  - ml-kem
+  - kyber
+  relevant_sections:
+  - 'implicit rejection'
+  - 'constant-time rejection sampling'
+  - 'q=3329'
+  last_verified: '2026-08-20'
+- id: nist-fips-204
+  title: 'NIST FIPS 204 — Module-Lattice-Based Digital Signature (ML-DSA)'
+  url: 'https://csrc.nist.gov/pubs/fips/204/final'
+  authority: normative
+  license: 'NIST (public)'
+  version: 2024
+  topics:
+  - post-quantum
+  - ml-dsa
+  - dilithium
+  relevant_sections:
+  - 'signature parameters'
+  - sampling
+  last_verified: '2026-08-20'
+- id: pq-crystals-kyber
+  title: 'CRYSTALS-Kyber (round-3 submission)'
+  url: 'https://pq-crystals.org/kyber/'
+  authority: authoritative
+  license: 'CC0/public (spec)'
+  version: 2020
+  topics:
+  - kyber
+  - kem
+  relevant_sections:
+  - NTT
+  - 'modulus 3329'
+  last_verified: '2026-08-20'
+- id: liboqs
+  title: 'Open Quantum Safe — liboqs'
+  url: 'https://github.com/open-quantum-safe/liboqs'
+  authority: authoritative
+  license: MIT
+  version: current
+  topics:
+  - post-quantum
+  - implementations
+  relevant_sections:
+  - ML-KEM
+  - ML-DSA
+  - 'ACVP vectors'
+  last_verified: '2026-08-20'
+- id: vulkan-spec
+  title: 'Vulkan Specification'
+  url: 'https://docs.vulkan.org/spec/latest/'
+  authority: normative
+  license: 'Khronos (referenced; not copied)'
+  version: 1.4
+  topics:
+  - vulkan
+  - gpu
+  - compute
+  relevant_sections:
+  - 'compute pipelines'
+  - 'descriptor sets'
+  - 'memory barriers'
+  - dispatch
+  last_verified: '2026-08-20'
+- id: spirv-spec
+  title: 'SPIR-V Specification'
+  url: 'https://registry.khronos.org/SPIR-V/'
+  authority: normative
+  license: 'Khronos (referenced)'
+  version: 1.6
+  topics:
+  - spir-v
+  - gpu
+  relevant_sections:
+  - 'module structure'
+  - opcodes
+  last_verified: '2026-08-20'
+- id: glslang
+  title: 'glslang — Khronos GLSL/HLSL reference compiler front end'
+  url: 'https://github.com/KhronosGroup/glslang'
+  authority: authoritative
+  license: BSD-3-Clause
+  version: current
+  topics:
+  - glsl
+  - spir-v
+  relevant_sections:
+  - 'glslangValidator -V'
+  last_verified: '2026-08-20'
+- id: yocto-reproducible
+  title: 'Yocto Project — reproducible builds'
+  url: 'https://docs.yoctoproject.org/dev-manual/reproducible-builds.html'
+  authority: official
+  license: CC-BY-SA-4.0
+  version: current
+  topics:
+  - yocto
+  - 'reproducible builds'
+  relevant_sections:
+  - 'INHERIT += reproducible_build'
+  - SOURCE_DATE_EPOCH
+  - SPDX
+  last_verified: '2026-08-20'
+- id: reproducible-builds-sde
+  title: 'Reproducible Builds — SOURCE_DATE_EPOCH specification'
+  url: 'https://reproducible-builds.org/specs/source-date-epoch/'
+  authority: authoritative
+  license: CC-BY-SA-4.0
+  version: current
+  topics:
+  - 'reproducible builds'
+  - source_date_epoch
+  relevant_sections:
+  - 'timestamp normalization'
+  last_verified: '2026-08-20'
+- id: buildroot-reproducible
+  title: 'Buildroot manual — reproducible builds'
+  url: 'https://buildroot.org/downloads/manual/manual.html#reproducible-builds'
+  authority: official
+  license: CC-BY-SA-4.0
+  version: current
+  topics:
+  - buildroot
+  - 'reproducible builds'
+  relevant_sections:
+  - BR2_REPRODUCIBLE
+  last_verified: '2026-08-20'
+- id: usb20-spec
+  title: 'Universal Serial Bus Specification rev 2.0 — Chapter 9'
+  url: 'https://www.usb.org/document-library/usb-20-specification'
+  authority: normative
+  license: 'USB-IF (referenced; not copied)'
+  version: 2.0
+  topics:
+  - usb
+  - descriptors
+  relevant_sections:
+  - 'Chapter 9'
+  - 'descriptor formats'
+  - 'standard requests'
+  - enumeration
+  last_verified: '2026-08-20'
+- id: hid-spec
+  title: 'USB HID Usage Tables / HID 1.11'
+  url: 'https://www.usb.org/sites/default/files/hid1_11.pdf'
+  authority: normative
+  license: 'USB-IF (referenced)'
+  version: 1.11
+  topics:
+  - usb
+  - hid
+  relevant_sections:
+  - 'HID descriptor'
+  - 'report descriptor'
+  last_verified: '2026-08-20'
+- id: pcie-base-spec
+  title: 'PCI Express Base Specification'
+  url: 'https://pcisig.com/specifications/pciexpress'
+  authority: normative
+  license: 'PCI-SIG (referenced; not copied)'
+  version: 6.0
+  topics:
+  - pcie
+  - 'config space'
+  relevant_sections:
+  - 'extended config space'
+  - capabilities
+  last_verified: '2026-08-20'
+- id: pci-local-spec
+  title: 'PCI Local Bus Specification rev 3.0 — Configuration Space'
+  url: 'https://pcisig.com/specifications/conventional'
+  authority: normative
+  license: 'PCI-SIG (referenced)'
+  version: 3.0
+  topics:
+  - pci
+  - 'config space'
+  relevant_sections:
+  - 'header type 0'
+  - BARs
+  - 'capability linked list'
+  - MSI/MSI-X
+  last_verified: '2026-08-20'
+- id: linux-pci-api
+  title: 'Linux kernel — PCI driver API'
+  url: 'https://docs.kernel.org/PCI/pci.html'
+  authority: official
+  license: GPL-2.0
+  version: current
+  topics:
+  - linux
+  - pci
+  relevant_sections:
+  - pci_resource_start
+  - 'config access'
+  last_verified: '2026-08-20'
+- id: linux-core-man
+  title: 'core(5) — core dump files'
+  url: 'https://man7.org/linux/man-pages/man5/core.5.html'
+  authority: authoritative
+  license: 'Linux man-pages (GPL)'
+  version: current
+  topics:
+  - 'core dumps'
+  - linux
+  relevant_sections:
+  - core_pattern
+  - 'ulimit -c'
+  last_verified: '2026-08-20'
+- id: linux-napi-docs
+  title: 'Linux kernel — NAPI documentation'
+  url: 'https://docs.kernel.org/networking/napi.html'
+  authority: official
+  license: GPL-2.0
+  version: current
+  topics:
+  - napi
+  - networking
+  relevant_sections:
+  - napi_struct
+  - 'poll budget'
+  - napi_complete
+  - GRO
+  last_verified: '2026-08-20'
+- id: klee-docs
+  title: 'KLEE — documentation and tutorials'
+  url: 'https://klee.github.io/docs/'
+  authority: authoritative
+  license: Unlicense
+  version: current
+  topics:
+  - 'symbolic execution'
+  - klee
+  relevant_sections:
+  - klee_make_symbolic
+  - --max-time
+  - 'LLVM bitcode'
+  last_verified: '2026-08-20'
+- id: angr-docs
+  title: 'angr — documentation'
+  url: 'https://docs.angr.io/'
+  authority: authoritative
+  license: BSD-2-Clause
+  version: current
+  topics:
+  - 'symbolic execution'
+  - angr
+  relevant_sections:
+  - claripy
+  - SimulationManager
+  - exploration
+  last_verified: '2026-08-20'
+- id: ieee-754
+  title: 'IEEE 754 — Standard for Floating-Point Arithmetic'
+  url: 'https://en.wikipedia.org/wiki/IEEE_754'
+  authority: normative
+  license: 'IEEE (referenced)'
+  version: 2019
+  topics:
+  - 'floating point'
+  - 'ieee 754'
+  relevant_sections:
+  - 'basic arithmetic'
+  - 'NaN semantics'
+  - rounding
+  last_verified: '2026-08-20'
+- id: goldberg-fp
+  title: 'What Every Computer Scientist Should Know About Floating-Point Arithmetic'
+  url: 'https://dl.acm.org/doi/10.1145/103162.103163'
+  authority: authoritative
+  license: 'ACM (referenced)'
+  version: 1991
+  topics:
+  - 'floating point'
+  relevant_sections:
+  - rounding
+  - 'catastrophic cancellation'
+  last_verified: '2026-08-20'
+- id: posix-byteorder
+  title: 'htonl/htons/ntohl/ntohs — network byte order'
+  url: 'https://man7.org/linux/man-pages/man3/htonl.3.html'
+  authority: authoritative
+  license: 'Linux man-pages (GPL)'
+  version: current
+  topics:
+  - 'byte order'
+  - network
+  relevant_sections:
+  - 'host-to-network conversion'
+  last_verified: '2026-08-20'
+- id: rfc1700
+  title: 'RFC 1700 / STD 2 — Assigned Numbers (network byte order)'
+  url: 'https://www.rfc-editor.org/rfc/rfc1700.html'
+  authority: normative
+  license: 'IETF (public)'
+  version: 1994
+  topics:
+  - 'byte order'
+  - internet
+  relevant_sections:
+  - 'big-endian network byte order'
+  last_verified: '2026-08-20'

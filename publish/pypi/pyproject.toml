@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "trothbyte-skills"
-version = "0.1.0"
-description = "Install the TrothByte low-level skills collection (124 verified skills for AI coding agents) into your agent's skills directory."
+version = "0.3.0"
+description = "Install the TrothByte low-level skills collection (185 verified skills for AI coding agents) into your agent's skills directory."
 readme = "README.md"
 requires-python = ">=3.8"
 license = { text = "MIT" }

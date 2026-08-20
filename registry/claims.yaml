@@ -1,5 +1,5 @@
 meta:
-  updated: '2026-08-17'
+  updated: '2026-08-20'
   rule: Нормативное утверждение без source-reference недопустимо в stable skill.
   confidence:
     MUST_VERIFY: требует исполнимой проверки (см. verification method)
@@ -996,6 +996,307 @@ claims:
   section: paper
   skill: design-anti-ai-look-originality-review
   confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-142
+  claim: 'LLM-генерируемый C++ содержит 23-29 нарушений MISRA C++ на KLOC, ни одна модель не даёт полностью compliant код'
+  source: rs-8123173-misra-llm
+  section: paper
+  skill: misra-c-compliance
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-143
+  claim: 'Top-k компактные MISRA-инструкции (k=3,5,10) снижают violations на 83%'
+  source: rs-8123173-misra-llm
+  section: paper
+  skill: misra-c-compliance
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-144
+  claim: 'MISRA C:2012 Rule 14.4: управляющее выражение if/while/for должно быть essentially Boolean'
+  source: misra-c-2012
+  section: 'Rule 14.4'
+  skill: misra-c-compliance
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-145
+  claim: 'LLM-агенты фабрикуют evidence: invent тест-результаты, terminal logs, git history, чтобы скрыть ошибки'
+  source: arxiv-2509-18970-agent-hallucination
+  section: paper
+  skill: agent-deception-detection
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-146
+  claim: 'Контр-механизм против fabricated evidence: требовать raw output команды, а не summary'
+  source: arxiv-2509-03518-can-llms-lie
+  section: paper
+  skill: agent-deception-detection
+  confidence: MUST_CONSIDER
+  evidence: INFERRED
+- id: CL-147
+  claim: 'Агенты при рефакторинге заменяют большие фрагменты рабочего кода и теряют функциональность без baseline-прогона тестов'
+  source: swebench-v2
+  section: paper
+  skill: destructive-refactoring-guard
+  confidence: MUST_CONSIDER
+  evidence: INFERRED
+- id: CL-148
+  claim: 'Поведение, различающееся между компиляторами/уровнями оптимизации, сигнализирует о UB (предположения о среде выполнения)'
+  source: iso-c11-n1570
+  section: '3.4.3, J.2'
+  skill: compiler-unstable-code-detection
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-149
+  claim: 'Дифференциальное тестирование компиляторов находит UB, которое sanitizer-реализации пропускают (UBfuzz: 31 баг в GCC/LLVM sanitizers)'
+  source: arxiv-2401-04538-ubfuzz
+  section: paper
+  skill: compiler-unstable-code-detection
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-150
+  claim: 'MTE: тег 4 бита живёт в битах 56-59 указателя (TBI), гранула памяти 16 байт'
+  source: arm-arm-armv9
+  section: FEAT_MTE
+  skill: arm-mte-programming
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-151
+  claim: 'MTE ASYNC-режим сообщает о tag fault асинхронно (после точки сбоя) — для точной диагностики нужен SYNC'
+  source: arm-mte-whitepaper
+  section: 'MTE modes'
+  skill: arm-mte-programming
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-152
+  claim: 'В kernel crate нет std: типы аллокатора доступны как kernel::alloc::{KBox, KVec, ...}'
+  source: kernel-crate-docs
+  section: alloc
+  skill: rust-for-linux-module-dev
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-153
+  claim: 'Паника в коде модуля ядра = kernel oops; ошибки возвращаются как kernel::error::Error через ?'
+  source: rust-for-linux-docs
+  section: 'error handling'
+  skill: rust-for-linux-module-dev
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-154
+  claim: 'io_uring SQ/CQ ring — lock-free shared структуры: sq_tail обновляется release-store, cq_head — acquire-store'
+  source: io-uring-docs
+  section: 'submission/completion queues'
+  skill: io-uring-interface
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-155
+  claim: 'Linked requests (IOSQE_IO_LINK) выполняются all-or-nothing; сбой одного звенa проваливает цепочку'
+  source: io-uring-docs
+  section: 'linked requests'
+  skill: io-uring-interface
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-156
+  claim: 'CO-RE релокации (field offset/type size/enum value) выполняются на этапе загрузки через BTF vmlinux'
+  source: kernel-btf-docs
+  section: CO-RE
+  skill: bpf-core-relocation
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-157
+  claim: 'Доступ к полям kernel-структур в BPF требует bpf_core_read или __builtin_preserve_access_index'
+  source: cilium-bpf-core
+  section: CO-RE
+  skill: bpf-core-relocation
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-158
+  claim: 'UEFI Secure Boot: цепочка PK->KEK->db/dbx; образ выполняется только при валидной подписи ключом из db'
+  source: uefi-spec
+  section: 'Secure Boot'
+  skill: secure-boot-chain
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-159
+  claim: 'Android Verified Boot 2.0: vbmeta-цепочка + rollback index (RPMB) для защиты от отката'
+  source: avb-docs
+  section: vbmeta
+  skill: secure-boot-chain
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-160
+  claim: 'Динамическое выделение памяти в hard-RT задачах недопустимо: время выделения неограничено (MISRA C:2012 Rule 21.3)'
+  source: misra-c-2012
+  section: 'Rule 21.3'
+  skill: hard-real-time-determinism
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-161
+  claim: 'Rate Monotonic utilization bound U=n(2^(1/n)-1): при превышении фиксированный приоритетный планировщик не гарантирует дедлайны'
+  source: liu-layland-1973
+  section: paper
+  skill: hard-real-time-determinism
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-162
+  claim: 'Full RELRO требует -Wl,-z,relro,-z,now (BIND_NOW); PIE обязателен для ASLR кода'
+  source: gnu-ld-manual
+  section: '-z relro/-z now'
+  skill: binary-hardening-flags
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-163
+  claim: 'Наличие hardening-флага в командной строке не гарантирует свойство в бинарнике — проверять readelf/objdump'
+  source: binutils-docs
+  section: readelf/objdump
+  skill: binary-hardening-flags
+  confidence: MUST_CONSIDER
+  evidence: INFERRED
+- id: CL-164
+  claim: 'Checked C: _Ptr/_Array_ptr/_Nt_array_ptr + bounds-аннотации дают пространственную память-безопасность в checked-регионах'
+  source: checked-c-spec
+  section: 'checked pointer types'
+  skill: checked-c-migration
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-165
+  claim: '3C полуавтоматически аннотирует legacy C; где bounds недоказуемы, требуется рефакторинг (root cause), а не cast'
+  source: arxiv-2203-13445-3c
+  section: paper
+  skill: checked-c-migration
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-166
+  claim: 'FIPS 203 требует implicit rejection: при невалидном ciphertext decapsulation возвращает значение без early-exit'
+  source: nist-fips-203
+  section: 'Module-Lattice-Based Key-Encapsulation'
+  skill: post-quantum-crypto-mlkem
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-167
+  claim: 'Rejection sampling и сравнение секретов в ML-KEM должны быть constant-time (без data-dependent ветвлений)'
+  source: nist-fips-203
+  section: sampling
+  skill: post-quantum-crypto-mlkem
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-168
+  claim: 'Vulkan: binding''и дескрипторов в шейдере (set/binding) должны точно совпадать с VkDescriptorSetLayout'
+  source: vulkan-spec
+  section: 'Descriptor Sets'
+  skill: vulkan-compute-shaders
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-169
+  claim: 'Vulkan: запись и чтение одного буфера между dispatch не упорядочены без vkCmdPipelineBarrier'
+  source: vulkan-spec
+  section: 'Memory Barriers'
+  skill: vulkan-compute-shaders
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-170
+  claim: 'SOURCE_DATE_EPOCH заставляет инструменты использовать фиксированное время; __DATE__/__TIME__ ломают воспроизводимость'
+  source: reproducible-builds-sde
+  section: spec
+  skill: reproducible-builds-firmware
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-171
+  claim: 'Yocto: INHERIT += ''reproducible_build'' + SOURCE_DATE_EPOCH из git метаданных рецепта для воспроизводимых образов'
+  source: yocto-reproducible
+  section: 'reproducible builds'
+  skill: reproducible-builds-firmware
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-172
+  claim: 'USB: Device Descriptor 18 байт (bLength=0x12), Configuration 9, Interface 9, Endpoint 7; порядок конфиг->интерфейс->эндпоинт'
+  source: usb20-spec
+  section: 'Chapter 9'
+  skill: usb-device-stack
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-173
+  claim: 'USB bEndpointAddress: bit7 = направление (1 IN), bits 3:0 = номер эндпоинта'
+  source: usb20-spec
+  section: 9.6.6
+  skill: usb-device-stack
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-174
+  claim: 'PCIe capability linked list: старт в offset 0x34, next-указатель в byte[1] каждой capability, 0x00 = конец'
+  source: pci-local-spec
+  section: 6.7
+  skill: pcie-config-space
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-175
+  claim: 'BAR-проба: записать 0xFFFFFFFF, прочитать, замаскировать width-биты; size = ~mask + 1'
+  source: pci-local-spec
+  section: 6.2.5.1
+  skill: pcie-config-space
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-176
+  claim: 'При повреждённом стеке кадры backtrace — мусор; перед доверием bt проверять rip/rsp/регистры и memory maps'
+  source: gdb-manual
+  section: Registers/Backtrace
+  skill: core-dump-analysis
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-177
+  claim: 'NAPI poll возвращает фактически обработанные пакеты; при исчерпании budget napi_complete не вызывается (напоминание для тестирования)'
+  source: linux-napi-docs
+  section: NAPI
+  skill: napi-network-driver
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-178
+  claim: 'NAPI-драйверы используют napi_gro_receive() (GRO), а не netif_receive_skb в receive-пути'
+  source: linux-napi-docs
+  section: GRO
+  skill: napi-network-driver
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-179
+  claim: 'Символьное исполнение исследует ограниченное число путей — результат не является proof of absence'
+  source: angr-docs
+  section: 'path exploration'
+  skill: symbolic-execution-klee-angr
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-180
+  claim: 'KLEE работает с LLVM bitcode; входные данные делаются символьными через klee_make_symbolic'
+  source: klee-docs
+  section: 'core concepts'
+  skill: symbolic-execution-klee-angr
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-181
+  claim: 'В двоичной арифметике 0.1+0.2 != 0.3; сравнение float через == недопустимо'
+  source: ieee-754
+  section: 'basic arithmetic'
+  skill: floating-point-ieee-semantics
+  confidence: MUST_VERIFY
+  evidence: KNOWN
+- id: CL-182
+  claim: '-ffast-math отключает NaN/Inf-семантику и errno и переставляет FP-выражения — меняет наблюдаемое поведение'
+  source: gcc-manual
+  section: 'Optimize Options'
+  skill: floating-point-ieee-semantics
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-183
+  claim: 'Сетевая/файловая serialization нативно зависит от хост-порядка; wire-форматы задают byte order явно — собирать сдвигами'
+  source: posix-byteorder
+  section: htonl
+  skill: endianness-and-byte-order
+  confidence: MUST_CONSIDER
+  evidence: KNOWN
+- id: CL-184
+  claim: 'Union/pointer punning для чтения байт-порядка — нарушение strict aliasing (UB); использовать memcpy'
+  source: iso-c11-n1570
+  section: '6.5 p7'
+  skill: endianness-and-byte-order
+  confidence: MUST_VERIFY
   evidence: KNOWN
 provenance_checks:
 - Каждый claim в stable skill должен иметь непустой source и section

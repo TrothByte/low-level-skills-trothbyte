@@ -8,8 +8,8 @@
 # requires=require edges from registry/cross-links.yaml (sorted).
 meta:
   generated_by: tools/reports/gen_skills_min.py
-  updated: '2026-08-17'
-  total: 163
+  updated: '2026-08-20'
+  total: 185
 skills:
 - id: abi-layout-reasoning
   domain: abi
@@ -17,7 +17,7 @@ skills:
   stability: source-backed
   tokens: 792
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [binary, calling, convention, crosses, interface]
   negative_triggers: []
   priority_rules: ['cat > layout.c <<''EOF''', '#include <stddef.h>']
@@ -29,19 +29,31 @@ skills:
   stability: researched
   tokens: 1431
   std_version: c11
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [accelerator, ai, dma, pipeline, programs]
   negative_triggers: []
   priority_rules: ['# Python pipeline model + barrier-sufficiency checker (plain', 'python examples/good/good_sync_schedule.py # expected: SAFE,']
   requires: []
   path: skills/accelerator/accelerator-pipeline-synchronization
+- id: agent-deception-detection
+  domain: _meta
+  type: unique
+  stability: source-backed
+  tokens: 1575
+  std_version: null
+  last_verified: '2026-08-20'
+  triggers: [reports, results, runs, test, tools]
+  negative_triggers: []
+  priority_rules: ['Run `examples/good/evidence_gate.py` on a JSON agent report:', 'Run `examples/good/git_plumbing_demo.py`: it builds a throwa']
+  requires: [meta-evidence, meta-verification]
+  path: skills/_meta/agent-deception-detection
 - id: agent-scope-management
   domain: _meta
   type: common
   stability: source-backed
   tokens: 1426
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [edits, many, session, spans, spawns]
   negative_triggers: []
   priority_rules: ['python examples/good/checkpoint_workflow.py', 'python examples/bad/no_checkpoint_workflow.py']
@@ -53,7 +65,7 @@ skills:
   stability: source-backed
   tokens: 1460
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [decide, must, operations, shell, tool]
   negative_triggers: []
   priority_rules: ['# Host-verifiable: whitelist policy engine (executed on this', 'python examples/good/whitelist_check.py # PASS: policy enfor']
@@ -65,7 +77,7 @@ skills:
   stability: researched
   tokens: 1327
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [artifacts, dex, format, register, smali]
   negative_triggers: []
   priority_rules: ['# Target flow (toolchain not installed on this host):', 'baksmali d classes.dex -o out_smali/']
@@ -77,19 +89,31 @@ skills:
   stability: researched
   tokens: 1377
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [analyzing, android, apps, native, so]
   negative_triggers: []
   priority_rules: ['# Target flow (frida + objdump documented; toolchain not ins', 'frida -U -l examples/good/frida_fingerprint.js com.example.a']
   requires: []
   path: skills/mobile/android-re-native-jni-analysis
+- id: arm-mte-programming
+  domain: embedded
+  type: unique
+  stability: researched
+  tokens: 1745
+  std_version: 'C++'
+  last_verified: '2026-08-20'
+  triggers: [allocators, collectors, garbage, memory, pointer]
+  negative_triggers: []
+  priority_rules: ['python examples/good/mte_sim.py', '# Expected: 6 scenarios, "RESULT: 6 passed, 0 failed", exit ']
+  requires: [embedded-volatile-and-memory-ordering]
+  path: skills/embedded/arm-mte-programming
 - id: asm-aarch64-neon-simd-safety
   domain: assembly
   type: unique
   stability: researched
   tokens: 1098
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [aarch64, loops, neon, simd, vector]
   negative_triggers: []
   priority_rules: ['# Researched — clang/qemu NOT installed on this host. Verifi', 'clang --target=aarch64-none-elf -march=armv8-a+simd -c examp']
@@ -101,7 +125,7 @@ skills:
   stability: researched
   tokens: 1008
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [arm, assembly, cortex, other, thumb]
   negative_triggers: []
   priority_rules: ['# Researched — toolchain (clang/llvm-mc) NOT installed on th', '# Verification command for each example:']
@@ -113,7 +137,7 @@ skills:
   stability: source-backed
   tokens: 1464
   std_version: 'GCC 16'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [asm, assembly, calls, ffi, inline]
   negative_triggers: []
   priority_rules: ['Windows x64 (MinGW gcc on PATH): compile and run `examples/b', 'SysV, AArch64, RISC-V: no cross-compilers here — generate wi']
@@ -125,7 +149,7 @@ skills:
   stability: source-backed
   tokens: 986
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [assembly, gcc, inline, porting, rust]
   negative_triggers: []
   priority_rules: ['gcc -Wall -Wextra -Werror -O2 -S examples/bad/missing_memory', 'gcc -Wall -Wextra -Werror -O2 -S examples/good/clobbers.c -o']
@@ -137,7 +161,7 @@ skills:
   stability: source-backed
   tokens: 1124
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [assembly, clang, compiler, gcc, generated]
   negative_triggers: []
   priority_rules: ['gcc -O0 -S source.c -o /tmp/o0.s', 'gcc -O2 -S source.c -o /tmp/o2.s']
@@ -149,7 +173,7 @@ skills:
   stability: researched
   tokens: 1022
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [assembly, frames, recursion, risc, stack]
   negative_triggers: []
   priority_rules: ['# Researched — no RISC-V toolchain on this host. Verificatio', 'clang --target=riscv64-unknown-elf -march=rv64gc -S examples']
@@ -161,7 +185,7 @@ skills:
   stability: source-backed
   tokens: 1430
   std_version: C11
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [asm, assembly, disassembly, inline, x86]
   negative_triggers: []
   priority_rules: ['cat > probe.c <<''EOF''', 'int f(int a, int b) { return a < b; } // signed -> setl (jl)']
@@ -173,7 +197,7 @@ skills:
   stability: source-backed
   tokens: 1161
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [assembly, dialect, intel, matters, nasm]
   negative_triggers: []
   priority_rules: ['# Source-backed (this host):', 'gcc -O2 -S good/src.c # AT&T output']
@@ -185,7 +209,7 @@ skills:
   stability: source-backed
   tokens: 1246
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [assembly, claims, instruction, produces, reviews]
   negative_triggers: []
   priority_rules: ['gcc -c bad/invented_mnemonic.s # exit 1: "no such instructio', 'gcc -c bad/att_inverted.s # exit 1: "operand type mismatch"']
@@ -197,7 +221,7 @@ skills:
   stability: source-backed
   tokens: 922
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [assembly, choosing, register, widths, x86]
   negative_triggers: []
   priority_rules: ['as file.s -o file.o # or: gcc -c file.s', 'objdump -dr file.o # encodings and relocations']
@@ -209,7 +233,7 @@ skills:
   stability: source-backed
   tokens: 1228
   std_version: c11
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [api, atomic, c11, porting, rust]
   negative_triggers: []
   priority_rules: ['# C11', 'gcc -std=c11 -Wall -Wextra -Werror -O2 examples/good/c11_ato']
@@ -221,7 +245,7 @@ skills:
   stability: source-backed
   tokens: 1235
   std_version: 'gcc 16'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [binary, captured, engineering, protocol, reverse]
   negative_triggers: []
   priority_rules: ['python examples/good/gen_log.py # writes synthetic_uart.log ', 'python examples/good/run_pipeline.py # UNCONFIRMED, exit cod']
@@ -233,7 +257,7 @@ skills:
   stability: source-backed
   tokens: 1368
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [char, int, recovering, short, types]
   negative_triggers: []
   priority_rules: ['gcc -O2 -g -c type_recovery.c -o t.o', 'objdump -d t.o # instruction patterns']
@@ -245,19 +269,31 @@ skills:
   stability: source-backed
   tokens: 1345
   std_version: 'GCC 16'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [binaries, decompiled, decompiling, judging, x86]
   negative_triggers: []
   priority_rules: ['gcc -O2 checksum.c -o reference.exe && ./reference.exe # rec', 'objdump -d reference.exe # record disassembly']
   requires: []
   path: skills/binary-analysis/binary-disassembly-decompilation-fidelity
+- id: binary-hardening-flags
+  domain: security
+  type: common
+  stability: source-backed
+  tokens: 1917
+  std_version: 'gcc 16'
+  last_verified: '2026-08-20'
+  triggers: [binaries, bind, building, relro, security]
+  negative_triggers: []
+  priority_rules: ['checksec --file=./app', 'readelf -l -d -h ./app # GNU_RELRO + BIND_NOW + Type: DYN']
+  requires: [build-toolchain-version-drift, compiler-ub-assumptions]
+  path: skills/security/binary-hardening-flags
 - id: binary-memory-leak-vm-allocator-diagnosis
   domain: binary-analysis
   type: unique
   stability: researched
   tokens: 1338
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [commit, diagnosing, high, ram, rss]
   negative_triggers: []
   priority_rules: ['gcc -O2 -Wall -Wextra -Werror examples/bad/page_pool.c -o pp', './pp.exe # commit grows: 0 -> 32 MiB (pool) -> 73 MiB (extra']
@@ -269,7 +305,7 @@ skills:
   stability: source-backed
   tokens: 1505
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [bios, bootloaders, firmware, stage, uefi]
   negative_triggers: []
   priority_rules: ['# host-verified (gcc/as 16.1, x86-64 native): every example ', 'gcc -c examples/good/correct_gdt.s -o /tmp/good_gdt.o']
@@ -281,7 +317,7 @@ skills:
   stability: source-backed
   tokens: 1467
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [bootloader, hand, must, off, uefi]
   negative_triggers: []
   priority_rules: ['# Host-verifiable: table-chain and DTB parser logic (real ru', 'gcc -Wall -Wextra -Werror -O2 examples/good/acpi_checksum.c ']
@@ -293,19 +329,31 @@ skills:
   stability: researched
   tokens: 1393
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [boot, edk2, firmware, runtime, uefi]
   negative_triggers: []
   priority_rules: ['# Target flow (QEMU + OVMF documented; toolchain not install', 'qemu-system-x86_64 -bios OVMF.fd -m 256 -serial stdio -displ']
   requires: [bootloader-stages]
   path: skills/bootloader/bootloader-uefi-firmware
+- id: bpf-core-relocation
+  domain: networking
+  type: improved
+  stability: researched
+  tokens: 1750
+  std_version: null
+  last_verified: '2026-08-20'
+  triggers: [ebpf, many, meant, programs, run]
+  negative_triggers: []
+  priority_rules: ['python examples/good/core_reloc_model.py # relocation model:', 'python examples/bad/reloc_misuse.py # hardcoded-offset misus']
+  requires: [ebpf-verifier-reasoning]
+  path: skills/networking/bpf-core-relocation
 - id: build-linker-error-diagnostics
   domain: build-systems
   type: unique
   stability: source-backed
   tokens: 1137
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [fails, linking, references, symbol, undefined]
   negative_triggers: []
   priority_rules: ['gcc -c bad/undef_main.c -o undef.o', 'nm undef.o # U missing_func (or: objdump -t undef.o)']
@@ -317,7 +365,7 @@ skills:
   stability: researched
   tokens: 1308
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [actually, build, run, signals, succeeded]
   negative_triggers: []
   priority_rules: ['ninja # real run; watch [N/M] lines and exit code', 'echo $? # POSIX; PowerShell: $LASTEXITCODE — read fast']
@@ -329,7 +377,7 @@ skills:
   stability: source-backed
   tokens: 1141
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [build, cmake, dependency, fails, misdeclared]
   negative_triggers: []
   priority_rules: ['cmake -G Ninja -S bad -B bad/build # expect: target was not ', 'cmake -G Ninja -S good -B good/build # exit 0']
@@ -341,7 +389,7 @@ skills:
   stability: source-backed
   tokens: 1165
   std_version: 'c++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [build, compiler, due, fails, misbehaves]
   negative_triggers: []
   priority_rules: ['gcc --version # exact compiler, record it', 'gcc --print-file-name=libstdc++.a # resolved runtime path']
@@ -353,7 +401,7 @@ skills:
   stability: source-backed
   tokens: 929
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [calls, errors, libc, report, system]
   negative_triggers: []
   priority_rules: ['Mock read/write returning short counts and one `EINTR` — the', 'Linux: `strace`/`perf trace` to observe real syscall returns']
@@ -365,7 +413,7 @@ skills:
   stability: source-backed
   tokens: 623
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [arithmetic, integer, mixing, signed, unsigned]
   negative_triggers: []
   priority_rules: ['gcc -Wall -Wextra -Wconversion -Wsign-conversion program.c', 'clang -fsanitize=undefined -fno-sanitize-recover=undefined p']
@@ -377,7 +425,7 @@ skills:
   stability: source-backed
   tokens: 1434
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [handlers, installs, runs, sigint, signal]
   negative_triggers: []
   priority_rules: ['Raise the handled signal (`raise(SIGINT)`) synchronously and', 'Review the handler body against the allow-list — grep for `p']
@@ -389,7 +437,7 @@ skills:
   stability: source-backed
   tokens: 1100
   std_version: C11
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [buffers, copies, fills, strings, strncpy]
   negative_triggers: []
   priority_rules: ['gcc -Wall -Wextra -Werror -O2 -D_FORTIFY_SOURCE=2 file.c -o ', '# expect: compile clean, runtime asserts pass']
@@ -401,7 +449,7 @@ skills:
   stability: source-backed
   tokens: 672
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [behavior, present, signed, ub, undefined]
   negative_triggers: []
   priority_rules: ['clang -O2 -g -fsanitize=undefined -fno-sanitize-recover=unde', './prog # must not report UB']
@@ -413,7 +461,7 @@ skills:
   stability: source-backed
   tokens: 1528
   std_version: c11
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [behavior, bound, cache, memory, numa]
   negative_triggers: []
   priority_rules: ['# False sharing (Windows, GCC 16.1 MinGW): wall time of each', 'gcc -O2 -pthread examples/bad/false_sharing.c -o fs_bad.exe ']
@@ -425,31 +473,55 @@ skills:
   stability: researched
   tokens: 1373
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [access, avoid, control, designing, must]
   negative_triggers: [high-level]
   priority_rules: ['python3 examples/good/capability_model.py # non-holder denie', 'python3 examples/bad/ambient_authority.py # ambient check by']
   requires: [riscv-cheri-capability-safety]
   path: skills/security/capability-based-security
+- id: checked-c-migration
+  domain: c
+  type: unique
+  stability: researched
+  tokens: 1775
+  std_version: 'C++'
+  last_verified: '2026-08-20'
+  triggers: [adding, annotations, bounds, checked, legacy]
+  negative_triggers: []
+  priority_rules: ['python examples/tools/annotation_infer.py', '# expect: every scenario''s PASS/FAIL matches its expected la']
+  requires: [c-string-and-buffer-safety, c-undefined-behavior]
+  path: skills/c/checked-c-migration
 - id: compiler-ub-assumptions
   domain: compiler
   type: improved
   stability: source-backed
   tokens: 667
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [behaves, diagnosing, differently, levels, optimization]
   negative_triggers: []
   priority_rules: ['gcc -O2 -S file.c # read generated asm', 'gcc -O0 -S file.c # compare against -O0']
   requires: []
   path: skills/compiler/compiler-ub-assumptions
+- id: compiler-unstable-code-detection
+  domain: compiler
+  type: unique
+  stability: source-backed
+  tokens: 1522
+  std_version: 'gcc 16'
+  last_verified: '2026-08-20'
+  triggers: [behaves, compilers, differently, levels, optimization]
+  negative_triggers: []
+  priority_rules: ['python examples/tools/diff_test.py examples/bad/*.c examples', '# expected: the two bad files DIVERGE; deterministic.c is st']
+  requires: [c-undefined-behavior, compiler-ub-assumptions]
+  path: skills/compiler/compiler-unstable-code-detection
 - id: concurrency-actual-parallelism-detection
   domain: concurrency
   type: unique
   stability: source-backed
   tokens: 1295
   std_version: c11
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [actually, concurrent, executes, parallel, verifying]
   negative_triggers: []
   priority_rules: ['gcc -O2 -Wall -Wextra -Werror -pthread examples/good/real_pa', './rp.exe # threads=4 max_started=4 max_working=4 wall~0.30s']
@@ -461,7 +533,7 @@ skills:
   stability: source-backed
   tokens: 1192
   std_version: C11
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [c11, cnd, condition, std, variable]
   negative_triggers: []
   priority_rules: ['g++ -std=c++17 -Wall -Wextra -Werror -O2 -pthread examples/b', '# exit 42, "WATCHDOG: consumer still waiting => LOST WAKEUP"']
@@ -473,19 +545,31 @@ skills:
   stability: source-backed
   tokens: 1254
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [abba, acquires, detecting, locks, two]
   negative_triggers: []
   priority_rules: ['g++ -std=c++17 -Wall -Wextra -Werror -O2 -pthread examples/b', '# exit 42, "WATCHDOG: ABBA DEADLOCK" — expected failure (bou']
   requires: []
   path: skills/concurrency/concurrency-deadlock-and-lock-ordering
+- id: core-dump-analysis
+  domain: debugging
+  type: improved
+  stability: source-backed
+  tokens: 1983
+  std_version: 'gcc 16'
+  last_verified: '2026-08-20'
+  triggers: [core, coredump, crashed, dump, process]
+  negative_triggers: []
+  priority_rules: ['gcc -g -O0 -fno-stack-protector examples/bad/crash.c -o cras', 'gdb -batch -ex "set pagination off" -ex run -ex bt -ex "info']
+  requires: [debugging-crash-triage-discipline, dwarf-debug-info]
+  path: skills/debugging/core-dump-analysis
 - id: cpp-move-semantics
   domain: cpp
   type: common
   stability: source-backed
   tokens: 1351
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [involving, move, references, rvalue, std]
   negative_triggers: []
   priority_rules: ['g++ -std=c++17 -Wall -Wextra -Werror -O2 examples/bad/use_af', 'g++ -std=c++17 -Wall -Wextra -Werror -O2 examples/bad/missin']
@@ -497,7 +581,7 @@ skills:
   stability: source-backed
   tokens: 1347
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [constructor, destructor, issues, lifetime, object]
   negative_triggers: []
   priority_rules: ['g++ -std=c++17 -Wall -Wextra -Werror -O2 examples/bad/virtua', 'g++ -std=c++17 -Wall -Wextra -Werror -O2 examples/bad/static']
@@ -509,7 +593,7 @@ skills:
   stability: source-backed
   tokens: 1518
   std_version: C11
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [data, hunting, kcsan, kernel, races]
   negative_triggers: []
   priority_rules: ['python examples/good/kcsan_model.py', 'python examples/good/race_fix_demo.py']
@@ -521,7 +605,7 @@ skills:
   stability: source-backed
   tokens: 1596
   std_version: C11
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [fixing, kernel, lockdep, locking, splats]
   negative_triggers: []
   priority_rules: ['gcc -Wall -Wextra -Werror -O2 -pthread examples/good/lock_or', 'gcc -Wall -Wextra -Werror -O2 -pthread examples/bad/abba_dea']
@@ -533,7 +617,7 @@ skills:
   stability: source-backed
   tokens: 1566
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [access, crash, low, segfault, violation]
   negative_triggers: []
   priority_rules: ['gcc -g -O0 -Wall -Wextra examples/bad/crash_site.c -o evals/', 'gdb -batch -ex "set pagination off" -ex run -ex bt -ex "info']
@@ -545,7 +629,7 @@ skills:
   stability: source-backed
   tokens: 1486
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [bug, debugger, pure, reasoning, resists]
   negative_triggers: []
   priority_rules: ['The buggy run must end with `CORRUPTION DETECTED` and the lo', 'The clean run (`gcc -g -O0 -DNOBUG`) must end with `no corru']
@@ -557,7 +641,7 @@ skills:
   stability: source-backed
   tokens: 1541
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [ai, generated, generic, styling, ui]
   negative_triggers: []
   priority_rules: ['python examples/ai_look_fingerprint.py examples/good/index.h', 'python examples/ai_look_fingerprint.py examples/bad/index.ht']
@@ -569,7 +653,7 @@ skills:
   stability: source-backed
   tokens: 1449
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [accessibility, choosing, color, pairs, verifying]
   negative_triggers: []
   priority_rules: ['python examples/contrast_check.py examples/good/palette.css', 'python examples/contrast_check.py examples/bad/palette.css #']
@@ -581,7 +665,7 @@ skills:
   stability: source-backed
   tokens: 1320
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [building, layout, page, responsive, spacing]
   negative_triggers: []
   priority_rules: ['python examples/spacing_scale_check.py examples/good/layout.', 'python examples/spacing_scale_check.py examples/bad/layout.c']
@@ -593,7 +677,7 @@ skills:
   stability: source-backed
   tokens: 1476
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [building, design, files, theme, tokens]
   negative_triggers: []
   priority_rules: ['python examples/verify_dtcg.py examples/good/tokens.json', 'python examples/verify_dtcg.py examples/bad/tokens.json # ex']
@@ -605,7 +689,7 @@ skills:
   stability: source-backed
   tokens: 1462
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [choosing, font, sizes, type, weights]
   negative_triggers: []
   priority_rules: ['python examples/type_scale_check.py examples/good/type.css', 'python examples/type_scale_check.py examples/bad/type.css # ']
@@ -617,19 +701,31 @@ skills:
   stability: source-backed
   tokens: 1342
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [composition, evaluating, hierarchy, page, structuring]
   negative_triggers: []
   priority_rules: ['python examples/composition_check.py examples/good/index.htm', 'python examples/composition_check.py examples/bad/index.html']
   requires: []
   path: skills/design/design-visual-hierarchy-composition
+- id: destructive-refactoring-guard
+  domain: _meta
+  type: unique
+  stability: source-backed
+  tokens: 1465
+  std_version: 'gcc 16'
+  last_verified: '2026-08-20'
+  triggers: [deletions, large, proposes, refactors, replacing]
+  negative_triggers: []
+  priority_rules: ['python examples/tools/refactor_diff_guard.py examples/bad/wh', '# expect: per-file FLAG lines and exit 1 (deletion-dominant,']
+  requires: [agent-scope-management]
+  path: skills/_meta/destructive-refactoring-guard
 - id: dma-cache-coherency
   domain: kernel
   type: unique
   stability: source-backed
   tokens: 1366
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [alloc, coherent, dma, mappings, streaming]
   negative_triggers: []
   priority_rules: ['gcc -Wall -Wextra -Werror -O2 examples/good/dma_direction_mo', 'gcc -Wall -Wextra -Werror -O2 examples/bad/dma_forgot_sync.c']
@@ -641,7 +737,7 @@ skills:
   stability: source-backed
   tokens: 992
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [debug, dwarf, generating, info, mapping]
   negative_triggers: []
   priority_rules: ['gcc -g -O0 -o good.exe examples/good/debug_friendly.c', 'gcc -O2 -g -o bad.exe examples/bad/optimized_away.c']
@@ -653,7 +749,7 @@ skills:
   stability: researched
   tokens: 1389
   std_version: 'gcc 16'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [bpf, fails, opaque, program, verifier]
   negative_triggers: []
   priority_rules: ['# Python simulation of the iterate-on-opaque-log loop (plain', 'python examples/good/good_verifier_log_iteration.py']
@@ -665,7 +761,7 @@ skills:
   stability: researched
   tokens: 1173
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [ebpf, elem, lookup, map, programs]
   negative_triggers: []
   priority_rules: ['gcc -Wall -Wextra -Werror -O2 -c examples/good/*.c examples/', '# On Linux (target only):']
@@ -677,7 +773,7 @@ skills:
   stability: source-backed
   tokens: 1689
   std_version: 'gcc 16'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [dynamically, elf, explaining, linked, program]
   negative_triggers: []
   priority_rules: ['gcc -fPIC -shared -o libcounter.so libcounter.c', 'gcc -pie -fPIE main.c -L. -lcounter -Wl,-rpath,''$ORIGIN'' -o ']
@@ -689,7 +785,7 @@ skills:
   stability: source-backed
   tokens: 1488
   std_version: 'gcc 16'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [elf, executables, files, header, object]
   negative_triggers: []
   priority_rules: ['gcc -c good.c -o good.o', 'readelf -h good.o # e_ident, e_type=ET_REL, e_machine=EM_X86']
@@ -701,7 +797,7 @@ skills:
   stability: source-backed
   tokens: 1483
   std_version: 'gcc 16'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [binaries, building, diagnosing, elf, symbol]
   negative_triggers: []
   priority_rules: ['gcc -Wall -Wextra -Werror -O2 -c libfoo.c -o libfoo.o', 'gcc -Wall -Wextra -Werror -O2 -c main.c -o main.o']
@@ -713,7 +809,7 @@ skills:
   stability: researched
   tokens: 1287
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [board, bringing, embedded, new, up]
   negative_triggers: ['application code']
   priority_rules: ['# host-verifiable core: the encoder state machine and AF/clo', 'gcc -Wall -Wextra -Werror -O2 examples/good/gray_code_encode']
@@ -725,7 +821,7 @@ skills:
   stability: researched
   tokens: 1162
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [devicetree, fragments, kconfig, overlays, zephyr]
   negative_triggers: []
   priority_rules: ['dtc -I dts -O dtb -o out.dtb board_overlay.dts # pure syntax', 'west build -b <board> -d build -p always <app> # bindings + ']
@@ -737,7 +833,7 @@ skills:
   stability: researched
   tokens: 1287
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [embedded, flashing, gdb, openocd, targets]
   negative_triggers: []
   priority_rules: ['# target toolchain (documented; not installed on this host —', '# no arm-none-eabi-gdb, no probe):']
@@ -749,7 +845,7 @@ skills:
   stability: researched
   tokens: 1284
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [embedded, hardware, running, setting, up]
   negative_triggers: []
   priority_rules: ['# host-verifiable core: readiness gate + re-enumeration + fl', 'python examples/good/hil_readiness.py']
@@ -761,7 +857,7 @@ skills:
   stability: source-backed
   tokens: 1186
   std_version: c11
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [drivers, embedded, peripheral, raw, touch]
   negative_triggers: []
   priority_rules: ['gcc -std=c11 -Wall -Wextra -Werror -c examples/good/madctl_b', 'gcc -std=c11 -Wall -Wextra -Werror -c examples/good/i2c_regi']
@@ -773,7 +869,7 @@ skills:
   stability: source-backed
   tokens: 1631
   std_version: C11
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [bare, cortex, firmware, metal, uses]
   negative_triggers: []
   priority_rules: ['# host, GCC 16.1: bad examples exit nonzero, good examples e', 'gcc -Wall -Wextra -Werror -O2 examples/bad/shared_var_race.c']
@@ -785,7 +881,7 @@ skills:
   stability: source-backed
   tokens: 1310
   std_version: 'gcc 16'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [bare, embedded, gnu, ld, metal]
   negative_triggers: []
   priority_rules: ['gcc -Wall -Wextra -Werror -O2 -c examples/good/host_demo.c -', 'gcc -Wl,-T,examples/good/host_demo.ld -Wl,--gc-sections -o g']
@@ -797,7 +893,7 @@ skills:
   stability: source-backed
   tokens: 1096
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [armv7, configures, cortex, firmware, mpu]
   negative_triggers: []
   priority_rules: ['# host gate (this repository): syntax + invariant asserts', 'gcc -Wall -Wextra -Werror -O2 examples/good/mpu_trustzone_go']
@@ -809,7 +905,7 @@ skills:
   stability: researched
   tokens: 1433
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [air, designing, firmware, over, updates]
   negative_triggers: []
   priority_rules: ['# host-verifiable core: rollback counter + A/B decision logi', 'python examples/good/rollback_logic.py # simulates trial win']
@@ -821,31 +917,55 @@ skills:
   stability: source-backed
   tokens: 1267
   std_version: C11
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [accesses, embedded, mapped, memory, mmio]
   negative_triggers: []
   priority_rules: ['gcc -O2 -S examples/good/mmio_volatile.c -o - # two loads pe', 'gcc -O2 -S examples/bad/mmio_no_volatile.c -o - # one load, ']
   requires: [memory-ordering-reasoning]
   path: skills/embedded/embedded-volatile-and-memory-ordering
+- id: endianness-and-byte-order
+  domain: c
+  type: common
+  stability: source-backed
+  tokens: 1446
+  std_version: 'C++'
+  last_verified: '2026-08-20'
+  triggers: [file, formats, parsing, serializing, wire]
+  negative_triggers: []
+  priority_rules: ['gcc -Wall -Wextra -Werror -O2 examples/good/portable_seriali', 'gcc -Wall -Wextra -Werror -O2 examples/good/endian_probe.c &']
+  requires: [c-undefined-behavior]
+  path: skills/c/endianness-and-byte-order
 - id: ffi-boundary-cross-language
   domain: ffi
   type: cross-layer
   stability: source-backed
   tokens: 747
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [boundary, control, data, language, passing]
   negative_triggers: []
   priority_rules: ['# C side layout program (offsetof/sizeof) vs Rust', '#[repr(C)] #[derive(Debug)] struct S { ... }']
   requires: [abi-layout-reasoning]
   path: skills/ffi/ffi-boundary-cross-language
+- id: floating-point-ieee-semantics
+  domain: c
+  type: common
+  stability: source-backed
+  tokens: 1634
+  std_version: C11
+  last_verified: '2026-08-20'
+  triggers: [floating, handling, inf, nan, point]
+  negative_triggers: []
+  priority_rules: ['python examples/tools/fp_check.py examples/good # expect 0 i', 'python examples/tools/fp_check.py examples/bad # expect flag']
+  requires: [compiler-ub-assumptions]
+  path: skills/c/floating-point-ieee-semantics
 - id: formal-spec-loop-invariants
   domain: security
   type: unique
   stability: researched
   tokens: 1364
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [acsl, contracts, formal, kani, specifications]
   negative_triggers: []
   priority_rules: ['# Frama-C with WP (target; not installed on this host):', 'frama-c -wp -wp-prop main file.c']
@@ -857,7 +977,7 @@ skills:
   stability: researched
   tokens: 1410
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [deciding, formally, kani, rust, verify]
   negative_triggers: []
   priority_rules: ['rustc --edition 2021 examples/good/kani_harness_style.rs -o ', 'rustc --edition 2021 examples/bad/vacuous_harness.rs -o /tmp']
@@ -869,7 +989,7 @@ skills:
   stability: researched
   tokens: 1634
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [asterinas, comparing, designing, framekernel, oses]
   negative_triggers: []
   priority_rules: ['rustc -O examples/good/framework_service_split.rs -o /tmp/f1', 'rustc -O examples/bad/framework_service_bad.rs -o /tmp/f2.ex']
@@ -881,7 +1001,7 @@ skills:
   stability: researched
   tokens: 1325
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [decide, fuzzing, reporting, results, whether]
   negative_triggers: []
   priority_rules: ['clang -O1 -g -fsanitize=fuzzer,address -fno-omit-frame-point', './fuzz_pkt -artifact_prefix=./art/ -max_total_time=600 ./cor']
@@ -893,7 +1013,7 @@ skills:
   stability: source-backed
   tokens: 1578
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [building, descriptions, fuzz, kernel, syzkaller]
   negative_triggers: []
   priority_rules: ['python examples/good/coverage_fuzzer.py', 'python examples/bad/naive_fuzzer.py']
@@ -905,7 +1025,7 @@ skills:
   stability: source-backed
   tokens: 1595
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [analyzing, engineering, go, reverse, rust]
   negative_triggers: []
   priority_rules: ['rustc -O examples/good/rust_panic_demo.rs -o rpd.exe', 'rustc -O -C strip=symbols examples/good/rust_panic_demo.rs -']
@@ -917,7 +1037,7 @@ skills:
   stability: researched
   tokens: 1437
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [designing, exchange, gpu, kernels, multi]
   negative_triggers: []
   priority_rules: ['# Multi-GPU host (documented target; no GPU here):', 'nvcc -arch=sm_80 -O2 -lnccl -o ring_ar ring_allreduce.cu']
@@ -929,7 +1049,7 @@ skills:
   stability: researched
   tokens: 1590
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [benchmarks, building, cuda, generated, llm]
   negative_triggers: []
   priority_rules: ['# Python protocol simulation (runs on any host with python 3', 'python examples/good/good_verified_protocol.py']
@@ -941,7 +1061,7 @@ skills:
   stability: researched
   tokens: 1372
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [escaping, fixed, gpu, kernels, verifying]
   negative_triggers: []
   priority_rules: ['# nvcc path (CUDA available):', 'nvcc -arch=sm_80 -O2 good/good_fuzz_kernel.cu -o fuzz_kernel']
@@ -953,19 +1073,31 @@ skills:
   stability: researched
   tokens: 1425
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [coherence, cuda, hip, kernels, memory]
   negative_triggers: []
   priority_rules: ['# Target verification (run on a machine with the CUDA toolki', 'nvcc -arch=sm_80 -O2 examples/good/good_shared_syncthreads.c']
   requires: [memory-ordering-reasoning]
   path: skills/gpu/gpu-memory-model-coherence
+- id: hard-real-time-determinism
+  domain: safety
+  type: unique
+  stability: researched
+  tokens: 1784
+  std_version: 'C++'
+  last_verified: '2026-08-20'
+  triggers: [bare, hard, metal, real, time]
+  negative_triggers: ['application code', ui]
+  priority_rules: ['python examples/tools/rt_banned_patterns.py examples/bad/rec', 'python examples/tools/rt_banned_patterns.py examples/bad/mal']
+  requires: [misra-c-compliance, rtos-concurrency-and-isr]
+  path: skills/safety/hard-real-time-determinism
 - id: hardware-register-bringup
   domain: embedded
   type: unique
   stability: source-backed
   tokens: 1679
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [bringing, mcu, peripheral, unknown, up]
   negative_triggers: []
   priority_rules: ['# Host-verifiable: init-order and sequence-logic simulation ', 'gcc -Wall -Wextra -Werror -O2 examples/good/init_sequence_go']
@@ -977,7 +1109,7 @@ skills:
   stability: researched
   tokens: 1414
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [clock, crossing, domain, fixing, hdl]
   negative_triggers: []
   priority_rules: ['python examples/good/cdc_two_flop_sync.py # coherent single-', 'python examples/bad/cdc_multibit_naive_sync.py # mixed-word ']
@@ -989,7 +1121,7 @@ skills:
   stability: researched
   tokens: 1374
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [constraints, fpga, sdc, timing, triaging]
   negative_triggers: []
   priority_rules: ['# Target flow (yosys + nextpnr; not installed on this host):', 'yosys -p "read_verilog -sv examples/good/constraints_authori']
@@ -1001,7 +1133,7 @@ skills:
   stability: researched
   tokens: 1375
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [closing, fpga, judging, report, timing]
   negative_triggers: []
   priority_rules: ['# Target flow (yosys + nextpnr; toolchain not installed on t', 'yosys -p "read_verilog -sv examples/good/timing_pipelined.v;']
@@ -1013,7 +1145,7 @@ skills:
   stability: researched
   tokens: 1351
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [mpi, point, programs, recv, send]
   negative_triggers: []
   priority_rules: ['# Target toolchain (documented; no mpicc/mpirun on this mach', 'mpicc -Wall -Wextra -O2 examples/good/good_pingpong.c -o pin']
@@ -1025,7 +1157,7 @@ skills:
   stability: source-backed
   tokens: 1485
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [openmp, parallel, programs, regions, worksharing]
   negative_triggers: []
   priority_rules: ['# Toolchain on this machine: gcc 16.1.0 with libgomp present', '# gcc -fopenmp compile + run OK on 2026-08-15).']
@@ -1037,7 +1169,7 @@ skills:
   stability: researched
   tokens: 1467
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [built, libibverbs, programs, qp, rdma]
   negative_triggers: []
   priority_rules: ['# Target toolchain (documented; no RDMA hardware/verbs on th', 'gcc -Wall -Wextra -O2 -libverbs examples/good/good_qp_setup.']
@@ -1049,7 +1181,7 @@ skills:
   stability: researched
   tokens: 1427
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [hypervisor, layout, vmcs, vmxon, vt]
   negative_triggers: []
   priority_rules: ['# KVM ioctl demo (documented; /dev/kvm needed — run inside Q', '# the host side of the API in examples/good/kvm_ioctl_demo.c']
@@ -1061,7 +1193,7 @@ skills:
   stability: researched
   tokens: 1236
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [arm, gicv3, handling, interrupt, v4]
   negative_triggers: []
   priority_rules: ['python3 examples/good/gic_routing_model.py # correct SPI→CPU', 'python3 examples/bad/edge_level_confusion.py # missing deass']
@@ -1073,19 +1205,31 @@ skills:
   stability: researched
   tokens: 1456
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [cbmc, frama, harnesses, kani, verification]
   negative_triggers: []
   priority_rules: ['rustc -O examples/good/inductive_invariant.rs -o /tmp/inv.ex', 'rustc -O examples/bad/non_inductive_invariant.rs -o /tmp/inv']
   requires: [meta-verification-harness-validity]
   path: skills/security/invariant-identification
+- id: io-uring-interface
+  domain: kernel
+  type: unique
+  stability: researched
+  tokens: 1496
+  std_version: null
+  last_verified: '2026-08-20'
+  triggers: [async, io, linux, ring, uring]
+  negative_triggers: []
+  priority_rules: ['python examples/good/ring_protocol.py # 4 protocol scenarios', 'python examples/bad/ring_misuse.py # 8 bug classes, prints "']
+  requires: [kernel-uaccess-safety]
+  path: skills/kernel/io-uring-interface
 - id: iommu-smmu-isolation
   domain: kernel
   type: unique
   stability: researched
   tokens: 1276
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [dma, iommu, isolation, smmu, stream]
   negative_triggers: []
   priority_rules: ['python3 examples/good/smmu_translation_model.py # correct st', 'python3 examples/bad/passthrough_bypass.py # bypass hole sim']
@@ -1097,7 +1241,7 @@ skills:
   stability: researched
   tokens: 1335
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [call, kernel, porting, sys, versions]
   negative_triggers: []
   priority_rules: ['# On the target Linux host (documented target commands, not ', 'grep sys_call_table /proc/kallsyms # empty in 6.9+ → unexpor']
@@ -1109,7 +1253,7 @@ skills:
   stability: source-backed
   tokens: 1410
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [atomic, context, kernel, linux, runs]
   negative_triggers: []
   priority_rules: ['gcc -Wall -Wextra -Werror -O2 examples/bad/bad_gfp_kernel_in', 'gcc -Wall -Wextra -Werror -O2 examples/bad/bad_mutex_in_inte']
@@ -1121,7 +1265,7 @@ skills:
   stability: researched
   tokens: 1040
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [adjacent, claims, container, kernel, namespaces]
   negative_triggers: []
   priority_rules: ['readlink /proc/self/ns/mnt', 'unshare -m sh -c ''readlink /proc/self/ns/mnt''']
@@ -1133,7 +1277,7 @@ skills:
   stability: researched
   tokens: 1069
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [instrumentation, kernel, linux, need, problems]
   negative_triggers: []
   priority_rules: ['findmnt /sys/kernel/tracing', '[ -f /sys/kernel/debug/dynamic_debug/control ] && echo "dynd']
@@ -1145,7 +1289,7 @@ skills:
   stability: researched
   tokens: 1449
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [character, device, drivers, file, linux]
   negative_triggers: []
   priority_rules: ['# On a Linux host with kernel headers for the running kernel', 'make -C /lib/modules/$(uname -r)/build M=$PWD modules']
@@ -1157,7 +1301,7 @@ skills:
   stability: researched
   tokens: 1565
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [assessing, exploitability, fixes, kernel, security]
   negative_triggers: []
   priority_rules: ['python examples/good/primitive_analysis.py', 'python examples/good/slub_freelist_sim.py']
@@ -1169,7 +1313,7 @@ skills:
   stability: source-backed
   tokens: 1592
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [bootloader, elf, kernel, load, must]
   negative_triggers: []
   priority_rules: ['# Host-verifiable: load-address math and relocation applicat', 'gcc -Wall -Wextra -Werror -O2 examples/good/elf_load_address']
@@ -1181,7 +1325,7 @@ skills:
   stability: researched
   tokens: 1480
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [building, fixing, kernel, linux, packaging]
   negative_triggers: []
   priority_rules: ['# On a Linux host with the target kernel''s headers installed', 'make -C /lib/modules/$(uname -r)/build M=$PWD modules']
@@ -1193,7 +1337,7 @@ skills:
   stability: researched
   tokens: 1388
   std_version: 'gcc 16'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [commit, kernel, log, patches, treat]
   negative_triggers: [high-level]
   priority_rules: ['# Python diff-first review simulation (runs with plain pytho', 'python examples/good/good_diff_first_review.py']
@@ -1205,7 +1349,7 @@ skills:
   stability: source-backed
   tokens: 1459
   std_version: C11
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [barriers, kernel, linux, memory, needs]
   negative_triggers: []
   priority_rules: ['gcc -Wall -Wextra -Werror -O2 -c examples/bad/bad_snippets.c', 'gcc -Wall -Wextra -Werror -O2 -c examples/good/good_snippets']
@@ -1217,7 +1361,7 @@ skills:
   stability: researched
   tokens: 1191
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [claims, fair, internals, linux, scheduler]
   negative_triggers: []
   priority_rules: ['uname -r', 'grep -E "vruntime|lag|deadline|avg_vruntime" /proc/sched_deb']
@@ -1229,7 +1373,7 @@ skills:
   stability: source-backed
   tokens: 1127
   std_version: c11
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [driver, exchanges, fixing, kernel, linux]
   negative_triggers: []
   priority_rules: ['gcc -Wall -Wextra -Werror -O2 examples/good/good_uaccess.c -', 'gcc -Wall -Wextra -Werror -O2 examples/bad/bad_uaccess.c -o ']
@@ -1241,7 +1385,7 @@ skills:
   stability: source-backed
   tokens: 1876
   std_version: C11
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [kernel, linux, strict, style, ub]
   negative_triggers: []
   priority_rules: ['# Host-verifiable: strict aliasing + container_of + overflow', 'gcc -Wall -Wextra -Werror -O2 examples/good/kernel_ub_good.c']
@@ -1253,7 +1397,7 @@ skills:
   stability: researched
   tokens: 1401
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [accepts, bug, dismisses, llm, reports]
   negative_triggers: []
   priority_rules: ['# Python reachability-witness simulation (plain python 3.11)', 'python examples/good/good_require_unreachability_witness.py']
@@ -1265,7 +1409,7 @@ skills:
   stability: researched
   tokens: 1220
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [files, ir, ll, llvm, opt]
   negative_triggers: [high-level]
   priority_rules: ['clang -O1 -S -emit-llvm file.c -o file.ll # generate IR from', 'opt -S -passes=verify file.ll -o /dev/null # verifier: well-']
@@ -1277,7 +1421,7 @@ skills:
   stability: researched
   tokens: 1260
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [llvm, new, optimization, passes, testing]
   negative_triggers: []
   priority_rules: ['# Syntax check on any host (sketch mode; LLVM not required):', 'g++ -std=c++17 -Wall -Wextra -Werror -c -DLLVM_SKETCH_STANDA']
@@ -1289,7 +1433,7 @@ skills:
   stability: source-backed
   tokens: 1522
   std_version: C11
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [arm, cross, ordering, reasoning, thread]
   negative_triggers: []
   priority_rules: ['gcc -O2 -Wall -Wextra examples/good/wakeup_flag.c -o /tmp/wa', 'gcc -O2 -S -o - examples/good/wakeup_flag.c # read the store']
@@ -1301,7 +1445,7 @@ skills:
   stability: source-backed
   tokens: 862
   std_version: C11
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [atomic, memory, operations, ordering, reasoning]
   negative_triggers: []
   priority_rules: ['# Rust: compile the atomic functions and read the asm', 'rustc --emit=asm -C opt-level=2 atomics.rs # compare store(R']
@@ -1313,7 +1457,7 @@ skills:
   stability: researched
   tokens: 649
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [assumptions, compiler, correctness, depends, implicit]
   negative_triggers: []
   priority_rules: ['For each platform-specific assumption, test on the actual ta', 'Cross-compile or use Godbolt for a second target when the as']
@@ -1325,7 +1469,7 @@ skills:
   stability: researched
   tokens: 914
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [claims, documenting, md, references, skill]
   negative_triggers: []
   priority_rules: ['python tools/lint/claim_extractor.py', 'python tools/source/source_check.py']
@@ -1337,7 +1481,7 @@ skills:
   stability: researched
   tokens: 542
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [complete, declaring, enforces, level, low]
   negative_triggers: []
   priority_rules: ['Re-run the completion checklist from the artifact side: does']
@@ -1349,7 +1493,7 @@ skills:
   stability: researched
   tokens: 878
   std_version: 'gcc 16'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [evals, false, running, skills, synthetic]
   negative_triggers: []
   priority_rules: ['python tools/validate.py', 'python tools/tokens/token_measure.py --check 2000 skills/_me']
@@ -1361,7 +1505,7 @@ skills:
   stability: researched
   tokens: 506
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [claim, factual, making, normative, whenever]
   negative_triggers: []
   priority_rules: ['For each KNOWN claim, open the cited source section and conf', 'For INFERRED claims, record the reasoning chain from the sou']
@@ -1373,7 +1517,7 @@ skills:
   stability: researched
   tokens: 1231
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [deciding, empirical, formal, verification, whether]
   negative_triggers: []
   priority_rules: ['# Kani (Rust) — proof harness', 'cargo kani --harness bounded_check']
@@ -1385,7 +1529,7 @@ skills:
   stability: researched
   tokens: 744
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [catch, rationalizations, reject, review, self]
   negative_triggers: []
   priority_rules: ['For each rejected rationalization, confirm the underlying cl', 'Re-verify after the fix: the rationalization must be gone, n']
@@ -1395,11 +1539,11 @@ skills:
   domain: _meta
   type: common
   stability: researched
-  tokens: 569
+  tokens: 842
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [choose, level, low, minimal, start]
-  negative_triggers: ['business logic']
+  negative_triggers: ['business logic', database, high-level, javascript, python, ui, web]
   priority_rules: ['Re-run the routing decision after loading: is every loaded s', 'If a loaded skill was never used, remove it and note the mis']
   requires: []
   path: skills/_meta/meta-routing
@@ -1409,7 +1553,7 @@ skills:
   stability: researched
   tokens: 1083
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [level, low, repository, security, teaches]
   negative_triggers: []
   priority_rules: ['python tools/validate.py', 'python tools/source/source_check.py']
@@ -1421,7 +1565,7 @@ skills:
   stability: researched
   tokens: 865
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [authoring, editing, keep, md, skill]
   negative_triggers: []
   priority_rules: ['python tools/tokens/token_measure.py skills/_meta/meta-token', 'python tools/tokens/token_measure.py --check 2000 skills/_me']
@@ -1433,7 +1577,7 @@ skills:
   stability: researched
   tokens: 631
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [bug, concluding, correct, level, low]
   negative_triggers: []
   priority_rules: ['Run the exact commands in the verification matrix; record fl', 'If a gate is unavailable, write "NOT VERIFIED: <gate> unavai']
@@ -1445,19 +1589,43 @@ skills:
   stability: source-backed
   tokens: 1516
   std_version: 'gcc 16'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [eval, harness, passing, test, trusting]
   negative_triggers: []
   priority_rules: ['gcc examples/good/ablation_delta.c -o ok.exe && ./ok.exe', 'exit 0 # correct target, harness passes']
   requires: [meta-verification]
   path: skills/_meta/meta-verification-harness-validity
+- id: misra-c-compliance
+  domain: safety
+  type: unique
+  stability: source-backed
+  tokens: 1542
+  std_version: 'C++'
+  last_verified: '2026-08-20'
+  triggers: [aerospace, automotive, medical, other, safety]
+  negative_triggers: []
+  priority_rules: ['python examples/tools/misra_topk_checker.py examples/bad/*.c', 'python examples/tools/misra_topk_checker.py examples/good/*.']
+  requires: []
+  path: skills/safety/misra-c-compliance
+- id: napi-network-driver
+  domain: networking
+  type: unique
+  stability: researched
+  tokens: 1488
+  std_version: null
+  last_verified: '2026-08-20'
+  triggers: [drivers, linux, napi, network, struct]
+  negative_triggers: []
+  priority_rules: ['# Host (python 3.11, runs on this machine):', 'python examples/good/napi_model.py # 3/3 PASS (budget/batchi']
+  requires: [kernel-atomic-context, kernel-driver-char-device-lifecycle]
+  path: skills/networking/napi-network-driver
 - id: networking-hardware-rdma-nic-offload
   domain: networking
   type: unique
   stability: researched
   tokens: 1092
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [claims, nic, offload, rdma, verbs]
   negative_triggers: []
   priority_rules: ['ibv_devinfo -v # HCA caps, link layer, active MTU', 'rdma link show']
@@ -1469,31 +1637,55 @@ skills:
   stability: source-backed
   tokens: 1300
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [level, memory, paging, virtual, x86]
   negative_triggers: []
   priority_rules: ['gcc -Wall -Wextra -O2 examples/good/x86_64_walk.c -o /tmp/wa', '# ARM64: compile and inspect page-table setup from Linux sou']
   requires: []
   path: skills/kernel/page-table-management
+- id: pcie-config-space
+  domain: embedded
+  type: unique
+  stability: researched
+  tokens: 1710
+  std_version: 'gcc 16'
+  last_verified: '2026-08-20'
+  triggers: [bars, config, msi, pcie, space]
+  negative_triggers: []
+  priority_rules: ['# host (python 3.11 + gcc 16.1 present on this repo''s CI hos', 'python examples/tools/capability_walk.py # good blob -> PASS']
+  requires: [dma-cache-coherency, embedded-hw-register-datasheet-verification]
+  path: skills/embedded/pcie-config-space
 - id: performance-measurement-discipline
   domain: performance
   type: common
   stability: source-backed
   tokens: 1125
   std_version: 'GCC 16'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [asked, benchmark, claim, optimize, performance]
   negative_triggers: []
   priority_rules: ['# Windows (GCC 16.1 MinGW, QPC for timing)', 'gcc -O2 -Wall -Wextra -Werror examples/bad/elided_benchmark.']
   requires: []
   path: skills/performance/performance-measurement-discipline
+- id: post-quantum-crypto-mlkem
+  domain: security
+  type: unique
+  stability: researched
+  tokens: 1501
+  std_version: null
+  last_verified: '2026-08-20'
+  triggers: [cryptography, implementing, post, quantum, selecting]
+  negative_triggers: []
+  priority_rules: ['python examples/good/ct_rejection_sampling.py', 'python examples/bad/branchy_rejection.py']
+  requires: [side-channel-constant-time-verification, zeroize-constant-time]
+  path: skills/security/post-quantum-crypto-mlkem
 - id: property-based-testing-kernel
   domain: kernel
   type: unique
   stability: source-backed
   tokens: 1661
   std_version: 'gcc 16'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [adjacent, checksums, kernel, parsers, verifying]
   negative_triggers: []
   priority_rules: ['# Host-verifiable: C property test for a checksum/round-trip', 'gcc -Wall -Wextra -Werror -O2 examples/good/pbt_checksum.c -']
@@ -1505,7 +1697,7 @@ skills:
   stability: researched
   tokens: 1210
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [assembly, nvidia, ptx, spaces, state]
   negative_triggers: [high-level]
   priority_rules: ['# 1. Emit PTX from CUDA C++ (if reviewing compiler output):', 'nvcc -arch=sm_80 -ptx kernel.cu -o kernel.ptx']
@@ -1517,7 +1709,7 @@ skills:
   stability: researched
   tokens: 1255
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [emulation, qemu, setting, system, up]
   negative_triggers: []
   priority_rules: ['qemu-system-x86_64 -machine help | grep q35', 'qemu-system-aarch64 -machine help | grep virt']
@@ -1529,19 +1721,31 @@ skills:
   stability: source-backed
   tokens: 733
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [apis, designing, new, rust, wrap]
   negative_triggers: []
   priority_rules: ['# C++: compile with -Wall -Wextra -Werror; run ASan/UBSan; l', '# Rust: clippy -D warnings; test Drop runs on error returns ']
   requires: [cpp-object-lifecycle]
   path: skills/cpp/raii-descriptor-types-api-design
+- id: reproducible-builds-firmware
+  domain: embedded
+  type: unique
+  stability: researched
+  tokens: 1554
+  std_version: 'gcc 16'
+  last_verified: '2026-08-20'
+  triggers: [bit, building, firmware, must, reproducible]
+  negative_triggers: []
+  priority_rules: ['`bad/nonrepro_time.c` (uses `__DATE__`/`__TIME__`) compiled ', '`good/fixed_timestamp.c` compiled twice in different directo']
+  requires: [build-toolchain-version-drift]
+  path: skills/embedded/reproducible-builds-firmware
 - id: reverse-engineering-can-signal-extraction
   domain: reverse-engineering
   type: improved
   stability: researched
   tokens: 1325
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [dbc, extracting, file, layouts, signal]
   negative_triggers: []
   priority_rules: ['python examples/good/decode.py examples/good/vehicle.dbc', 'python examples/good/park_moving_gate.py examples/good/vehic']
@@ -1553,7 +1757,7 @@ skills:
   stability: researched
   tokens: 1275
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [daemon, drives, ghidra, pyghidra, rpc]
   negative_triggers: [gui]
   priority_rules: ['pyghidra examples/good/analysis_loop.py <program> report.jso', 'pyghidra examples/good/rebase_and_patch.py <program> 0xA000 ']
@@ -1565,7 +1769,7 @@ skills:
   stability: source-backed
   tokens: 1258
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [extracting, information, raw, shellcode, verifying]
   negative_triggers: []
   priority_rules: ['gcc -c stub.s -o stub.o && objdump -d stub.o # record real i', 'gcc -c wrong_syscalls.s -o w.o # assembles! but wrong syscal']
@@ -1577,7 +1781,7 @@ skills:
   stability: researched
   tokens: 1411
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [aware, capability, cheri, morello, risc]
   negative_triggers: []
   priority_rules: ['# Target toolchain (documented; no CHERI build on this machi', '# QEMU-CHERI + cheribuild:']
@@ -1589,7 +1793,7 @@ skills:
   stability: researched
   tokens: 1348
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [extension, risc, vector, vsetvl, vsetvli]
   negative_triggers: []
   priority_rules: ['# Target toolchain (documented; no clang/qemu on this machin', 'clang --target=riscv64-unknown-elf -march=rv64gcv -O2 -S exa']
@@ -1601,7 +1805,7 @@ skills:
   stability: source-backed
   tokens: 1413
   std_version: c11
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [firmware, freertos, queues, tasks, zephyr]
   negative_triggers: []
   priority_rules: ['# host: bad examples must exit nonzero, good examples exit 0', 'gcc -Wall -Wextra -Werror -O2 examples/bad/blocking_in_isr.c']
@@ -1613,7 +1817,7 @@ skills:
   stability: source-backed
   tokens: 1330
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [compile, must, rust, specific, toolchain]
   negative_triggers: []
   priority_rules: ['rustc --edition 2021 examples/good/edition_aware.rs # clean ', 'rustc --edition 2024 examples/good/set_var_edition2024.rs # ']
@@ -1625,7 +1829,7 @@ skills:
   stability: source-backed
   tokens: 1286
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [aead, auditing, cryptography, rust, selecting]
   negative_triggers: []
   priority_rules: ['rustc --edition 2021 examples/good/chacha20_vector.rs -o v.e', '# prints "RFC 8439 section 2.3.2 test vector: PASS"']
@@ -1637,7 +1841,7 @@ skills:
   stability: source-backed
   tokens: 1210
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [adding, choosing, crate, dependency, names]
   negative_triggers: []
   priority_rules: ['python examples/good/verify_crate_names.py # exact match + L', 'cargo search <name> --limit 3 # fuzzy — evidence only']
@@ -1649,19 +1853,31 @@ skills:
   stability: source-backed
   tokens: 1108
   std_version: c11
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [enum, ffi, layout, repr, rust]
   negative_triggers: []
   priority_rules: ['# layout on both sides, compare outputs line by line', 'rustc --edition 2021 examples/good/rust_layout.rs -o rust_la']
   requires: [ffi-boundary-cross-language]
   path: skills/rust/rust-ffi-boundary
+- id: rust-for-linux-module-dev
+  domain: kernel
+  type: unique
+  stability: researched
+  tokens: 1999
+  std_version: null
+  last_verified: '2026-08-20'
+  triggers: [crate, kernel, linux, modules, rust]
+  negative_triggers: []
+  priority_rules: ['python examples/tools/module_contract_check.py examples/bad/', 'rustc --edition 2021 --crate-type lib --crate-name standalon']
+  requires: [kernel-atomic-context, kernel-module-build-out-of-tree, rust-unsafe-reasoning]
+  path: skills/kernel/rust-for-linux-module-dev
 - id: rust-panic-safety
   domain: rust
   type: improved
   stability: source-backed
   tokens: 1228
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [expect, panic, reachable, rust, unwrap]
   negative_triggers: []
   priority_rules: ['rustc --edition 2021 bad.rs -o bad && ./bad # hostile input;', 'rustc --edition 2021 good.rs -o good && ./good # must print ']
@@ -1673,7 +1889,7 @@ skills:
   stability: source-backed
   tokens: 1367
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [blocks, raw, rust, unsafe, uses]
   negative_triggers: []
   priority_rules: ['rustc --edition 2021 examples/good/maybe_uninit.rs -o g1.exe', 'rustc --edition 2021 examples/bad/set_len_uninit.rs -o b4.ex']
@@ -1685,7 +1901,7 @@ skills:
   stability: source-backed
   tokens: 1352
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [auditing, block, every, rust, unsafe]
   negative_triggers: []
   priority_rules: ['rustc --edition 2021 examples/good/phantomdata_invariant.rs ', '# prints 42 — the invariant is enforced by PhantomData<&''a T']
@@ -1697,7 +1913,7 @@ skills:
   stability: source-backed
   tokens: 843
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [asm, level, low, new, rust]
   negative_triggers: []
   priority_rules: ['# C/C++', 'gcc/clang -Wall -Wextra -Werror -O2 -g -fsanitize=address,un']
@@ -1709,7 +1925,7 @@ skills:
   stability: source-backed
   tokens: 704
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [asan, integrating, sanitizers, tsan, ubsan]
   negative_triggers: []
   priority_rules: ['# build with sanitizers every time', 'clang -O1 -g -fsanitize=address,undefined -fno-omit-frame-po']
@@ -1721,19 +1937,31 @@ skills:
   stability: researched
   tokens: 1011
   std_version: c11
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [asan, interpreting, output, sanitizer, ubsan]
   negative_triggers: []
   priority_rules: ['clang -O1 -g -fsanitize=address,undefined -fno-omit-frame-po', './prog # expect the specific report']
   requires: []
   path: skills/sanitizers/sanitizer-report-reading
+- id: secure-boot-chain
+  domain: security
+  type: unique
+  stability: researched
+  tokens: 1660
+  std_version: null
+  last_verified: '2026-08-20'
+  triggers: [boot, implementing, secure, shim, uefi]
+  negative_triggers: []
+  priority_rules: ['python examples/tools/chain_verify.py # 12 scenarios, all PA', 'python examples/good/signature_chain.py # hashlib chain, VER']
+  requires: [bootloader-uefi-firmware]
+  path: skills/security/secure-boot-chain
 - id: sel4-sddf-driver-framework
   domain: kernel
   type: unique
   stability: researched
   tokens: 1602
   std_version: 'gcc 16'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [components, device, drivers, sddf, sel4]
   negative_triggers: []
   priority_rules: ['python examples/good/virtio_queue.py', 'python examples/bad/virtio_queue_unsafe.py']
@@ -1745,7 +1973,7 @@ skills:
   stability: source-backed
   tokens: 1283
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [critical, cryptographic, handles, secrets, security]
   negative_triggers: []
   priority_rules: ['gcc -O2 -Wall -Wextra -c examples/good/ct_compare.c', 'objdump -d ct_compare.o # loop intact, branch only on accumu']
@@ -1757,7 +1985,7 @@ skills:
   stability: source-backed
   tokens: 1486
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [channel, choosing, countermeasures, leaks, side]
   negative_triggers: []
   priority_rules: ['gcc -O2 examples/good/ct_compare_demo.c -o /tmp/ct && /tmp/c', 'gcc -O2 -S examples/good/ct_compare_demo.c -o - # inspect: n']
@@ -1769,7 +1997,7 @@ skills:
   stability: source-backed
   tokens: 1400
   std_version: 'GCC 16'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [fopt, gcc, loop, reasoning, vectorize]
   negative_triggers: []
   priority_rules: ['gcc -O2 -fopt-info-vec=vec.txt -S examples/good/loop.c', 'gcc -O2 -fopt-info-vec=vec_bad.txt -S examples/bad/loop.c']
@@ -1781,43 +2009,79 @@ skills:
   stability: researched
   tokens: 1361
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [checking, facts, smt, solvers, z3]
   negative_triggers: []
   priority_rules: ['# Z3 via python (target; not installed on this host — comman', 'python -c "from z3 import *; x=Int(''x''); s=Solver(); s.add(x']
   requires: []
   path: skills/security/smt-z3-sound-usage
+- id: symbolic-execution-klee-angr
+  domain: security
+  type: unique
+  stability: researched
+  tokens: 1636
+  std_version: null
+  last_verified: '2026-08-20'
+  triggers: [analyzing, execution, klee, paths, symbolic]
+  negative_triggers: []
+  priority_rules: ['python examples/tools/path_exploration_model.py', '# KLEE: build bitcode, run, read stats and errors']
+  requires: [smt-z3-sound-usage]
+  path: skills/security/symbolic-execution-klee-angr
 - id: toctou-kernel
   domain: kernel
   type: unique
   stability: researched
   tokens: 1254
   std_version: null
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [driver, kernel, resource, uses, validates]
   negative_triggers: [database]
   priority_rules: ['python3 examples/good/atomic_check_use.py # lock covers chec', 'python3 examples/bad/check_then_use.py # two-step race: inco']
   requires: [kernel-uaccess-safety]
   path: skills/kernel/toctou-kernel
+- id: usb-device-stack
+  domain: embedded
+  type: unique
+  stability: researched
+  tokens: 1474
+  std_version: c11
+  last_verified: '2026-08-20'
+  triggers: [descriptors, device, endpoints, firmware, usb]
+  negative_triggers: []
+  priority_rules: ['python examples/tools/usb_descriptor_validate.py examples/go', 'python examples/tools/usb_descriptor_validate.py --speed ful']
+  requires: [embedded-hw-register-datasheet-verification, embedded-volatile-and-memory-ordering]
+  path: skills/embedded/usb-device-stack
 - id: vectorization-reasoning
   domain: simd
   type: common
   stability: source-backed
   tokens: 1431
   std_version: 'GCC 16'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [analyzing, carried, loop, vectorize, whether]
   negative_triggers: []
   priority_rules: ['gcc -O2 -fopt-info-vec=vec_good.txt -S examples/good/loops.c', 'gcc -O2 -fopt-info-vec=vec_bad.txt -S examples/bad/loops.c']
   requires: []
   path: skills/simd/vectorization-reasoning
+- id: vulkan-compute-shaders
+  domain: gpu
+  type: unique
+  stability: researched
+  tokens: 1698
+  std_version: 'C++'
+  last_verified: '2026-08-20'
+  triggers: [compute, pipelines, shader, spir, vulkan]
+  negative_triggers: []
+  priority_rules: ['python examples/tools/binding_check.py examples/good/compute', '# expected: PASS — shader and host bindings match 1:1']
+  requires: [gpu-memory-model-coherence]
+  path: skills/gpu/vulkan-compute-shaders
 - id: wasm-runtime-from-scratch
   domain: wasm
   type: unique
   stability: source-backed
   tokens: 1137
   std_version: C11
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [interpreter, loader, runtime, validator, webassembly]
   negative_triggers: []
   priority_rules: ['gcc -Wall -Wextra -Werror -O2 interp.c -o interp && ./interp', '# good interpreter: tests 3,4,5 must exit 102/103/105 (traps']
@@ -1829,7 +2093,7 @@ skills:
   stability: source-backed
   tokens: 952
   std_version: 'GCC 16'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [handling, keys, nonces, passwords, secrets]
   negative_triggers: []
   priority_rules: ['gcc -O2 -S examples/bad/zeroize_bad.c -o bad.s', 'grep -E "memset|stosb|movb \$0" bad.s # wipe gone in B1 (bod']
@@ -1841,7 +2105,7 @@ skills:
   stability: researched
   tokens: 1365
   std_version: 'Zig 0.15'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [allocation, allocator, choosing, designing, zig]
   negative_triggers: []
   priority_rules: ['zig test examples/good/cli_arena.zig # arena pattern', 'zig test examples/good/fixed_buffer.zig # bounded no-heap al']
@@ -1853,7 +2117,7 @@ skills:
   stability: researched
   tokens: 1310
   std_version: 'Zig 0.15'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [build, creating, wiring, zig, zon]
   negative_triggers: []
   priority_rules: ['zig build --summary all # install step + artifacts', 'zig build test --summary all # test step runs unit tests']
@@ -1865,7 +2129,7 @@ skills:
   stability: researched
   tokens: 1360
   std_version: 'Zig 0.15'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [comptime, evaluation, generics, reflection, zig]
   negative_triggers: []
   priority_rules: ['zig test examples/good/comptime_reflect.zig', 'zig test examples/good/inline_for.zig']
@@ -1877,7 +2141,7 @@ skills:
   stability: researched
   tokens: 1380
   std_version: 'Zig 0.15'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [concurrency, spawn, std, thread, zig]
   negative_triggers: []
   priority_rules: ['zig test examples/good/threads.zig', 'zig test examples/good/atomic_counter.zig']
@@ -1889,7 +2153,7 @@ skills:
   stability: researched
   tokens: 1274
   std_version: 'Zig 0.15'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [building, dtarget, host, other, target]
   negative_triggers: []
   priority_rules: ['zig targets # full target table incl. tiers', 'zig build -Dtarget=x86_64-windows-gnu --summary all']
@@ -1901,7 +2165,7 @@ skills:
   stability: researched
   tokens: 1223
   std_version: 'Zig 0.15'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [error, handling, sets, unions, zig]
   negative_triggers: []
   priority_rules: ['zig test examples/good/defers.zig', 'zig test examples/good/error_union.zig']
@@ -1913,7 +2177,7 @@ skills:
   stability: researched
   tokens: 1253
   std_version: 'Zig 0.15'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [bridging, extern, layout, struct, zig]
   negative_triggers: []
   priority_rules: ['zig test examples/good/extern_struct.zig', 'zig test examples/good/export_lib.zig -lc']
@@ -1925,7 +2189,7 @@ skills:
   stability: researched
   tokens: 1273
   std_version: 'Zig 0.15'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [fuzz, targets, test, tests, zig]
   negative_triggers: []
   priority_rules: ['zig test examples/good/tests.zig', 'zig build --fuzz=10K # 0.16+: fuzz all fuzz tests, bounded']
@@ -1937,7 +2201,7 @@ skills:
   stability: researched
   tokens: 1211
   std_version: 'Zig 0.15'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [asm, assembly, global, inline, zig]
   negative_triggers: []
   priority_rules: ['zig test examples/good/syscall.zig -target x86_64-linux', 'zig test examples/good/global_asm.zig -target x86_64-linux -']
@@ -1949,7 +2213,7 @@ skills:
   stability: researched
   tokens: 1263
   std_version: 'Zig 0.15'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [element, simd, vector, wise, zig]
   negative_triggers: []
   priority_rules: ['zig test examples/good/vector_add.zig', 'zig test examples/good/reduce_shuffle.zig']
@@ -1961,7 +2225,7 @@ skills:
   stability: researched
   tokens: 1293
   std_version: 'C++'
-  last_verified: '2026-08-17'
+  last_verified: '2026-08-20'
   triggers: [io, migrating, std, writergate, zig]
   negative_triggers: []
   priority_rules: ['zigup list # show installed versions', 'zigup 0.16.0 # pin']

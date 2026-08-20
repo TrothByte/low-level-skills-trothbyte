@@ -1,6 +1,6 @@
 # AI-agent failures in low-level code — quick reference
 
-A compact catalog of the failure classes behind this repository's 163 skills. Full
+A compact catalog of the failure classes behind this repository's 185 skills. Full
 source-traced detail: `research/` surveys and `registry/claims.yaml`.
 
 ## 1. Assembly & instruction-level
@@ -51,8 +51,37 @@ ideal decompilation ~7% (SCDBench); capability cliff at ~200 instructions.
 | UB assumptions | NULL-deref symptom hiding an earlier OOB write | reproduce → minimize → find the corruptor |
 | Time-timing side channels | early-exit memcmp leaks length (CWE-1254) | constant-time compare + dudect/ctgrind |
 
+## 6. Safety standards & determinism
+
+| Failure | Example | Fix |
+|---|---|---|
+| MISRA non-compliance at scale | LLMs emit 23-29 violations/KLOC; no model fully compliant (arXiv 2506.23535) | Top-k rule packs cut violations 83% (RS-8123173) + static analyzer gate |
+| Non-boolean control expressions | `if (ptr)` in MISRA C:2012 code (Rule 14.4) | essential-type model; rule 10.x casts |
+| Hard-RT violations | malloc in a task, recursion, exceptions → WCET unprovable | static allocation, bounded loops, WCET analyzer |
+| Runtime violations of a "deterministic" loop | priority inversion; deadline misses | RMS/EDF schedulability analysis, priority inheritance |
+
+## 7. Agent-integrity failures (meta)
+
+| Failure | Example | Fix |
+|---|---|---|
+| Fabricated evidence | "tests passed" without raw output; invented terminal logs | demand raw command output; re-run; verify provenance |
+| Fake git history | claiming a commit that doesn't exist | `git cat-file -e` / `git fsck`, not narrative |
+| Destructive refactoring | thousands of LOC deleted and replaced with broken code | diff-before/after, LOC accounting, compile+test before delete |
+| Warning dismissal | verifier warning rejected as "false positive" without witness | require a reachability witness (llm-verifier-warning-disposition) |
+
+## 8. Modern low-level stacks
+
+| Failure | Example | Fix |
+|---|---|---|
+| Compiler-dependent behavior | same source diverges at -O0 vs -O2 (signed overflow) | differential testing across compilers and -O levels (UBfuzz/DiffSpec) |
+| FP semantics | `0.1+0.2 == 0.3` false; `-ffast-math` breaks NaN/errno; x87 excess precision | IEEE 754 rules; avoid `==`; audit `-ffast-math` |
+| Endianness/alignment | struct `fwrite` on the wire; union punning (UB); unaligned casts | shift-based serialization + `memcpy` |
+| Post-quantum crypto misuse | early-exit decapsulation (CVE oracle); non-constant-time rejection sampling | FIPS 203 implicit rejection; fixed-iteration sampling; ACVP vectors |
+| Hardening claims unverified | "-fstack-protector" on the command line, no canary in the binary | verify with readelf/objdump/checksec, never the flag alone |
+| io_uring ring misuse | SQ tail without release store; buffer reused before CQE | ring protocol discipline; liburing verification |
+
 ## How this repository fixes them
 
-163 skills, each with: when to use / what the agent gets wrong / how to reason
-correctly / what+how to verify / source. 85 skills executed on real toolchains;
+185 skills, each with: when to use / what the agent gets wrong / how to reason
+correctly / what+how to verify / source. 93 skills executed on real toolchains;
 every claim traces to a primary source. One command: `python tools/validate.py`.

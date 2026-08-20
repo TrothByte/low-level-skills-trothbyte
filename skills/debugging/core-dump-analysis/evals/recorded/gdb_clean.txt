@@ -1,0 +1,17 @@
+﻿[New Thread 21472.0x4708]
+[New Thread 21472.0x4e50]
+[New Thread 21472.0x167c]
+clean_app: sum=-5, expected=-5
+clean_app: ok, exiting 0
+[Thread 21472.0x4e50 exited with code 0]
+[Thread 21472.0x167c exited with code 0]
+[Thread 21472.0x4708 exited with code 0]
+[Inferior 1 (process 21472) exited normally]
+gdb.exe : No stack.
+строка:4 знак:1
++ & gdb -batch -ex "set pagination off" -ex run -ex "bt" -ex "info regi ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (No stack.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+The program has no registers now.

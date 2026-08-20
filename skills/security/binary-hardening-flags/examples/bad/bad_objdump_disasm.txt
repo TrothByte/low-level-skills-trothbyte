@@ -1,0 +1,38 @@
+bad_plain:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000400550 <process>:
+  400550:	55                   	push   %rbp
+  400551:	48 89 e5             	mov    %rsp,%rbp
+  400554:	48 83 ec 40          	sub    $0x40,%rsp
+  400558:	48 89 7d d8          	mov    %rdi,-0x28(%rbp)
+  40055c:	48 8b 55 d8          	mov    -0x28(%rbp),%rdx
+  400560:	48 8d 45 c0          	lea    -0x40(%rbp),%rax
+  400564:	48 89 d6             	mov    %rdx,%rsi
+  400567:	48 89 c7             	mov    %rax,%rdi
+  40056a:	e8 41 0b 00 00       	call   4010b0 <strcpy@plt>
+  40056f:	48 8d 45 c0          	lea    -0x40(%rbp),%rax
+  400573:	48 89 c7             	mov    %rax,%rdi
+  400576:	e8 45 0b 00 00       	call   4010c0 <puts@plt>
+  40057b:	90                   	nop
+  40057c:	c9                   	leave
+  40057d:	c3                   	ret
+
+0000000000400580 <main>:
+  400580:	55                   	push   %rbp
+  400581:	48 89 e5             	mov    %rsp,%rbp
+  400584:	48 83 ec 10          	sub    $0x10,%rsp
+  400588:	89 7d fc             	mov    %edi,-0x4(%rbp)
+  40058b:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+  40058e:	83 7d fc 01          	cmpl   $0x1,-0x4(%rbp)
+  400592:	7e 0c                	jle    4005a0 <main+0x20>
+  400594:	48 8b 45 f0          	mov    -0x10(%rbp),%rax
+  400598:	48 83 c0 08          	add    $0x8,%rax
+  40059c:	48 8b 00             	mov    (%rax),%rax
+  40059f:	48 89 c7             	mov    %rax,%rdi
+  4005a2:	e8 a9 ff ff ff       	call   400550 <process>
+  4005a7:	b8 00 00 00 00       	mov    $0x0,%eax
+  4005ac:	c9                   	leave
+  4005ad:	c3                   	ret

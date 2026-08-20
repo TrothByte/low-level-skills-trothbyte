@@ -1,0 +1,123 @@
+﻿[New Thread 14300.0x4db0]
+[New Thread 14300.0x2064]
+[New Thread 14300.0x3458]
+
+Thread 1 received signal SIGSEGV, Segmentation fault.
+0x00007fff2608d900 in ucrtbase!strlen () from C:\WINDOWS\System32\ucrtbase.dll
+#0  0x00007fff2608d900 in ucrtbase!strlen () from C:\WINDOWS\System32\ucrtbase.dll
+#1  0x00007ff67a2d14b8 in crash_here (user_input=0x4141414141414141 <error: Cannot access memory at address 0x4141414141414141>) at skills/debugging/core-dump-analysis/examples/bad/crash.c:27
+#2  0x4141414141414141 in ?? ()
+#3  0x4141414141414141 in ?? ()
+#4  0x4141414141414141 in ?? ()
+#5  0x4141414141414141 in ?? ()
+#6  0x4141414141414141 in ?? ()
+#7  0x4141414141414141 in ?? ()
+#8  0x00007ff67a2d4000 in ?? ()
+#9  0x0000000000000001 in ?? ()
+#10 0x00007ff67a2d10da in __tmainCRTStartup () at D:/W/B/src/mingw-w64/mingw-w64-crt/crt/crtexe.c:260
+#11 0x00007ff67a2d1456 in mainCRTStartup () at D:/W/B/src/mingw-w64/mingw-w64-crt/crt/crtexe.c:129
+rip            0x7fff2608d900      0x7fff2608d900 <ucrtbase!strlen+16>
+rsp            0x5ffe08            0x5ffe08
+rbp            0x5ffe40            0x5ffe40
+rax            0x4141414141414141  4702111234474983745
+Symbols from "C:\Users\User\AppData\Local\Temp\crash.exe".
+Native process:
+	Using the running image of child process 14300.
+	While running this, GDB does not access memory from...
+Local exec file:
+	`C:\Users\User\AppData\Local\Temp\crash.exe', file type pei-x86-64.
+	Entry point: 0x7ff67a2d1440
+	0x00007ff67a2d1000 - 0x00007ff67a2d2ae0 is .text
+	0x00007ff67a2d3000 - 0x00007ff67a2d30a0 is .data
+	0x00007ff67a2d4000 - 0x00007ff67a2d4c98 is .rdata
+	0x00007ff67a2d5000 - 0x00007ff67a2d5234 is .pdata
+	0x00007ff67a2d6000 - 0x00007ff67a2d61bc is .xdata
+	0x00007ff67a2d7000 - 0x00007ff67a2d7180 is .bss
+	0x00007ff67a2d8000 - 0x00007ff67a2d8890 is .idata
+	0x00007ff67a2d9000 - 0x00007ff67a2d9010 is .tls
+	0x00007ff67a2da000 - 0x00007ff67a2da4e8 is .rsrc
+	0x00007ff67a2db000 - 0x00007ff67a2db060 is .reloc
+	0x00007fff286a1000 - 0x00007fff2880a67a is .text in C:\WINDOWS\SYSTEM32\ntdll.dll
+	0x00007fff2880b000 - 0x00007fff2880b2b0 is SCPCFG in C:\WINDOWS\SYSTEM32\ntdll.dll
+	0x00007fff2880c000 - 0x00007fff2880c2b0 is SCPCFGFP in C:\WINDOWS\SYSTEM32\ntdll.dll
+	0x00007fff2880d000 - 0x00007fff2880d2b0 is SCPCFGNP in C:\WINDOWS\SYSTEM32\ntdll.dll
+	0x00007fff2880e000 - 0x00007fff2880e2b0 is SCPCFGES in C:\WINDOWS\SYSTEM32\ntdll.dll
+	0x00007fff2880f000 - 0x00007fff2880f1bc is RT in C:\WINDOWS\SYSTEM32\ntdll.dll
+	0x00007fff28810000 - 0x00007fff288108c3 is PAGE in C:\WINDOWS\SYSTEM32\ntdll.dll
+	0x00007fff28811000 - 0x00007fff28812000 is fothk in C:\WINDOWS\SYSTEM32\ntdll.dll
+	0x00007fff28812000 - 0x00007fff2886ab3f is .rdata in C:\WINDOWS\SYSTEM32\ntdll.dll
+	0x00007fff2886b000 - 0x00007fff2886d000 is .data in C:\WINDOWS\SYSTEM32\ntdll.dll
+	0x00007fff28874000 - 0x00007fff28884a34 is .pdata in C:\WINDOWS\SYSTEM32\ntdll.dll
+	0x00007fff28885000 - 0x00007fff28885028 is .00cfg in C:\WINDOWS\SYSTEM32\ntdll.dll
+	0x00007fff28886000 - 0x00007fff288895b8 is .mrdata in C:\WINDOWS\SYSTEM32\ntdll.dll
+	0x00007fff2888a000 - 0x00007fff28904470 is .rsrc in C:\WINDOWS\SYSTEM32\ntdll.dll
+	0x00007fff28905000 - 0x00007fff289057f4 is .reloc in C:\WINDOWS\SYSTEM32\ntdll.dll
+	0x00007fff26b01000 - 0x00007fff26b85b84 is .text in C:\WINDOWS\System32\kernel32.dll
+	0x00007fff26b86000 - 0x00007fff26b87000 is fothk in C:\WINDOWS\System32\kernel32.dll
+	0x00007fff26b87000 - 0x00007fff26bbec80 is .rdata in C:\WINDOWS\System32\kernel32.dll
+	0x00007fff26bbf000 - 0x00007fff26bc0000 is .data in C:\WINDOWS\System32\kernel32.dll
+	0x00007fff26bc1000 - 0x00007fff26bc577c is .pdata in C:\WINDOWS\System32\kernel32.dll
+	0x00007fff26bc6000 - 0x00007fff26bc60a8 is .didat in C:\WINDOWS\System32\kernel32.dll
+	0x00007fff26bc7000 - 0x00007fff26bc7520 is .rsrc in C:\WINDOWS\System32\kernel32.dll
+	0x00007fff26bc8000 - 0x00007fff26bc8628 is .reloc in C:\WINDOWS\System32\kernel32.dll
+	0x00007fff25911000 - 0x00007fff25ab625d is .text in C:\WINDOWS\System32\KernelBase.dll
+	0x00007fff25ab7000 - 0x00007fff25ab8000 is fothk in C:\WINDOWS\System32\KernelBase.dll
+	0x00007fff25ab8000 - 0x00007fff25cb4e28 is .rdata in C:\WINDOWS\System32\KernelBase.dll
+	0x00007fff25cb5000 - 0x00007fff25cb7000 is .data in C:\WINDOWS\System32\KernelBase.dll
+	0x00007fff25cc0000 - 0x00007fff25cd2d44 is .pdata in C:\WINDOWS\System32\KernelBase.dll
+	0x00007fff25cd3000 - 0x00007fff25cd38d8 is .didat in C:\WINDOWS\System32\KernelBase.dll
+	0x00007fff25cd4000 - 0x00007fff25cd4548 is .rsrc in C:\WINDOWS\System32\KernelBase.dll
+	0x00007fff25cd5000 - 0x00007fff25d0eb58 is .reloc in C:\WINDOWS\System32\KernelBase.dll
+	0x00007fff25fa1000 - 0x00007fff26097163 is .text in C:\WINDOWS\System32\ucrtbase.dll
+	0x00007fff26098000 - 0x00007fff26099000 is fothk in C:\WINDOWS\System32\ucrtbase.dll
+	0x00007fff26099000 - 0x00007fff260d75a0 is .rdata in C:\WINDOWS\System32\ucrtbase.dll
+	0x00007fff260d8000 - 0x00007fff260da000 is .data in C:\WINDOWS\System32\ucrtbase.dll
+	0x00007fff260db000 - 0x00007fff260e835c is .pdata in C:\WINDOWS\System32\ucrtbase.dll
+	0x00007fff260e9000 - 0x00007fff260e9100 is .fptable in C:\WINDOWS\System32\ucrtbase.dll
+	0x00007fff260ea000 - 0x00007fff260ea410 is .rsrc in C:\WINDOWS\System32\ucrtbase.dll
+	0x00007fff260eb000 - 0x00007fff260ebec0 is .reloc in C:\WINDOWS\System32\ucrtbase.dll
+	0x00007fff0d051000 - 0x00007fff0d0a2739 is .text in C:\Program Files\Windhawk\Engine\1.7.3\64\windhawk.dll
+	0x00007fff0d0a3000 - 0x00007fff0d13542e is .rdata in C:\Program Files\Windhawk\Engine\1.7.3\64\windhawk.dll
+	0x00007fff0d136000 - 0x00007fff0d138400 is .data in C:\Program Files\Windhawk\Engine\1.7.3\64\windhawk.dll
+	0x00007fff0d13a000 - 0x00007fff0d13df9c is .pdata in C:\Program Files\Windhawk\Engine\1.7.3\64\windhawk.dll
+	0x00007fff0d13e000 - 0x00007fff0d13e100 is .fptable in C:\Program Files\Windhawk\Engine\1.7.3\64\windhawk.dll
+	0x00007fff0d13f000 - 0x00007fff0d13f298 is .rsrc in C:\Program Files\Windhawk\Engine\1.7.3\64\windhawk.dll
+	0x00007fff0d140000 - 0x00007fff0d141d30 is .reloc in C:\Program Files\Windhawk\Engine\1.7.3\64\windhawk.dll
+	0x00007fff26cb1000 - 0x00007fff26d239c4 is .text in C:\WINDOWS\System32\advapi32.dll
+	0x00007fff26d24000 - 0x00007fff26d25000 is fothk in C:\WINDOWS\System32\advapi32.dll
+	0x00007fff26d25000 - 0x00007fff26d5d81e is .rdata in C:\WINDOWS\System32\advapi32.dll
+	0x00007fff26d5e000 - 0x00007fff26d61000 is .data in C:\WINDOWS\System32\advapi32.dll
+	0x00007fff26d63000 - 0x00007fff26d673d4 is .pdata in C:\WINDOWS\System32\advapi32.dll
+	0x00007fff26d68000 - 0x00007fff26d68470 is .didat in C:\WINDOWS\System32\advapi32.dll
+	0x00007fff26d69000 - 0x00007fff26d695c8 is .rsrc in C:\WINDOWS\System32\advapi32.dll
+	0x00007fff26d6a000 - 0x00007fff26d6bae4 is .reloc in C:\WINDOWS\System32\advapi32.dll
+	0x00007fff28231000 - 0x00007fff282ad749 is .text in C:\WINDOWS\System32\msvcrt.dll
+	0x00007fff282ae000 - 0x00007fff282af000 is fothk in C:\WINDOWS\System32\msvcrt.dll
+	0x00007fff282af000 - 0x00007fff282ccb66 is .rdata in C:\WINDOWS\System32\msvcrt.dll
+	0x00007fff282cd000 - 0x00007fff282d0000 is .data in C:\WINDOWS\System32\msvcrt.dll
+	0x00007fff282d2000 - 0x00007fff282d6d1c is .pdata in C:\WINDOWS\System32\msvcrt.dll
+	0x00007fff282d7000 - 0x00007fff282d73f0 is .rsrc in C:\WINDOWS\System32\msvcrt.dll
+	0x00007fff282d8000 - 0x00007fff282d85f4 is .reloc in C:\WINDOWS\System32\msvcrt.dll
+	0x00007fff267a1000 - 0x00007fff2681049c is .text in C:\WINDOWS\System32\sechost.dll
+	0x00007fff26811000 - 0x00007fff26812000 is fothk in C:\WINDOWS\System32\sechost.dll
+	0x00007fff26812000 - 0x00007fff2683b740 is .rdata in C:\WINDOWS\System32\sechost.dll
+	0x00007fff2683c000 - 0x00007fff2683f000 is .data in C:\WINDOWS\System32\sechost.dll
+	0x00007fff26840000 - 0x00007fff2684408c is .pdata in C:\WINDOWS\System32\sechost.dll
+	0x00007fff26845000 - 0x00007fff26845260 is .didat in C:\WINDOWS\System32\sechost.dll
+	0x00007fff26846000 - 0x00007fff268472b8 is .rsrc in C:\WINDOWS\System32\sechost.dll
+	0x00007fff26848000 - 0x00007fff268495e8 is .reloc in C:\WINDOWS\System32\sechost.dll
+	0x00007fff282e1000 - 0x00007fff283b4c49 is .text in C:\WINDOWS\System32\rpcrt4.dll
+	0x00007fff283b5000 - 0x00007fff283bb96b is .ndr64 in C:\WINDOWS\System32\rpcrt4.dll
+	0x00007fff283bc000 - 0x00007fff283bd000 is fothk in C:\WINDOWS\System32\rpcrt4.dll
+	0x00007fff283bd000 - 0x00007fff283e2c82 is .rdata in C:\WINDOWS\System32\rpcrt4.dll
+	0x00007fff283e3000 - 0x00007fff283e4000 is .data in C:\WINDOWS\System32\rpcrt4.dll
+	0x00007fff283e5000 - 0x00007fff283ee714 is .pdata in C:\WINDOWS\System32\rpcrt4.dll
+	0x00007fff283ef000 - 0x00007fff283ef290 is .didat in C:\WINDOWS\System32\rpcrt4.dll
+	0x00007fff283f0000 - 0x00007fff283f5860 is .rsrc in C:\WINDOWS\System32\rpcrt4.dll
+	0x00007fff283f6000 - 0x00007fff283f784c is .reloc in C:\WINDOWS\System32\rpcrt4.dll
+0x5ffdc8:	0x260d98c0	0x00007fff	0x00000001	0x00000000
+0x5ffdd8:	0x25fa983e	0x00007fff	0x005ffe50	0x00000000
+0x5ffde8:	0x25fa9315	0x00007fff	0x00753710	0x00000000
+0x5ffdf8:	0x00000000	0x00000000	0x00000000	0x00000000
+0x5ffe08:	0x7a2d14b8	0x00007ff6	0x00000001	0x00000000
+0x5ffe18:	0x25fa983e	0x00007fff	0x005ffe90	0x00000000

@@ -1,0 +1,2337 @@
+
+good/hardened.exe:     file format pei-x86-64
+
+
+Disassembly of section .text:
+
+0000000140001000 <__mingw_invalidParameterHandler>:
+   140001000:	c3                   	ret
+   140001001:	0f 1f 40 00          	nopl   0x0(%rax)
+   140001005:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+   14000100c:	00 00 00 00 
+
+0000000140001010 <safe_flush>:
+   140001010:	31 c9                	xor    %ecx,%ecx
+   140001012:	e9 21 1a 00 00       	jmp    140002a38 <fflush>
+   140001017:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)
+   14000101e:	00 00 
+
+0000000140001020 <__tmainCRTStartup>:
+   140001020:	41 57                	push   %r15
+   140001022:	41 56                	push   %r14
+   140001024:	41 55                	push   %r13
+   140001026:	41 54                	push   %r12
+   140001028:	55                   	push   %rbp
+   140001029:	57                   	push   %rdi
+   14000102a:	56                   	push   %rsi
+   14000102b:	53                   	push   %rbx
+   14000102c:	48 83 ec 58          	sub    $0x58,%rsp
+   140001030:	65 48 8b 04 25 30 00 	mov    %gs:0x30,%rax
+   140001037:	00 00 
+   140001039:	48 8b 70 08          	mov    0x8(%rax),%rsi
+   14000103d:	48 8b 1d bc 34 00 00 	mov    0x34bc(%rip),%rbx        # 140004500 <.refptr.__native_startup_lock>
+   140001044:	48 8b 3d 95 72 00 00 	mov    0x7295(%rip),%rdi        # 1400082e0 <__imp_Sleep>
+   14000104b:	eb 13                	jmp    140001060 <__tmainCRTStartup+0x40>
+   14000104d:	0f 1f 00             	nopl   (%rax)
+   140001050:	48 39 c6             	cmp    %rax,%rsi
+   140001053:	0f 84 af 00 00 00    	je     140001108 <__tmainCRTStartup+0xe8>
+   140001059:	b9 e8 03 00 00       	mov    $0x3e8,%ecx
+   14000105e:	ff d7                	call   *%rdi
+   140001060:	31 c0                	xor    %eax,%eax
+   140001062:	f0 48 0f b1 33       	lock cmpxchg %rsi,(%rbx)
+   140001067:	75 e7                	jne    140001050 <__tmainCRTStartup+0x30>
+   140001069:	45 31 f6             	xor    %r14d,%r14d
+   14000106c:	4c 8b 25 9d 34 00 00 	mov    0x349d(%rip),%r12        # 140004510 <.refptr.__native_startup_state>
+   140001073:	41 83 3c 24 01       	cmpl   $0x1,(%r12)
+   140001078:	0f 84 8f 03 00 00    	je     14000140d <__tmainCRTStartup+0x3ed>
+   14000107e:	45 8b 1c 24          	mov    (%r12),%r11d
+   140001082:	45 85 db             	test   %r11d,%r11d
+   140001085:	0f 84 b5 00 00 00    	je     140001140 <__tmainCRTStartup+0x120>
+   14000108b:	c7 05 6f 5f 00 00 01 	movl   $0x1,0x5f6f(%rip)        # 140007004 <has_cctor>
+   140001092:	00 00 00 
+   140001095:	45 85 f6             	test   %r14d,%r14d
+   140001098:	0f 84 92 00 00 00    	je     140001130 <__tmainCRTStartup+0x110>
+   14000109e:	48 8b 05 db 33 00 00 	mov    0x33db(%rip),%rax        # 140004480 <.refptr.__dyn_tls_init_callback>
+   1400010a5:	48 8b 00             	mov    (%rax),%rax
+   1400010a8:	48 85 c0             	test   %rax,%rax
+   1400010ab:	74 0c                	je     1400010b9 <__tmainCRTStartup+0x99>
+   1400010ad:	45 31 c0             	xor    %r8d,%r8d
+   1400010b0:	ba 02 00 00 00       	mov    $0x2,%edx
+   1400010b5:	31 c9                	xor    %ecx,%ecx
+   1400010b7:	ff d0                	call   *%rax
+   1400010b9:	e8 92 18 00 00       	call   140002950 <__p___initenv>
+   1400010be:	4c 8b 05 4b 5f 00 00 	mov    0x5f4b(%rip),%r8        # 140007010 <envp>
+   1400010c5:	8b 0d 55 5f 00 00    	mov    0x5f55(%rip),%ecx        # 140007020 <argc>
+   1400010cb:	4c 89 00             	mov    %r8,(%rax)
+   1400010ce:	48 8b 15 43 5f 00 00 	mov    0x5f43(%rip),%rdx        # 140007018 <argv>
+   1400010d5:	e8 b6 1a 00 00       	call   140002b90 <main>
+   1400010da:	8b 0d 28 5f 00 00    	mov    0x5f28(%rip),%ecx        # 140007008 <managedapp>
+   1400010e0:	85 c9                	test   %ecx,%ecx
+   1400010e2:	0f 84 1e 03 00 00    	je     140001406 <__tmainCRTStartup+0x3e6>
+   1400010e8:	8b 15 16 5f 00 00    	mov    0x5f16(%rip),%edx        # 140007004 <has_cctor>
+   1400010ee:	85 d2                	test   %edx,%edx
+   1400010f0:	74 26                	je     140001118 <__tmainCRTStartup+0xf8>
+   1400010f2:	48 83 c4 58          	add    $0x58,%rsp
+   1400010f6:	5b                   	pop    %rbx
+   1400010f7:	5e                   	pop    %rsi
+   1400010f8:	5f                   	pop    %rdi
+   1400010f9:	5d                   	pop    %rbp
+   1400010fa:	41 5c                	pop    %r12
+   1400010fc:	41 5d                	pop    %r13
+   1400010fe:	41 5e                	pop    %r14
+   140001100:	41 5f                	pop    %r15
+   140001102:	c3                   	ret
+   140001103:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+   140001108:	41 be 01 00 00 00    	mov    $0x1,%r14d
+   14000110e:	e9 59 ff ff ff       	jmp    14000106c <__tmainCRTStartup+0x4c>
+   140001113:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+   140001118:	89 44 24 3c          	mov    %eax,0x3c(%rsp)
+   14000111c:	e8 3f 19 00 00       	call   140002a60 <_cexit>
+   140001121:	8b 44 24 3c          	mov    0x3c(%rsp),%eax
+   140001125:	eb cb                	jmp    1400010f2 <__tmainCRTStartup+0xd2>
+   140001127:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)
+   14000112e:	00 00 
+   140001130:	31 c0                	xor    %eax,%eax
+   140001132:	48 87 03             	xchg   %rax,(%rbx)
+   140001135:	e9 64 ff ff ff       	jmp    14000109e <__tmainCRTStartup+0x7e>
+   14000113a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+   140001140:	b9 02 00 00 00       	mov    $0x2,%ecx
+   140001145:	41 c7 04 24 01 00 00 	movl   $0x1,(%r12)
+   14000114c:	00 
+   14000114d:	e8 be 18 00 00       	call   140002a10 <__acrt_iob_func>
+   140001152:	45 31 c9             	xor    %r9d,%r9d
+   140001155:	41 b8 04 00 00 00    	mov    $0x4,%r8d
+   14000115b:	31 d2                	xor    %edx,%edx
+   14000115d:	48 89 c1             	mov    %rax,%rcx
+   140001160:	e8 db 18 00 00       	call   140002a40 <setvbuf>
+   140001165:	48 8d 0d a4 fe ff ff 	lea    -0x15c(%rip),%rcx        # 140001010 <safe_flush>
+   14000116c:	e8 ff 18 00 00       	call   140002a70 <_crt_atexit>
+   140001171:	89 c6                	mov    %eax,%esi
+   140001173:	85 c0                	test   %eax,%eax
+   140001175:	0f 85 7c 02 00 00    	jne    1400013f7 <__tmainCRTStartup+0x3d7>
+   14000117b:	e8 f0 07 00 00       	call   140001970 <_pei386_runtime_relocator>
+   140001180:	48 8d 0d 79 0d 00 00 	lea    0xd79(%rip),%rcx        # 140001f00 <_gnu_exception_handler>
+   140001187:	ff 15 4b 71 00 00    	call   *0x714b(%rip)        # 1400082d8 <__imp_SetUnhandledExceptionFilter>
+   14000118d:	48 8b 15 5c 33 00 00 	mov    0x335c(%rip),%rdx        # 1400044f0 <.refptr.__mingw_oldexcpt_handler>
+   140001194:	48 8d 0d 65 fe ff ff 	lea    -0x19b(%rip),%rcx        # 140001000 <__mingw_invalidParameterHandler>
+   14000119b:	48 89 02             	mov    %rax,(%rdx)
+   14000119e:	e8 fd 18 00 00       	call   140002aa0 <_set_invalid_parameter_handler>
+   1400011a3:	e8 b8 11 00 00       	call   140002360 <_fpreset>
+   1400011a8:	48 8b 05 11 33 00 00 	mov    0x3311(%rip),%rax        # 1400044c0 <.refptr.__mingw_initltsdrot_force>
+   1400011af:	c7 00 01 00 00 00    	movl   $0x1,(%rax)
+   1400011b5:	48 8b 05 14 33 00 00 	mov    0x3314(%rip),%rax        # 1400044d0 <.refptr.__mingw_initltsdyn_force>
+   1400011bc:	c7 00 01 00 00 00    	movl   $0x1,(%rax)
+   1400011c2:	48 8b 05 17 33 00 00 	mov    0x3317(%rip),%rax        # 1400044e0 <.refptr.__mingw_initltssuo_force>
+   1400011c9:	c7 00 01 00 00 00    	movl   $0x1,(%rax)
+   1400011cf:	48 8b 05 7a 32 00 00 	mov    0x327a(%rip),%rax        # 140004450 <.refptr.__ImageBase>
+   1400011d6:	66 81 38 4d 5a       	cmpw   $0x5a4d,(%rax)
+   1400011db:	75 43                	jne    140001220 <__tmainCRTStartup+0x200>
+   1400011dd:	48 63 50 3c          	movslq 0x3c(%rax),%rdx
+   1400011e1:	48 01 d0             	add    %rdx,%rax
+   1400011e4:	81 38 50 45 00 00    	cmpl   $0x4550,(%rax)
+   1400011ea:	75 34                	jne    140001220 <__tmainCRTStartup+0x200>
+   1400011ec:	0f b7 50 18          	movzwl 0x18(%rax),%edx
+   1400011f0:	66 81 fa 0b 01       	cmp    $0x10b,%dx
+   1400011f5:	0f 84 dd 01 00 00    	je     1400013d8 <__tmainCRTStartup+0x3b8>
+   1400011fb:	66 81 fa 0b 02       	cmp    $0x20b,%dx
+   140001200:	75 1e                	jne    140001220 <__tmainCRTStartup+0x200>
+   140001202:	83 b8 84 00 00 00 0e 	cmpl   $0xe,0x84(%rax)
+   140001209:	76 15                	jbe    140001220 <__tmainCRTStartup+0x200>
+   14000120b:	44 8b 88 f8 00 00 00 	mov    0xf8(%rax),%r9d
+   140001212:	31 f6                	xor    %esi,%esi
+   140001214:	45 85 c9             	test   %r9d,%r9d
+   140001217:	40 0f 95 c6          	setne  %sil
+   14000121b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+   140001220:	48 8b 05 89 32 00 00 	mov    0x3289(%rip),%rax        # 1400044b0 <.refptr.__mingw_app_type>
+   140001227:	89 35 db 5d 00 00    	mov    %esi,0x5ddb(%rip)        # 140007008 <managedapp>
+   14000122d:	44 8b 00             	mov    (%rax),%r8d
+   140001230:	45 85 c0             	test   %r8d,%r8d
+   140001233:	0f 85 2f 01 00 00    	jne    140001368 <__tmainCRTStartup+0x348>
+   140001239:	b9 01 00 00 00       	mov    $0x1,%ecx
+   14000123e:	e8 45 18 00 00       	call   140002a88 <__set_app_type>
+   140001243:	e8 d8 17 00 00       	call   140002a20 <__p__fmode>
+   140001248:	48 8b 15 41 33 00 00 	mov    0x3341(%rip),%rdx        # 140004590 <.refptr._fmode>
+   14000124f:	8b 12                	mov    (%rdx),%edx
+   140001251:	89 10                	mov    %edx,(%rax)
+   140001253:	e8 c0 17 00 00       	call   140002a18 <__p__commode>
+   140001258:	48 8b 15 11 33 00 00 	mov    0x3311(%rip),%rdx        # 140004570 <.refptr._commode>
+   14000125f:	8b 12                	mov    (%rdx),%edx
+   140001261:	89 10                	mov    %edx,(%rax)
+   140001263:	e8 78 03 00 00       	call   1400015e0 <_setargv>
+   140001268:	85 c0                	test   %eax,%eax
+   14000126a:	0f 88 e9 00 00 00    	js     140001359 <__tmainCRTStartup+0x339>
+   140001270:	48 8b 05 b9 31 00 00 	mov    0x31b9(%rip),%rax        # 140004430 <.refptr._MINGW_INSTALL_DEBUG_MATHERR>
+   140001277:	83 38 01             	cmpl   $0x1,(%rax)
+   14000127a:	0f 84 47 01 00 00    	je     1400013c7 <__tmainCRTStartup+0x3a7>
+   140001280:	48 8b 05 09 32 00 00 	mov    0x3209(%rip),%rax        # 140004490 <.refptr.__globallocalestatus>
+   140001287:	83 38 ff             	cmpl   $0xffffffff,(%rax)
+   14000128a:	0f 84 28 01 00 00    	je     1400013b8 <__tmainCRTStartup+0x398>
+   140001290:	48 8b 15 c9 32 00 00 	mov    0x32c9(%rip),%rdx        # 140004560 <.refptr.__xi_z>
+   140001297:	48 8b 0d b2 32 00 00 	mov    0x32b2(%rip),%rcx        # 140004550 <.refptr.__xi_a>
+   14000129e:	e8 f5 17 00 00       	call   140002a98 <_initterm_e>
+   1400012a3:	85 c0                	test   %eax,%eax
+   1400012a5:	0f 85 51 01 00 00    	jne    1400013fc <__tmainCRTStartup+0x3dc>
+   1400012ab:	48 8b 05 0e 33 00 00 	mov    0x330e(%rip),%rax        # 1400045c0 <.refptr._newmode>
+   1400012b2:	4c 8d 05 57 5d 00 00 	lea    0x5d57(%rip),%r8        # 140007010 <envp>
+   1400012b9:	48 8d 15 58 5d 00 00 	lea    0x5d58(%rip),%rdx        # 140007018 <argv>
+   1400012c0:	48 8d 0d 59 5d 00 00 	lea    0x5d59(%rip),%rcx        # 140007020 <argc>
+   1400012c7:	8b 00                	mov    (%rax),%eax
+   1400012c9:	89 44 24 4c          	mov    %eax,0x4c(%rsp)
+   1400012cd:	48 8b 05 ac 32 00 00 	mov    0x32ac(%rip),%rax        # 140004580 <.refptr._dowildcard>
+   1400012d4:	44 8b 08             	mov    (%rax),%r9d
+   1400012d7:	48 8d 44 24 4c       	lea    0x4c(%rsp),%rax
+   1400012dc:	48 89 44 24 20       	mov    %rax,0x20(%rsp)
+   1400012e1:	e8 aa 16 00 00       	call   140002990 <__getmainargs>
+   1400012e6:	85 c0                	test   %eax,%eax
+   1400012e8:	78 6f                	js     140001359 <__tmainCRTStartup+0x339>
+   1400012ea:	8b 2d 30 5d 00 00    	mov    0x5d30(%rip),%ebp        # 140007020 <argc>
+   1400012f0:	8d 4d 01             	lea    0x1(%rbp),%ecx
+   1400012f3:	48 63 c9             	movslq %ecx,%rcx
+   1400012f6:	48 c1 e1 03          	shl    $0x3,%rcx
+   1400012fa:	e8 09 18 00 00       	call   140002b08 <malloc>
+   1400012ff:	49 89 c5             	mov    %rax,%r13
+   140001302:	48 85 c0             	test   %rax,%rax
+   140001305:	74 52                	je     140001359 <__tmainCRTStartup+0x339>
+   140001307:	85 ed                	test   %ebp,%ebp
+   140001309:	7e 7a                	jle    140001385 <__tmainCRTStartup+0x365>
+   14000130b:	4c 8b 3d 06 5d 00 00 	mov    0x5d06(%rip),%r15        # 140007018 <argv>
+   140001312:	be 01 00 00 00       	mov    $0x1,%esi
+   140001317:	eb 20                	jmp    140001339 <__tmainCRTStartup+0x319>
+   140001319:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+   140001320:	49 8b 54 f7 f8       	mov    -0x8(%r15,%rsi,8),%rdx
+   140001325:	49 89 f8             	mov    %rdi,%r8
+   140001328:	48 89 c1             	mov    %rax,%rcx
+   14000132b:	e8 98 17 00 00       	call   140002ac8 <memcpy>
+   140001330:	48 39 f5             	cmp    %rsi,%rbp
+   140001333:	74 4b                	je     140001380 <__tmainCRTStartup+0x360>
+   140001335:	48 83 c6 01          	add    $0x1,%rsi
+   140001339:	49 8b 4c f7 f8       	mov    -0x8(%r15,%rsi,8),%rcx
+   14000133e:	e8 bd 16 00 00       	call   140002a00 <strlen>
+   140001343:	48 8d 78 01          	lea    0x1(%rax),%rdi
+   140001347:	48 89 f9             	mov    %rdi,%rcx
+   14000134a:	e8 b9 17 00 00       	call   140002b08 <malloc>
+   14000134f:	49 89 44 f5 f8       	mov    %rax,-0x8(%r13,%rsi,8)
+   140001354:	48 85 c0             	test   %rax,%rax
+   140001357:	75 c7                	jne    140001320 <__tmainCRTStartup+0x300>
+   140001359:	b9 08 00 00 00       	mov    $0x8,%ecx
+   14000135e:	e8 fd 15 00 00       	call   140002960 <_amsg_exit>
+   140001363:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+   140001368:	b9 02 00 00 00       	mov    $0x2,%ecx
+   14000136d:	e8 16 17 00 00       	call   140002a88 <__set_app_type>
+   140001372:	e9 cc fe ff ff       	jmp    140001243 <__tmainCRTStartup+0x223>
+   140001377:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)
+   14000137e:	00 00 
+   140001380:	49 8d 44 ed 00       	lea    0x0(%r13,%rbp,8),%rax
+   140001385:	48 c7 00 00 00 00 00 	movq   $0x0,(%rax)
+   14000138c:	48 8b 15 ad 31 00 00 	mov    0x31ad(%rip),%rdx        # 140004540 <.refptr.__xc_z>
+   140001393:	48 8b 0d 96 31 00 00 	mov    0x3196(%rip),%rcx        # 140004530 <.refptr.__xc_a>
+   14000139a:	4c 89 2d 77 5c 00 00 	mov    %r13,0x5c77(%rip)        # 140007018 <argv>
+   1400013a1:	e8 ea 16 00 00       	call   140002a90 <_initterm>
+   1400013a6:	e8 15 02 00 00       	call   1400015c0 <__main>
+   1400013ab:	41 c7 04 24 02 00 00 	movl   $0x2,(%r12)
+   1400013b2:	00 
+   1400013b3:	e9 dd fc ff ff       	jmp    140001095 <__tmainCRTStartup+0x75>
+   1400013b8:	b9 ff ff ff ff       	mov    $0xffffffff,%ecx
+   1400013bd:	e8 1e 17 00 00       	call   140002ae0 <_configthreadlocale>
+   1400013c2:	e9 c9 fe ff ff       	jmp    140001290 <__tmainCRTStartup+0x270>
+   1400013c7:	48 8d 0d d2 02 00 00 	lea    0x2d2(%rip),%rcx        # 1400016a0 <_matherr>
+   1400013ce:	e8 7d 09 00 00       	call   140001d50 <__mingw_setusermatherr>
+   1400013d3:	e9 a8 fe ff ff       	jmp    140001280 <__tmainCRTStartup+0x260>
+   1400013d8:	83 78 74 0e          	cmpl   $0xe,0x74(%rax)
+   1400013dc:	0f 86 3e fe ff ff    	jbe    140001220 <__tmainCRTStartup+0x200>
+   1400013e2:	44 8b 90 e8 00 00 00 	mov    0xe8(%rax),%r10d
+   1400013e9:	31 f6                	xor    %esi,%esi
+   1400013eb:	45 85 d2             	test   %r10d,%r10d
+   1400013ee:	40 0f 95 c6          	setne  %sil
+   1400013f2:	e9 29 fe ff ff       	jmp    140001220 <__tmainCRTStartup+0x200>
+   1400013f7:	e8 ac 16 00 00       	call   140002aa8 <abort>
+   1400013fc:	b9 0a 00 00 00       	mov    $0xa,%ecx
+   140001401:	e8 5a 15 00 00       	call   140002960 <_amsg_exit>
+   140001406:	89 c1                	mov    %eax,%ecx
+   140001408:	e8 a3 16 00 00       	call   140002ab0 <exit>
+   14000140d:	b9 1f 00 00 00       	mov    $0x1f,%ecx
+   140001412:	e8 49 15 00 00       	call   140002960 <_amsg_exit>
+   140001417:	90                   	nop
+   140001418:	0f 1f 84 00 00 00 00 	nopl   0x0(%rax,%rax,1)
+   14000141f:	00 
+
+0000000140001420 <WinMainCRTStartup>:
+   140001420:	48 83 ec 28          	sub    $0x28,%rsp
+
+0000000140001424 <.l_startw>:
+   140001424:	48 8b 05 85 30 00 00 	mov    0x3085(%rip),%rax        # 1400044b0 <.refptr.__mingw_app_type>
+   14000142b:	c7 00 01 00 00 00    	movl   $0x1,(%rax)
+   140001431:	e8 ea fb ff ff       	call   140001020 <__tmainCRTStartup>
+   140001436:	90                   	nop
+
+0000000140001437 <.l_endw>:
+   140001437:	90                   	nop
+   140001438:	48 83 c4 28          	add    $0x28,%rsp
+   14000143c:	c3                   	ret
+   14000143d:	0f 1f 00             	nopl   (%rax)
+
+0000000140001440 <mainCRTStartup>:
+   140001440:	48 83 ec 28          	sub    $0x28,%rsp
+
+0000000140001444 <.l_start>:
+   140001444:	48 8b 05 65 30 00 00 	mov    0x3065(%rip),%rax        # 1400044b0 <.refptr.__mingw_app_type>
+   14000144b:	c7 00 00 00 00 00    	movl   $0x0,(%rax)
+   140001451:	e8 ca fb ff ff       	call   140001020 <__tmainCRTStartup>
+   140001456:	90                   	nop
+
+0000000140001457 <.l_end>:
+   140001457:	90                   	nop
+   140001458:	48 83 c4 28          	add    $0x28,%rsp
+   14000145c:	c3                   	ret
+   14000145d:	0f 1f 00             	nopl   (%rax)
+
+0000000140001460 <atexit>:
+   140001460:	e9 0b 16 00 00       	jmp    140002a70 <_crt_atexit>
+   140001465:	90                   	nop
+   140001466:	90                   	nop
+   140001467:	90                   	nop
+   140001468:	90                   	nop
+   140001469:	90                   	nop
+   14000146a:	90                   	nop
+   14000146b:	90                   	nop
+   14000146c:	90                   	nop
+   14000146d:	90                   	nop
+   14000146e:	90                   	nop
+   14000146f:	90                   	nop
+
+0000000140001470 <__gcc_register_frame>:
+   140001470:	48 8d 0d 09 00 00 00 	lea    0x9(%rip),%rcx        # 140001480 <__gcc_deregister_frame>
+   140001477:	e9 e4 ff ff ff       	jmp    140001460 <atexit>
+   14000147c:	0f 1f 40 00          	nopl   0x0(%rax)
+
+0000000140001480 <__gcc_deregister_frame>:
+   140001480:	c3                   	ret
+   140001481:	90                   	nop
+   140001482:	90                   	nop
+   140001483:	90                   	nop
+   140001484:	90                   	nop
+   140001485:	90                   	nop
+   140001486:	90                   	nop
+   140001487:	90                   	nop
+   140001488:	90                   	nop
+   140001489:	90                   	nop
+   14000148a:	90                   	nop
+   14000148b:	90                   	nop
+   14000148c:	90                   	nop
+   14000148d:	90                   	nop
+   14000148e:	90                   	nop
+   14000148f:	90                   	nop
+
+0000000140001490 <process>:
+   140001490:	48 83 ec 78          	sub    $0x78,%rsp
+   140001494:	48 89 ca             	mov    %rcx,%rdx
+   140001497:	48 8b 0d 82 30 00 00 	mov    0x3082(%rip),%rcx        # 140004520 <.refptr.__stack_chk_guard>
+   14000149e:	4c 8b 01             	mov    (%rcx),%r8
+   1400014a1:	4c 89 44 24 68       	mov    %r8,0x68(%rsp)
+   1400014a6:	41 b8 40 00 00 00    	mov    $0x40,%r8d
+   1400014ac:	48 8d 4c 24 20       	lea    0x20(%rsp),%rcx
+   1400014b1:	e8 0a 13 00 00       	call   1400027c0 <__strcpy_chk>
+   1400014b6:	48 8d 54 24 20       	lea    0x20(%rsp),%rdx
+   1400014bb:	48 8d 0d 3e 2b 00 00 	lea    0x2b3e(%rip),%rcx        # 140004000 <.rdata>
+   1400014c2:	e8 c9 13 00 00       	call   140002890 <printf>
+   1400014c7:	48 8b 15 52 30 00 00 	mov    0x3052(%rip),%rdx        # 140004520 <.refptr.__stack_chk_guard>
+   1400014ce:	48 8b 44 24 68       	mov    0x68(%rsp),%rax
+   1400014d3:	48 2b 02             	sub    (%rdx),%rax
+   1400014d6:	75 05                	jne    1400014dd <process+0x4d>
+   1400014d8:	48 83 c4 78          	add    $0x78,%rsp
+   1400014dc:	c3                   	ret
+   1400014dd:	e8 8e 12 00 00       	call   140002770 <__stack_chk_fail>
+   1400014e2:	90                   	nop
+   1400014e3:	90                   	nop
+   1400014e4:	90                   	nop
+   1400014e5:	90                   	nop
+   1400014e6:	90                   	nop
+   1400014e7:	90                   	nop
+   1400014e8:	90                   	nop
+   1400014e9:	90                   	nop
+   1400014ea:	90                   	nop
+   1400014eb:	90                   	nop
+   1400014ec:	90                   	nop
+   1400014ed:	90                   	nop
+   1400014ee:	90                   	nop
+   1400014ef:	90                   	nop
+
+00000001400014f0 <__do_global_dtors>:
+   1400014f0:	48 83 ec 28          	sub    $0x28,%rsp
+   1400014f4:	48 8b 05 05 1b 00 00 	mov    0x1b05(%rip),%rax        # 140003000 <__data_start__>
+   1400014fb:	48 8b 00             	mov    (%rax),%rax
+   1400014fe:	48 85 c0             	test   %rax,%rax
+   140001501:	74 2a                	je     14000152d <__do_global_dtors+0x3d>
+   140001503:	66 90                	xchg   %ax,%ax
+   140001505:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+   14000150c:	00 00 00 00 
+   140001510:	ff d0                	call   *%rax
+   140001512:	48 8b 05 e7 1a 00 00 	mov    0x1ae7(%rip),%rax        # 140003000 <__data_start__>
+   140001519:	48 8d 50 08          	lea    0x8(%rax),%rdx
+   14000151d:	48 8b 40 08          	mov    0x8(%rax),%rax
+   140001521:	48 89 15 d8 1a 00 00 	mov    %rdx,0x1ad8(%rip)        # 140003000 <__data_start__>
+   140001528:	48 85 c0             	test   %rax,%rax
+   14000152b:	75 e3                	jne    140001510 <__do_global_dtors+0x20>
+   14000152d:	48 83 c4 28          	add    $0x28,%rsp
+   140001531:	c3                   	ret
+   140001532:	0f 1f 00             	nopl   (%rax)
+   140001535:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+   14000153c:	00 00 00 00 
+
+0000000140001540 <__do_global_ctors>:
+   140001540:	56                   	push   %rsi
+   140001541:	53                   	push   %rbx
+   140001542:	48 83 ec 28          	sub    $0x28,%rsp
+   140001546:	48 8b 15 f3 2e 00 00 	mov    0x2ef3(%rip),%rdx        # 140004440 <.refptr.__CTOR_LIST__>
+   14000154d:	48 8b 02             	mov    (%rdx),%rax
+   140001550:	89 c1                	mov    %eax,%ecx
+   140001552:	83 f8 ff             	cmp    $0xffffffff,%eax
+   140001555:	74 39                	je     140001590 <__do_global_ctors+0x50>
+   140001557:	85 c9                	test   %ecx,%ecx
+   140001559:	74 20                	je     14000157b <__do_global_ctors+0x3b>
+   14000155b:	89 c8                	mov    %ecx,%eax
+   14000155d:	83 e9 01             	sub    $0x1,%ecx
+   140001560:	48 8d 1c c2          	lea    (%rdx,%rax,8),%rbx
+   140001564:	48 29 c8             	sub    %rcx,%rax
+   140001567:	48 8d 74 c2 f8       	lea    -0x8(%rdx,%rax,8),%rsi
+   14000156c:	0f 1f 40 00          	nopl   0x0(%rax)
+   140001570:	ff 13                	call   *(%rbx)
+   140001572:	48 83 eb 08          	sub    $0x8,%rbx
+   140001576:	48 39 f3             	cmp    %rsi,%rbx
+   140001579:	75 f5                	jne    140001570 <__do_global_ctors+0x30>
+   14000157b:	48 8d 0d 6e ff ff ff 	lea    -0x92(%rip),%rcx        # 1400014f0 <__do_global_dtors>
+   140001582:	48 83 c4 28          	add    $0x28,%rsp
+   140001586:	5b                   	pop    %rbx
+   140001587:	5e                   	pop    %rsi
+   140001588:	e9 d3 fe ff ff       	jmp    140001460 <atexit>
+   14000158d:	0f 1f 00             	nopl   (%rax)
+   140001590:	31 c0                	xor    %eax,%eax
+   140001592:	0f 1f 00             	nopl   (%rax)
+   140001595:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+   14000159c:	00 00 00 00 
+   1400015a0:	44 8d 40 01          	lea    0x1(%rax),%r8d
+   1400015a4:	89 c1                	mov    %eax,%ecx
+   1400015a6:	4c 89 c0             	mov    %r8,%rax
+   1400015a9:	4a 83 3c c2 00       	cmpq   $0x0,(%rdx,%r8,8)
+   1400015ae:	75 f0                	jne    1400015a0 <__do_global_ctors+0x60>
+   1400015b0:	eb a5                	jmp    140001557 <__do_global_ctors+0x17>
+   1400015b2:	0f 1f 00             	nopl   (%rax)
+   1400015b5:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+   1400015bc:	00 00 00 00 
+
+00000001400015c0 <__main>:
+   1400015c0:	8b 05 6a 5a 00 00    	mov    0x5a6a(%rip),%eax        # 140007030 <initialized>
+   1400015c6:	85 c0                	test   %eax,%eax
+   1400015c8:	74 06                	je     1400015d0 <__main+0x10>
+   1400015ca:	c3                   	ret
+   1400015cb:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+   1400015d0:	c7 05 56 5a 00 00 01 	movl   $0x1,0x5a56(%rip)        # 140007030 <initialized>
+   1400015d7:	00 00 00 
+   1400015da:	e9 61 ff ff ff       	jmp    140001540 <__do_global_ctors>
+   1400015df:	90                   	nop
+
+00000001400015e0 <_setargv>:
+   1400015e0:	31 c0                	xor    %eax,%eax
+   1400015e2:	c3                   	ret
+   1400015e3:	90                   	nop
+   1400015e4:	90                   	nop
+   1400015e5:	90                   	nop
+   1400015e6:	90                   	nop
+   1400015e7:	90                   	nop
+   1400015e8:	90                   	nop
+   1400015e9:	90                   	nop
+   1400015ea:	90                   	nop
+   1400015eb:	90                   	nop
+   1400015ec:	90                   	nop
+   1400015ed:	90                   	nop
+   1400015ee:	90                   	nop
+   1400015ef:	90                   	nop
+
+00000001400015f0 <__dyn_tls_dtor>:
+   1400015f0:	83 fa 03             	cmp    $0x3,%edx
+   1400015f3:	74 0b                	je     140001600 <__dyn_tls_dtor+0x10>
+   1400015f5:	85 d2                	test   %edx,%edx
+   1400015f7:	74 07                	je     140001600 <__dyn_tls_dtor+0x10>
+   1400015f9:	c3                   	ret
+   1400015fa:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+   140001600:	e9 4b 0c 00 00       	jmp    140002250 <__mingw_TLScallback>
+   140001605:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+   14000160c:	00 00 00 00 
+
+0000000140001610 <__dyn_tls_init>:
+   140001610:	56                   	push   %rsi
+   140001611:	53                   	push   %rbx
+   140001612:	48 83 ec 28          	sub    $0x28,%rsp
+   140001616:	48 8b 05 03 2e 00 00 	mov    0x2e03(%rip),%rax        # 140004420 <.refptr._CRT_MT>
+   14000161d:	83 38 02             	cmpl   $0x2,(%rax)
+   140001620:	74 06                	je     140001628 <__dyn_tls_init+0x18>
+   140001622:	c7 00 02 00 00 00    	movl   $0x2,(%rax)
+   140001628:	83 fa 02             	cmp    $0x2,%edx
+   14000162b:	74 13                	je     140001640 <__dyn_tls_init+0x30>
+   14000162d:	83 fa 01             	cmp    $0x1,%edx
+   140001630:	74 4e                	je     140001680 <__dyn_tls_init+0x70>
+   140001632:	48 83 c4 28          	add    $0x28,%rsp
+   140001636:	5b                   	pop    %rbx
+   140001637:	5e                   	pop    %rsi
+   140001638:	c3                   	ret
+   140001639:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+   140001640:	48 8d 1d 21 37 00 00 	lea    0x3721(%rip),%rbx        # 140004d68 <__xd_z>
+   140001647:	48 8d 35 1a 37 00 00 	lea    0x371a(%rip),%rsi        # 140004d68 <__xd_z>
+   14000164e:	48 39 f3             	cmp    %rsi,%rbx
+   140001651:	74 df                	je     140001632 <__dyn_tls_init+0x22>
+   140001653:	66 90                	xchg   %ax,%ax
+   140001655:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+   14000165c:	00 00 00 00 
+   140001660:	48 8b 03             	mov    (%rbx),%rax
+   140001663:	48 85 c0             	test   %rax,%rax
+   140001666:	74 02                	je     14000166a <__dyn_tls_init+0x5a>
+   140001668:	ff d0                	call   *%rax
+   14000166a:	48 83 c3 08          	add    $0x8,%rbx
+   14000166e:	48 39 f3             	cmp    %rsi,%rbx
+   140001671:	75 ed                	jne    140001660 <__dyn_tls_init+0x50>
+   140001673:	48 83 c4 28          	add    $0x28,%rsp
+   140001677:	5b                   	pop    %rbx
+   140001678:	5e                   	pop    %rsi
+   140001679:	c3                   	ret
+   14000167a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+   140001680:	48 83 c4 28          	add    $0x28,%rsp
+   140001684:	5b                   	pop    %rbx
+   140001685:	5e                   	pop    %rsi
+   140001686:	e9 c5 0b 00 00       	jmp    140002250 <__mingw_TLScallback>
+   14000168b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+
+0000000140001690 <__tlregdtor>:
+   140001690:	31 c0                	xor    %eax,%eax
+   140001692:	c3                   	ret
+   140001693:	90                   	nop
+   140001694:	90                   	nop
+   140001695:	90                   	nop
+   140001696:	90                   	nop
+   140001697:	90                   	nop
+   140001698:	90                   	nop
+   140001699:	90                   	nop
+   14000169a:	90                   	nop
+   14000169b:	90                   	nop
+   14000169c:	90                   	nop
+   14000169d:	90                   	nop
+   14000169e:	90                   	nop
+   14000169f:	90                   	nop
+
+00000001400016a0 <_matherr>:
+   1400016a0:	56                   	push   %rsi
+   1400016a1:	53                   	push   %rbx
+   1400016a2:	48 83 ec 78          	sub    $0x78,%rsp
+   1400016a6:	0f 11 74 24 40       	movups %xmm6,0x40(%rsp)
+   1400016ab:	0f 11 7c 24 50       	movups %xmm7,0x50(%rsp)
+   1400016b0:	44 0f 11 44 24 60    	movups %xmm8,0x60(%rsp)
+   1400016b6:	83 39 06             	cmpl   $0x6,(%rcx)
+   1400016b9:	0f 87 cd 00 00 00    	ja     14000178c <_matherr+0xec>
+   1400016bf:	8b 01                	mov    (%rcx),%eax
+   1400016c1:	48 8d 15 dc 2a 00 00 	lea    0x2adc(%rip),%rdx        # 1400041a4 <.rdata+0x124>
+   1400016c8:	48 63 04 82          	movslq (%rdx,%rax,4),%rax
+   1400016cc:	48 01 d0             	add    %rdx,%rax
+   1400016cf:	ff e0                	jmp    *%rax
+   1400016d1:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+   1400016d8:	48 8d 1d c0 29 00 00 	lea    0x29c0(%rip),%rbx        # 14000409f <.rdata+0x1f>
+   1400016df:	f2 44 0f 10 41 20    	movsd  0x20(%rcx),%xmm8
+   1400016e5:	f2 0f 10 79 18       	movsd  0x18(%rcx),%xmm7
+   1400016ea:	f2 0f 10 71 10       	movsd  0x10(%rcx),%xmm6
+   1400016ef:	48 8b 71 08          	mov    0x8(%rcx),%rsi
+   1400016f3:	b9 02 00 00 00       	mov    $0x2,%ecx
+   1400016f8:	e8 13 13 00 00       	call   140002a10 <__acrt_iob_func>
+   1400016fd:	f2 44 0f 11 44 24 30 	movsd  %xmm8,0x30(%rsp)
+   140001704:	49 89 d8             	mov    %rbx,%r8
+   140001707:	48 8d 15 6a 2a 00 00 	lea    0x2a6a(%rip),%rdx        # 140004178 <.rdata+0xf8>
+   14000170e:	f2 0f 11 7c 24 28    	movsd  %xmm7,0x28(%rsp)
+   140001714:	49 89 f1             	mov    %rsi,%r9
+   140001717:	48 89 c1             	mov    %rax,%rcx
+   14000171a:	f2 0f 11 74 24 20    	movsd  %xmm6,0x20(%rsp)
+   140001720:	e8 cb 11 00 00       	call   1400028f0 <fprintf>
+   140001725:	90                   	nop
+   140001726:	0f 10 74 24 40       	movups 0x40(%rsp),%xmm6
+   14000172b:	0f 10 7c 24 50       	movups 0x50(%rsp),%xmm7
+   140001730:	31 c0                	xor    %eax,%eax
+   140001732:	44 0f 10 44 24 60    	movups 0x60(%rsp),%xmm8
+   140001738:	48 83 c4 78          	add    $0x78,%rsp
+   14000173c:	5b                   	pop    %rbx
+   14000173d:	5e                   	pop    %rsi
+   14000173e:	c3                   	ret
+   14000173f:	90                   	nop
+   140001740:	48 8d 1d 39 29 00 00 	lea    0x2939(%rip),%rbx        # 140004080 <.rdata>
+   140001747:	eb 96                	jmp    1400016df <_matherr+0x3f>
+   140001749:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+   140001750:	48 8d 1d 89 29 00 00 	lea    0x2989(%rip),%rbx        # 1400040e0 <.rdata+0x60>
+   140001757:	eb 86                	jmp    1400016df <_matherr+0x3f>
+   140001759:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+   140001760:	48 8d 1d 59 29 00 00 	lea    0x2959(%rip),%rbx        # 1400040c0 <.rdata+0x40>
+   140001767:	e9 73 ff ff ff       	jmp    1400016df <_matherr+0x3f>
+   14000176c:	0f 1f 40 00          	nopl   0x0(%rax)
+   140001770:	48 8d 1d b9 29 00 00 	lea    0x29b9(%rip),%rbx        # 140004130 <.rdata+0xb0>
+   140001777:	e9 63 ff ff ff       	jmp    1400016df <_matherr+0x3f>
+   14000177c:	0f 1f 40 00          	nopl   0x0(%rax)
+   140001780:	48 8d 1d 81 29 00 00 	lea    0x2981(%rip),%rbx        # 140004108 <.rdata+0x88>
+   140001787:	e9 53 ff ff ff       	jmp    1400016df <_matherr+0x3f>
+   14000178c:	48 8d 1d d3 29 00 00 	lea    0x29d3(%rip),%rbx        # 140004166 <.rdata+0xe6>
+   140001793:	e9 47 ff ff ff       	jmp    1400016df <_matherr+0x3f>
+   140001798:	90                   	nop
+   140001799:	90                   	nop
+   14000179a:	90                   	nop
+   14000179b:	90                   	nop
+   14000179c:	90                   	nop
+   14000179d:	90                   	nop
+   14000179e:	90                   	nop
+   14000179f:	90                   	nop
+
+00000001400017a0 <__report_error>:
+   1400017a0:	56                   	push   %rsi
+   1400017a1:	53                   	push   %rbx
+   1400017a2:	48 83 ec 38          	sub    $0x38,%rsp
+   1400017a6:	48 89 cb             	mov    %rcx,%rbx
+   1400017a9:	48 8d 44 24 58       	lea    0x58(%rsp),%rax
+   1400017ae:	b9 02 00 00 00       	mov    $0x2,%ecx
+   1400017b3:	4c 89 44 24 60       	mov    %r8,0x60(%rsp)
+   1400017b8:	4c 89 4c 24 68       	mov    %r9,0x68(%rsp)
+   1400017bd:	48 89 54 24 58       	mov    %rdx,0x58(%rsp)
+   1400017c2:	48 89 44 24 28       	mov    %rax,0x28(%rsp)
+   1400017c7:	e8 44 12 00 00       	call   140002a10 <__acrt_iob_func>
+   1400017cc:	48 8d 15 ed 29 00 00 	lea    0x29ed(%rip),%rdx        # 1400041c0 <.rdata>
+   1400017d3:	48 89 c1             	mov    %rax,%rcx
+   1400017d6:	e8 15 11 00 00       	call   1400028f0 <fprintf>
+   1400017db:	48 8b 74 24 28       	mov    0x28(%rsp),%rsi
+   1400017e0:	b9 02 00 00 00       	mov    $0x2,%ecx
+   1400017e5:	e8 26 12 00 00       	call   140002a10 <__acrt_iob_func>
+   1400017ea:	48 89 da             	mov    %rbx,%rdx
+   1400017ed:	49 89 f0             	mov    %rsi,%r8
+   1400017f0:	48 89 c1             	mov    %rax,%rcx
+   1400017f3:	e8 58 10 00 00       	call   140002850 <vfprintf>
+   1400017f8:	e8 ab 12 00 00       	call   140002aa8 <abort>
+   1400017fd:	90                   	nop
+   1400017fe:	66 90                	xchg   %ax,%ax
+
+0000000140001800 <mark_section_writable>:
+   140001800:	57                   	push   %rdi
+   140001801:	56                   	push   %rsi
+   140001802:	53                   	push   %rbx
+   140001803:	48 83 ec 50          	sub    $0x50,%rsp
+   140001807:	8b 35 97 58 00 00    	mov    0x5897(%rip),%esi        # 1400070a4 <maxSections>
+   14000180d:	48 89 cb             	mov    %rcx,%rbx
+   140001810:	85 f6                	test   %esi,%esi
+   140001812:	0f 8e 18 01 00 00    	jle    140001930 <mark_section_writable+0x130>
+   140001818:	48 8b 05 89 58 00 00 	mov    0x5889(%rip),%rax        # 1400070a8 <the_secs>
+   14000181f:	45 31 c9             	xor    %r9d,%r9d
+   140001822:	48 83 c0 18          	add    $0x18,%rax
+   140001826:	66 2e 0f 1f 84 00 00 	cs nopw 0x0(%rax,%rax,1)
+   14000182d:	00 00 00 
+   140001830:	4c 8b 00             	mov    (%rax),%r8
+   140001833:	4c 39 c3             	cmp    %r8,%rbx
+   140001836:	72 13                	jb     14000184b <mark_section_writable+0x4b>
+   140001838:	48 8b 50 08          	mov    0x8(%rax),%rdx
+   14000183c:	8b 52 08             	mov    0x8(%rdx),%edx
+   14000183f:	49 01 d0             	add    %rdx,%r8
+   140001842:	4c 39 c3             	cmp    %r8,%rbx
+   140001845:	0f 82 8a 00 00 00    	jb     1400018d5 <mark_section_writable+0xd5>
+   14000184b:	41 83 c1 01          	add    $0x1,%r9d
+   14000184f:	48 83 c0 28          	add    $0x28,%rax
+   140001853:	41 39 f1             	cmp    %esi,%r9d
+   140001856:	75 d8                	jne    140001830 <mark_section_writable+0x30>
+   140001858:	48 89 d9             	mov    %rbx,%rcx
+   14000185b:	e8 30 0c 00 00       	call   140002490 <__mingw_GetSectionForAddress>
+   140001860:	48 89 c7             	mov    %rax,%rdi
+   140001863:	48 85 c0             	test   %rax,%rax
+   140001866:	0f 84 e6 00 00 00    	je     140001952 <mark_section_writable+0x152>
+   14000186c:	48 8b 05 35 58 00 00 	mov    0x5835(%rip),%rax        # 1400070a8 <the_secs>
+   140001873:	48 8d 1c b6          	lea    (%rsi,%rsi,4),%rbx
+   140001877:	48 c1 e3 03          	shl    $0x3,%rbx
+   14000187b:	48 01 d8             	add    %rbx,%rax
+   14000187e:	48 89 78 20          	mov    %rdi,0x20(%rax)
+   140001882:	c7 00 00 00 00 00    	movl   $0x0,(%rax)
+   140001888:	e8 23 0d 00 00       	call   1400025b0 <_GetPEImageBase>
+   14000188d:	8b 57 0c             	mov    0xc(%rdi),%edx
+   140001890:	41 b8 30 00 00 00    	mov    $0x30,%r8d
+   140001896:	48 8d 0c 10          	lea    (%rax,%rdx,1),%rcx
+   14000189a:	48 8b 05 07 58 00 00 	mov    0x5807(%rip),%rax        # 1400070a8 <the_secs>
+   1400018a1:	48 8d 54 24 20       	lea    0x20(%rsp),%rdx
+   1400018a6:	48 89 4c 18 18       	mov    %rcx,0x18(%rax,%rbx,1)
+   1400018ab:	ff 15 4f 6a 00 00    	call   *0x6a4f(%rip)        # 140008300 <__imp_VirtualQuery>
+   1400018b1:	48 85 c0             	test   %rax,%rax
+   1400018b4:	0f 84 7d 00 00 00    	je     140001937 <mark_section_writable+0x137>
+   1400018ba:	8b 44 24 44          	mov    0x44(%rsp),%eax
+   1400018be:	8d 50 fc             	lea    -0x4(%rax),%edx
+   1400018c1:	83 e2 fb             	and    $0xfffffffb,%edx
+   1400018c4:	74 08                	je     1400018ce <mark_section_writable+0xce>
+   1400018c6:	8d 50 c0             	lea    -0x40(%rax),%edx
+   1400018c9:	83 e2 bf             	and    $0xffffffbf,%edx
+   1400018cc:	75 12                	jne    1400018e0 <mark_section_writable+0xe0>
+   1400018ce:	83 05 cf 57 00 00 01 	addl   $0x1,0x57cf(%rip)        # 1400070a4 <maxSections>
+   1400018d5:	48 83 c4 50          	add    $0x50,%rsp
+   1400018d9:	5b                   	pop    %rbx
+   1400018da:	5e                   	pop    %rsi
+   1400018db:	5f                   	pop    %rdi
+   1400018dc:	c3                   	ret
+   1400018dd:	0f 1f 00             	nopl   (%rax)
+   1400018e0:	83 f8 02             	cmp    $0x2,%eax
+   1400018e3:	48 8b 4c 24 20       	mov    0x20(%rsp),%rcx
+   1400018e8:	48 8b 54 24 38       	mov    0x38(%rsp),%rdx
+   1400018ed:	41 b8 40 00 00 00    	mov    $0x40,%r8d
+   1400018f3:	b8 04 00 00 00       	mov    $0x4,%eax
+   1400018f8:	44 0f 44 c0          	cmove  %eax,%r8d
+   1400018fc:	48 03 1d a5 57 00 00 	add    0x57a5(%rip),%rbx        # 1400070a8 <the_secs>
+   140001903:	48 89 4b 08          	mov    %rcx,0x8(%rbx)
+   140001907:	49 89 d9             	mov    %rbx,%r9
+   14000190a:	48 89 53 10          	mov    %rdx,0x10(%rbx)
+   14000190e:	ff 15 e4 69 00 00    	call   *0x69e4(%rip)        # 1400082f8 <__imp_VirtualProtect>
+   140001914:	85 c0                	test   %eax,%eax
+   140001916:	75 b6                	jne    1400018ce <mark_section_writable+0xce>
+   140001918:	ff 15 9a 69 00 00    	call   *0x699a(%rip)        # 1400082b8 <__imp_GetLastError>
+   14000191e:	48 8d 0d 13 29 00 00 	lea    0x2913(%rip),%rcx        # 140004238 <.rdata+0x78>
+   140001925:	89 c2                	mov    %eax,%edx
+   140001927:	e8 74 fe ff ff       	call   1400017a0 <__report_error>
+   14000192c:	0f 1f 40 00          	nopl   0x0(%rax)
+   140001930:	31 f6                	xor    %esi,%esi
+   140001932:	e9 21 ff ff ff       	jmp    140001858 <mark_section_writable+0x58>
+   140001937:	48 8b 05 6a 57 00 00 	mov    0x576a(%rip),%rax        # 1400070a8 <the_secs>
+   14000193e:	8b 57 08             	mov    0x8(%rdi),%edx
+   140001941:	48 8d 0d b8 28 00 00 	lea    0x28b8(%rip),%rcx        # 140004200 <.rdata+0x40>
+   140001948:	4c 8b 44 18 18       	mov    0x18(%rax,%rbx,1),%r8
+   14000194d:	e8 4e fe ff ff       	call   1400017a0 <__report_error>
+   140001952:	48 89 da             	mov    %rbx,%rdx
+   140001955:	48 8d 0d 84 28 00 00 	lea    0x2884(%rip),%rcx        # 1400041e0 <.rdata+0x20>
+   14000195c:	e8 3f fe ff ff       	call   1400017a0 <__report_error>
+   140001961:	90                   	nop
+   140001962:	0f 1f 00             	nopl   (%rax)
+   140001965:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+   14000196c:	00 00 00 00 
+
+0000000140001970 <_pei386_runtime_relocator>:
+   140001970:	55                   	push   %rbp
+   140001971:	41 56                	push   %r14
+   140001973:	41 55                	push   %r13
+   140001975:	41 54                	push   %r12
+   140001977:	57                   	push   %rdi
+   140001978:	56                   	push   %rsi
+   140001979:	53                   	push   %rbx
+   14000197a:	48 83 ec 40          	sub    $0x40,%rsp
+   14000197e:	48 8d 6c 24 40       	lea    0x40(%rsp),%rbp
+   140001983:	8b 35 17 57 00 00    	mov    0x5717(%rip),%esi        # 1400070a0 <was_init.0>
+   140001989:	85 f6                	test   %esi,%esi
+   14000198b:	74 13                	je     1400019a0 <_pei386_runtime_relocator+0x30>
+   14000198d:	48 89 ec             	mov    %rbp,%rsp
+   140001990:	5b                   	pop    %rbx
+   140001991:	5e                   	pop    %rsi
+   140001992:	5f                   	pop    %rdi
+   140001993:	41 5c                	pop    %r12
+   140001995:	41 5d                	pop    %r13
+   140001997:	41 5e                	pop    %r14
+   140001999:	5d                   	pop    %rbp
+   14000199a:	c3                   	ret
+   14000199b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+   1400019a0:	c7 05 f6 56 00 00 01 	movl   $0x1,0x56f6(%rip)        # 1400070a0 <was_init.0>
+   1400019a7:	00 00 00 
+   1400019aa:	e8 61 0b 00 00       	call   140002510 <__mingw_GetSectionCount>
+   1400019af:	48 98                	cltq
+   1400019b1:	48 8d 04 80          	lea    (%rax,%rax,4),%rax
+   1400019b5:	48 8d 04 c5 0f 00 00 	lea    0xf(,%rax,8),%rax
+   1400019bc:	00 
+   1400019bd:	48 83 e0 f0          	and    $0xfffffffffffffff0,%rax
+   1400019c1:	e8 6a 0d 00 00       	call   140002730 <___chkstk_ms>
+   1400019c6:	4c 8b 2d 93 2a 00 00 	mov    0x2a93(%rip),%r13        # 140004460 <.refptr.__RUNTIME_PSEUDO_RELOC_LIST_END__>
+   1400019cd:	48 8b 1d 9c 2a 00 00 	mov    0x2a9c(%rip),%rbx        # 140004470 <.refptr.__RUNTIME_PSEUDO_RELOC_LIST__>
+   1400019d4:	48 29 c4             	sub    %rax,%rsp
+   1400019d7:	c7 05 c3 56 00 00 00 	movl   $0x0,0x56c3(%rip)        # 1400070a4 <maxSections>
+   1400019de:	00 00 00 
+   1400019e1:	48 8d 44 24 30       	lea    0x30(%rsp),%rax
+   1400019e6:	48 89 05 bb 56 00 00 	mov    %rax,0x56bb(%rip)        # 1400070a8 <the_secs>
+   1400019ed:	4c 89 e8             	mov    %r13,%rax
+   1400019f0:	48 29 d8             	sub    %rbx,%rax
+   1400019f3:	48 83 f8 07          	cmp    $0x7,%rax
+   1400019f7:	7e 94                	jle    14000198d <_pei386_runtime_relocator+0x1d>
+   1400019f9:	48 83 f8 0b          	cmp    $0xb,%rax
+   1400019fd:	0f 8f 6d 01 00 00    	jg     140001b70 <_pei386_runtime_relocator+0x200>
+   140001a03:	8b 13                	mov    (%rbx),%edx
+   140001a05:	85 d2                	test   %edx,%edx
+   140001a07:	0f 85 78 01 00 00    	jne    140001b85 <_pei386_runtime_relocator+0x215>
+   140001a0d:	8b 43 04             	mov    0x4(%rbx),%eax
+   140001a10:	85 c0                	test   %eax,%eax
+   140001a12:	0f 85 6d 01 00 00    	jne    140001b85 <_pei386_runtime_relocator+0x215>
+   140001a18:	8b 53 08             	mov    0x8(%rbx),%edx
+   140001a1b:	83 fa 01             	cmp    $0x1,%edx
+   140001a1e:	0f 85 df 02 00 00    	jne    140001d03 <_pei386_runtime_relocator+0x393>
+   140001a24:	48 83 c3 0c          	add    $0xc,%rbx
+   140001a28:	48 8b 3d 21 2a 00 00 	mov    0x2a21(%rip),%rdi        # 140004450 <.refptr.__ImageBase>
+   140001a2f:	4c 39 eb             	cmp    %r13,%rbx
+   140001a32:	72 79                	jb     140001aad <_pei386_runtime_relocator+0x13d>
+   140001a34:	e9 54 ff ff ff       	jmp    14000198d <_pei386_runtime_relocator+0x1d>
+   140001a39:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+   140001a40:	83 fa 08             	cmp    $0x8,%edx
+   140001a43:	0f 84 8f 01 00 00    	je     140001bd8 <_pei386_runtime_relocator+0x268>
+   140001a49:	83 fa 10             	cmp    $0x10,%edx
+   140001a4c:	0f 85 9d 02 00 00    	jne    140001cef <_pei386_runtime_relocator+0x37f>
+   140001a52:	41 0f b7 06          	movzwl (%r14),%eax
+   140001a56:	66 85 c0             	test   %ax,%ax
+   140001a59:	0f 89 31 02 00 00    	jns    140001c90 <_pei386_runtime_relocator+0x320>
+   140001a5f:	48 0d 00 00 ff ff    	or     $0xffffffffffff0000,%rax
+   140001a65:	48 29 c8             	sub    %rcx,%rax
+   140001a68:	4c 01 c8             	add    %r9,%rax
+   140001a6b:	48 89 45 f8          	mov    %rax,-0x8(%rbp)
+   140001a6f:	48 3d 00 80 ff ff    	cmp    $0xffffffffffff8000,%rax
+   140001a75:	0f 8c 2b 02 00 00    	jl     140001ca6 <_pei386_runtime_relocator+0x336>
+   140001a7b:	48 3d ff ff 00 00    	cmp    $0xffff,%rax
+   140001a81:	0f 8f 1f 02 00 00    	jg     140001ca6 <_pei386_runtime_relocator+0x336>
+   140001a87:	4c 89 f1             	mov    %r14,%rcx
+   140001a8a:	4c 8d 65 f8          	lea    -0x8(%rbp),%r12
+   140001a8e:	e8 6d fd ff ff       	call   140001800 <mark_section_writable>
+   140001a93:	41 b8 02 00 00 00    	mov    $0x2,%r8d
+   140001a99:	4c 89 e2             	mov    %r12,%rdx
+   140001a9c:	4c 89 f1             	mov    %r14,%rcx
+   140001a9f:	e8 24 10 00 00       	call   140002ac8 <memcpy>
+   140001aa4:	48 83 c3 0c          	add    $0xc,%rbx
+   140001aa8:	4c 39 eb             	cmp    %r13,%rbx
+   140001aab:	73 63                	jae    140001b10 <_pei386_runtime_relocator+0x1a0>
+   140001aad:	8b 0b                	mov    (%rbx),%ecx
+   140001aaf:	44 8b 73 04          	mov    0x4(%rbx),%r14d
+   140001ab3:	0f b6 53 08          	movzbl 0x8(%rbx),%edx
+   140001ab7:	48 01 f9             	add    %rdi,%rcx
+   140001aba:	49 01 fe             	add    %rdi,%r14
+   140001abd:	4c 8b 09             	mov    (%rcx),%r9
+   140001ac0:	83 fa 20             	cmp    $0x20,%edx
+   140001ac3:	0f 84 67 01 00 00    	je     140001c30 <_pei386_runtime_relocator+0x2c0>
+   140001ac9:	0f 86 71 ff ff ff    	jbe    140001a40 <_pei386_runtime_relocator+0xd0>
+   140001acf:	83 fa 40             	cmp    $0x40,%edx
+   140001ad2:	0f 85 17 02 00 00    	jne    140001cef <_pei386_runtime_relocator+0x37f>
+   140001ad8:	49 8b 06             	mov    (%r14),%rax
+   140001adb:	4c 8d 65 f8          	lea    -0x8(%rbp),%r12
+   140001adf:	48 83 c3 0c          	add    $0xc,%rbx
+   140001ae3:	48 29 c8             	sub    %rcx,%rax
+   140001ae6:	4c 89 f1             	mov    %r14,%rcx
+   140001ae9:	4c 01 c8             	add    %r9,%rax
+   140001aec:	48 89 45 f8          	mov    %rax,-0x8(%rbp)
+   140001af0:	e8 0b fd ff ff       	call   140001800 <mark_section_writable>
+   140001af5:	41 b8 08 00 00 00    	mov    $0x8,%r8d
+   140001afb:	4c 89 e2             	mov    %r12,%rdx
+   140001afe:	4c 89 f1             	mov    %r14,%rcx
+   140001b01:	e8 c2 0f 00 00       	call   140002ac8 <memcpy>
+   140001b06:	4c 39 eb             	cmp    %r13,%rbx
+   140001b09:	72 a2                	jb     140001aad <_pei386_runtime_relocator+0x13d>
+   140001b0b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+   140001b10:	8b 05 8e 55 00 00    	mov    0x558e(%rip),%eax        # 1400070a4 <maxSections>
+   140001b16:	85 c0                	test   %eax,%eax
+   140001b18:	0f 8e 6f fe ff ff    	jle    14000198d <_pei386_runtime_relocator+0x1d>
+   140001b1e:	48 8b 3d d3 67 00 00 	mov    0x67d3(%rip),%rdi        # 1400082f8 <__imp_VirtualProtect>
+   140001b25:	31 db                	xor    %ebx,%ebx
+   140001b27:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)
+   140001b2e:	00 00 
+   140001b30:	48 8b 05 71 55 00 00 	mov    0x5571(%rip),%rax        # 1400070a8 <the_secs>
+   140001b37:	48 01 d8             	add    %rbx,%rax
+   140001b3a:	44 8b 00             	mov    (%rax),%r8d
+   140001b3d:	45 85 c0             	test   %r8d,%r8d
+   140001b40:	74 0d                	je     140001b4f <_pei386_runtime_relocator+0x1df>
+   140001b42:	48 8b 50 10          	mov    0x10(%rax),%rdx
+   140001b46:	48 8b 48 08          	mov    0x8(%rax),%rcx
+   140001b4a:	4d 89 e1             	mov    %r12,%r9
+   140001b4d:	ff d7                	call   *%rdi
+   140001b4f:	83 c6 01             	add    $0x1,%esi
+   140001b52:	48 83 c3 28          	add    $0x28,%rbx
+   140001b56:	3b 35 48 55 00 00    	cmp    0x5548(%rip),%esi        # 1400070a4 <maxSections>
+   140001b5c:	7c d2                	jl     140001b30 <_pei386_runtime_relocator+0x1c0>
+   140001b5e:	48 89 ec             	mov    %rbp,%rsp
+   140001b61:	5b                   	pop    %rbx
+   140001b62:	5e                   	pop    %rsi
+   140001b63:	5f                   	pop    %rdi
+   140001b64:	41 5c                	pop    %r12
+   140001b66:	41 5d                	pop    %r13
+   140001b68:	41 5e                	pop    %r14
+   140001b6a:	5d                   	pop    %rbp
+   140001b6b:	c3                   	ret
+   140001b6c:	0f 1f 40 00          	nopl   0x0(%rax)
+   140001b70:	44 8b 0b             	mov    (%rbx),%r9d
+   140001b73:	45 85 c9             	test   %r9d,%r9d
+   140001b76:	75 0d                	jne    140001b85 <_pei386_runtime_relocator+0x215>
+   140001b78:	44 8b 43 04          	mov    0x4(%rbx),%r8d
+   140001b7c:	45 85 c0             	test   %r8d,%r8d
+   140001b7f:	0f 84 56 01 00 00    	je     140001cdb <_pei386_runtime_relocator+0x36b>
+   140001b85:	4c 39 eb             	cmp    %r13,%rbx
+   140001b88:	0f 83 ff fd ff ff    	jae    14000198d <_pei386_runtime_relocator+0x1d>
+   140001b8e:	4c 8b 35 bb 28 00 00 	mov    0x28bb(%rip),%r14        # 140004450 <.refptr.__ImageBase>
+   140001b95:	4c 8d 65 f8          	lea    -0x8(%rbp),%r12
+   140001b99:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+   140001ba0:	8b 7b 04             	mov    0x4(%rbx),%edi
+   140001ba3:	8b 03                	mov    (%rbx),%eax
+   140001ba5:	48 83 c3 08          	add    $0x8,%rbx
+   140001ba9:	41 03 04 3e          	add    (%r14,%rdi,1),%eax
+   140001bad:	4a 8d 0c 37          	lea    (%rdi,%r14,1),%rcx
+   140001bb1:	89 45 f8             	mov    %eax,-0x8(%rbp)
+   140001bb4:	e8 47 fc ff ff       	call   140001800 <mark_section_writable>
+   140001bb9:	41 b8 04 00 00 00    	mov    $0x4,%r8d
+   140001bbf:	4c 89 e2             	mov    %r12,%rdx
+   140001bc2:	4a 8d 0c 37          	lea    (%rdi,%r14,1),%rcx
+   140001bc6:	e8 fd 0e 00 00       	call   140002ac8 <memcpy>
+   140001bcb:	4c 39 eb             	cmp    %r13,%rbx
+   140001bce:	72 d0                	jb     140001ba0 <_pei386_runtime_relocator+0x230>
+   140001bd0:	e9 3b ff ff ff       	jmp    140001b10 <_pei386_runtime_relocator+0x1a0>
+   140001bd5:	0f 1f 00             	nopl   (%rax)
+   140001bd8:	41 0f b6 06          	movzbl (%r14),%eax
+   140001bdc:	84 c0                	test   %al,%al
+   140001bde:	0f 89 ec 00 00 00    	jns    140001cd0 <_pei386_runtime_relocator+0x360>
+   140001be4:	48 0d 00 ff ff ff    	or     $0xffffffffffffff00,%rax
+   140001bea:	48 29 c8             	sub    %rcx,%rax
+   140001bed:	4c 01 c8             	add    %r9,%rax
+   140001bf0:	48 89 45 f8          	mov    %rax,-0x8(%rbp)
+   140001bf4:	48 83 f8 80          	cmp    $0xffffffffffffff80,%rax
+   140001bf8:	0f 8c a8 00 00 00    	jl     140001ca6 <_pei386_runtime_relocator+0x336>
+   140001bfe:	48 3d ff 00 00 00    	cmp    $0xff,%rax
+   140001c04:	0f 8f 9c 00 00 00    	jg     140001ca6 <_pei386_runtime_relocator+0x336>
+   140001c0a:	4c 89 f1             	mov    %r14,%rcx
+   140001c0d:	4c 8d 65 f8          	lea    -0x8(%rbp),%r12
+   140001c11:	e8 ea fb ff ff       	call   140001800 <mark_section_writable>
+   140001c16:	41 b8 01 00 00 00    	mov    $0x1,%r8d
+   140001c1c:	4c 89 e2             	mov    %r12,%rdx
+   140001c1f:	4c 89 f1             	mov    %r14,%rcx
+   140001c22:	e8 a1 0e 00 00       	call   140002ac8 <memcpy>
+   140001c27:	e9 78 fe ff ff       	jmp    140001aa4 <_pei386_runtime_relocator+0x134>
+   140001c2c:	0f 1f 40 00          	nopl   0x0(%rax)
+   140001c30:	41 8b 06             	mov    (%r14),%eax
+   140001c33:	85 c0                	test   %eax,%eax
+   140001c35:	0f 89 85 00 00 00    	jns    140001cc0 <_pei386_runtime_relocator+0x350>
+   140001c3b:	49 ba 00 00 00 00 ff 	movabs $0xffffffff00000000,%r10
+   140001c42:	ff ff ff 
+   140001c45:	4c 09 d0             	or     %r10,%rax
+   140001c48:	48 29 c8             	sub    %rcx,%rax
+   140001c4b:	4c 01 c8             	add    %r9,%rax
+   140001c4e:	b9 ff ff ff ff       	mov    $0xffffffff,%ecx
+   140001c53:	48 89 45 f8          	mov    %rax,-0x8(%rbp)
+   140001c57:	48 39 c8             	cmp    %rcx,%rax
+   140001c5a:	7f 4a                	jg     140001ca6 <_pei386_runtime_relocator+0x336>
+   140001c5c:	48 3d 00 00 00 80    	cmp    $0xffffffff80000000,%rax
+   140001c62:	7c 42                	jl     140001ca6 <_pei386_runtime_relocator+0x336>
+   140001c64:	4c 89 f1             	mov    %r14,%rcx
+   140001c67:	4c 8d 65 f8          	lea    -0x8(%rbp),%r12
+   140001c6b:	e8 90 fb ff ff       	call   140001800 <mark_section_writable>
+   140001c70:	41 b8 04 00 00 00    	mov    $0x4,%r8d
+   140001c76:	4c 89 e2             	mov    %r12,%rdx
+   140001c79:	4c 89 f1             	mov    %r14,%rcx
+   140001c7c:	e8 47 0e 00 00       	call   140002ac8 <memcpy>
+   140001c81:	e9 1e fe ff ff       	jmp    140001aa4 <_pei386_runtime_relocator+0x134>
+   140001c86:	66 2e 0f 1f 84 00 00 	cs nopw 0x0(%rax,%rax,1)
+   140001c8d:	00 00 00 
+   140001c90:	48 29 c8             	sub    %rcx,%rax
+   140001c93:	4c 01 c8             	add    %r9,%rax
+   140001c96:	48 89 45 f8          	mov    %rax,-0x8(%rbp)
+   140001c9a:	48 3d 00 80 ff ff    	cmp    $0xffffffffffff8000,%rax
+   140001ca0:	0f 8d d5 fd ff ff    	jge    140001a7b <_pei386_runtime_relocator+0x10b>
+   140001ca6:	48 89 44 24 20       	mov    %rax,0x20(%rsp)
+   140001cab:	4d 89 f0             	mov    %r14,%r8
+   140001cae:	48 8d 0d 13 26 00 00 	lea    0x2613(%rip),%rcx        # 1400042c8 <.rdata+0x108>
+   140001cb5:	e8 e6 fa ff ff       	call   1400017a0 <__report_error>
+   140001cba:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+   140001cc0:	48 29 c8             	sub    %rcx,%rax
+   140001cc3:	4c 01 c8             	add    %r9,%rax
+   140001cc6:	eb 86                	jmp    140001c4e <_pei386_runtime_relocator+0x2de>
+   140001cc8:	0f 1f 84 00 00 00 00 	nopl   0x0(%rax,%rax,1)
+   140001ccf:	00 
+   140001cd0:	48 29 c8             	sub    %rcx,%rax
+   140001cd3:	4c 01 c8             	add    %r9,%rax
+   140001cd6:	e9 15 ff ff ff       	jmp    140001bf0 <_pei386_runtime_relocator+0x280>
+   140001cdb:	8b 4b 08             	mov    0x8(%rbx),%ecx
+   140001cde:	85 c9                	test   %ecx,%ecx
+   140001ce0:	0f 85 32 fd ff ff    	jne    140001a18 <_pei386_runtime_relocator+0xa8>
+   140001ce6:	48 83 c3 0c          	add    $0xc,%rbx
+   140001cea:	e9 14 fd ff ff       	jmp    140001a03 <_pei386_runtime_relocator+0x93>
+   140001cef:	48 8d 0d a2 25 00 00 	lea    0x25a2(%rip),%rcx        # 140004298 <.rdata+0xd8>
+   140001cf6:	48 c7 45 f8 00 00 00 	movq   $0x0,-0x8(%rbp)
+   140001cfd:	00 
+   140001cfe:	e8 9d fa ff ff       	call   1400017a0 <__report_error>
+   140001d03:	48 8d 0d 56 25 00 00 	lea    0x2556(%rip),%rcx        # 140004260 <.rdata+0xa0>
+   140001d0a:	e8 91 fa ff ff       	call   1400017a0 <__report_error>
+   140001d0f:	90                   	nop
+
+0000000140001d10 <__mingw_raise_matherr>:
+   140001d10:	48 83 ec 58          	sub    $0x58,%rsp
+   140001d14:	48 8b 05 95 53 00 00 	mov    0x5395(%rip),%rax        # 1400070b0 <stUserMathErr>
+   140001d1b:	48 85 c0             	test   %rax,%rax
+   140001d1e:	74 29                	je     140001d49 <__mingw_raise_matherr+0x39>
+   140001d20:	f2 0f 10 84 24 80 00 	movsd  0x80(%rsp),%xmm0
+   140001d27:	00 00 
+   140001d29:	66 0f 14 d3          	unpcklpd %xmm3,%xmm2
+   140001d2d:	89 4c 24 20          	mov    %ecx,0x20(%rsp)
+   140001d31:	48 8d 4c 24 20       	lea    0x20(%rsp),%rcx
+   140001d36:	48 89 54 24 28       	mov    %rdx,0x28(%rsp)
+   140001d3b:	0f 11 54 24 30       	movups %xmm2,0x30(%rsp)
+   140001d40:	f2 0f 11 44 24 40    	movsd  %xmm0,0x40(%rsp)
+   140001d46:	ff d0                	call   *%rax
+   140001d48:	90                   	nop
+   140001d49:	48 83 c4 58          	add    $0x58,%rsp
+   140001d4d:	c3                   	ret
+   140001d4e:	66 90                	xchg   %ax,%ax
+
+0000000140001d50 <__mingw_setusermatherr>:
+   140001d50:	48 89 0d 59 53 00 00 	mov    %rcx,0x5359(%rip)        # 1400070b0 <stUserMathErr>
+   140001d57:	e9 74 0d 00 00       	jmp    140002ad0 <__setusermatherr>
+   140001d5c:	90                   	nop
+   140001d5d:	90                   	nop
+   140001d5e:	90                   	nop
+   140001d5f:	90                   	nop
+
+0000000140001d60 <__mingw_SEH_error_handler>:
+   140001d60:	48 83 ec 28          	sub    $0x28,%rsp
+   140001d64:	f6 41 04 02          	testb  $0x2,0x4(%rcx)
+   140001d68:	75 66                	jne    140001dd0 <__mingw_SEH_error_handler+0x70>
+   140001d6a:	48 b8 ff ff ff 20 01 	movabs $0x120ffffff,%rax
+   140001d71:	00 00 00 
+   140001d74:	48 23 01             	and    (%rcx),%rax
+   140001d77:	48 3d 43 43 47 20    	cmp    $0x20474343,%rax
+   140001d7d:	0f 84 7f 00 00 00    	je     140001e02 <__mingw_SEH_error_handler+0xa2>
+   140001d83:	8b 01                	mov    (%rcx),%eax
+   140001d85:	3d 96 00 00 c0       	cmp    $0xc0000096,%eax
+   140001d8a:	77 44                	ja     140001dd0 <__mingw_SEH_error_handler+0x70>
+   140001d8c:	3d 8b 00 00 c0       	cmp    $0xc000008b,%eax
+   140001d91:	76 1d                	jbe    140001db0 <__mingw_SEH_error_handler+0x50>
+   140001d93:	05 74 ff ff 3f       	add    $0x3fffff74,%eax
+   140001d98:	83 f8 0a             	cmp    $0xa,%eax
+   140001d9b:	77 33                	ja     140001dd0 <__mingw_SEH_error_handler+0x70>
+   140001d9d:	48 8d 15 7c 25 00 00 	lea    0x257c(%rip),%rdx        # 140004320 <.rdata>
+   140001da4:	48 63 04 82          	movslq (%rdx,%rax,4),%rax
+   140001da8:	48 01 d0             	add    %rdx,%rax
+   140001dab:	ff e0                	jmp    *%rax
+   140001dad:	0f 1f 00             	nopl   (%rax)
+   140001db0:	3d 05 00 00 c0       	cmp    $0xc0000005,%eax
+   140001db5:	74 59                	je     140001e10 <__mingw_SEH_error_handler+0xb0>
+   140001db7:	0f 86 d3 00 00 00    	jbe    140001e90 <__mingw_SEH_error_handler+0x130>
+   140001dbd:	3d 08 00 00 c0       	cmp    $0xc0000008,%eax
+   140001dc2:	74 3e                	je     140001e02 <__mingw_SEH_error_handler+0xa2>
+   140001dc4:	3d 1d 00 00 c0       	cmp    $0xc000001d,%eax
+   140001dc9:	0f 84 91 00 00 00    	je     140001e60 <__mingw_SEH_error_handler+0x100>
+   140001dcf:	90                   	nop
+   140001dd0:	b8 01 00 00 00       	mov    $0x1,%eax
+   140001dd5:	48 83 c4 28          	add    $0x28,%rsp
+   140001dd9:	c3                   	ret
+   140001dda:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+   140001de0:	31 d2                	xor    %edx,%edx
+   140001de2:	b9 08 00 00 00       	mov    $0x8,%ecx
+   140001de7:	e8 cc 0c 00 00       	call   140002ab8 <signal>
+   140001dec:	48 83 f8 01          	cmp    $0x1,%rax
+   140001df0:	0f 84 ea 00 00 00    	je     140001ee0 <__mingw_SEH_error_handler+0x180>
+   140001df6:	48 85 c0             	test   %rax,%rax
+   140001df9:	74 d5                	je     140001dd0 <__mingw_SEH_error_handler+0x70>
+   140001dfb:	b9 08 00 00 00       	mov    $0x8,%ecx
+   140001e00:	ff d0                	call   *%rax
+   140001e02:	31 c0                	xor    %eax,%eax
+   140001e04:	48 83 c4 28          	add    $0x28,%rsp
+   140001e08:	c3                   	ret
+   140001e09:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+   140001e10:	31 d2                	xor    %edx,%edx
+   140001e12:	b9 0b 00 00 00       	mov    $0xb,%ecx
+   140001e17:	e8 9c 0c 00 00       	call   140002ab8 <signal>
+   140001e1c:	48 83 f8 01          	cmp    $0x1,%rax
+   140001e20:	74 7e                	je     140001ea0 <__mingw_SEH_error_handler+0x140>
+   140001e22:	48 85 c0             	test   %rax,%rax
+   140001e25:	74 a9                	je     140001dd0 <__mingw_SEH_error_handler+0x70>
+   140001e27:	b9 0b 00 00 00       	mov    $0xb,%ecx
+   140001e2c:	ff d0                	call   *%rax
+   140001e2e:	31 c0                	xor    %eax,%eax
+   140001e30:	eb d2                	jmp    140001e04 <__mingw_SEH_error_handler+0xa4>
+   140001e32:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+   140001e38:	31 d2                	xor    %edx,%edx
+   140001e3a:	b9 08 00 00 00       	mov    $0x8,%ecx
+   140001e3f:	e8 74 0c 00 00       	call   140002ab8 <signal>
+   140001e44:	48 83 f8 01          	cmp    $0x1,%rax
+   140001e48:	75 ac                	jne    140001df6 <__mingw_SEH_error_handler+0x96>
+   140001e4a:	ba 01 00 00 00       	mov    $0x1,%edx
+   140001e4f:	b9 08 00 00 00       	mov    $0x8,%ecx
+   140001e54:	e8 5f 0c 00 00       	call   140002ab8 <signal>
+   140001e59:	31 c0                	xor    %eax,%eax
+   140001e5b:	eb a7                	jmp    140001e04 <__mingw_SEH_error_handler+0xa4>
+   140001e5d:	0f 1f 00             	nopl   (%rax)
+   140001e60:	31 d2                	xor    %edx,%edx
+   140001e62:	b9 04 00 00 00       	mov    $0x4,%ecx
+   140001e67:	e8 4c 0c 00 00       	call   140002ab8 <signal>
+   140001e6c:	48 83 f8 01          	cmp    $0x1,%rax
+   140001e70:	74 4e                	je     140001ec0 <__mingw_SEH_error_handler+0x160>
+   140001e72:	48 85 c0             	test   %rax,%rax
+   140001e75:	0f 84 55 ff ff ff    	je     140001dd0 <__mingw_SEH_error_handler+0x70>
+   140001e7b:	b9 04 00 00 00       	mov    $0x4,%ecx
+   140001e80:	ff d0                	call   *%rax
+   140001e82:	31 c0                	xor    %eax,%eax
+   140001e84:	e9 7b ff ff ff       	jmp    140001e04 <__mingw_SEH_error_handler+0xa4>
+   140001e89:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+   140001e90:	3d 02 00 00 80       	cmp    $0x80000002,%eax
+   140001e95:	0f 95 c0             	setne  %al
+   140001e98:	0f b6 c0             	movzbl %al,%eax
+   140001e9b:	e9 35 ff ff ff       	jmp    140001dd5 <__mingw_SEH_error_handler+0x75>
+   140001ea0:	ba 01 00 00 00       	mov    $0x1,%edx
+   140001ea5:	b9 0b 00 00 00       	mov    $0xb,%ecx
+   140001eaa:	e8 09 0c 00 00       	call   140002ab8 <signal>
+   140001eaf:	31 c0                	xor    %eax,%eax
+   140001eb1:	e9 4e ff ff ff       	jmp    140001e04 <__mingw_SEH_error_handler+0xa4>
+   140001eb6:	66 2e 0f 1f 84 00 00 	cs nopw 0x0(%rax,%rax,1)
+   140001ebd:	00 00 00 
+   140001ec0:	ba 01 00 00 00       	mov    $0x1,%edx
+   140001ec5:	b9 04 00 00 00       	mov    $0x4,%ecx
+   140001eca:	e8 e9 0b 00 00       	call   140002ab8 <signal>
+   140001ecf:	31 c0                	xor    %eax,%eax
+   140001ed1:	e9 2e ff ff ff       	jmp    140001e04 <__mingw_SEH_error_handler+0xa4>
+   140001ed6:	66 2e 0f 1f 84 00 00 	cs nopw 0x0(%rax,%rax,1)
+   140001edd:	00 00 00 
+   140001ee0:	ba 01 00 00 00       	mov    $0x1,%edx
+   140001ee5:	b9 08 00 00 00       	mov    $0x8,%ecx
+   140001eea:	e8 c9 0b 00 00       	call   140002ab8 <signal>
+   140001eef:	e8 6c 04 00 00       	call   140002360 <_fpreset>
+   140001ef4:	31 c0                	xor    %eax,%eax
+   140001ef6:	e9 09 ff ff ff       	jmp    140001e04 <__mingw_SEH_error_handler+0xa4>
+   140001efb:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+
+0000000140001f00 <_gnu_exception_handler>:
+   140001f00:	53                   	push   %rbx
+   140001f01:	48 83 ec 20          	sub    $0x20,%rsp
+   140001f05:	48 8b 11             	mov    (%rcx),%rdx
+   140001f08:	8b 02                	mov    (%rdx),%eax
+   140001f0a:	48 89 cb             	mov    %rcx,%rbx
+   140001f0d:	89 c1                	mov    %eax,%ecx
+   140001f0f:	81 e1 ff ff ff 20    	and    $0x20ffffff,%ecx
+   140001f15:	81 f9 43 43 47 20    	cmp    $0x20474343,%ecx
+   140001f1b:	74 2b                	je     140001f48 <_gnu_exception_handler+0x48>
+   140001f1d:	3d 96 00 00 c0       	cmp    $0xc0000096,%eax
+   140001f22:	77 2a                	ja     140001f4e <_gnu_exception_handler+0x4e>
+   140001f24:	3d 8b 00 00 c0       	cmp    $0xc000008b,%eax
+   140001f29:	76 3d                	jbe    140001f68 <_gnu_exception_handler+0x68>
+   140001f2b:	05 74 ff ff 3f       	add    $0x3fffff74,%eax
+   140001f30:	83 f8 0a             	cmp    $0xa,%eax
+   140001f33:	77 19                	ja     140001f4e <_gnu_exception_handler+0x4e>
+   140001f35:	48 8d 15 10 24 00 00 	lea    0x2410(%rip),%rdx        # 14000434c <.rdata+0x2c>
+   140001f3c:	48 63 04 82          	movslq (%rdx,%rax,4),%rax
+   140001f40:	48 01 d0             	add    %rdx,%rax
+   140001f43:	ff e0                	jmp    *%rax
+   140001f45:	0f 1f 00             	nopl   (%rax)
+   140001f48:	f6 42 04 01          	testb  $0x1,0x4(%rdx)
+   140001f4c:	74 5b                	je     140001fa9 <_gnu_exception_handler+0xa9>
+   140001f4e:	48 8b 05 7b 51 00 00 	mov    0x517b(%rip),%rax        # 1400070d0 <__mingw_oldexcpt_handler>
+   140001f55:	48 85 c0             	test   %rax,%rax
+   140001f58:	74 5e                	je     140001fb8 <_gnu_exception_handler+0xb8>
+   140001f5a:	48 89 d9             	mov    %rbx,%rcx
+   140001f5d:	48 83 c4 20          	add    $0x20,%rsp
+   140001f61:	5b                   	pop    %rbx
+   140001f62:	48 ff e0             	rex.W jmp *%rax
+   140001f65:	0f 1f 00             	nopl   (%rax)
+   140001f68:	3d 05 00 00 c0       	cmp    $0xc0000005,%eax
+   140001f6d:	0f 84 9d 00 00 00    	je     140002010 <_gnu_exception_handler+0x110>
+   140001f73:	0f 86 c7 00 00 00    	jbe    140002040 <_gnu_exception_handler+0x140>
+   140001f79:	3d 08 00 00 c0       	cmp    $0xc0000008,%eax
+   140001f7e:	74 29                	je     140001fa9 <_gnu_exception_handler+0xa9>
+   140001f80:	3d 1d 00 00 c0       	cmp    $0xc000001d,%eax
+   140001f85:	75 c7                	jne    140001f4e <_gnu_exception_handler+0x4e>
+   140001f87:	31 d2                	xor    %edx,%edx
+   140001f89:	b9 04 00 00 00       	mov    $0x4,%ecx
+   140001f8e:	e8 25 0b 00 00       	call   140002ab8 <signal>
+   140001f93:	48 83 f8 01          	cmp    $0x1,%rax
+   140001f97:	0f 84 e0 00 00 00    	je     14000207d <_gnu_exception_handler+0x17d>
+   140001f9d:	48 85 c0             	test   %rax,%rax
+   140001fa0:	74 ac                	je     140001f4e <_gnu_exception_handler+0x4e>
+   140001fa2:	b9 04 00 00 00       	mov    $0x4,%ecx
+   140001fa7:	ff d0                	call   *%rax
+   140001fa9:	b8 ff ff ff ff       	mov    $0xffffffff,%eax
+   140001fae:	48 83 c4 20          	add    $0x20,%rsp
+   140001fb2:	5b                   	pop    %rbx
+   140001fb3:	c3                   	ret
+   140001fb4:	0f 1f 40 00          	nopl   0x0(%rax)
+   140001fb8:	31 c0                	xor    %eax,%eax
+   140001fba:	48 83 c4 20          	add    $0x20,%rsp
+   140001fbe:	5b                   	pop    %rbx
+   140001fbf:	c3                   	ret
+   140001fc0:	31 d2                	xor    %edx,%edx
+   140001fc2:	b9 08 00 00 00       	mov    $0x8,%ecx
+   140001fc7:	e8 ec 0a 00 00       	call   140002ab8 <signal>
+   140001fcc:	48 83 f8 01          	cmp    $0x1,%rax
+   140001fd0:	74 7e                	je     140002050 <_gnu_exception_handler+0x150>
+   140001fd2:	48 85 c0             	test   %rax,%rax
+   140001fd5:	0f 84 73 ff ff ff    	je     140001f4e <_gnu_exception_handler+0x4e>
+   140001fdb:	b9 08 00 00 00       	mov    $0x8,%ecx
+   140001fe0:	ff d0                	call   *%rax
+   140001fe2:	eb c5                	jmp    140001fa9 <_gnu_exception_handler+0xa9>
+   140001fe4:	0f 1f 40 00          	nopl   0x0(%rax)
+   140001fe8:	31 d2                	xor    %edx,%edx
+   140001fea:	b9 08 00 00 00       	mov    $0x8,%ecx
+   140001fef:	e8 c4 0a 00 00       	call   140002ab8 <signal>
+   140001ff4:	48 83 f8 01          	cmp    $0x1,%rax
+   140001ff8:	75 d8                	jne    140001fd2 <_gnu_exception_handler+0xd2>
+   140001ffa:	ba 01 00 00 00       	mov    $0x1,%edx
+   140001fff:	b9 08 00 00 00       	mov    $0x8,%ecx
+   140002004:	e8 af 0a 00 00       	call   140002ab8 <signal>
+   140002009:	eb 9e                	jmp    140001fa9 <_gnu_exception_handler+0xa9>
+   14000200b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+   140002010:	31 d2                	xor    %edx,%edx
+   140002012:	b9 0b 00 00 00       	mov    $0xb,%ecx
+   140002017:	e8 9c 0a 00 00       	call   140002ab8 <signal>
+   14000201c:	48 83 f8 01          	cmp    $0x1,%rax
+   140002020:	74 47                	je     140002069 <_gnu_exception_handler+0x169>
+   140002022:	48 85 c0             	test   %rax,%rax
+   140002025:	0f 84 23 ff ff ff    	je     140001f4e <_gnu_exception_handler+0x4e>
+   14000202b:	b9 0b 00 00 00       	mov    $0xb,%ecx
+   140002030:	ff d0                	call   *%rax
+   140002032:	e9 72 ff ff ff       	jmp    140001fa9 <_gnu_exception_handler+0xa9>
+   140002037:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)
+   14000203e:	00 00 
+   140002040:	3d 02 00 00 80       	cmp    $0x80000002,%eax
+   140002045:	0f 84 5e ff ff ff    	je     140001fa9 <_gnu_exception_handler+0xa9>
+   14000204b:	e9 fe fe ff ff       	jmp    140001f4e <_gnu_exception_handler+0x4e>
+   140002050:	ba 01 00 00 00       	mov    $0x1,%edx
+   140002055:	b9 08 00 00 00       	mov    $0x8,%ecx
+   14000205a:	e8 59 0a 00 00       	call   140002ab8 <signal>
+   14000205f:	e8 fc 02 00 00       	call   140002360 <_fpreset>
+   140002064:	e9 40 ff ff ff       	jmp    140001fa9 <_gnu_exception_handler+0xa9>
+   140002069:	ba 01 00 00 00       	mov    $0x1,%edx
+   14000206e:	b9 0b 00 00 00       	mov    $0xb,%ecx
+   140002073:	e8 40 0a 00 00       	call   140002ab8 <signal>
+   140002078:	e9 2c ff ff ff       	jmp    140001fa9 <_gnu_exception_handler+0xa9>
+   14000207d:	ba 01 00 00 00       	mov    $0x1,%edx
+   140002082:	b9 04 00 00 00       	mov    $0x4,%ecx
+   140002087:	e8 2c 0a 00 00       	call   140002ab8 <signal>
+   14000208c:	e9 18 ff ff ff       	jmp    140001fa9 <_gnu_exception_handler+0xa9>
+   140002091:	90                   	nop
+   140002092:	90                   	nop
+   140002093:	90                   	nop
+   140002094:	90                   	nop
+   140002095:	90                   	nop
+   140002096:	90                   	nop
+   140002097:	90                   	nop
+   140002098:	90                   	nop
+   140002099:	90                   	nop
+   14000209a:	90                   	nop
+   14000209b:	90                   	nop
+   14000209c:	90                   	nop
+   14000209d:	90                   	nop
+   14000209e:	90                   	nop
+   14000209f:	90                   	nop
+
+00000001400020a0 <__mingwthr_run_key_dtors.part.0>:
+   1400020a0:	55                   	push   %rbp
+   1400020a1:	57                   	push   %rdi
+   1400020a2:	56                   	push   %rsi
+   1400020a3:	53                   	push   %rbx
+   1400020a4:	48 83 ec 28          	sub    $0x28,%rsp
+   1400020a8:	48 8d 0d 51 50 00 00 	lea    0x5051(%rip),%rcx        # 140007100 <__mingwthr_cs>
+   1400020af:	ff 15 f3 61 00 00    	call   *0x61f3(%rip)        # 1400082a8 <__imp_EnterCriticalSection>
+   1400020b5:	48 8b 1d 24 50 00 00 	mov    0x5024(%rip),%rbx        # 1400070e0 <key_dtor_list>
+   1400020bc:	48 85 db             	test   %rbx,%rbx
+   1400020bf:	74 30                	je     1400020f1 <__mingwthr_run_key_dtors.part.0+0x51>
+   1400020c1:	48 8b 2d 28 62 00 00 	mov    0x6228(%rip),%rbp        # 1400082f0 <__imp_TlsGetValue>
+   1400020c8:	48 8b 3d e9 61 00 00 	mov    0x61e9(%rip),%rdi        # 1400082b8 <__imp_GetLastError>
+   1400020cf:	90                   	nop
+   1400020d0:	8b 0b                	mov    (%rbx),%ecx
+   1400020d2:	ff d5                	call   *%rbp
+   1400020d4:	48 89 c6             	mov    %rax,%rsi
+   1400020d7:	ff d7                	call   *%rdi
+   1400020d9:	48 85 f6             	test   %rsi,%rsi
+   1400020dc:	74 0a                	je     1400020e8 <__mingwthr_run_key_dtors.part.0+0x48>
+   1400020de:	85 c0                	test   %eax,%eax
+   1400020e0:	75 06                	jne    1400020e8 <__mingwthr_run_key_dtors.part.0+0x48>
+   1400020e2:	48 89 f1             	mov    %rsi,%rcx
+   1400020e5:	ff 53 08             	call   *0x8(%rbx)
+   1400020e8:	48 8b 5b 10          	mov    0x10(%rbx),%rbx
+   1400020ec:	48 85 db             	test   %rbx,%rbx
+   1400020ef:	75 df                	jne    1400020d0 <__mingwthr_run_key_dtors.part.0+0x30>
+   1400020f1:	48 8d 0d 08 50 00 00 	lea    0x5008(%rip),%rcx        # 140007100 <__mingwthr_cs>
+   1400020f8:	48 83 c4 28          	add    $0x28,%rsp
+   1400020fc:	5b                   	pop    %rbx
+   1400020fd:	5e                   	pop    %rsi
+   1400020fe:	5f                   	pop    %rdi
+   1400020ff:	5d                   	pop    %rbp
+   140002100:	48 ff 25 c9 61 00 00 	rex.W jmp *0x61c9(%rip)        # 1400082d0 <__imp_LeaveCriticalSection>
+   140002107:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)
+   14000210e:	00 00 
+
+0000000140002110 <___w64_mingwthr_add_key_dtor>:
+   140002110:	48 83 ec 38          	sub    $0x38,%rsp
+   140002114:	8b 05 ce 4f 00 00    	mov    0x4fce(%rip),%eax        # 1400070e8 <__mingwthr_cs_init>
+   14000211a:	41 89 c9             	mov    %ecx,%r9d
+   14000211d:	85 c0                	test   %eax,%eax
+   14000211f:	75 0f                	jne    140002130 <___w64_mingwthr_add_key_dtor+0x20>
+   140002121:	48 83 c4 38          	add    $0x38,%rsp
+   140002125:	c3                   	ret
+   140002126:	66 2e 0f 1f 84 00 00 	cs nopw 0x0(%rax,%rax,1)
+   14000212d:	00 00 00 
+   140002130:	48 89 54 24 48       	mov    %rdx,0x48(%rsp)
+   140002135:	b9 01 00 00 00       	mov    $0x1,%ecx
+   14000213a:	ba 18 00 00 00       	mov    $0x18,%edx
+   14000213f:	44 89 4c 24 40       	mov    %r9d,0x40(%rsp)
+   140002144:	e8 af 09 00 00       	call   140002af8 <calloc>
+   140002149:	48 85 c0             	test   %rax,%rax
+   14000214c:	74 4e                	je     14000219c <___w64_mingwthr_add_key_dtor+0x8c>
+   14000214e:	44 8b 4c 24 40       	mov    0x40(%rsp),%r9d
+   140002153:	4c 8b 44 24 48       	mov    0x48(%rsp),%r8
+   140002158:	48 89 44 24 28       	mov    %rax,0x28(%rsp)
+   14000215d:	48 8d 0d 9c 4f 00 00 	lea    0x4f9c(%rip),%rcx        # 140007100 <__mingwthr_cs>
+   140002164:	44 89 08             	mov    %r9d,(%rax)
+   140002167:	4c 89 40 08          	mov    %r8,0x8(%rax)
+   14000216b:	ff 15 37 61 00 00    	call   *0x6137(%rip)        # 1400082a8 <__imp_EnterCriticalSection>
+   140002171:	48 8b 44 24 28       	mov    0x28(%rsp),%rax
+   140002176:	48 8b 15 63 4f 00 00 	mov    0x4f63(%rip),%rdx        # 1400070e0 <key_dtor_list>
+   14000217d:	48 8d 0d 7c 4f 00 00 	lea    0x4f7c(%rip),%rcx        # 140007100 <__mingwthr_cs>
+   140002184:	48 89 50 10          	mov    %rdx,0x10(%rax)
+   140002188:	48 89 05 51 4f 00 00 	mov    %rax,0x4f51(%rip)        # 1400070e0 <key_dtor_list>
+   14000218f:	ff 15 3b 61 00 00    	call   *0x613b(%rip)        # 1400082d0 <__imp_LeaveCriticalSection>
+   140002195:	31 c0                	xor    %eax,%eax
+   140002197:	48 83 c4 38          	add    $0x38,%rsp
+   14000219b:	c3                   	ret
+   14000219c:	b8 ff ff ff ff       	mov    $0xffffffff,%eax
+   1400021a1:	e9 7b ff ff ff       	jmp    140002121 <___w64_mingwthr_add_key_dtor+0x11>
+   1400021a6:	66 2e 0f 1f 84 00 00 	cs nopw 0x0(%rax,%rax,1)
+   1400021ad:	00 00 00 
+
+00000001400021b0 <___w64_mingwthr_remove_key_dtor>:
+   1400021b0:	48 83 ec 28          	sub    $0x28,%rsp
+   1400021b4:	8b 05 2e 4f 00 00    	mov    0x4f2e(%rip),%eax        # 1400070e8 <__mingwthr_cs_init>
+   1400021ba:	85 c0                	test   %eax,%eax
+   1400021bc:	75 0a                	jne    1400021c8 <___w64_mingwthr_remove_key_dtor+0x18>
+   1400021be:	31 c0                	xor    %eax,%eax
+   1400021c0:	48 83 c4 28          	add    $0x28,%rsp
+   1400021c4:	c3                   	ret
+   1400021c5:	0f 1f 00             	nopl   (%rax)
+   1400021c8:	89 4c 24 30          	mov    %ecx,0x30(%rsp)
+   1400021cc:	48 8d 0d 2d 4f 00 00 	lea    0x4f2d(%rip),%rcx        # 140007100 <__mingwthr_cs>
+   1400021d3:	ff 15 cf 60 00 00    	call   *0x60cf(%rip)        # 1400082a8 <__imp_EnterCriticalSection>
+   1400021d9:	48 8b 0d 00 4f 00 00 	mov    0x4f00(%rip),%rcx        # 1400070e0 <key_dtor_list>
+   1400021e0:	48 85 c9             	test   %rcx,%rcx
+   1400021e3:	74 3c                	je     140002221 <___w64_mingwthr_remove_key_dtor+0x71>
+   1400021e5:	8b 54 24 30          	mov    0x30(%rsp),%edx
+   1400021e9:	45 31 c0             	xor    %r8d,%r8d
+   1400021ec:	eb 1d                	jmp    14000220b <___w64_mingwthr_remove_key_dtor+0x5b>
+   1400021ee:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+   1400021f5:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+   1400021fc:	00 00 00 00 
+   140002200:	49 89 c8             	mov    %rcx,%r8
+   140002203:	48 85 c0             	test   %rax,%rax
+   140002206:	74 19                	je     140002221 <___w64_mingwthr_remove_key_dtor+0x71>
+   140002208:	48 89 c1             	mov    %rax,%rcx
+   14000220b:	39 11                	cmp    %edx,(%rcx)
+   14000220d:	48 8b 41 10          	mov    0x10(%rcx),%rax
+   140002211:	75 ed                	jne    140002200 <___w64_mingwthr_remove_key_dtor+0x50>
+   140002213:	4d 85 c0             	test   %r8,%r8
+   140002216:	74 20                	je     140002238 <___w64_mingwthr_remove_key_dtor+0x88>
+   140002218:	49 89 40 10          	mov    %rax,0x10(%r8)
+   14000221c:	e8 df 08 00 00       	call   140002b00 <free>
+   140002221:	48 8d 0d d8 4e 00 00 	lea    0x4ed8(%rip),%rcx        # 140007100 <__mingwthr_cs>
+   140002228:	ff 15 a2 60 00 00    	call   *0x60a2(%rip)        # 1400082d0 <__imp_LeaveCriticalSection>
+   14000222e:	31 c0                	xor    %eax,%eax
+   140002230:	48 83 c4 28          	add    $0x28,%rsp
+   140002234:	c3                   	ret
+   140002235:	0f 1f 00             	nopl   (%rax)
+   140002238:	48 89 05 a1 4e 00 00 	mov    %rax,0x4ea1(%rip)        # 1400070e0 <key_dtor_list>
+   14000223f:	eb db                	jmp    14000221c <___w64_mingwthr_remove_key_dtor+0x6c>
+   140002241:	0f 1f 40 00          	nopl   0x0(%rax)
+   140002245:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+   14000224c:	00 00 00 00 
+
+0000000140002250 <__mingw_TLScallback>:
+   140002250:	48 83 ec 38          	sub    $0x38,%rsp
+   140002254:	83 fa 02             	cmp    $0x2,%edx
+   140002257:	0f 84 ab 00 00 00    	je     140002308 <__mingw_TLScallback+0xb8>
+   14000225d:	77 29                	ja     140002288 <__mingw_TLScallback+0x38>
+   14000225f:	85 d2                	test   %edx,%edx
+   140002261:	74 3d                	je     1400022a0 <__mingw_TLScallback+0x50>
+   140002263:	8b 0d 7f 4e 00 00    	mov    0x4e7f(%rip),%ecx        # 1400070e8 <__mingwthr_cs_init>
+   140002269:	85 c9                	test   %ecx,%ecx
+   14000226b:	0f 84 bf 00 00 00    	je     140002330 <__mingw_TLScallback+0xe0>
+   140002271:	c7 05 6d 4e 00 00 01 	movl   $0x1,0x4e6d(%rip)        # 1400070e8 <__mingwthr_cs_init>
+   140002278:	00 00 00 
+   14000227b:	b8 01 00 00 00       	mov    $0x1,%eax
+   140002280:	48 83 c4 38          	add    $0x38,%rsp
+   140002284:	c3                   	ret
+   140002285:	0f 1f 00             	nopl   (%rax)
+   140002288:	83 fa 03             	cmp    $0x3,%edx
+   14000228b:	75 ee                	jne    14000227b <__mingw_TLScallback+0x2b>
+   14000228d:	8b 05 55 4e 00 00    	mov    0x4e55(%rip),%eax        # 1400070e8 <__mingwthr_cs_init>
+   140002293:	85 c0                	test   %eax,%eax
+   140002295:	74 e4                	je     14000227b <__mingw_TLScallback+0x2b>
+   140002297:	e8 04 fe ff ff       	call   1400020a0 <__mingwthr_run_key_dtors.part.0>
+   14000229c:	eb dd                	jmp    14000227b <__mingw_TLScallback+0x2b>
+   14000229e:	66 90                	xchg   %ax,%ax
+   1400022a0:	8b 15 42 4e 00 00    	mov    0x4e42(%rip),%edx        # 1400070e8 <__mingwthr_cs_init>
+   1400022a6:	85 d2                	test   %edx,%edx
+   1400022a8:	75 76                	jne    140002320 <__mingw_TLScallback+0xd0>
+   1400022aa:	83 3d 37 4e 00 00 01 	cmpl   $0x1,0x4e37(%rip)        # 1400070e8 <__mingwthr_cs_init>
+   1400022b1:	75 c8                	jne    14000227b <__mingw_TLScallback+0x2b>
+   1400022b3:	48 8b 05 26 4e 00 00 	mov    0x4e26(%rip),%rax        # 1400070e0 <key_dtor_list>
+   1400022ba:	48 85 c0             	test   %rax,%rax
+   1400022bd:	74 1c                	je     1400022db <__mingw_TLScallback+0x8b>
+   1400022bf:	90                   	nop
+   1400022c0:	48 89 c1             	mov    %rax,%rcx
+   1400022c3:	48 8b 40 10          	mov    0x10(%rax),%rax
+   1400022c7:	48 89 44 24 28       	mov    %rax,0x28(%rsp)
+   1400022cc:	e8 2f 08 00 00       	call   140002b00 <free>
+   1400022d1:	48 8b 44 24 28       	mov    0x28(%rsp),%rax
+   1400022d6:	48 85 c0             	test   %rax,%rax
+   1400022d9:	75 e5                	jne    1400022c0 <__mingw_TLScallback+0x70>
+   1400022db:	48 8d 0d 1e 4e 00 00 	lea    0x4e1e(%rip),%rcx        # 140007100 <__mingwthr_cs>
+   1400022e2:	48 c7 05 f3 4d 00 00 	movq   $0x0,0x4df3(%rip)        # 1400070e0 <key_dtor_list>
+   1400022e9:	00 00 00 00 
+   1400022ed:	c7 05 f1 4d 00 00 00 	movl   $0x0,0x4df1(%rip)        # 1400070e8 <__mingwthr_cs_init>
+   1400022f4:	00 00 00 
+   1400022f7:	ff 15 a3 5f 00 00    	call   *0x5fa3(%rip)        # 1400082a0 <__IAT_start__>
+   1400022fd:	e9 79 ff ff ff       	jmp    14000227b <__mingw_TLScallback+0x2b>
+   140002302:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+   140002308:	e8 53 00 00 00       	call   140002360 <_fpreset>
+   14000230d:	b8 01 00 00 00       	mov    $0x1,%eax
+   140002312:	48 83 c4 38          	add    $0x38,%rsp
+   140002316:	c3                   	ret
+   140002317:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)
+   14000231e:	00 00 
+   140002320:	e8 7b fd ff ff       	call   1400020a0 <__mingwthr_run_key_dtors.part.0>
+   140002325:	eb 83                	jmp    1400022aa <__mingw_TLScallback+0x5a>
+   140002327:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)
+   14000232e:	00 00 
+   140002330:	48 8d 0d c9 4d 00 00 	lea    0x4dc9(%rip),%rcx        # 140007100 <__mingwthr_cs>
+   140002337:	ff 15 83 5f 00 00    	call   *0x5f83(%rip)        # 1400082c0 <__imp_InitializeCriticalSection>
+   14000233d:	e9 2f ff ff ff       	jmp    140002271 <__mingw_TLScallback+0x21>
+   140002342:	90                   	nop
+   140002343:	90                   	nop
+   140002344:	90                   	nop
+   140002345:	90                   	nop
+   140002346:	90                   	nop
+   140002347:	90                   	nop
+   140002348:	90                   	nop
+   140002349:	90                   	nop
+   14000234a:	90                   	nop
+   14000234b:	90                   	nop
+   14000234c:	90                   	nop
+   14000234d:	90                   	nop
+   14000234e:	90                   	nop
+   14000234f:	90                   	nop
+   140002350:	90                   	nop
+   140002351:	90                   	nop
+   140002352:	90                   	nop
+   140002353:	90                   	nop
+   140002354:	90                   	nop
+   140002355:	90                   	nop
+   140002356:	90                   	nop
+   140002357:	90                   	nop
+   140002358:	90                   	nop
+   140002359:	90                   	nop
+   14000235a:	90                   	nop
+   14000235b:	90                   	nop
+   14000235c:	90                   	nop
+   14000235d:	90                   	nop
+   14000235e:	90                   	nop
+   14000235f:	90                   	nop
+
+0000000140002360 <_fpreset>:
+   140002360:	db e3                	fninit
+   140002362:	c3                   	ret
+   140002363:	90                   	nop
+   140002364:	90                   	nop
+   140002365:	90                   	nop
+   140002366:	90                   	nop
+   140002367:	90                   	nop
+   140002368:	90                   	nop
+   140002369:	90                   	nop
+   14000236a:	90                   	nop
+   14000236b:	90                   	nop
+   14000236c:	90                   	nop
+   14000236d:	90                   	nop
+   14000236e:	90                   	nop
+   14000236f:	90                   	nop
+
+0000000140002370 <_ValidateImageBase>:
+   140002370:	66 81 39 4d 5a       	cmpw   $0x5a4d,(%rcx)
+   140002375:	75 0f                	jne    140002386 <_ValidateImageBase+0x16>
+   140002377:	48 63 41 3c          	movslq 0x3c(%rcx),%rax
+   14000237b:	48 01 c1             	add    %rax,%rcx
+   14000237e:	81 39 50 45 00 00    	cmpl   $0x4550,(%rcx)
+   140002384:	74 0a                	je     140002390 <_ValidateImageBase+0x20>
+   140002386:	31 c0                	xor    %eax,%eax
+   140002388:	c3                   	ret
+   140002389:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+   140002390:	31 c0                	xor    %eax,%eax
+   140002392:	66 81 79 18 0b 02    	cmpw   $0x20b,0x18(%rcx)
+   140002398:	0f 94 c0             	sete   %al
+   14000239b:	c3                   	ret
+   14000239c:	0f 1f 40 00          	nopl   0x0(%rax)
+
+00000001400023a0 <_FindPESection>:
+   1400023a0:	48 63 41 3c          	movslq 0x3c(%rcx),%rax
+   1400023a4:	48 01 c8             	add    %rcx,%rax
+   1400023a7:	0f b7 48 06          	movzwl 0x6(%rax),%ecx
+   1400023ab:	66 85 c9             	test   %cx,%cx
+   1400023ae:	74 3d                	je     1400023ed <_FindPESection+0x4d>
+   1400023b0:	44 0f b7 40 14       	movzwl 0x14(%rax),%r8d
+   1400023b5:	83 e9 01             	sub    $0x1,%ecx
+   1400023b8:	48 8d 0c 89          	lea    (%rcx,%rcx,4),%rcx
+   1400023bc:	4a 8d 44 00 18       	lea    0x18(%rax,%r8,1),%rax
+   1400023c1:	4c 8d 4c c8 28       	lea    0x28(%rax,%rcx,8),%r9
+   1400023c6:	66 2e 0f 1f 84 00 00 	cs nopw 0x0(%rax,%rax,1)
+   1400023cd:	00 00 00 
+   1400023d0:	44 8b 40 0c          	mov    0xc(%rax),%r8d
+   1400023d4:	4c 89 c1             	mov    %r8,%rcx
+   1400023d7:	4c 39 c2             	cmp    %r8,%rdx
+   1400023da:	72 08                	jb     1400023e4 <_FindPESection+0x44>
+   1400023dc:	03 48 08             	add    0x8(%rax),%ecx
+   1400023df:	48 39 ca             	cmp    %rcx,%rdx
+   1400023e2:	72 0b                	jb     1400023ef <_FindPESection+0x4f>
+   1400023e4:	48 83 c0 28          	add    $0x28,%rax
+   1400023e8:	4c 39 c8             	cmp    %r9,%rax
+   1400023eb:	75 e3                	jne    1400023d0 <_FindPESection+0x30>
+   1400023ed:	31 c0                	xor    %eax,%eax
+   1400023ef:	c3                   	ret
+
+00000001400023f0 <_FindPESectionByName>:
+   1400023f0:	55                   	push   %rbp
+   1400023f1:	57                   	push   %rdi
+   1400023f2:	56                   	push   %rsi
+   1400023f3:	53                   	push   %rbx
+   1400023f4:	48 83 ec 28          	sub    $0x28,%rsp
+   1400023f8:	48 89 cf             	mov    %rcx,%rdi
+   1400023fb:	e8 00 06 00 00       	call   140002a00 <strlen>
+   140002400:	48 83 f8 08          	cmp    $0x8,%rax
+   140002404:	77 0e                	ja     140002414 <_FindPESectionByName+0x24>
+   140002406:	48 8b 05 43 20 00 00 	mov    0x2043(%rip),%rax        # 140004450 <.refptr.__ImageBase>
+   14000240d:	66 81 38 4d 5a       	cmpw   $0x5a4d,(%rax)
+   140002412:	74 14                	je     140002428 <_FindPESectionByName+0x38>
+   140002414:	31 db                	xor    %ebx,%ebx
+   140002416:	48 89 d8             	mov    %rbx,%rax
+   140002419:	48 83 c4 28          	add    $0x28,%rsp
+   14000241d:	5b                   	pop    %rbx
+   14000241e:	5e                   	pop    %rsi
+   14000241f:	5f                   	pop    %rdi
+   140002420:	5d                   	pop    %rbp
+   140002421:	c3                   	ret
+   140002422:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+   140002428:	48 63 68 3c          	movslq 0x3c(%rax),%rbp
+   14000242c:	48 01 c5             	add    %rax,%rbp
+   14000242f:	81 7d 00 50 45 00 00 	cmpl   $0x4550,0x0(%rbp)
+   140002436:	75 dc                	jne    140002414 <_FindPESectionByName+0x24>
+   140002438:	66 81 7d 18 0b 02    	cmpw   $0x20b,0x18(%rbp)
+   14000243e:	75 d4                	jne    140002414 <_FindPESectionByName+0x24>
+   140002440:	66 83 7d 06 00       	cmpw   $0x0,0x6(%rbp)
+   140002445:	74 cd                	je     140002414 <_FindPESectionByName+0x24>
+   140002447:	0f b7 45 14          	movzwl 0x14(%rbp),%eax
+   14000244b:	31 f6                	xor    %esi,%esi
+   14000244d:	48 8d 5c 05 18       	lea    0x18(%rbp,%rax,1),%rbx
+   140002452:	0f 1f 00             	nopl   (%rax)
+   140002455:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+   14000245c:	00 00 00 00 
+   140002460:	41 b8 08 00 00 00    	mov    $0x8,%r8d
+   140002466:	48 89 fa             	mov    %rdi,%rdx
+   140002469:	48 89 d9             	mov    %rbx,%rcx
+   14000246c:	e8 97 05 00 00       	call   140002a08 <strncmp>
+   140002471:	85 c0                	test   %eax,%eax
+   140002473:	74 a1                	je     140002416 <_FindPESectionByName+0x26>
+   140002475:	0f b7 45 06          	movzwl 0x6(%rbp),%eax
+   140002479:	83 c6 01             	add    $0x1,%esi
+   14000247c:	48 83 c3 28          	add    $0x28,%rbx
+   140002480:	39 c6                	cmp    %eax,%esi
+   140002482:	72 dc                	jb     140002460 <_FindPESectionByName+0x70>
+   140002484:	eb 8e                	jmp    140002414 <_FindPESectionByName+0x24>
+   140002486:	66 2e 0f 1f 84 00 00 	cs nopw 0x0(%rax,%rax,1)
+   14000248d:	00 00 00 
+
+0000000140002490 <__mingw_GetSectionForAddress>:
+   140002490:	48 8b 05 b9 1f 00 00 	mov    0x1fb9(%rip),%rax        # 140004450 <.refptr.__ImageBase>
+   140002497:	66 81 38 4d 5a       	cmpw   $0x5a4d,(%rax)
+   14000249c:	75 0f                	jne    1400024ad <__mingw_GetSectionForAddress+0x1d>
+   14000249e:	48 63 50 3c          	movslq 0x3c(%rax),%rdx
+   1400024a2:	48 01 c2             	add    %rax,%rdx
+   1400024a5:	81 3a 50 45 00 00    	cmpl   $0x4550,(%rdx)
+   1400024ab:	74 03                	je     1400024b0 <__mingw_GetSectionForAddress+0x20>
+   1400024ad:	31 c0                	xor    %eax,%eax
+   1400024af:	c3                   	ret
+   1400024b0:	66 81 7a 18 0b 02    	cmpw   $0x20b,0x18(%rdx)
+   1400024b6:	75 f5                	jne    1400024ad <__mingw_GetSectionForAddress+0x1d>
+   1400024b8:	44 0f b7 42 06       	movzwl 0x6(%rdx),%r8d
+   1400024bd:	66 45 85 c0          	test   %r8w,%r8w
+   1400024c1:	74 ea                	je     1400024ad <__mingw_GetSectionForAddress+0x1d>
+   1400024c3:	48 29 c1             	sub    %rax,%rcx
+   1400024c6:	0f b7 42 14          	movzwl 0x14(%rdx),%eax
+   1400024ca:	48 8d 44 02 18       	lea    0x18(%rdx,%rax,1),%rax
+   1400024cf:	41 8d 50 ff          	lea    -0x1(%r8),%edx
+   1400024d3:	48 8d 14 92          	lea    (%rdx,%rdx,4),%rdx
+   1400024d7:	4c 8d 4c d0 28       	lea    0x28(%rax,%rdx,8),%r9
+   1400024dc:	0f 1f 40 00          	nopl   0x0(%rax)
+   1400024e0:	44 8b 40 0c          	mov    0xc(%rax),%r8d
+   1400024e4:	4c 89 c2             	mov    %r8,%rdx
+   1400024e7:	4c 39 c1             	cmp    %r8,%rcx
+   1400024ea:	72 08                	jb     1400024f4 <__mingw_GetSectionForAddress+0x64>
+   1400024ec:	03 50 08             	add    0x8(%rax),%edx
+   1400024ef:	48 39 d1             	cmp    %rdx,%rcx
+   1400024f2:	72 bb                	jb     1400024af <__mingw_GetSectionForAddress+0x1f>
+   1400024f4:	48 83 c0 28          	add    $0x28,%rax
+   1400024f8:	4c 39 c8             	cmp    %r9,%rax
+   1400024fb:	75 e3                	jne    1400024e0 <__mingw_GetSectionForAddress+0x50>
+   1400024fd:	31 c0                	xor    %eax,%eax
+   1400024ff:	eb ae                	jmp    1400024af <__mingw_GetSectionForAddress+0x1f>
+   140002501:	0f 1f 40 00          	nopl   0x0(%rax)
+   140002505:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+   14000250c:	00 00 00 00 
+
+0000000140002510 <__mingw_GetSectionCount>:
+   140002510:	48 8b 05 39 1f 00 00 	mov    0x1f39(%rip),%rax        # 140004450 <.refptr.__ImageBase>
+   140002517:	66 81 38 4d 5a       	cmpw   $0x5a4d,(%rax)
+   14000251c:	75 0f                	jne    14000252d <__mingw_GetSectionCount+0x1d>
+   14000251e:	48 63 50 3c          	movslq 0x3c(%rax),%rdx
+   140002522:	48 01 d0             	add    %rdx,%rax
+   140002525:	81 38 50 45 00 00    	cmpl   $0x4550,(%rax)
+   14000252b:	74 03                	je     140002530 <__mingw_GetSectionCount+0x20>
+   14000252d:	31 c0                	xor    %eax,%eax
+   14000252f:	c3                   	ret
+   140002530:	66 81 78 18 0b 02    	cmpw   $0x20b,0x18(%rax)
+   140002536:	75 f5                	jne    14000252d <__mingw_GetSectionCount+0x1d>
+   140002538:	0f b7 40 06          	movzwl 0x6(%rax),%eax
+   14000253c:	c3                   	ret
+   14000253d:	0f 1f 00             	nopl   (%rax)
+
+0000000140002540 <_FindPESectionExec>:
+   140002540:	48 8b 15 09 1f 00 00 	mov    0x1f09(%rip),%rdx        # 140004450 <.refptr.__ImageBase>
+   140002547:	66 81 3a 4d 5a       	cmpw   $0x5a4d,(%rdx)
+   14000254c:	75 0f                	jne    14000255d <_FindPESectionExec+0x1d>
+   14000254e:	48 63 42 3c          	movslq 0x3c(%rdx),%rax
+   140002552:	48 01 d0             	add    %rdx,%rax
+   140002555:	81 38 50 45 00 00    	cmpl   $0x4550,(%rax)
+   14000255b:	74 03                	je     140002560 <_FindPESectionExec+0x20>
+   14000255d:	31 c0                	xor    %eax,%eax
+   14000255f:	c3                   	ret
+   140002560:	66 81 78 18 0b 02    	cmpw   $0x20b,0x18(%rax)
+   140002566:	75 f5                	jne    14000255d <_FindPESectionExec+0x1d>
+   140002568:	0f b7 50 06          	movzwl 0x6(%rax),%edx
+   14000256c:	66 85 d2             	test   %dx,%dx
+   14000256f:	74 ec                	je     14000255d <_FindPESectionExec+0x1d>
+   140002571:	44 0f b7 40 14       	movzwl 0x14(%rax),%r8d
+   140002576:	83 ea 01             	sub    $0x1,%edx
+   140002579:	48 8d 14 92          	lea    (%rdx,%rdx,4),%rdx
+   14000257d:	4a 8d 44 00 18       	lea    0x18(%rax,%r8,1),%rax
+   140002582:	48 8d 54 d0 28       	lea    0x28(%rax,%rdx,8),%rdx
+   140002587:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)
+   14000258e:	00 00 
+   140002590:	f6 40 27 20          	testb  $0x20,0x27(%rax)
+   140002594:	74 09                	je     14000259f <_FindPESectionExec+0x5f>
+   140002596:	48 85 c9             	test   %rcx,%rcx
+   140002599:	74 c4                	je     14000255f <_FindPESectionExec+0x1f>
+   14000259b:	48 83 e9 01          	sub    $0x1,%rcx
+   14000259f:	48 83 c0 28          	add    $0x28,%rax
+   1400025a3:	48 39 c2             	cmp    %rax,%rdx
+   1400025a6:	75 e8                	jne    140002590 <_FindPESectionExec+0x50>
+   1400025a8:	31 c0                	xor    %eax,%eax
+   1400025aa:	eb b3                	jmp    14000255f <_FindPESectionExec+0x1f>
+   1400025ac:	0f 1f 40 00          	nopl   0x0(%rax)
+
+00000001400025b0 <_GetPEImageBase>:
+   1400025b0:	48 8b 05 99 1e 00 00 	mov    0x1e99(%rip),%rax        # 140004450 <.refptr.__ImageBase>
+   1400025b7:	66 81 38 4d 5a       	cmpw   $0x5a4d,(%rax)
+   1400025bc:	75 0f                	jne    1400025cd <_GetPEImageBase+0x1d>
+   1400025be:	48 63 50 3c          	movslq 0x3c(%rax),%rdx
+   1400025c2:	48 01 c2             	add    %rax,%rdx
+   1400025c5:	81 3a 50 45 00 00    	cmpl   $0x4550,(%rdx)
+   1400025cb:	74 03                	je     1400025d0 <_GetPEImageBase+0x20>
+   1400025cd:	31 c0                	xor    %eax,%eax
+   1400025cf:	c3                   	ret
+   1400025d0:	66 81 7a 18 0b 02    	cmpw   $0x20b,0x18(%rdx)
+   1400025d6:	ba 00 00 00 00       	mov    $0x0,%edx
+   1400025db:	48 0f 45 c2          	cmovne %rdx,%rax
+   1400025df:	c3                   	ret
+
+00000001400025e0 <_IsNonwritableInCurrentImage>:
+   1400025e0:	48 8b 05 69 1e 00 00 	mov    0x1e69(%rip),%rax        # 140004450 <.refptr.__ImageBase>
+   1400025e7:	66 81 38 4d 5a       	cmpw   $0x5a4d,(%rax)
+   1400025ec:	75 0f                	jne    1400025fd <_IsNonwritableInCurrentImage+0x1d>
+   1400025ee:	48 63 50 3c          	movslq 0x3c(%rax),%rdx
+   1400025f2:	48 01 c2             	add    %rax,%rdx
+   1400025f5:	81 3a 50 45 00 00    	cmpl   $0x4550,(%rdx)
+   1400025fb:	74 03                	je     140002600 <_IsNonwritableInCurrentImage+0x20>
+   1400025fd:	31 c0                	xor    %eax,%eax
+   1400025ff:	c3                   	ret
+   140002600:	66 81 7a 18 0b 02    	cmpw   $0x20b,0x18(%rdx)
+   140002606:	75 f5                	jne    1400025fd <_IsNonwritableInCurrentImage+0x1d>
+   140002608:	44 0f b7 42 06       	movzwl 0x6(%rdx),%r8d
+   14000260d:	66 45 85 c0          	test   %r8w,%r8w
+   140002611:	74 ea                	je     1400025fd <_IsNonwritableInCurrentImage+0x1d>
+   140002613:	48 29 c1             	sub    %rax,%rcx
+   140002616:	0f b7 42 14          	movzwl 0x14(%rdx),%eax
+   14000261a:	48 8d 44 02 18       	lea    0x18(%rdx,%rax,1),%rax
+   14000261f:	41 8d 50 ff          	lea    -0x1(%r8),%edx
+   140002623:	48 8d 14 92          	lea    (%rdx,%rdx,4),%rdx
+   140002627:	4c 8d 4c d0 28       	lea    0x28(%rax,%rdx,8),%r9
+   14000262c:	0f 1f 40 00          	nopl   0x0(%rax)
+   140002630:	44 8b 40 0c          	mov    0xc(%rax),%r8d
+   140002634:	4c 89 c2             	mov    %r8,%rdx
+   140002637:	4c 39 c1             	cmp    %r8,%rcx
+   14000263a:	72 08                	jb     140002644 <_IsNonwritableInCurrentImage+0x64>
+   14000263c:	03 50 08             	add    0x8(%rax),%edx
+   14000263f:	48 39 d1             	cmp    %rdx,%rcx
+   140002642:	72 14                	jb     140002658 <_IsNonwritableInCurrentImage+0x78>
+   140002644:	48 83 c0 28          	add    $0x28,%rax
+   140002648:	49 39 c1             	cmp    %rax,%r9
+   14000264b:	75 e3                	jne    140002630 <_IsNonwritableInCurrentImage+0x50>
+   14000264d:	31 c0                	xor    %eax,%eax
+   14000264f:	eb ae                	jmp    1400025ff <_IsNonwritableInCurrentImage+0x1f>
+   140002651:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+   140002658:	8b 40 24             	mov    0x24(%rax),%eax
+   14000265b:	f7 d0                	not    %eax
+   14000265d:	c1 e8 1f             	shr    $0x1f,%eax
+   140002660:	c3                   	ret
+   140002661:	0f 1f 40 00          	nopl   0x0(%rax)
+   140002665:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+   14000266c:	00 00 00 00 
+
+0000000140002670 <__mingw_enum_import_library_names>:
+   140002670:	48 8b 05 d9 1d 00 00 	mov    0x1dd9(%rip),%rax        # 140004450 <.refptr.__ImageBase>
+   140002677:	41 89 c8             	mov    %ecx,%r8d
+   14000267a:	66 81 38 4d 5a       	cmpw   $0x5a4d,(%rax)
+   14000267f:	75 0f                	jne    140002690 <__mingw_enum_import_library_names+0x20>
+   140002681:	48 63 48 3c          	movslq 0x3c(%rax),%rcx
+   140002685:	48 01 c1             	add    %rax,%rcx
+   140002688:	81 39 50 45 00 00    	cmpl   $0x4550,(%rcx)
+   14000268e:	74 08                	je     140002698 <__mingw_enum_import_library_names+0x28>
+   140002690:	31 c0                	xor    %eax,%eax
+   140002692:	c3                   	ret
+   140002693:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+   140002698:	66 81 79 18 0b 02    	cmpw   $0x20b,0x18(%rcx)
+   14000269e:	75 f0                	jne    140002690 <__mingw_enum_import_library_names+0x20>
+   1400026a0:	8b 91 90 00 00 00    	mov    0x90(%rcx),%edx
+   1400026a6:	85 d2                	test   %edx,%edx
+   1400026a8:	74 e6                	je     140002690 <__mingw_enum_import_library_names+0x20>
+   1400026aa:	44 0f b7 49 06       	movzwl 0x6(%rcx),%r9d
+   1400026af:	66 45 85 c9          	test   %r9w,%r9w
+   1400026b3:	74 db                	je     140002690 <__mingw_enum_import_library_names+0x20>
+   1400026b5:	44 0f b7 51 14       	movzwl 0x14(%rcx),%r10d
+   1400026ba:	41 83 e9 01          	sub    $0x1,%r9d
+   1400026be:	4f 8d 0c 89          	lea    (%r9,%r9,4),%r9
+   1400026c2:	4a 8d 4c 11 18       	lea    0x18(%rcx,%r10,1),%rcx
+   1400026c7:	4e 8d 5c c9 28       	lea    0x28(%rcx,%r9,8),%r11
+   1400026cc:	0f 1f 40 00          	nopl   0x0(%rax)
+   1400026d0:	44 8b 51 0c          	mov    0xc(%rcx),%r10d
+   1400026d4:	4d 89 d1             	mov    %r10,%r9
+   1400026d7:	4c 39 d2             	cmp    %r10,%rdx
+   1400026da:	72 09                	jb     1400026e5 <__mingw_enum_import_library_names+0x75>
+   1400026dc:	44 03 49 08          	add    0x8(%rcx),%r9d
+   1400026e0:	4c 39 ca             	cmp    %r9,%rdx
+   1400026e3:	72 13                	jb     1400026f8 <__mingw_enum_import_library_names+0x88>
+   1400026e5:	48 83 c1 28          	add    $0x28,%rcx
+   1400026e9:	49 39 cb             	cmp    %rcx,%r11
+   1400026ec:	75 e2                	jne    1400026d0 <__mingw_enum_import_library_names+0x60>
+   1400026ee:	31 c0                	xor    %eax,%eax
+   1400026f0:	eb a0                	jmp    140002692 <__mingw_enum_import_library_names+0x22>
+   1400026f2:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+   1400026f8:	48 01 c2             	add    %rax,%rdx
+   1400026fb:	eb 0b                	jmp    140002708 <__mingw_enum_import_library_names+0x98>
+   1400026fd:	0f 1f 00             	nopl   (%rax)
+   140002700:	41 83 e8 01          	sub    $0x1,%r8d
+   140002704:	48 83 c2 14          	add    $0x14,%rdx
+   140002708:	44 8b 4a 04          	mov    0x4(%rdx),%r9d
+   14000270c:	45 85 c9             	test   %r9d,%r9d
+   14000270f:	75 0b                	jne    14000271c <__mingw_enum_import_library_names+0xac>
+   140002711:	8b 4a 0c             	mov    0xc(%rdx),%ecx
+   140002714:	85 c9                	test   %ecx,%ecx
+   140002716:	0f 84 74 ff ff ff    	je     140002690 <__mingw_enum_import_library_names+0x20>
+   14000271c:	45 85 c0             	test   %r8d,%r8d
+   14000271f:	7f df                	jg     140002700 <__mingw_enum_import_library_names+0x90>
+   140002721:	8b 52 0c             	mov    0xc(%rdx),%edx
+   140002724:	48 01 d0             	add    %rdx,%rax
+   140002727:	c3                   	ret
+   140002728:	90                   	nop
+   140002729:	90                   	nop
+   14000272a:	90                   	nop
+   14000272b:	90                   	nop
+   14000272c:	90                   	nop
+   14000272d:	90                   	nop
+   14000272e:	90                   	nop
+   14000272f:	90                   	nop
+
+0000000140002730 <___chkstk_ms>:
+   140002730:	51                   	push   %rcx
+   140002731:	50                   	push   %rax
+   140002732:	48 3d 00 10 00 00    	cmp    $0x1000,%rax
+   140002738:	48 8d 4c 24 18       	lea    0x18(%rsp),%rcx
+   14000273d:	72 19                	jb     140002758 <___chkstk_ms+0x28>
+   14000273f:	48 81 e9 00 10 00 00 	sub    $0x1000,%rcx
+   140002746:	48 83 09 00          	orq    $0x0,(%rcx)
+   14000274a:	48 2d 00 10 00 00    	sub    $0x1000,%rax
+   140002750:	48 3d 00 10 00 00    	cmp    $0x1000,%rax
+   140002756:	77 e7                	ja     14000273f <___chkstk_ms+0xf>
+   140002758:	48 29 c1             	sub    %rax,%rcx
+   14000275b:	48 83 09 00          	orq    $0x0,(%rcx)
+   14000275f:	58                   	pop    %rax
+   140002760:	59                   	pop    %rcx
+   140002761:	c3                   	ret
+   140002762:	90                   	nop
+   140002763:	90                   	nop
+   140002764:	90                   	nop
+   140002765:	90                   	nop
+   140002766:	90                   	nop
+   140002767:	90                   	nop
+   140002768:	90                   	nop
+   140002769:	90                   	nop
+   14000276a:	90                   	nop
+   14000276b:	90                   	nop
+   14000276c:	90                   	nop
+   14000276d:	90                   	nop
+   14000276e:	90                   	nop
+   14000276f:	90                   	nop
+
+0000000140002770 <__stack_chk_fail>:
+   140002770:	48 83 ec 28          	sub    $0x28,%rsp
+   140002774:	48 8d 0d 05 1c 00 00 	lea    0x1c05(%rip),%rcx        # 140004380 <msg.0>
+   14000277b:	e8 80 02 00 00       	call   140002a00 <strlen>
+   140002780:	b9 02 00 00 00       	mov    $0x2,%ecx
+   140002785:	48 8d 15 f4 1b 00 00 	lea    0x1bf4(%rip),%rdx        # 140004380 <msg.0>
+   14000278c:	41 89 c0             	mov    %eax,%r8d
+   14000278f:	e8 9c 02 00 00       	call   140002a30 <write>
+   140002794:	b9 17 00 00 00       	mov    $0x17,%ecx
+   140002799:	e8 ba 03 00 00       	call   140002b58 <IsProcessorFeaturePresent>
+   14000279e:	85 c0                	test   %eax,%eax
+   1400027a0:	74 07                	je     1400027a9 <__stack_chk_fail+0x39>
+   1400027a2:	b9 02 00 00 00       	mov    $0x2,%ecx
+   1400027a7:	cd 29                	int    $0x29
+   1400027a9:	ff 15 01 5b 00 00    	call   *0x5b01(%rip)        # 1400082b0 <__imp_GetCurrentProcess>
+   1400027af:	ba 09 04 00 c0       	mov    $0xc0000409,%edx
+   1400027b4:	48 89 c1             	mov    %rax,%rcx
+   1400027b7:	ff 15 2b 5b 00 00    	call   *0x5b2b(%rip)        # 1400082e8 <__imp_TerminateProcess>
+   1400027bd:	90                   	nop
+   1400027be:	90                   	nop
+   1400027bf:	90                   	nop
+
+00000001400027c0 <__strcpy_chk>:
+   1400027c0:	56                   	push   %rsi
+   1400027c1:	53                   	push   %rbx
+   1400027c2:	48 83 ec 38          	sub    $0x38,%rsp
+   1400027c6:	48 89 ce             	mov    %rcx,%rsi
+   1400027c9:	48 89 d1             	mov    %rdx,%rcx
+   1400027cc:	48 89 54 24 28       	mov    %rdx,0x28(%rsp)
+   1400027d1:	4c 89 c3             	mov    %r8,%rbx
+   1400027d4:	e8 27 02 00 00       	call   140002a00 <strlen>
+   1400027d9:	48 8b 54 24 28       	mov    0x28(%rsp),%rdx
+   1400027de:	48 39 d8             	cmp    %rbx,%rax
+   1400027e1:	73 12                	jae    1400027f5 <__strcpy_chk+0x35>
+   1400027e3:	4c 8d 40 01          	lea    0x1(%rax),%r8
+   1400027e7:	48 89 f1             	mov    %rsi,%rcx
+   1400027ea:	48 83 c4 38          	add    $0x38,%rsp
+   1400027ee:	5b                   	pop    %rbx
+   1400027ef:	5e                   	pop    %rsi
+   1400027f0:	e9 d3 02 00 00       	jmp    140002ac8 <memcpy>
+   1400027f5:	e8 06 00 00 00       	call   140002800 <__chk_fail>
+   1400027fa:	90                   	nop
+   1400027fb:	90                   	nop
+   1400027fc:	90                   	nop
+   1400027fd:	90                   	nop
+   1400027fe:	90                   	nop
+   1400027ff:	90                   	nop
+
+0000000140002800 <__chk_fail>:
+   140002800:	48 83 ec 28          	sub    $0x28,%rsp
+   140002804:	48 8d 0d b5 1b 00 00 	lea    0x1bb5(%rip),%rcx        # 1400043c0 <msg.0>
+   14000280b:	e8 f0 01 00 00       	call   140002a00 <strlen>
+   140002810:	b9 02 00 00 00       	mov    $0x2,%ecx
+   140002815:	48 8d 15 a4 1b 00 00 	lea    0x1ba4(%rip),%rdx        # 1400043c0 <msg.0>
+   14000281c:	41 89 c0             	mov    %eax,%r8d
+   14000281f:	e8 0c 02 00 00       	call   140002a30 <write>
+   140002824:	b9 17 00 00 00       	mov    $0x17,%ecx
+   140002829:	e8 2a 03 00 00       	call   140002b58 <IsProcessorFeaturePresent>
+   14000282e:	85 c0                	test   %eax,%eax
+   140002830:	74 07                	je     140002839 <__chk_fail+0x39>
+   140002832:	b9 08 00 00 00       	mov    $0x8,%ecx
+   140002837:	cd 29                	int    $0x29
+   140002839:	ff 15 71 5a 00 00    	call   *0x5a71(%rip)        # 1400082b0 <__imp_GetCurrentProcess>
+   14000283f:	ba 09 04 00 c0       	mov    $0xc0000409,%edx
+   140002844:	48 89 c1             	mov    %rax,%rcx
+   140002847:	ff 15 9b 5a 00 00    	call   *0x5a9b(%rip)        # 1400082e8 <__imp_TerminateProcess>
+   14000284d:	90                   	nop
+   14000284e:	90                   	nop
+   14000284f:	90                   	nop
+
+0000000140002850 <vfprintf>:
+   140002850:	57                   	push   %rdi
+   140002851:	56                   	push   %rsi
+   140002852:	53                   	push   %rbx
+   140002853:	48 83 ec 30          	sub    $0x30,%rsp
+   140002857:	48 89 cb             	mov    %rcx,%rbx
+   14000285a:	48 89 d6             	mov    %rdx,%rsi
+   14000285d:	4c 89 c7             	mov    %r8,%rdi
+   140002860:	e8 db 00 00 00       	call   140002940 <__local_stdio_printf_options>
+   140002865:	45 31 c9             	xor    %r9d,%r9d
+   140002868:	49 89 f0             	mov    %rsi,%r8
+   14000286b:	48 89 da             	mov    %rbx,%rdx
+   14000286e:	48 8b 08             	mov    (%rax),%rcx
+   140002871:	48 89 7c 24 20       	mov    %rdi,0x20(%rsp)
+   140002876:	e8 ad 01 00 00       	call   140002a28 <__stdio_common_vfprintf>
+   14000287b:	48 83 c4 30          	add    $0x30,%rsp
+   14000287f:	5b                   	pop    %rbx
+   140002880:	5e                   	pop    %rsi
+   140002881:	5f                   	pop    %rdi
+   140002882:	c3                   	ret
+   140002883:	90                   	nop
+   140002884:	90                   	nop
+   140002885:	90                   	nop
+   140002886:	90                   	nop
+   140002887:	90                   	nop
+   140002888:	90                   	nop
+   140002889:	90                   	nop
+   14000288a:	90                   	nop
+   14000288b:	90                   	nop
+   14000288c:	90                   	nop
+   14000288d:	90                   	nop
+   14000288e:	90                   	nop
+   14000288f:	90                   	nop
+
+0000000140002890 <printf>:
+   140002890:	57                   	push   %rdi
+   140002891:	56                   	push   %rsi
+   140002892:	53                   	push   %rbx
+   140002893:	48 83 ec 40          	sub    $0x40,%rsp
+   140002897:	48 89 cb             	mov    %rcx,%rbx
+   14000289a:	48 8d 74 24 68       	lea    0x68(%rsp),%rsi
+   14000289f:	b9 01 00 00 00       	mov    $0x1,%ecx
+   1400028a4:	48 89 54 24 68       	mov    %rdx,0x68(%rsp)
+   1400028a9:	4c 89 44 24 70       	mov    %r8,0x70(%rsp)
+   1400028ae:	4c 89 4c 24 78       	mov    %r9,0x78(%rsp)
+   1400028b3:	48 89 74 24 38       	mov    %rsi,0x38(%rsp)
+   1400028b8:	e8 53 01 00 00       	call   140002a10 <__acrt_iob_func>
+   1400028bd:	48 89 c7             	mov    %rax,%rdi
+   1400028c0:	e8 7b 00 00 00       	call   140002940 <__local_stdio_printf_options>
+   1400028c5:	45 31 c9             	xor    %r9d,%r9d
+   1400028c8:	49 89 d8             	mov    %rbx,%r8
+   1400028cb:	48 89 fa             	mov    %rdi,%rdx
+   1400028ce:	48 8b 08             	mov    (%rax),%rcx
+   1400028d1:	48 89 74 24 20       	mov    %rsi,0x20(%rsp)
+   1400028d6:	e8 4d 01 00 00       	call   140002a28 <__stdio_common_vfprintf>
+   1400028db:	48 83 c4 40          	add    $0x40,%rsp
+   1400028df:	5b                   	pop    %rbx
+   1400028e0:	5e                   	pop    %rsi
+   1400028e1:	5f                   	pop    %rdi
+   1400028e2:	c3                   	ret
+   1400028e3:	90                   	nop
+   1400028e4:	90                   	nop
+   1400028e5:	90                   	nop
+   1400028e6:	90                   	nop
+   1400028e7:	90                   	nop
+   1400028e8:	90                   	nop
+   1400028e9:	90                   	nop
+   1400028ea:	90                   	nop
+   1400028eb:	90                   	nop
+   1400028ec:	90                   	nop
+   1400028ed:	90                   	nop
+   1400028ee:	90                   	nop
+   1400028ef:	90                   	nop
+
+00000001400028f0 <fprintf>:
+   1400028f0:	57                   	push   %rdi
+   1400028f1:	56                   	push   %rsi
+   1400028f2:	53                   	push   %rbx
+   1400028f3:	48 83 ec 40          	sub    $0x40,%rsp
+   1400028f7:	48 8d 7c 24 70       	lea    0x70(%rsp),%rdi
+   1400028fc:	48 89 cb             	mov    %rcx,%rbx
+   1400028ff:	48 89 d6             	mov    %rdx,%rsi
+   140002902:	4c 89 44 24 70       	mov    %r8,0x70(%rsp)
+   140002907:	4c 89 4c 24 78       	mov    %r9,0x78(%rsp)
+   14000290c:	48 89 7c 24 38       	mov    %rdi,0x38(%rsp)
+   140002911:	e8 2a 00 00 00       	call   140002940 <__local_stdio_printf_options>
+   140002916:	45 31 c9             	xor    %r9d,%r9d
+   140002919:	49 89 f0             	mov    %rsi,%r8
+   14000291c:	48 89 da             	mov    %rbx,%rdx
+   14000291f:	48 8b 08             	mov    (%rax),%rcx
+   140002922:	48 89 7c 24 20       	mov    %rdi,0x20(%rsp)
+   140002927:	e8 fc 00 00 00       	call   140002a28 <__stdio_common_vfprintf>
+   14000292c:	48 83 c4 40          	add    $0x40,%rsp
+   140002930:	5b                   	pop    %rbx
+   140002931:	5e                   	pop    %rsi
+   140002932:	5f                   	pop    %rdi
+   140002933:	c3                   	ret
+   140002934:	90                   	nop
+   140002935:	90                   	nop
+   140002936:	90                   	nop
+   140002937:	90                   	nop
+   140002938:	90                   	nop
+   140002939:	90                   	nop
+   14000293a:	90                   	nop
+   14000293b:	90                   	nop
+   14000293c:	90                   	nop
+   14000293d:	90                   	nop
+   14000293e:	90                   	nop
+   14000293f:	90                   	nop
+
+0000000140002940 <__local_stdio_printf_options>:
+   140002940:	48 8d 05 09 07 00 00 	lea    0x709(%rip),%rax        # 140003050 <options>
+   140002947:	c3                   	ret
+   140002948:	90                   	nop
+   140002949:	90                   	nop
+   14000294a:	90                   	nop
+   14000294b:	90                   	nop
+   14000294c:	90                   	nop
+   14000294d:	90                   	nop
+   14000294e:	90                   	nop
+   14000294f:	90                   	nop
+
+0000000140002950 <__p___initenv>:
+   140002950:	48 8b 05 49 1b 00 00 	mov    0x1b49(%rip),%rax        # 1400044a0 <.refptr.__imp___initenv>
+   140002957:	48 8b 00             	mov    (%rax),%rax
+   14000295a:	c3                   	ret
+   14000295b:	90                   	nop
+   14000295c:	90                   	nop
+   14000295d:	90                   	nop
+   14000295e:	90                   	nop
+   14000295f:	90                   	nop
+
+0000000140002960 <_amsg_exit>:
+   140002960:	53                   	push   %rbx
+   140002961:	48 83 ec 20          	sub    $0x20,%rsp
+   140002965:	89 cb                	mov    %ecx,%ebx
+   140002967:	b9 02 00 00 00       	mov    $0x2,%ecx
+   14000296c:	e8 9f 00 00 00       	call   140002a10 <__acrt_iob_func>
+   140002971:	41 89 d8             	mov    %ebx,%r8d
+   140002974:	48 8d 15 85 1a 00 00 	lea    0x1a85(%rip),%rdx        # 140004400 <.rdata>
+   14000297b:	48 89 c1             	mov    %rax,%rcx
+   14000297e:	e8 6d ff ff ff       	call   1400028f0 <fprintf>
+   140002983:	b9 ff 00 00 00       	mov    $0xff,%ecx
+   140002988:	e8 eb 00 00 00       	call   140002a78 <_exit>
+   14000298d:	90                   	nop
+   14000298e:	90                   	nop
+   14000298f:	90                   	nop
+
+0000000140002990 <__getmainargs>:
+   140002990:	55                   	push   %rbp
+   140002991:	57                   	push   %rdi
+   140002992:	56                   	push   %rsi
+   140002993:	53                   	push   %rbx
+   140002994:	48 83 ec 28          	sub    $0x28,%rsp
+   140002998:	44 89 cd             	mov    %r9d,%ebp
+   14000299b:	48 89 d6             	mov    %rdx,%rsi
+   14000299e:	4c 89 c3             	mov    %r8,%rbx
+   1400029a1:	48 89 cf             	mov    %rcx,%rdi
+   1400029a4:	e8 d7 00 00 00       	call   140002a80 <_initialize_narrow_environment>
+   1400029a9:	83 fd 01             	cmp    $0x1,%ebp
+   1400029ac:	b9 01 00 00 00       	mov    $0x1,%ecx
+   1400029b1:	83 d9 ff             	sbb    $0xffffffff,%ecx
+   1400029b4:	e8 af 00 00 00       	call   140002a68 <_configure_narrow_argv>
+   1400029b9:	e8 92 00 00 00       	call   140002a50 <__p___argc>
+   1400029be:	8b 00                	mov    (%rax),%eax
+   1400029c0:	89 07                	mov    %eax,(%rdi)
+   1400029c2:	e8 91 00 00 00       	call   140002a58 <__p___argv>
+   1400029c7:	48 8b 00             	mov    (%rax),%rax
+   1400029ca:	48 89 06             	mov    %rax,(%rsi)
+   1400029cd:	e8 3e 01 00 00       	call   140002b10 <__p__environ>
+   1400029d2:	48 8b 00             	mov    (%rax),%rax
+   1400029d5:	48 89 03             	mov    %rax,(%rbx)
+   1400029d8:	48 8b 44 24 70       	mov    0x70(%rsp),%rax
+   1400029dd:	8b 08                	mov    (%rax),%ecx
+   1400029df:	e8 0c 01 00 00       	call   140002af0 <_set_new_mode>
+   1400029e4:	31 c0                	xor    %eax,%eax
+   1400029e6:	48 83 c4 28          	add    $0x28,%rsp
+   1400029ea:	5b                   	pop    %rbx
+   1400029eb:	5e                   	pop    %rsi
+   1400029ec:	5f                   	pop    %rdi
+   1400029ed:	5d                   	pop    %rbp
+   1400029ee:	c3                   	ret
+   1400029ef:	90                   	nop
+
+00000001400029f0 <rand_s>:
+   1400029f0:	ff 25 5a 5a 00 00    	jmp    *0x5a5a(%rip)        # 140008450 <__imp_rand_s>
+   1400029f6:	90                   	nop
+   1400029f7:	90                   	nop
+   1400029f8:	0f 1f 84 00 00 00 00 	nopl   0x0(%rax,%rax,1)
+   1400029ff:	00 
+
+0000000140002a00 <strlen>:
+   140002a00:	ff 25 32 5a 00 00    	jmp    *0x5a32(%rip)        # 140008438 <__imp_strlen>
+   140002a06:	90                   	nop
+   140002a07:	90                   	nop
+
+0000000140002a08 <strncmp>:
+   140002a08:	ff 25 32 5a 00 00    	jmp    *0x5a32(%rip)        # 140008440 <__imp_strncmp>
+   140002a0e:	90                   	nop
+   140002a0f:	90                   	nop
+
+0000000140002a10 <__acrt_iob_func>:
+   140002a10:	ff 25 e2 59 00 00    	jmp    *0x59e2(%rip)        # 1400083f8 <__imp___acrt_iob_func>
+   140002a16:	90                   	nop
+   140002a17:	90                   	nop
+
+0000000140002a18 <__p__commode>:
+   140002a18:	ff 25 e2 59 00 00    	jmp    *0x59e2(%rip)        # 140008400 <__imp___p__commode>
+   140002a1e:	90                   	nop
+   140002a1f:	90                   	nop
+
+0000000140002a20 <__p__fmode>:
+   140002a20:	ff 25 e2 59 00 00    	jmp    *0x59e2(%rip)        # 140008408 <__imp___p__fmode>
+   140002a26:	90                   	nop
+   140002a27:	90                   	nop
+
+0000000140002a28 <__stdio_common_vfprintf>:
+   140002a28:	ff 25 e2 59 00 00    	jmp    *0x59e2(%rip)        # 140008410 <__imp___stdio_common_vfprintf>
+   140002a2e:	90                   	nop
+   140002a2f:	90                   	nop
+
+0000000140002a30 <write>:
+   140002a30:	ff 25 e2 59 00 00    	jmp    *0x59e2(%rip)        # 140008418 <__imp_write>
+   140002a36:	90                   	nop
+   140002a37:	90                   	nop
+
+0000000140002a38 <fflush>:
+   140002a38:	ff 25 e2 59 00 00    	jmp    *0x59e2(%rip)        # 140008420 <__imp_fflush>
+   140002a3e:	90                   	nop
+   140002a3f:	90                   	nop
+
+0000000140002a40 <setvbuf>:
+   140002a40:	ff 25 e2 59 00 00    	jmp    *0x59e2(%rip)        # 140008428 <__imp_setvbuf>
+   140002a46:	90                   	nop
+   140002a47:	90                   	nop
+   140002a48:	0f 1f 84 00 00 00 00 	nopl   0x0(%rax,%rax,1)
+   140002a4f:	00 
+
+0000000140002a50 <__p___argc>:
+   140002a50:	ff 25 2a 59 00 00    	jmp    *0x592a(%rip)        # 140008380 <__imp___p___argc>
+   140002a56:	90                   	nop
+   140002a57:	90                   	nop
+
+0000000140002a58 <__p___argv>:
+   140002a58:	ff 25 2a 59 00 00    	jmp    *0x592a(%rip)        # 140008388 <__imp___p___argv>
+   140002a5e:	90                   	nop
+   140002a5f:	90                   	nop
+
+0000000140002a60 <_cexit>:
+   140002a60:	ff 25 2a 59 00 00    	jmp    *0x592a(%rip)        # 140008390 <__imp__cexit>
+   140002a66:	90                   	nop
+   140002a67:	90                   	nop
+
+0000000140002a68 <_configure_narrow_argv>:
+   140002a68:	ff 25 2a 59 00 00    	jmp    *0x592a(%rip)        # 140008398 <__imp__configure_narrow_argv>
+   140002a6e:	90                   	nop
+   140002a6f:	90                   	nop
+
+0000000140002a70 <_crt_atexit>:
+   140002a70:	ff 25 2a 59 00 00    	jmp    *0x592a(%rip)        # 1400083a0 <__imp__crt_atexit>
+   140002a76:	90                   	nop
+   140002a77:	90                   	nop
+
+0000000140002a78 <_exit>:
+   140002a78:	ff 25 2a 59 00 00    	jmp    *0x592a(%rip)        # 1400083a8 <__imp__exit>
+   140002a7e:	90                   	nop
+   140002a7f:	90                   	nop
+
+0000000140002a80 <_initialize_narrow_environment>:
+   140002a80:	ff 25 2a 59 00 00    	jmp    *0x592a(%rip)        # 1400083b0 <__imp__initialize_narrow_environment>
+   140002a86:	90                   	nop
+   140002a87:	90                   	nop
+
+0000000140002a88 <__set_app_type>:
+   140002a88:	ff 25 2a 59 00 00    	jmp    *0x592a(%rip)        # 1400083b8 <__imp___set_app_type>
+   140002a8e:	90                   	nop
+   140002a8f:	90                   	nop
+
+0000000140002a90 <_initterm>:
+   140002a90:	ff 25 2a 59 00 00    	jmp    *0x592a(%rip)        # 1400083c0 <__imp__initterm>
+   140002a96:	90                   	nop
+   140002a97:	90                   	nop
+
+0000000140002a98 <_initterm_e>:
+   140002a98:	ff 25 2a 59 00 00    	jmp    *0x592a(%rip)        # 1400083c8 <__imp__initterm_e>
+   140002a9e:	90                   	nop
+   140002a9f:	90                   	nop
+
+0000000140002aa0 <_set_invalid_parameter_handler>:
+   140002aa0:	ff 25 2a 59 00 00    	jmp    *0x592a(%rip)        # 1400083d0 <__imp__set_invalid_parameter_handler>
+   140002aa6:	90                   	nop
+   140002aa7:	90                   	nop
+
+0000000140002aa8 <abort>:
+   140002aa8:	ff 25 2a 59 00 00    	jmp    *0x592a(%rip)        # 1400083d8 <__imp_abort>
+   140002aae:	90                   	nop
+   140002aaf:	90                   	nop
+
+0000000140002ab0 <exit>:
+   140002ab0:	ff 25 2a 59 00 00    	jmp    *0x592a(%rip)        # 1400083e0 <__imp_exit>
+   140002ab6:	90                   	nop
+   140002ab7:	90                   	nop
+
+0000000140002ab8 <signal>:
+   140002ab8:	ff 25 2a 59 00 00    	jmp    *0x592a(%rip)        # 1400083e8 <__imp_signal>
+   140002abe:	90                   	nop
+   140002abf:	90                   	nop
+
+0000000140002ac0 <__C_specific_handler>:
+   140002ac0:	ff 25 a2 58 00 00    	jmp    *0x58a2(%rip)        # 140008368 <__imp___C_specific_handler>
+   140002ac6:	90                   	nop
+   140002ac7:	90                   	nop
+
+0000000140002ac8 <memcpy>:
+   140002ac8:	ff 25 a2 58 00 00    	jmp    *0x58a2(%rip)        # 140008370 <__imp_memcpy>
+   140002ace:	90                   	nop
+   140002acf:	90                   	nop
+
+0000000140002ad0 <__setusermatherr>:
+   140002ad0:	ff 25 82 58 00 00    	jmp    *0x5882(%rip)        # 140008358 <__imp___setusermatherr>
+   140002ad6:	90                   	nop
+   140002ad7:	90                   	nop
+   140002ad8:	0f 1f 84 00 00 00 00 	nopl   0x0(%rax,%rax,1)
+   140002adf:	00 
+
+0000000140002ae0 <_configthreadlocale>:
+   140002ae0:	ff 25 62 58 00 00    	jmp    *0x5862(%rip)        # 140008348 <__imp__configthreadlocale>
+   140002ae6:	90                   	nop
+   140002ae7:	90                   	nop
+   140002ae8:	0f 1f 84 00 00 00 00 	nopl   0x0(%rax,%rax,1)
+   140002aef:	00 
+
+0000000140002af0 <_set_new_mode>:
+   140002af0:	ff 25 2a 58 00 00    	jmp    *0x582a(%rip)        # 140008320 <__imp__set_new_mode>
+   140002af6:	90                   	nop
+   140002af7:	90                   	nop
+
+0000000140002af8 <calloc>:
+   140002af8:	ff 25 2a 58 00 00    	jmp    *0x582a(%rip)        # 140008328 <__imp_calloc>
+   140002afe:	90                   	nop
+   140002aff:	90                   	nop
+
+0000000140002b00 <free>:
+   140002b00:	ff 25 2a 58 00 00    	jmp    *0x582a(%rip)        # 140008330 <__imp_free>
+   140002b06:	90                   	nop
+   140002b07:	90                   	nop
+
+0000000140002b08 <malloc>:
+   140002b08:	ff 25 2a 58 00 00    	jmp    *0x582a(%rip)        # 140008338 <__imp_malloc>
+   140002b0e:	90                   	nop
+   140002b0f:	90                   	nop
+
+0000000140002b10 <__p__environ>:
+   140002b10:	ff 25 fa 57 00 00    	jmp    *0x57fa(%rip)        # 140008310 <__imp___p__environ>
+   140002b16:	90                   	nop
+   140002b17:	90                   	nop
+   140002b18:	0f 1f 84 00 00 00 00 	nopl   0x0(%rax,%rax,1)
+   140002b1f:	00 
+
+0000000140002b20 <VirtualQuery>:
+   140002b20:	ff 25 da 57 00 00    	jmp    *0x57da(%rip)        # 140008300 <__imp_VirtualQuery>
+   140002b26:	90                   	nop
+   140002b27:	90                   	nop
+
+0000000140002b28 <VirtualProtect>:
+   140002b28:	ff 25 ca 57 00 00    	jmp    *0x57ca(%rip)        # 1400082f8 <__imp_VirtualProtect>
+   140002b2e:	90                   	nop
+   140002b2f:	90                   	nop
+
+0000000140002b30 <TlsGetValue>:
+   140002b30:	ff 25 ba 57 00 00    	jmp    *0x57ba(%rip)        # 1400082f0 <__imp_TlsGetValue>
+   140002b36:	90                   	nop
+   140002b37:	90                   	nop
+
+0000000140002b38 <TerminateProcess>:
+   140002b38:	ff 25 aa 57 00 00    	jmp    *0x57aa(%rip)        # 1400082e8 <__imp_TerminateProcess>
+   140002b3e:	90                   	nop
+   140002b3f:	90                   	nop
+
+0000000140002b40 <Sleep>:
+   140002b40:	ff 25 9a 57 00 00    	jmp    *0x579a(%rip)        # 1400082e0 <__imp_Sleep>
+   140002b46:	90                   	nop
+   140002b47:	90                   	nop
+
+0000000140002b48 <SetUnhandledExceptionFilter>:
+   140002b48:	ff 25 8a 57 00 00    	jmp    *0x578a(%rip)        # 1400082d8 <__imp_SetUnhandledExceptionFilter>
+   140002b4e:	90                   	nop
+   140002b4f:	90                   	nop
+
+0000000140002b50 <LeaveCriticalSection>:
+   140002b50:	ff 25 7a 57 00 00    	jmp    *0x577a(%rip)        # 1400082d0 <__imp_LeaveCriticalSection>
+   140002b56:	90                   	nop
+   140002b57:	90                   	nop
+
+0000000140002b58 <IsProcessorFeaturePresent>:
+   140002b58:	ff 25 6a 57 00 00    	jmp    *0x576a(%rip)        # 1400082c8 <__imp_IsProcessorFeaturePresent>
+   140002b5e:	90                   	nop
+   140002b5f:	90                   	nop
+
+0000000140002b60 <InitializeCriticalSection>:
+   140002b60:	ff 25 5a 57 00 00    	jmp    *0x575a(%rip)        # 1400082c0 <__imp_InitializeCriticalSection>
+   140002b66:	90                   	nop
+   140002b67:	90                   	nop
+
+0000000140002b68 <GetLastError>:
+   140002b68:	ff 25 4a 57 00 00    	jmp    *0x574a(%rip)        # 1400082b8 <__imp_GetLastError>
+   140002b6e:	90                   	nop
+   140002b6f:	90                   	nop
+
+0000000140002b70 <GetCurrentProcess>:
+   140002b70:	ff 25 3a 57 00 00    	jmp    *0x573a(%rip)        # 1400082b0 <__imp_GetCurrentProcess>
+   140002b76:	90                   	nop
+   140002b77:	90                   	nop
+
+0000000140002b78 <EnterCriticalSection>:
+   140002b78:	ff 25 2a 57 00 00    	jmp    *0x572a(%rip)        # 1400082a8 <__imp_EnterCriticalSection>
+   140002b7e:	90                   	nop
+   140002b7f:	90                   	nop
+
+0000000140002b80 <DeleteCriticalSection>:
+   140002b80:	ff 25 1a 57 00 00    	jmp    *0x571a(%rip)        # 1400082a0 <__IAT_start__>
+   140002b86:	90                   	nop
+   140002b87:	90                   	nop
+   140002b88:	0f 1f 84 00 00 00 00 	nopl   0x0(%rax,%rax,1)
+   140002b8f:	00 
+
+0000000140002b90 <main>:
+   140002b90:	f3 0f 1e fa          	endbr64
+   140002b94:	56                   	push   %rsi
+   140002b95:	53                   	push   %rbx
+   140002b96:	48 83 ec 28          	sub    $0x28,%rsp
+   140002b9a:	89 cb                	mov    %ecx,%ebx
+   140002b9c:	48 89 d6             	mov    %rdx,%rsi
+   140002b9f:	e8 1c ea ff ff       	call   1400015c0 <__main>
+   140002ba4:	48 8d 0d 64 14 00 00 	lea    0x1464(%rip),%rcx        # 14000400f <.rdata+0xf>
+   140002bab:	83 fb 01             	cmp    $0x1,%ebx
+   140002bae:	7e 04                	jle    140002bb4 <main+0x24>
+   140002bb0:	48 8b 4e 08          	mov    0x8(%rsi),%rcx
+   140002bb4:	e8 d7 e8 ff ff       	call   140001490 <process>
+   140002bb9:	31 c0                	xor    %eax,%eax
+   140002bbb:	48 83 c4 28          	add    $0x28,%rsp
+   140002bbf:	5b                   	pop    %rbx
+   140002bc0:	5e                   	pop    %rsi
+   140002bc1:	c3                   	ret
+   140002bc2:	90                   	nop
+   140002bc3:	90                   	nop
+   140002bc4:	90                   	nop
+   140002bc5:	90                   	nop
+   140002bc6:	90                   	nop
+   140002bc7:	90                   	nop
+   140002bc8:	90                   	nop
+   140002bc9:	90                   	nop
+   140002bca:	90                   	nop
+   140002bcb:	90                   	nop
+   140002bcc:	90                   	nop
+   140002bcd:	90                   	nop
+   140002bce:	90                   	nop
+   140002bcf:	90                   	nop
+
+0000000140002bd0 <init>:
+   140002bd0:	48 83 ec 48          	sub    $0x48,%rsp
+   140002bd4:	48 83 3d 94 45 00 00 	cmpq   $0x0,0x4594(%rip)        # 140007170 <__stack_chk_guard>
+   140002bdb:	00 
+   140002bdc:	74 05                	je     140002be3 <init+0x13>
+   140002bde:	48 83 c4 48          	add    $0x48,%rsp
+   140002be2:	c3                   	ret
+   140002be3:	48 8b 15 66 58 00 00 	mov    0x5866(%rip),%rdx        # 140008450 <__imp_rand_s>
+   140002bea:	48 8d 4c 24 3c       	lea    0x3c(%rsp),%rcx
+   140002bef:	48 89 54 24 28       	mov    %rdx,0x28(%rsp)
+   140002bf4:	ff d2                	call   *%rdx
+   140002bf6:	48 8b 54 24 28       	mov    0x28(%rsp),%rdx
+   140002bfb:	85 c0                	test   %eax,%eax
+   140002bfd:	74 13                	je     140002c12 <init+0x42>
+   140002bff:	48 b8 ef be ad de ef 	movabs $0xdeadbeefdeadbeef,%rax
+   140002c06:	be ad de 
+   140002c09:	48 89 05 60 45 00 00 	mov    %rax,0x4560(%rip)        # 140007170 <__stack_chk_guard>
+   140002c10:	eb cc                	jmp    140002bde <init+0xe>
+   140002c12:	8b 44 24 3c          	mov    0x3c(%rsp),%eax
+   140002c16:	48 8d 4c 24 3c       	lea    0x3c(%rsp),%rcx
+   140002c1b:	48 89 05 4e 45 00 00 	mov    %rax,0x454e(%rip)        # 140007170 <__stack_chk_guard>
+   140002c22:	ff d2                	call   *%rdx
+   140002c24:	48 8b 05 45 45 00 00 	mov    0x4545(%rip),%rax        # 140007170 <__stack_chk_guard>
+   140002c2b:	8b 54 24 3c          	mov    0x3c(%rsp),%edx
+   140002c2f:	48 c1 e0 20          	shl    $0x20,%rax
+   140002c33:	48 09 d0             	or     %rdx,%rax
+   140002c36:	48 89 05 33 45 00 00 	mov    %rax,0x4533(%rip)        # 140007170 <__stack_chk_guard>
+   140002c3d:	eb 9f                	jmp    140002bde <init+0xe>
+   140002c3f:	90                   	nop
+
+0000000140002c40 <register_frame_ctor>:
+   140002c40:	e9 2b e8 ff ff       	jmp    140001470 <__gcc_register_frame>
+   140002c45:	90                   	nop
+   140002c46:	90                   	nop
+   140002c47:	90                   	nop
+   140002c48:	90                   	nop
+   140002c49:	90                   	nop
+   140002c4a:	90                   	nop
+   140002c4b:	90                   	nop
+   140002c4c:	90                   	nop
+   140002c4d:	90                   	nop
+   140002c4e:	90                   	nop
+   140002c4f:	90                   	nop

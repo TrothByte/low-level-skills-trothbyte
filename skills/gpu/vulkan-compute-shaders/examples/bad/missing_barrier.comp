@@ -1,0 +1,42 @@
+// BAD: this shader is the CONSUMER of a buffer written by a previous dispatch.
+// TARGET-ONLY: compiles with
+//   glslangValidator -V missing_barrier.comp -o missing_barrier.spv
+//
+// This file is VALID GLSL and compiles cleanly. The bug lives on the HOST:
+// the paired command sequence (examples/bad/bad_missing_barrier_seq.json) runs
+//   dispatch A  (writes scratch.data[])
+//   dispatch B  (this shader, reads scratch.data[])
+// with NO vkCmdPipelineBarrier between them. On many GPUs this "works" by luck
+// (the write finishes in time); on others dispatch B reads stale data. Same-queue
+// submission order does NOT imply write visibility.
+//
+// The missing barrier cannot be expressed in GLSL; it must be inserted on the
+// host: srcStage=COMPUTE, srcAccess=SHADER_WRITE, dstStage=COMPUTE,
+// dstAccess=SHADER_READ between the two vkCmdDispatch calls.
+
+#version 450
+
+layout(local_size_x = 64, local_size_y = 1, local_size_z = 1) in;
+
+layout(set = 0, binding = 0, std430) buffer Scratch {
+    float data[];
+} scratch;
+
+layout(set = 0, binding = 1, std430) buffer OutBuf {
+    float results[];
+} out_buf;
+
+layout(push_constant) uniform PushC {
+    uint n;
+} pc;
+
+void main() {
+    uint gid = gl_GlobalInvocationID.x;
+    if (gid >= pc.n) {
+        return;
+    }
+    // Reads scratch.data[] written by the PREVIOUS dispatch in the same command
+    // buffer. Without a host barrier (COMPUTE SHADER_WRITE -> COMPUTE SHADER_READ)
+    // between the two dispatches this read is NOT guaranteed to see that write.
+    out_buf.results[gid] = scratch.data[gid] * 2.0f;
+}

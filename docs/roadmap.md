@@ -32,7 +32,7 @@ Public roadmap for **Low-level skills TrothByte**. Status and history live in
 4. **Elevate researched → source-backed** — on a Linux/GPU host with zig, nasm,
    clang-cross, qemu, nvcc, mpicc, valgrind, verilator, jadx/frida, frama-c/cbmc/kani,
    z3, and kernel toolchains installed. Each skill documents its exact command.
-5. **License audit (PHASE 22)** — full pass over the 228 registered sources.
+5. **License audit (PHASE 22)** — full pass over the 278 registered sources.
 6. **Calibration (PHASE 21)** — fold evals back into skill guidance.
 
 ## Good first issues
